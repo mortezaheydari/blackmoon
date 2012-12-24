@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe Account do
-  before { @account = Account.new(email: "test@blackmoon.com",
-  								 password: "password", password_confirmation:	"password")}
+	before { @account = FactoryGirl.create(:account) }
 
   subject { @account }
 
@@ -11,25 +10,17 @@ describe Account do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }  
 #  it { should respond_to(:remember_token) }  
-
+	it { should respond_to(:user) }
 
 #	describe "when password don't match" do
 #		before { @account = }
 #	end
-
+	describe "profile" do
+		#
+	end
 
 
 	describe "traditional tests" do
-
-#	  describe "when name is not present" do
-#	    before {@account.name = " "}
-#	    it { should_not be_valid}
-#	  end
-#
-#	  describe "when name is too long" do
-#	    before {@account.name = "a" * 51}
-#	    it { should_not be_valid }
-#	  end
 
 	  describe "when email format is invalid" do
 	    it "should be invalid" do
@@ -54,6 +45,8 @@ describe Account do
 
 	  describe "when email address is already taken" do
 	    before do
+				@account = Account.new(email: "test@blackmoon.com",
+  								 password: "password", password_confirmation:	"password")
 	      account_with_same_email = @account.dup
 	      account_with_same_email.email = @account.email.upcase
 	      account_with_same_email.save
