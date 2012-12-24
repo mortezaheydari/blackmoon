@@ -8,8 +8,10 @@ class Account < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
+  has_one :user
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, format: {with: VALID_EMAIL_REGEX}  
+  validates :email, format: {with: VALID_EMAIL_REGEX}
   # attr_accessible :title, :body
 
  	def has_password?(submitted_password)
