@@ -1,12 +1,16 @@
 require 'spec_helper'
 
 describe User do
+	let(:account) { FactoryGirl.create(:account) }
 
-	before { @user = User.new(name:	"username") }
+	before { @user = account.build_user(name:	"username") }
+
 	subject { @user }
 
 	it { should respond_to(:name) }
-
+	it { should respond_to(:profile) }	
+	it { should respond_to(:account) }
+	its(:account) { should == account }
 
   describe "when name is not present" do
     before {@user.name = " "}
