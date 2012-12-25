@@ -1,4 +1,4 @@
-class RegistrationsController < Device::RegistrationsController
+class RegistrationsController < Devise::RegistrationsController
 
   def create
     super
