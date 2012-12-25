@@ -1,0 +1,40 @@
+<h2>Edit <%= @user.name.to_s.humanize %></h2>
+
+<h1>Update your profile</h1>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for(@user) do |f| %>	
+			<%= render 'shared/error_messages', object: f.object %>
+
+			<%= f.label :name %>
+			<%= f.text_field :name %>
+
+			<%= f.fields_for :profile do |profile_form| %> 
+
+				<%= profile_form.label :first_name %>
+				<%= profile_form.text_field :first_name %>
+
+				<%= profile_form.label :last_name %>
+				<%= profile_form.text_field :last_name %>
+
+				<%= profile_form.label :phone %>
+				<%= profile_form.text_field :phone %>
+													
+				<%= profile_form.label :date_of_birth %>
+				<%= select_date @date_of_birth, :prefix => :date_of_birth %>
+
+				<%= profile_form.label :about %>
+    		<%= profile_form.text_area :about, 
+    						placeholder: "Write something about yourself..." %>
+
+			<% end %>
+
+			<%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+		<% end %>
+
+		<%= gravatar_for @user %>
+		<a href="http://gravatar.com/emails">change</a>
+									
+	</div>
+</div>
