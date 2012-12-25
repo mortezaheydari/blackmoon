@@ -1,7 +1,13 @@
 <h2>Sign up</h2>
 
+<% resource.user ||= User.new %>
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
+
+	<%= f.fields_for :user do |user_form| %> 
+    <div><%= user_form.label :name %><br />
+    <%= user_form.text_field :name %></div>
+  <% end %>
 
   <div><%= f.label :email %><br />
   <%= f.email_field :email %></div>
