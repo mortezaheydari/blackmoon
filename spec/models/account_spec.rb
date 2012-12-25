@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Account do
-	before { @account = FactoryGirl.create(:account) }
+	before { @account = FactoryGirl.create(:account_with_user) }
 
   subject { @account }
 
@@ -19,7 +19,14 @@ describe Account do
 		#
 	end
 
-
+	describe "destroying an account" do
+		it "should change Account count" do
+			expect { @account.destroy }.to change(Account, :count).by(-1)
+		end
+		it "should change User count" do
+			expect { @account.destroy }.to change(User, :count).by(-1)
+		end		
+	end
 	describe "traditional tests" do
 
 	  describe "when email format is invalid" do

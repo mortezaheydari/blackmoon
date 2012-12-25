@@ -18,8 +18,8 @@ describe "Registration" do
 
 	describe "with valid information" do
 		before do
-		  fill_in 'account_user_attributes_name', 		with: "username"
-		  fill_in 'account_email', 		with: "username@example.com"
+		  fill_in 'account_user_attributes_name', 		with: "Example User"
+		  fill_in 'account_email', 		with: "user@example.com"
 		  fill_in 'account_password',	with: "password"
 		  fill_in 'account_password_confirmation',	with: "password"	  
 		end

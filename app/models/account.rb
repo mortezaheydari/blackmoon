@@ -8,7 +8,7 @@ class Account < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :user_attributes
 
-  has_one :user
+  has_one :user, :dependent => :destroy
   accepts_nested_attributes_for :user, :allow_destroy => true
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
