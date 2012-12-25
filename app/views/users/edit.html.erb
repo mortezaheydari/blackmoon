@@ -7,30 +7,30 @@
 		<%= form_for(@user) do |f| %>	
 			<%= render 'shared/error_messages', object: f.object %>
 
-			<%= f.label :name %>
-			<%= f.text_field :name %>
+			<div><%= f.label "User Name" %><br />
+			<%= f.text_field :name %></div>
 
 			<%= f.fields_for :profile do |profile_form| %> 
 
-				<%= profile_form.label :first_name %>
+				<div><%= profile_form.label :first_name %><br />
 				<%= profile_form.text_field :first_name %>
 
-				<%= profile_form.label :last_name %>
-				<%= profile_form.text_field :last_name %>
+				<div><%= profile_form.label :last_name %><br />
+				<%= profile_form.text_field :last_name %></div>
 
-				<%= profile_form.label :phone %>
-				<%= profile_form.text_field :phone %>
+				<div><%= profile_form.label :phone %><br />
+				<%= profile_form.text_field :phone %></div>
 													
-				<%= profile_form.label :date_of_birth %>
-				<%= select_date @date_of_birth, :prefix => :date_of_birth %>
+				<div><%= profile_form.label :date_of_birth %><br />
+				<%= select_date @date_of_birth, :prefix => :date_of_birth %></div>
 
-				<%= profile_form.label :about %>
+				<div><%= profile_form.label :about %><br />
     		<%= profile_form.text_area :about, 
-    						placeholder: "Write something about yourself..." %>
+    						placeholder: "Write something about yourself..." %></div>
 
 			<% end %>
 
-			<%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+			<div><%= f.submit "Save changes", class: "btn btn-large btn-primary" %></div>
 		<% end %>
 
 		<%= gravatar_for @user %>
