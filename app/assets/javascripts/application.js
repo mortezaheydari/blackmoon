@@ -13,3 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+$(document).ready(function() {
+    $("ul#userDrop").hide();
+    $("div#userMenu").mouseenter(function(e) {
+        e.preventDefault();
+        $("ul#userDrop").slideDown("fast");
+    });
+    $("div#userMenu").mouseleave(function(e) {
+        e.preventDefault();
+        $("ul#userDrop").slideUp("fast");
+    });
+});

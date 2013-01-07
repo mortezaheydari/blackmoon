@@ -1,40 +1,87 @@
-<h2>Edit <%= @user.name.to_s.humanize %></h2>
+<div class="body">
+    <div class="cards">
 
-<h1>Update your profile</h1>
+            <h1>Update your profile <%= @user.name.to_s.humanize %></h1>
 
-<div class="row">
-	<div class="span6 offset3">
-		<%= form_for(@user) do |f| %>	
-			<%= render 'shared/error_messages', object: f.object %>
+            <div class="row">
+            	<div class="span6 offset3">
+            		<%= form_for(@user) do |f| %>
+            			<%= render 'shared/error_messages', object: f.object %>
+                            <div class="gravatarContainer">
+                                <%= gravatar_for @user %>
+                                <a href="http://gravatar.com/emails" class="button grey">change</a>
+                            </div>
 
-			<div><%= f.label "User Name" %><br />
-			<%= f.text_field :name %></div>
 
-			<%= f.fields_for :profile do |profile_form| %> 
+            			<div><%= f.label "User Name" %><br />
+            			<%= f.text_field :name, class: "TextField" %></div>
 
-				<div><%= profile_form.label :first_name %><br />
-				<%= profile_form.text_field :first_name %>
+            			<%= f.fields_for :profile do |profile_form| %>
 
-				<div><%= profile_form.label :last_name %><br />
-				<%= profile_form.text_field :last_name %></div>
+            				<div><%= profile_form.label :first_name %><br />
+            				<%= profile_form.text_field :first_name, class: "TextField" %>
 
-				<div><%= profile_form.label :phone %><br />
-				<%= profile_form.text_field :phone %></div>
-													
-				<div><%= profile_form.label :date_of_birth %><br />
-				<%= select_date @date_of_birth, :prefix => :date_of_birth %></div>
+            				<div><%= profile_form.label :last_name %><br />
+            				<%= profile_form.text_field :last_name, class: "TextField" %></div>
 
-				<div><%= profile_form.label :about %><br />
-    		<%= profile_form.text_area :about, 
-    						placeholder: "Write something about yourself..." %></div>
+            				<div><%= profile_form.label :phone %><br />
+            				<%= profile_form.text_field :phone, class: "TextField" %></div>
 
-			<% end %>
+            				<div><%= profile_form.label :date_of_birth %><br />
+            				<%= select_date @date_of_birth, :prefix => :date_of_birth %></div>
 
-			<div><%= f.submit "Save changes", class: "btn btn-large btn-primary" %></div>
-		<% end %>
+            				<div><%= profile_form.label :about %><br />
+                		<%= profile_form.text_area :about,
+                						placeholder: "Write something about yourself..." %></div>
 
-		<%= gravatar_for @user %>
-		<a href="http://gravatar.com/emails">change</a>
-									
-	</div>
+            			<% end %>
+
+            			<div><%= f.submit "Save changes", class: " submitBtn button blue" %></div>
+            		<% end %>
+
+                      </div>
+
+            	</div>
+            </div>
+      </div>
+
+      <div class="sideBar">
+
+          <div class="sideBox">
+            <div class="sideTitle">Intrests</div>
+            <hr>
+            <div class="sideTag">
+              <span>Football</span>
+              <span>Basketball</span>
+              <span>Volleyball</span>
+              <span>Jet Ski</span>
+              <span>Karate</span>
+              <span>Fitness</span>
+            </div>
+          </div>
+
+
+          <div class="sideBox">
+            <div class="sideTitle">Similar Players</div>
+            <hr>
+            <div class="sideImage">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+     </div>
+
+
+
+
 </div>

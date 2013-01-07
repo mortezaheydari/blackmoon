@@ -1,3 +1,18 @@
-// Place all the styles related to the Registrations controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+h1  {
+  color: $linkColor;
+  font-weight: normal;
+}
+
+
+div.gravatarContainer {
+  margin: 10px 0;
+  .gravatar {
+    margin: 0 0 0 10px;
+  }
+  a {
+    margin: 0 0 0 10px;
+    position: relative;
+    top: -7.5px;
+  }
+
+}

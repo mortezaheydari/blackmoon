@@ -7,8 +7,54 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="page">
+    <div id="headerContainer">
+      <header id="main">
+        <div id="headerLeft">
+          <a href="#" id="mainLogo"><%= image_tag "logo.png" %></a>
+          <input type="search" placeholder="search" />
+        </div>
+        <div id="headerMenu">
+          <div id="dashboard" class="left">
+            <div class="left"></div>
+            <a href="#">Dashboard</a>
+          </div>
+          <div id="notiMenu" class="left">
+            <div class="left"></div>
+            <a href="#">Notifications</a>
+          </div>
+          <div id="createNewMenu" class="left">
+            <div class="left"></div>
+            <a href="#">Create New</a>
+          </div>
+          <div id="userMenu">
+            <a href="#"><%= image_tag "rails.png", :class => "left" %> Morteza Heydari</a>
+            <ul id="userDrop">
+              <li>
+                <div id="editProfile" class="left">
+                  <div class="left"></div>
+                  <a href="#">Edit Profile</a>
+                </div>
+              </li>
+              <li>
+                <div id="manageOffering" class="left">
+                  <div class="left"></div>
+                  <a href="#">Manage Offerings</a>
+                </div>
+              </li>
+              <hr>
+              <li><a href="#" id="signOutTop">Sign out</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+      </header>
+    </div>
 
 <%= yield %>
 <%= debug(params) if Rails.env.development? %>
+
+</div>
 </body>
 </html>
