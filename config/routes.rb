@@ -1,4 +1,9 @@
 Blackmoon::Application.routes.draw do
+#  get "users/index"
+#  get "users/edit"
+
+
+  resources :users  
   devise_for :accounts, :controllers => {:registrations => "registrations"}
 
   # The priority is based upon order of creation:
