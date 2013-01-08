@@ -29,5 +29,8 @@ describe "Registration" do
 		it "should create a user" do
 			expect { click_button "Sign up"}.to change(User, :count)
 		end	
+		it "should create a profile" do
+			expect { click_button "Sign up"}.to change(Profile, :count)
+		end	
 	end
 end
