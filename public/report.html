@@ -284,218 +284,168 @@ a {
 <div class="results">
 <div id="div_group_1" class="example_group passed">
   <dl style="margin-left: 0px;">
-  <dt id="example_group_1" class="passed">Account</dt>
-    <script type="text/javascript">moveProgressBar('3.1');</script>
-    <dd class="example passed"><span class="passed_spec_name">should respond to #password</span><span class='duration'>0.13601s</span></dd>
-    <script type="text/javascript">moveProgressBar('6.2');</script>
-    <dd class="example passed"><span class="passed_spec_name">should respond to #password_confirmation</span><span class='duration'>0.01865s</span></dd>
-    <script type="text/javascript">makeRed('rspec-header');</script>
-    <script type="text/javascript">makeRed('div_group_1');</script>
-    <script type="text/javascript">makeRed('example_group_1');</script>
-    <script type="text/javascript">moveProgressBar('9.3');</script>
-    <dd class="example failed">
-      <span class="failed_spec_name">should not respond to #email</span>
-      <span class="duration">0.01765s</span>
-      <div class="failure" id="failure_1">
-        <div class="message"><pre>expected #&lt;Account id: 2, email: &quot;persone_5@example.com&quot;, encrypted_password: &quot;$2a$04$/uUXfo65AQiWI5iSrQKoA..ANfTgekaE0Pzo0JwcUSeU...&quot;, reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, created_at: &quot;2013-01-03 09:46:37&quot;, updated_at: &quot;2013-01-03 09:46:37&quot;&gt; not to respond to :email</pre></div>
-        <div class="backtrace"><pre>./spec/models/account_spec.rb:8:in `block (2 levels) in <top (required)>'</pre></div>
-    <pre class="ruby"><code><span class="linenum">6</span>  subject { @account }
-<span class="linenum">7</span>
-<span class="offending"><span class="linenum">8</span>  it { should_not respond_to(:email) }</span>
-<span class="linenum">9</span>  it { should respond_to(:password_digest) }  
-<span class="linenum">10</span>  it { should respond_to(:password) }
-<span class="linenum">11</span><span class="comment"># gem install syntax to get syntax highlighting</span></code></pre>
-      </div>
-    </dd>
-    <script type="text/javascript">moveProgressBar('12.5');</script>
-    <dd class="example passed"><span class="passed_spec_name">should respond to #user</span><span class='duration'>0.01860s</span></dd>
-    <script type="text/javascript">moveProgressBar('15.6');</script>
-    <dd class="example passed"><span class="passed_spec_name">should respond to #password_digest</span><span class='duration'>0.01745s</span></dd>
+  <dt id="example_group_1" class="passed">Profile</dt>
+    <script type="text/javascript">moveProgressBar('3.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #first_name</span><span class='duration'>0.17296s</span></dd>
+    <script type="text/javascript">moveProgressBar('6.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #user</span><span class='duration'>0.01786s</span></dd>
   </dl>
 </div>
 <div id="div_group_2" class="example_group passed">
   <dl style="margin-left: 15px;">
-  <dt id="example_group_2" class="passed">traditional tests</dt>
+  <dt id="example_group_2" class="passed">user</dt>
+    <script type="text/javascript">moveProgressBar('10.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">should == #&lt;User id: 1, name: &quot;Persone 3&quot;, created_at: &quot;2013-01-08 13:16:34&quot;, updated_at: &quot;2013-01-08 13:16:34&quot;, account_id: 1&gt;</span><span class='duration'>0.02050s</span></dd>
   </dl>
 </div>
 <div id="div_group_3" class="example_group passed">
-  <dl style="margin-left: 30px;">
-  <dt id="example_group_3" class="passed">when password is not present</dt>
-    <script type="text/javascript">moveProgressBar('18.7');</script>
-    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.12893s</span></dd>
+  <dl style="margin-left: 0px;">
+  <dt id="example_group_3" class="passed">User</dt>
+    <script type="text/javascript">moveProgressBar('13.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #profile</span><span class='duration'>0.01172s</span></dd>
+    <script type="text/javascript">moveProgressBar('17.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #name</span><span class='duration'>0.01122s</span></dd>
+    <script type="text/javascript">moveProgressBar('20.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #account</span><span class='duration'>0.01078s</span></dd>
   </dl>
 </div>
 <div id="div_group_4" class="example_group passed">
-  <dl style="margin-left: 30px;">
-  <dt id="example_group_4" class="passed">when email address is already taken</dt>
-    <script type="text/javascript">moveProgressBar('21.8');</script>
-    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.02401s</span></dd>
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_4" class="passed">when name is not present</dt>
+    <script type="text/javascript">moveProgressBar('24.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.11976s</span></dd>
   </dl>
 </div>
 <div id="div_group_5" class="example_group passed">
-  <dl style="margin-left: 30px;">
-  <dt id="example_group_5" class="passed">when email format is invalid</dt>
-    <script type="text/javascript">moveProgressBar('25.0');</script>
-    <dd class="example passed"><span class="passed_spec_name">should be invalid</span><span class='duration'>0.02968s</span></dd>
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_5" class="passed">with username already taken</dt>
+    <script type="text/javascript">moveProgressBar('27.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.01922s</span></dd>
   </dl>
 </div>
 <div id="div_group_6" class="example_group passed">
-  <dl style="margin-left: 30px;">
-  <dt id="example_group_6" class="passed">with a password that is too short</dt>
-    <script type="text/javascript">moveProgressBar('28.1');</script>
-    <dd class="example passed"><span class="passed_spec_name">should be invalid</span><span class='duration'>0.01999s</span></dd>
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_6" class="passed">when name is too long</dt>
+    <script type="text/javascript">moveProgressBar('31.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.01199s</span></dd>
   </dl>
 </div>
 <div id="div_group_7" class="example_group passed">
-  <dl style="margin-left: 30px;">
-  <dt id="example_group_7" class="passed">when email format is valid</dt>
-    <script type="text/javascript">moveProgressBar('31.2');</script>
-    <dd class="example passed"><span class="passed_spec_name">should be valid</span><span class='duration'>0.02477s</span></dd>
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_7" class="passed">account</dt>
+    <script type="text/javascript">moveProgressBar('34.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">should == #&lt;Account id: 1, email: &quot;persone_10@example.com&quot;, encrypted_password: &quot;$2a$04$8oRycHh3BgEQhOLMsZZQ0ucOHW4qFFl3vFHWm2aR4DT1...&quot;, reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, created_at: &quot;2013-01-08 13:16:34&quot;, updated_at: &quot;2013-01-08 13:16:34&quot;&gt;</span><span class='duration'>0.01217s</span></dd>
   </dl>
 </div>
 <div id="div_group_8" class="example_group passed">
-  <dl style="margin-left: 30px;">
-  <dt id="example_group_8" class="passed">when password doesn&#x27;t match</dt>
-    <script type="text/javascript">moveProgressBar('34.3');</script>
-    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.01948s</span></dd>
+  <dl style="margin-left: 0px;">
+  <dt id="example_group_8" class="passed">Account</dt>
+    <script type="text/javascript">moveProgressBar('37.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #user</span><span class='duration'>0.02361s</span></dd>
+    <script type="text/javascript">moveProgressBar('41.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #password_digest</span><span class='duration'>0.02162s</span></dd>
+    <script type="text/javascript">moveProgressBar('44.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #password</span><span class='duration'>0.02190s</span></dd>
+    <script type="text/javascript">moveProgressBar('48.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #password_confirmation</span><span class='duration'>0.02277s</span></dd>
+    <script type="text/javascript">moveProgressBar('51.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">should respond to #email</span><span class='duration'>0.02148s</span></dd>
   </dl>
 </div>
 <div id="div_group_9" class="example_group passed">
   <dl style="margin-left: 15px;">
   <dt id="example_group_9" class="passed">destroying an account</dt>
-    <script type="text/javascript">moveProgressBar('37.5');</script>
-    <dd class="example passed"><span class="passed_spec_name">should change Account count</span><span class='duration'>0.04528s</span></dd>
-    <script type="text/javascript">moveProgressBar('40.6');</script>
-    <dd class="example passed"><span class="passed_spec_name">should change User count</span><span class='duration'>0.02162s</span></dd>
+    <script type="text/javascript">moveProgressBar('55.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">should change Account count</span><span class='duration'>0.05122s</span></dd>
+    <script type="text/javascript">moveProgressBar('58.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">should change User count</span><span class='duration'>0.02497s</span></dd>
   </dl>
 </div>
 <div id="div_group_10" class="example_group passed">
-  <dl style="margin-left: 0px;">
-  <dt id="example_group_10" class="passed">UsersHelper</dt>
-    <script type="text/javascript">makeYellow('div_group_10');</script>
-    <script type="text/javascript">makeYellow('example_group_10');</script>
-    <script type="text/javascript">moveProgressBar('43.7');</script>
-    <dd class="example not_implemented"><span class="not_implemented_spec_name">add some examples to (or delete) /media/sf_Sites/blackmoon/spec/helpers/users_helper_spec.rb (PENDING: No reason given)</span></dd>
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_10" class="passed">traditional tests</dt>
   </dl>
 </div>
 <div id="div_group_11" class="example_group passed">
-  <dl style="margin-left: 0px;">
-  <dt id="example_group_11" class="passed">Profile</dt>
-    <script type="text/javascript">moveProgressBar('46.8');</script>
-    <dd class="example passed"><span class="passed_spec_name">should respond to #first_name</span><span class='duration'>0.05965s</span></dd>
-    <script type="text/javascript">moveProgressBar('50.0');</script>
-    <dd class="example passed"><span class="passed_spec_name">should respond to #user</span><span class='duration'>0.01548s</span></dd>
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_11" class="passed">when password is not present</dt>
+    <script type="text/javascript">moveProgressBar('62.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.02547s</span></dd>
   </dl>
 </div>
 <div id="div_group_12" class="example_group passed">
-  <dl style="margin-left: 15px;">
-  <dt id="example_group_12" class="passed">user</dt>
-    <script type="text/javascript">moveProgressBar('53.1');</script>
-    <dd class="example passed"><span class="passed_spec_name">should == #&lt;User id: 1, name: &quot;Persone 16&quot;, created_at: &quot;2013-01-03 09:46:37&quot;, updated_at: &quot;2013-01-03 09:46:37&quot;, account_id: 1&gt;</span><span class='duration'>0.01706s</span></dd>
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_12" class="passed">when password doesn&#x27;t match</dt>
+    <script type="text/javascript">moveProgressBar('65.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.02474s</span></dd>
   </dl>
 </div>
 <div id="div_group_13" class="example_group passed">
-  <dl style="margin-left: 0px;">
-  <dt id="example_group_13" class="passed">users/index.html.erb</dt>
-    <script type="text/javascript">makeYellow('div_group_13');</script>
-    <script type="text/javascript">makeYellow('example_group_13');</script>
-    <script type="text/javascript">moveProgressBar('56.2');</script>
-    <dd class="example not_implemented"><span class="not_implemented_spec_name">add some examples to (or delete) /media/sf_Sites/blackmoon/spec/views/users/index.html.erb_spec.rb (PENDING: No reason given)</span></dd>
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_13" class="passed">when email format is invalid</dt>
+    <script type="text/javascript">moveProgressBar('68.9');</script>
+    <dd class="example passed"><span class="passed_spec_name">should be invalid</span><span class='duration'>0.06404s</span></dd>
   </dl>
 </div>
 <div id="div_group_14" class="example_group passed">
-  <dl style="margin-left: 0px;">
-  <dt id="example_group_14" class="passed">RegistrationsHelper</dt>
-    <script type="text/javascript">makeYellow('div_group_14');</script>
-    <script type="text/javascript">makeYellow('example_group_14');</script>
-    <script type="text/javascript">moveProgressBar('59.3');</script>
-    <dd class="example not_implemented"><span class="not_implemented_spec_name">add some examples to (or delete) /media/sf_Sites/blackmoon/spec/helpers/registrations_helper_spec.rb (PENDING: No reason given)</span></dd>
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_14" class="passed">when email address is already taken</dt>
+    <script type="text/javascript">moveProgressBar('72.4');</script>
+    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.02819s</span></dd>
   </dl>
 </div>
 <div id="div_group_15" class="example_group passed">
-  <dl style="margin-left: 0px;">
-  <dt id="example_group_15" class="passed">User</dt>
-    <script type="text/javascript">moveProgressBar('62.5');</script>
-    <dd class="example passed"><span class="passed_spec_name">should respond to #account</span><span class='duration'>0.01105s</span></dd>
-    <script type="text/javascript">moveProgressBar('65.6');</script>
-    <dd class="example passed"><span class="passed_spec_name">should respond to #profile</span><span class='duration'>0.01166s</span></dd>
-    <script type="text/javascript">moveProgressBar('68.7');</script>
-    <dd class="example passed"><span class="passed_spec_name">should respond to #name</span><span class='duration'>0.01129s</span></dd>
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_15" class="passed">when email format is valid</dt>
+    <script type="text/javascript">moveProgressBar('75.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">should be valid</span><span class='duration'>0.02891s</span></dd>
   </dl>
 </div>
 <div id="div_group_16" class="example_group passed">
-  <dl style="margin-left: 15px;">
-  <dt id="example_group_16" class="passed">with username already taken</dt>
-    <script type="text/javascript">moveProgressBar('71.8');</script>
-    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.01590s</span></dd>
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_16" class="passed">with a password that is too short</dt>
+    <script type="text/javascript">moveProgressBar('79.3');</script>
+    <dd class="example passed"><span class="passed_spec_name">should be invalid</span><span class='duration'>0.02623s</span></dd>
   </dl>
 </div>
 <div id="div_group_17" class="example_group passed">
-  <dl style="margin-left: 15px;">
-  <dt id="example_group_17" class="passed">when name is too long</dt>
-    <script type="text/javascript">moveProgressBar('75.0');</script>
-    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.01213s</span></dd>
+  <dl style="margin-left: 0px;">
+  <dt id="example_group_17" class="passed">Registration</dt>
   </dl>
 </div>
 <div id="div_group_18" class="example_group passed">
   <dl style="margin-left: 15px;">
-  <dt id="example_group_18" class="passed">account</dt>
-    <script type="text/javascript">moveProgressBar('78.1');</script>
-    <dd class="example passed"><span class="passed_spec_name">should == #&lt;Account id: 1, email: &quot;persone_35@example.com&quot;, encrypted_password: &quot;$2a$04$oIpKxLd0/nHsTOXiF88wBuf73bmDbv5jcOTw2xOXTY43...&quot;, reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, created_at: &quot;2013-01-03 09:46:38&quot;, updated_at: &quot;2013-01-03 09:46:38&quot;&gt;</span><span class='duration'>0.01274s</span></dd>
+  <dt id="example_group_18" class="passed">with invalid information</dt>
+    <script type="text/javascript">moveProgressBar('82.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">should not create an account</span><span class='duration'>0.25233s</span></dd>
+    <script type="text/javascript">moveProgressBar('86.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">should not create a user</span><span class='duration'>0.02324s</span></dd>
   </dl>
 </div>
 <div id="div_group_19" class="example_group passed">
-  <dl style="margin-left: 15px;">
-  <dt id="example_group_19" class="passed">when name is not present</dt>
-    <script type="text/javascript">moveProgressBar('81.2');</script>
-    <dd class="example passed"><span class="passed_spec_name">should not be valid</span><span class='duration'>0.01206s</span></dd>
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_19" class="passed">error messages</dt>
+    <script type="text/javascript">moveProgressBar('89.6');</script>
+    <dd class="example passed"><span class="passed_spec_name">should has content &quot;error&quot;</span><span class='duration'>0.02194s</span></dd>
   </dl>
 </div>
 <div id="div_group_20" class="example_group passed">
-  <dl style="margin-left: 0px;">
-  <dt id="example_group_20" class="passed">users/edit.html.erb</dt>
-    <script type="text/javascript">makeYellow('div_group_20');</script>
-    <script type="text/javascript">makeYellow('example_group_20');</script>
-    <script type="text/javascript">moveProgressBar('84.3');</script>
-    <dd class="example not_implemented"><span class="not_implemented_spec_name">add some examples to (or delete) /media/sf_Sites/blackmoon/spec/views/users/edit.html.erb_spec.rb (PENDING: No reason given)</span></dd>
-  </dl>
-</div>
-<div id="div_group_21" class="example_group passed">
-  <dl style="margin-left: 0px;">
-  <dt id="example_group_21" class="passed">Registration</dt>
-  </dl>
-</div>
-<div id="div_group_22" class="example_group passed">
   <dl style="margin-left: 15px;">
-  <dt id="example_group_22" class="passed">with invalid information</dt>
-    <script type="text/javascript">moveProgressBar('87.5');</script>
-    <dd class="example passed"><span class="passed_spec_name">should not create an account</span><span class='duration'>0.24973s</span></dd>
-    <script type="text/javascript">moveProgressBar('90.6');</script>
-    <dd class="example passed"><span class="passed_spec_name">should not create a user</span><span class='duration'>0.02320s</span></dd>
-  </dl>
-</div>
-<div id="div_group_23" class="example_group passed">
-  <dl style="margin-left: 30px;">
-  <dt id="example_group_23" class="passed">error messages</dt>
-    <script type="text/javascript">moveProgressBar('93.7');</script>
-    <dd class="example passed"><span class="passed_spec_name">should has content &quot;error&quot;</span><span class='duration'>0.04711s</span></dd>
-  </dl>
-</div>
-<div id="div_group_24" class="example_group passed">
-  <dl style="margin-left: 15px;">
-  <dt id="example_group_24" class="passed">with valid information</dt>
-    <script type="text/javascript">moveProgressBar('96.8');</script>
-    <dd class="example passed"><span class="passed_spec_name">should create an account</span><span class='duration'>0.03274s</span></dd>
+  <dt id="example_group_20" class="passed">with valid information</dt>
+    <script type="text/javascript">moveProgressBar('93.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">should create a user</span><span class='duration'>0.03636s</span></dd>
+    <script type="text/javascript">moveProgressBar('96.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">should create an account</span><span class='duration'>0.06561s</span></dd>
     <script type="text/javascript">moveProgressBar('100.0');</script>
-    <dd class="example passed"><span class="passed_spec_name">should create a user</span><span class='duration'>0.03169s</span></dd>
+    <dd class="example passed"><span class="passed_spec_name">should create a profile</span><span class='duration'>0.03648s</span></dd>
   </dl>
 </div>
-<script type="text/javascript">document.getElementById('duration').innerHTML = "Finished in <strong>1.12936 seconds</strong>";</script>
-<script type="text/javascript">document.getElementById('totals').innerHTML = "32 examples, 1 failure, 4 pending";</script>
+<script type="text/javascript">document.getElementById('duration').innerHTML = "Finished in <strong>1.26127 seconds</strong>";</script>
+<script type="text/javascript">document.getElementById('totals').innerHTML = "29 examples, 0 failures";</script>
 </div>
 </div>
 </body>
 </html>
 
-Randomized with seed 61564
+Randomized with seed 32918
 
