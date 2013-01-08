@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   end
 
   has_one :profile
+  has_many :offering_creations, foreign_key: :creator_id
+  has_many :events_created, through: :offering_creations, source: :offering, source_type: "Event"
+
   accepts_nested_attributes_for :profile  
   belongs_to :account
 end

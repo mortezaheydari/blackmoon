@@ -10,6 +10,8 @@ describe User do
 	it { should respond_to(:name) }
 	it { should respond_to(:profile) }	
 	it { should respond_to(:account) }
+	it { should respond_to(:events_created)}
+	it { should respond_to(:offering_creations)}		
 	its(:account) { should == account }
 
   describe "when name is not present" do

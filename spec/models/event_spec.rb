@@ -15,5 +15,6 @@ describe Event do
 	it { should respond_to(:location_type) }
 	it { should respond_to(:title) }
 	it { should respond_to(:tournament_id) }
-
+	it { should respond_to(:creator)}
+	it { should respond_to(:offering_creations)}	
 end
