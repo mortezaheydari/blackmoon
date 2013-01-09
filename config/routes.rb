@@ -1,17 +1,6 @@
 Blackmoon::Application.routes.draw do
-  get "events/index"
-
-  get "events/new"
-
-  get "events/show"
-
-  get "events/edit"
-
-#  get "users/index"
-#  get "users/edit"
-
-
-  resources :users  
+  resources :users
+  resources :events   
   devise_for :accounts, :controllers => {:registrations => "registrations"}
 
   # The priority is based upon order of creation:
