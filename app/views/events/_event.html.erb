@@ -1,0 +1,7 @@
+<li>
+	Event <Strong><%= event.title %></strong>,
+	created by <Strong><%= event.creator.name %></strong>,
+	categorised under <Strong><%= event.category%></strong><br/>
+
+	<%= link_to "Edit", edit_event_path(event) %> | <%= link_to "delete", event, method: :delete, data: { confirm: "You sure?"} %>
+</li>

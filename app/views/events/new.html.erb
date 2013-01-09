@@ -1,2 +1,37 @@
 <h1>Events#new</h1>
-<p>Find me in app/views/events/new.html.erb</p>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for(@event) do |f| %>
+			<div>
+				<%= f.label :title, "Event Title" %>
+				<%= f.text_field :title %>
+			</div>
+
+			<div>
+				<%= f.label :category, "Category" %>
+				<%= f.text_field :category %>
+			</div>
+
+			<div>
+				<%= f.label :date_and_time %><br />
+				<%= select_date @date_and_time, :prefix => :date_and_time %>
+			</div>
+
+			<div>
+				<%= f.label :descreption, "Event Title" %>
+				<%= f.text_area :descreption %>
+			</div>
+
+			<div>
+				<%= f.label :custom_address, "Address" %>
+				<%= f.text_area :custom_address %>
+			</div>
+
+			<div>
+				<%= f.submit "Create the Event", class: "btn btn-large btn-primary" %>
+			</div>
+			
+		<% end %>
+	</div>
+</div>
