@@ -8,6 +8,8 @@ describe Event do
 
 	subject { event }
 
+	it { should be_valid }
+
 	it { should respond_to(:category) }
 	it { should respond_to(:custom_address) }
 	it { should respond_to(:date_and_time) }
@@ -17,4 +19,7 @@ describe Event do
 	it { should respond_to(:tournament_id) }
 	it { should respond_to(:creator)}
 	it { should respond_to(:offering_creation)}	
+
+	
+
 end
