@@ -1,5 +1,5 @@
 <div class="body">
-    <div class="cards">
+    <div class="leftContent">
 
             <h1>Update your profile <%= @user.name.to_s.humanize %></h1>
 
@@ -19,7 +19,7 @@
             			<%= f.fields_for :profile do |profile_form| %>
 
             				<div><%= profile_form.label :first_name %><br />
-            				<%= profile_form.text_field :first_name, class: "TextField" %>
+            				<%= profile_form.text_field :first_name, class: "TextField" %></div>
 
             				<div><%= profile_form.label :last_name %><br />
             				<%= profile_form.text_field :last_name, class: "TextField" %></div>
@@ -38,8 +38,6 @@
 
             			<div><%= f.submit "Save changes", class: " submitBtn button blue" %></div>
             		<% end %>
-
-                      </div>
 
             	</div>
             </div>
