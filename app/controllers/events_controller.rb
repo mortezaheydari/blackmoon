@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
- 	before_filter :account_signed_in?, only: [:new, :create, :edit, :destroy]
+ 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy]
  	# before_filter :user_is_admin?(current_user, Event.find(params[:id])), only: [:edit]
 
   def index
@@ -11,7 +11,9 @@ class EventsController < ApplicationController
   end
 
   def create
-  	@event = Event.create(params[:event])
+  	@event = Event.new(params[:event])
+    @event.date_and_time = date_helper_to_str(params[:date_and_time])
+    @event.save
   	@event.create_offering_creation(creator_id: current_user.id)
 		redirect_to @event
   end
@@ -39,7 +41,12 @@ class EventsController < ApplicationController
 
   def update  
     @event = Event.find(params[:id])
-    @event.date_and_time = date_helper_to_str(params[:date_and_time])  	
+    @event.date_and_time = date_helper_to_str(params[:date_and_time]) 
+    if @event.save
+      redirect_to @event
+    else
+      render 'edit'
+    end
 	end
 
 	private
