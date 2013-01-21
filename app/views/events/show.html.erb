@@ -1,6 +1,153 @@
-<h1>Events#show</h1>
 
-<--  Back to <%= link_to "index", events_path %>
-<ul class="events">
-		<%= render @event %>
-</ul>
+  <div class="userInfo">
+    <div class="eventProfileCard">
+      <div class="large"></div>
+      <div class="BallSports left"></div>
+      <h1>yarmouk vs adailiya</h1>
+      <p>Sports: Football</p>
+      <p>Time: 5 - 7 pm</p>
+      <p>Date 14th to 30th January 2012</p>
+      <p>Location: Rec gym, Salmiya Block 2, Building 43</p>
+      <footer>
+        <span>Fee:</span>
+        <a href="#">10 kd per session</a>
+        <span class="right">players: 15</span>
+      </footer>
+    </div>
+
+    <div class="locationPartial">
+      <div class="locationTitle">Location</div>
+      <div class="map"></div>
+    </div>
+
+    <div class="activityOrigin">
+      <div class="OriginTitle">Activity Originator</div>
+      <div class="img"></div>
+      <a href="#" class="originTitle">Morteza Mansour Heydari</a>
+      <p>Level 2: Game Originator</p>
+    </div>
+
+    <a href="#"><div class="likeButton"></div></a>
+    <a href="#"><div class="joinButton"></div></a>
+    <a href="#"><div class="shareButton"></div></a>
+
+
+  </div>
+
+  <div class="secondMenu">
+    <nav id="secondary">
+      <ul>
+        <li id="joined"><a href="#">Joined (12)</a></li>
+        <li id="Description"><a href="#">Description</a></li>
+        <li id="likes"><a href="#">Likes (14)</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="event">
+    <div class="body">
+      <div class="joined">
+        <% i = 0
+           while i<12 do %>
+            <article class="userCard">
+              <header class="userCardHeader">
+                <a href="#">
+                  <%= image_tag "bg.png", class: "userCardImage left" %>
+                </a>
+                <h5 class="userCardTitle text-left">
+                  <a href="#">Abdulmohsen al Abdulmuralib</a>
+                </h5>
+              </header>
+
+              <div class="userCardLevel">
+                <p>Level: First Boomer</p>
+              </div>
+
+              <div class="userCardRecent text-left">
+                <p>Recent Activities</p>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </article>
+
+        <% i = i + 1
+           end %>
+      </div>
+
+    <div class="Description">
+        <div class="BallSports"></div>
+        <p><%= @event.descreption %></p>
+    </div>
+
+      <div class="likes">
+        <% i = 0
+           while i<12 do %>
+            <article class="userCard">
+              <header class="userCardHeader">
+                <a href="#">
+                  <%= image_tag "bg.png", class: "userCardImage left" %>
+                </a>
+                <h5 class="userCardTitle text-left">
+                  <a href="#">Abdulmohsen al Abdulmuralib</a>
+                </h5>
+              </header>
+
+              <div class="userCardLevel">
+                <p>Level: First Boomer</p>
+              </div>
+
+              <div class="userCardRecent text-left">
+                <p>Recent Activities</p>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </article>
+
+        <% i = i + 1
+           end %>
+      </div>
+
+      <div class="sideBar">
+
+<!--         <div class="sideBox">
+          <div class="sideTitle">Intrests</div>
+          <hr>
+          <div class="sideTag">
+            <span>Football</span>
+            <span>Basketball</span>
+            <span>Volleyball</span>
+            <span>Jet Ski</span>
+            <span>Karate</span>
+            <span>Fitness</span>
+          </div>
+        </div>
+
+
+        <div class="sideBox">
+          <div class="sideTitle">Similar Players</div>
+          <hr>
+          <div class="sideImage">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
