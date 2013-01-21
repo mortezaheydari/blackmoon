@@ -4,7 +4,7 @@ class EventsController < ApplicationController
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
   def index
-    @events = Event.all    	
+    @events = Event.all
   end
 
   def new
@@ -29,7 +29,7 @@ class EventsController < ApplicationController
 			# @event.offering_creation.destroy
       # @event.offering_administrations.destroy
   		redirect_to @event
-  	else 
+  	else
   		render 'index'
   	end
   end
@@ -41,11 +41,11 @@ class EventsController < ApplicationController
   def edit
   	@event = Event.find(params[:id])
     @date_and_time = @event.date_and_time
-    
+
 
   end
 
-  def update  
+  def update
     @event = Event.find(params[:id])
     # @event.date_and_time = date_helper_to_str(params[:date_and_time])
     params[:event][:date_and_time] = date_helper_to_str(params[:date_and_time])
@@ -54,8 +54,7 @@ class EventsController < ApplicationController
     else
       render 'edit'
     end
-	end
-
+end
 
   def user_must_be_admin?
     @offering = Event.find(params[:id])

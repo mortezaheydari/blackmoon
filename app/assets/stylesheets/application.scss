@@ -97,6 +97,11 @@ span {
   padding: 0;
 }
 
+p {
+    color: $TextColor;
+    font-size: 0.8em;
+}
+
 div.small {
     width: 18px;
     height: 18px;
@@ -318,12 +323,15 @@ div.page {
     float: none;
     margin: 0 auto;
     height:100%;
-    div.cards, div.activityCards, div.leftContent {
+    div.cards, div.activityCards, div.leftContent, div.joined, div.Description, div.likes {
       @include column(14);
       @include divReset;
+      min-height: 500px;
       float: left;
     }
-
+    div.Description {
+        margin-top: 20px;
+    }
     div.sideBar {
       @include column(6);
       @include divReset;
