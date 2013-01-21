@@ -1,0 +1,113 @@
+<div class="body">
+
+    <!-- left contents -->
+
+    <div class="leftContent">
+        <div class="homeImgContainer">
+            <%= image_tag "hometopimg.png" %>
+                <p>
+                    <strong>Organise here &amp; go play there</strong><br>
+                    Activate your sportslife &amp; connect <br>with other players &amp; trainers in kuwait.
+                </p>
+        </div>
+
+        <div class="homeShortcuts">
+            <div class="homeFollow">
+                <div class="GrayCircle">
+                <p><strong>Follow &amp; Find</strong><br>
+                    Players &amp; Trainers<br>
+                </p>
+                <%= image_tag "findHome.png" %>
+                </div>
+            </div>
+
+            <div class="homeCreate">
+                <div class="GrayCircle">
+                <p><strong>Create</strong><br>
+                    Matches or Teams <br>&amp; Challenge others.<br>
+                </p>
+                <%= image_tag "flagHome.png" %>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="VideoContainer">
+            <%= image_tag "logo.png" %> <br>
+            <div></div>
+        </div>
+
+
+    </div>
+
+    <!-- end of left contents -->
+
+
+
+    <!-- sidebar -->
+
+
+    <div class="sideBar">
+
+        <div class="HomeForm">
+            <div class="signup">
+                <h3>New to GOBOOM? JOIN NOW</h3>
+                <%= form_for("user", :url => new_account_registration_path) do |f| %>
+                  <%= f.text_field :email, placeholder: "Email", class: "textField" %>
+                  <%= f.password_field :password, placeholder: "Password", class: "textField" %>
+                  <%= f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "textField" %>
+                  <%= f.submit 'Register me', class: "button grey submitBtn homeBtn" %>
+                <% end %>
+                <div class="button grey facebookLogin">Sign up with facebook</div>
+            </div>
+
+            <div class="signin">
+                <h3>SIGN IN</h3>
+                <%= form_for("user", :url => account_session_path) do |f| %>
+                  <%= f.text_field :email, placeholder: "Email", class: "textField" %>
+                  <%= f.password_field :password, placeholder: "Password", class: "textField" %>
+                  <%= f.submit 'Sign In', class: "button grey submitBtn homeBtn" %>
+                  <div class="button grey facebookLogin">Sign in with facebook</div>
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>
+                  <li><%= link_to "Forgot your password?", new_account_password_path('user') %></li>
+                <% end %>
+            </div>
+        </div>
+
+
+        <div class="homeJoin">
+            <div class="GrayCircle">
+            <p><strong>Join</strong><br>
+                classes &amp; <br>setup training sessions.<br>
+            </p>
+            <%= image_tag "joinHome.png" %>
+            </div>
+        </div>
+
+        <div class="HomeRecent">
+            <h3>Recent Activities</h3>
+            <div class="recentItem">
+                <div class="small"></div>
+                <p>New <a href="#">Yoga</a> Class available</p>
+            </div>
+
+            <div class="recentItem">
+                <div class="small"></div>
+                <p><a href="#">Flex Fitness</a> offers <a href="#">spinning</a></p>
+            </div>
+
+            <h3>Joining Now</h3>
+              <div class="recentItem">
+                <div class="small"></div>
+                <a href="#">Morteza Heydari</a>
+                <p>joined</p><br>
+                <span>1 hour ago</span>
+              </div>
+        </div>
+
+    </div>
+
+    <!-- end of sidebar -->
+
+</div>
