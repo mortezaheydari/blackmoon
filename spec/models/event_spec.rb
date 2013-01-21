@@ -18,8 +18,8 @@ describe Event do
 	it { should respond_to(:title) }
 	it { should respond_to(:tournament_id) }
 	it { should respond_to(:creator)}
-	it { should respond_to(:offering_creation)}	
-
-	
+	it { should respond_to(:offering_creation)}		
+	it { should respond_to(:administrators)}	
+	it { should respond_to(:offering_administrations)}	
 
 end
