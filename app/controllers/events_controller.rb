@@ -15,7 +15,7 @@ class EventsController < ApplicationController
     @event.date_and_time = date_helper_to_str(params[:date_and_time])
     @event.save
   	@event.create_offering_creation(creator_id: current_user.id)
-    #@event.create_offering_administrations(creator_id: current_user.id)
+    @event.offering_administrations.create(administrator_id: current_user.id)
 		redirect_to @event
   end
 
@@ -24,7 +24,8 @@ class EventsController < ApplicationController
   	@event = Event.find(params[:id])
 		if true #user_is_admin?(@user, @event)
 			@event.destroy
-			@event.offering_creation.destroy
+			# @event.offering_creation.destroy
+      # @event.offering_administrations.destroy
   		redirect_to @event
   	else 
   		render 'index'
