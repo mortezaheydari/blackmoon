@@ -25,6 +25,7 @@ $white: #ffffff;
 
 $grey: #E6E6E6;
 $timePassedGrey: #B3B3B3;
+$lighGray: #f5f5f5;
 
 
 $NavTextColor: #666666;
@@ -96,6 +97,14 @@ span {
   padding: 0;
 }
 
+div.small {
+    width: 18px;
+    height: 18px;
+    background: #add8e6;
+    float: left;
+    margin: 0 5px 0 5px;
+    @include border-radius(5px);
+}
 
 
 
