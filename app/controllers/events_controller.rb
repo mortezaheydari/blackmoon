@@ -15,6 +15,7 @@ class EventsController < ApplicationController
     @event.date_and_time = date_helper_to_str(params[:date_and_time])
     @event.save
   	@event.create_offering_creation(creator_id: current_user.id)
+    #@event.create_offering_administrations(creator_id: current_user.id)
 		redirect_to @event
   end
 
@@ -37,12 +38,14 @@ class EventsController < ApplicationController
   def edit
   	@event = Event.find(params[:id])
     @date_and_time = @event.date_and_time
+
   end
 
   def update  
     @event = Event.find(params[:id])
-    @event.date_and_time = date_helper_to_str(params[:date_and_time]) 
-    if @event.save
+    # @event.date_and_time = date_helper_to_str(params[:date_and_time])
+    params[:event][:date_and_time] = date_helper_to_str(params[:date_and_time])
+    if @event.update_attributes(params[:event])
       redirect_to @event
     else
       render 'edit'
