@@ -39,4 +39,8 @@ module ApplicationHelper
 	def current_user?(user)
 		user == current_user
 	end
+
+  def user_is_admin?(offerinig, user = current_user)
+    offering.administrators.include?(user)
+  end
 end

@@ -10,7 +10,12 @@ class Event < ActiveRecord::Base
 	def creator
 		User.find_by_id(self.offering_creation.creator_id) if !self.offering_creation.nil?
 	end
-	# def administrations
-	# 	User.find_by_id(self.offering_administrations.creator_id) unless self.offering_creation.nil?
-	# end	
+
+	def administrators
+		@admins = []
+		self.offering_administrations.each do |admin|
+			@admins << admin.administrator_id 
+		end
+		User.find(@admins)
+	end	
 end

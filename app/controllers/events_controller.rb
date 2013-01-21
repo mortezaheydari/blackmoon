@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
+  include ApplicationHelper
  	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy]
- 	# before_filter :user_is_admin?(current_user, Event.find(params[:id])), only: [:edit]
+ 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
   def index
     @events = Event.all    	
@@ -11,11 +12,12 @@ class EventsController < ApplicationController
   end
 
   def create
+    @current_user_id = current_user.id
   	@event = Event.new(params[:event])
     @event.date_and_time = date_helper_to_str(params[:date_and_time])
     @event.save
-  	@event.create_offering_creation(creator_id: current_user.id)
-    @event.offering_administrations.create(administrator_id: current_user.id)
+  	@event.create_offering_creation(creator_id: @current_user_id)
+    @event.offering_administrations.create(administrator_id: @current_user_id)
 		redirect_to @event
   end
 
@@ -39,6 +41,7 @@ class EventsController < ApplicationController
   def edit
   	@event = Event.find(params[:id])
     @date_and_time = @event.date_and_time
+    
 
   end
 
@@ -53,25 +56,28 @@ class EventsController < ApplicationController
     end
 	end
 
+
+  def user_must_be_admin?
+    @offering = Event.find(params[:id])
+    @user = current_user
+    redirect_to(@offering) unless @offering.administrators.include?(@user)
+  end
+
 	private
 		def date_helper_to_str(date)
 			"#{date[:year]}-#{date[:month]}-#{date[:day]}"
 		end    
 
-		# def user_is_admin?(user, offering)
-		# 	offering.admins.include?(user)
-		# end
+  # def current_user=(user)
+  #   @current_user = user
+  # end
 
-  def current_user=(user)
-    @current_user = user
-  end
+  # def current_user
+  #   @current_user ||= current_account.user
+  # end
 
-  def current_user
-    @current_user ||= current_account.user
-  end
-
-  def current_user?(user)
-    user == current_user
-  end
+  # def current_user?(user)
+  #   user == current_user
+  # end
 
 end
