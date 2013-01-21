@@ -13,7 +13,7 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :offering_individual_participations
 
 	def creator
-		User.find_by_id(self.offering_creation.creator_id) if !self.offering_creation.nil?
+		User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
 	end
 
 	def administrators
