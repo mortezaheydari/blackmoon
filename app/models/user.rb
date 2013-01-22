@@ -25,6 +25,12 @@ class User < ActiveRecord::Base
   has_many :events_administrating, through: :offering_administrations, source: :offering, source_type: "Event"
   accepts_nested_attributes_for :events_administrating
 
+  # C - offering participation:
+  has_many :offering_individual_participations, foreign_key: :participator_id
+  #   1.events administrating  
+  has_many :events_participating, through: :offering_individual_participations, source: :offering, source_type: "Event"
+  accepts_nested_attributes_for :events_participating
+
   accepts_nested_attributes_for :profile  
   belongs_to :account
 
