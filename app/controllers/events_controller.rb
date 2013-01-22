@@ -41,13 +41,12 @@ class EventsController < ApplicationController
   def edit
   	@event = Event.find(params[:id])
     @date_and_time = @event.date_and_time
-    
+
 
   end
 
   def update
     @event = Event.find(params[:id])
-<<<<<<< HEAD
     # @event.date_and_time = date_helper_to_str(params[:date_and_time])
     params[:event][:date_and_time] = date_helper_to_str(params[:date_and_time])
     if @event.update_attributes(params[:event])
@@ -56,7 +55,6 @@ class EventsController < ApplicationController
       render 'edit'
     end
 	end
-
 
   def user_must_be_admin?
     @offering = Event.find(params[:id])
