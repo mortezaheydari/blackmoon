@@ -11,7 +11,7 @@
     <div id="headerContainer">
       <header id="main">
         <div id="headerLeft">
-          <a href="#" id="mainLogo"><%= image_tag "logo.png" %></a>
+          <%= link_to image_tag("logo.png"), root_path, id: "mainLogo" %>
           <input type="search" placeholder="search" />
         </div>
             <% if account_signed_in? %>
@@ -34,7 +34,7 @@
                       <li>
                         <div id="editProfile" class="left">
                           <div class="left"></div>
-                          <a href="#">Edit Profile</a>
+                          <%= link_to "Edit Profile", edit_user_path(current_user.id) %>
                         </div>
                       </li>
                       <li>
@@ -54,7 +54,7 @@
     </div>
 
 <%= yield %>
-<div class="VideoContainer"><%= debug(params) if Rails.env.development? %></div>
+<!-- <div class="VideoContainer"><%= debug(params) if Rails.env.development? %></div> -->
 </div>
 </body>
 </html>
