@@ -9,6 +9,9 @@ class Event < ActiveRecord::Base
   has_many :offering_administrations, as: :offering, :dependent => :destroy
   accepts_nested_attributes_for :offering_administrations
 
+  has_many :offering_individual_participations, as: :offering, :dependent => :destroy
+  accepts_nested_attributes_for :offering_individual_participations
+
 	def creator
 		User.find_by_id(self.offering_creation.creator_id) if !self.offering_creation.nil?
 	end
@@ -20,4 +23,13 @@ class Event < ActiveRecord::Base
 		end
 		User.find(@admins)
 	end	
+
+	def individual_participators
+		@participators = []
+		self.offering_individual_participations.each do |participation|
+			@participators << participation.participator_id
+		end
+		User.find(@participators)
+	end
+
 end

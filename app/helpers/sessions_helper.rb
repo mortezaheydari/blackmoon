@@ -21,6 +21,10 @@ module SessionsHelper
 	    this.creator == user
 	  end	
 
+	  def user_is_participating?(this, user=current_user)
+	    this.individual_participators.include?(user)
+	  end		  
+
 		def date_helper_to_str(date)
 			"#{date[:year]}-#{date[:month]}-#{date[:day]}"
 		end  
