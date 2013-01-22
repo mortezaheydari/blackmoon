@@ -68,7 +68,11 @@ ActiveRecord::Schema.define(:version => 20130122141454) do
     t.datetime "updated_at",    :null => false
   end
 
+<<<<<<< HEAD
   create_table "offering_individual_participations", :force => true do |t|
+=======
+  create_table "offering_participations", :force => true do |t|
+>>>>>>> schema updated
     t.integer  "participator_id"
     t.integer  "offering_id"
     t.string   "offering_type"
