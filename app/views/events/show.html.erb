@@ -5,13 +5,17 @@
       <div class="<%= @event.category %> left"></div>
       <h1><%= @event.title %></h1>
       <p>Sports: <%= @event.sport %></p>
-      <p>Time: 5 - 7 pm</p>
+      <p>Time: <%= @event.time_from.strftime("%I:%M %p") %> - <%= @event.time_to.strftime("%I:%M %p")  %></p>
       <p>Date: <%= @event.date_and_time.strftime("%A, %B %d, %Y") %></p>
       <p>Location: <%= @event.custom_address %></p>
       <footer>
         <span>Fee:</span>
-        <a href="#">10 kd per session</a>
-        <span class="right">players: 15</span>
+        <% if @event.fee_type == "Free" %>
+            <<a href="#">Free</a>
+        <% else %>
+            <a href="#"><%= @event.fee %> KD</a>
+        <% end %>
+        <span class="right">players: <%= @event.number_of_attendings %></span>
       </footer>
     </div>
 
@@ -79,7 +83,7 @@
       </div>
 
     <div class="Description">
-        <div class="BallSports"></div>
+        <div class="<%= @event.category %>"></div>
         <p><%= @event.descreption %></p>
     </div>
 
