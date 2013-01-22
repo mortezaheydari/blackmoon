@@ -14,9 +14,9 @@ user_created_this?(@event) = <%= user_created_this?(@event) %>
   <div class="userInfo">
     <div class="eventProfileCard">
       <div class="large"></div>
-      <div class="BallSports left"></div>
-      <h1>yarmouk vs adailiya</h1>
-      <p>Sports: Football</p>
+      <div class="<%= @event.category %> left"></div>
+      <h1><%= @event.title %></h1>
+      <p>Sports: <%= @event.sport %></p>
       <p>Time: 5 - 7 pm</p>
       <p>Date: <%= @event.date_and_time.strftime("%A, %B %d, %Y") %></p>
       <p>Location: <%= @event.custom_address %></p>
