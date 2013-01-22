@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include SessionsHelper  
   def index
     @users = User.all  	
   end
@@ -24,8 +25,4 @@ class UsersController < ApplicationController
     end
   end  
 
-	private
-		def date_helper_to_str(date)
-			"#{date[:year]}-#{date[:month]}-#{date[:day]}"
-		end  
 end

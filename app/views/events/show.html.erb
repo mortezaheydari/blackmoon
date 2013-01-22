@@ -1,5 +1,11 @@
 <h1>Events#show</h1>
 
+user_is_admin?(@event) = <%= user_is_admin?(@event) %>
+
+
+user_created_this?(@event) = <%= user_created_this?(@event) %>
+
+
 <--  Back to <%= link_to "index", events_path %>
 <ul class="events">
 		<%= render @event %>
