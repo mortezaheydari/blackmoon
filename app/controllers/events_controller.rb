@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  include ApplicationHelper
+  include SessionsHelper
  	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy]
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
@@ -62,22 +62,5 @@ class EventsController < ApplicationController
     @user = current_user
     redirect_to(@offering) unless @offering.administrators.include?(@user)
   end
-
-	private
-		def date_helper_to_str(date)
-			"#{date[:year]}-#{date[:month]}-#{date[:day]}"
-		end    
-
-  # def current_user=(user)
-  #   @current_user = user
-  # end
-
-  # def current_user
-  #   @current_user ||= current_account.user
-  # end
-
-  # def current_user?(user)
-  #   user == current_user
-  # end
 
 end

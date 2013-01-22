@@ -1,5 +1,6 @@
 module ApplicationHelper
-
+	include SessionsHelper
+	
 # http://stackoverflow.com/questions/2410639/best-way-to-create-random-datetime-in-rails
 
 	# generates random integer
@@ -28,19 +29,4 @@ module ApplicationHelper
 	  Time.at(rand_in_range(from.to_f, to.to_f))
 	end
 
-	def current_user=(user)
-		@current_user = user
-	end
-
-	def current_user
-		@current_user ||= current_account.user
-	end
-
-	def current_user?(user)
-		user == current_user
-	end
-
-  def user_is_admin?(offerinig, user = current_user)
-    offering.administrators.include?(user)
-  end
 end
