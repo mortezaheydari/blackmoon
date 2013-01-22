@@ -18,8 +18,8 @@ user_created_this?(@event) = <%= user_created_this?(@event) %>
       <h1>yarmouk vs adailiya</h1>
       <p>Sports: Football</p>
       <p>Time: 5 - 7 pm</p>
-      <p>Date 14th to 30th January 2012</p>
-      <p>Location: Rec gym, Salmiya Block 2, Building 43</p>
+      <p>Date: <%= @event.date_and_time.strftime("%A, %B %d, %Y") %></p>
+      <p>Location: <%= @event.custom_address %></p>
       <footer>
         <span>Fee:</span>
         <a href="#">10 kd per session</a>
@@ -33,10 +33,13 @@ user_created_this?(@event) = <%= user_created_this?(@event) %>
     </div>
 
     <div class="activityOrigin">
-      <div class="OriginTitle">Activity Originator</div>
-      <div class="img"></div>
-      <a href="#" class="originTitle">Morteza Mansour Heydari</a>
-      <p>Level 2: Game Originator</p>
+        <div class="OriginTitle">Activity Originator</div>
+        <div class="UserimgName">
+            <div class="img"></div>
+            <%= link_to @event.creator.name , user_path %>
+        </div>
+      <!-- <a href="#" class="originTitle"><%= @event.creator.name %></a> -->
+        <p>Level 2: Game Originator</p>
     </div>
 
     <a href="#"><div class="likeButton"></div></a>
