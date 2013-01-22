@@ -45,6 +45,7 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
+
     # @event.date_and_time = date_helper_to_str(params[:date_and_time])
     params[:event][:date_and_time] = date_helper_to_str(params[:date_and_time])
     if @event.update_attributes(params[:event])
