@@ -39,10 +39,8 @@ class EventsController < ApplicationController
   end
 
   def edit
-  	@event = Event.find(params[:id])
-    @date_and_time = @event.date_and_time
-
-
+        @event = Event.find(params[:id])
+        @date_and_time = @event.date_and_time
   end
 
   def update
