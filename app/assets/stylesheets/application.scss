@@ -375,6 +375,17 @@ div.joinButton {
   }
 }
 
+div.joinedButton {
+  float: left;
+  margin: 10px;
+  background: url("icons.png") no-repeat;
+  @include background-size(320px 400px);
+  background-position: -80px -240px;
+  border: none;
+  width: 40px;
+  height: 40px;
+}
+
 div.shareButton {
   float: left;
   margin: 10px;

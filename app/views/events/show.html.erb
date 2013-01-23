@@ -1,4 +1,3 @@
-
   <div class="userInfo">
     <div class="eventProfileCard">
       <div class="large"></div>
@@ -11,7 +10,7 @@
       <footer>
         <span>Fee:</span>
         <% if @event.fee_type == "Free" %>
-            <<a href="#">Free</a>
+            <a href="#">Free</a>
         <% else %>
             <a href="#"><%= @event.fee %> KD</a>
         <% end %>
@@ -35,7 +34,8 @@
     </div>
 
     <a href="#"><div class="likeButton"></div></a>
-        <%= link_to "<div class='joinButton'></div>", offering_individual_participations_create_path(offering_type: "event", offering_id: @event.id, joining_user: current_user), method: :post %>
+    <%= render 'shared/join_link' if signed_in? %>
+
 
     <!-- <a href="#"><div class="joinButton"></div></a> -->
     <a href="#"><div class="shareButton"></div></a>

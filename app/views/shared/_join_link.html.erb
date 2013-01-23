@@ -1,0 +1,7 @@
+<div id="join_container">
+    <% if user_is_participating?(@event) %>
+            <%= render 'joined' %>
+    <% else %>
+            <%= render 'join' %>
+    <% end %>
+</div>

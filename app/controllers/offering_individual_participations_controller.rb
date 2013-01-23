@@ -14,12 +14,11 @@ class OfferingIndividualParticipationsController < ApplicationController
 		@user = User.find_by_id(params[:joining_user])
 		if @offering_type = "event"
 			@user.events_participating << Event.find_by_id(@offering_id)
-                                 redirect_to root_path
 		end
-		# respond_to do |format|
-		# 	format.html { redirect_to @user }
-			# format.js
-		# end
+		respond_to do |format|
+			format.html { redirect_to @offering, notice: "Joined" }
+			format.js
+		end
 	end
 
 	def destroy
