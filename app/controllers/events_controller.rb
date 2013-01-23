@@ -36,6 +36,11 @@ class EventsController < ApplicationController
 
   def show
   	@event = Event.find(params[:id])
+           if @event.team_participation == false
+                @participator = @event.individual_participators
+           else
+                @participator = @event.team_participators
+           end
   end
 
   def edit

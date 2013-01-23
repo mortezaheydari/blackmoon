@@ -25,9 +25,9 @@ $(document).ready(function() {
         $("ul#userDrop").slideUp("fast");
     });
 
-    // $('#joinButton').bind('ajax:success', function() {
-    //     $("a#joinButton div.joinButton").removeClass();
-    //     $("a#joinButton div").addClass("joinedButton");
-    //     $("a#joinButton div").attr("href", "#");
-    // });
+    $('#joinButton').bind('ajax:success', function() {
+        $("a#joinButton div.joinButton").removeClass();
+        $("a#joinButton div").addClass("joinedButton");
+        $("a#joinButton div").attr("href", "#");
+    });
 });
