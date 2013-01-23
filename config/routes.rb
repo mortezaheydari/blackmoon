@@ -1,8 +1,10 @@
 Blackmoon::Application.routes.draw do
-  resources :users
-  resources :events   
+    resources :users
+    resources :events
+    # resources :offering_individual_participations
+    post 'offering_individual_participations/create'
 
-  devise_for :accounts, :controllers => {:registrations => "registrations"}
+    devise_for :accounts, :controllers => {:registrations => "registrations"}
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
