@@ -323,7 +323,7 @@ div.page {
     float: none;
     margin: 0 auto;
     height:100%;
-    div.cards, div.activityCards, div.leftContent, div.joined, div.Description, div.likes {
+    div.cards, div.activityCards, div.leftContent, div.Description, div.cardsection {
       @include column(14);
       @include divReset;
       min-height: 500px;
