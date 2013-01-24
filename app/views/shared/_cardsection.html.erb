@@ -1,6 +1,6 @@
 <%= content_tag("div", "", class: "joined", remote: :true) do %>
 
-    <%  participator.each do |p| %>
-        <%= render 'shared/usercards', p: p %>
+    <%  individuals.each do |individual| %>
+        <%= render 'users/usercards', person: individual %>
     <% end %>
 <% end %>
