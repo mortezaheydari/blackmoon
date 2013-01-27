@@ -15,25 +15,47 @@
 //= require_tree .
 
 $(document).ready(function() {
+    var $modal = $('#modal');
+    var $modal_close = $modal.find('.close');
+    var $modal_container = $('#modal-container');
     $("ul#userDrop").hide();
     $('ul#ExploreDrop').hide();
     $("div#userMenu").mouseenter(function(e) {
         e.preventDefault();
-        $("ul#userDrop").slideDown("normal");
+        $("ul#userDrop").show();
     });
     $("div#userMenu").mouseleave(function(e) {
         e.preventDefault();
-        $("ul#userDrop").slideUp("normal");
+        $("ul#userDrop").hide();
     });
 
     $("div#dashboard").mouseenter(function(e) {
         e.preventDefault();
-        $("ul#ExploreDrop").slideDown("normal");
+        $("ul#ExploreDrop").show();
     });
     $("div#dashboard").mouseleave(function(e) {
         e.preventDefault();
-        $("ul#ExploreDrop").slideUp("normal");
+        $("ul#ExploreDrop").hide();
     });
+
+// Modal JavaScript Begin
+
+    $('div#createNewMenu').click(function(e) {
+        $modal
+          .prepend($modal_close)
+          .css('top', $(window).scrollTop() + 40)
+          .show();
+        $modal_container.show();
+    });
+
+    $('.close', '#modal').live('click', function(){
+        $modal_container.hide();
+        $modal.hide();
+        return false;
+      });
+
+// Modal JavaScript End
+
 
     $('#joinButton').bind('ajax:success', function() {
         $("a#joinButton div.joinButton").removeClass();
