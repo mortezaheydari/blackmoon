@@ -11,7 +11,7 @@
         <div class="sideBox">
             <div class="sideTitle">Your Upcoming Events</div>
             <% @events.each do |e| %>
-                <%= render 'shared/upcoming_event', event: e %>
+                <%= render 'shared/upcoming_offering', offering: e, offering_name: "event" %>
             <% end %>
         </div>
 
