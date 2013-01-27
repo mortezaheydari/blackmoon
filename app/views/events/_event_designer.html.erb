@@ -8,7 +8,6 @@
                 <%= link_to event.title, event_path(event) %>
               </h5>
               <p class="text-left"><strong>Originator:</strong> <%= event.creator.name %><br><%= event.date_and_time.strftime("%A, %B %d, %Y") %></p>
-              <div class="<%= event.category %>"></div>
             </header>
 
             <div class="activityBody text-center">

@@ -16,13 +16,23 @@
 
 $(document).ready(function() {
     $("ul#userDrop").hide();
+    $('ul#ExploreDrop').hide();
     $("div#userMenu").mouseenter(function(e) {
         e.preventDefault();
-        $("ul#userDrop").slideDown("fast");
+        $("ul#userDrop").slideDown("normal");
     });
     $("div#userMenu").mouseleave(function(e) {
         e.preventDefault();
-        $("ul#userDrop").slideUp("fast");
+        $("ul#userDrop").slideUp("normal");
+    });
+
+    $("div#dashboard").mouseenter(function(e) {
+        e.preventDefault();
+        $("ul#ExploreDrop").slideDown("normal");
+    });
+    $("div#dashboard").mouseleave(function(e) {
+        e.preventDefault();
+        $("ul#ExploreDrop").slideUp("normal");
     });
 
     $('#joinButton').bind('ajax:success', function() {

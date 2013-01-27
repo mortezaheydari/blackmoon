@@ -1,7 +1,24 @@
-<h1>All events</h1>
+  <div class="body">
+    <div class="cardsection">
+        <% @events.each do |e| %>
+            <%= render 'events/event', event: e %>
+        <% end %>
+    </div>
 
-<%= link_to "create_new_event", new_event_path %>
+    <div class="sideBar">
 
-<ul class="events">
-		<%= render @events %>
-</ul>
+
+        <div class="sideBox">
+            <div class="sideTitle">Your Upcoming Events</div>
+            <% @events.each do |e| %>
+                <%= render 'shared/upcoming_event', event: e %>
+            <% end %>
+        </div>
+
+
+      <div class="sideBox">
+        <div class="sideTitle">Activity</div>
+            <%= render 'shared/activity_sidebar' %>
+      </div>
+    </div>
+  </div>
