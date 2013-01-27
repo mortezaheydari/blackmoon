@@ -1,0 +1,6 @@
+<hr>
+<div class="sideEvents">
+    <%= link_to event.title, event_path(event) %><br>
+    <span><%= event.date_and_time.strftime("%B %d") %></span><br>
+    <span><%= event.time_from.strftime("%I:%M %p") %> - <%= event.time_to.strftime("%I:%M %p")  %></span>
+</div>
