@@ -1,4 +1,3 @@
-
   <div class="userInfo">
     <div class="eventProfileCard">
       <div class="large"></div>
@@ -11,7 +10,7 @@
       <footer>
         <span>Fee:</span>
         <% if @event.fee_type == "Free" %>
-            <<a href="#">Free</a>
+            <a href="#">Free</a>
         <% else %>
             <a href="#"><%= @event.fee %> KD</a>
         <% end %>
@@ -35,6 +34,10 @@
     </div>
 
     <a href="#"><div class="likeButton"></div></a>
+    <%= render 'shared/join_link' if signed_in? %>
+
+
+    <a href="#"><div class="likeButton"></div></a>
         <%= link_to "<div class='joinButton'></div>", offering_individual_participations_create_path(offering_type: "event", offering_id: @event.id, joining_user: current_user), method: :post %>
 
     <!-- <a href="#"><div class="joinButton"></div></a> -->
@@ -46,7 +49,7 @@
   <div class="secondMenu">
     <nav id="secondary">
       <ul>
-        <li id="joined"><a href="#">Joined (12)</a></li>
+        <li id="joined"><a href="#">Joined (<span id="joinCount"><%= @participator.count %></span>)</a></li>
         <li id="Description"><a href="#">Description</a></li>
         <li id="likes"><a href="#">Likes (14)</a></li>
       </ul>
@@ -54,36 +57,7 @@
   </div>
   <div class="event">
     <div class="body">
-      <div class="joined">
-        <% i = 0
-           while i<12 do %>
-            <article class="userCard">
-              <header class="userCardHeader">
-                <a href="#">
-                  <%= image_tag "bg.png", class: "userCardImage left" %>
-                </a>
-                <h5 class="userCardTitle text-left">
-                  <a href="#">Abdulmohsen al Abdulmuralib</a>
-                </h5>
-              </header>
-
-              <div class="userCardLevel">
-                <p>Level: First Boomer</p>
-              </div>
-
-              <div class="userCardRecent text-left">
-                <p>Recent Activities</p>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            </article>
-
-        <% i = i + 1
-           end %>
-      </div>
-
+        <%= render 'shared/cardsection', individuals: @participator, class_name: "joined" %>
     <div class="Description">
         <div class="<%= @event.category %>"></div>
         <p><%= @event.descreption %></p>

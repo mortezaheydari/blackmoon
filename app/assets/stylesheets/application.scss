@@ -323,7 +323,8 @@ div.page {
     float: none;
     margin: 0 auto;
     height:100%;
-    div.cards, div.activityCards, div.leftContent, div.joined, div.Description, div.likes {
+
+    div.cards, div.activityCards, div.leftContent, div.Description, div.cardsection {
       @include column(14);
       @include divReset;
       min-height: 500px;
@@ -373,6 +374,17 @@ div.joinButton {
   &:active {
     background-position: -80px -240px;
   }
+}
+
+div.joinedButton {
+  float: left;
+  margin: 10px;
+  background: url("icons.png") no-repeat;
+  @include background-size(320px 400px);
+  background-position: -80px -240px;
+  border: none;
+  width: 40px;
+  height: 40px;
 }
 
 div.shareButton {

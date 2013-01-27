@@ -7,29 +7,28 @@ class OfferingIndividualParticipationsController < ApplicationController
 
             end
 
-	def create
+  def create
+      offering = params[:offering_type]
+      user = User.find_by_id(params[:joining_user])
+      offering_id = params[:offering_id]
 
-    offering = params[:offering_type]
-		user = User.find_by_id(params[:joining_user])
-		offering_id = params[:offering_id]
+      if user.respond_to? "#{offering}s_participating" and ["event","class","game"].include? offering
 
-		if user.respond_to? "#{offering}s_participating" and ["event","class","game"].include? offering
-
-			offerings_participating = user.send("#{offering}s_participating")
-			joining_offering = offering.camelize.constantize.find_by_id(offering_id)
-			number_of_attendings = joining_offering.number_of_attendings
-
-			if offerings_participating.count < number_of_attendings or number_of_attendings = 0
-		  	offerings_participating << joining_offering
-		  end
-			respond_to do |format|
-				format.html { redirect_to joining_offering }
-				format.js
-			end
-		else
-			redirect_to @user
-		end
-	end
+          offerings_participating = user.send("#{offering}s_participating")
+          joining_offering = offering.camelize.constantize.find_by_id(offering_id)
+          number_of_attendings = joining_offering.number_of_attendings
+          if offerings_participating.count < number_of_attendings or number_of_attendings = 0
+              offerings_participating << joining_offering
+          end
+          @participator = joining_offering.individual_participators
+          respond_to do |format|
+              format.html { redirect_to joining_offering }
+              format.js
+          end
+      else
+          redirect_to @user
+      end
+  end
 
 	# def destroy
 	# 	@offering_type = params[offering_type]
