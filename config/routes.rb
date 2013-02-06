@@ -2,14 +2,16 @@ Blackmoon::Application.routes.draw do
     resources :users
     resources :events do
       member do
-        get 'like'  
+        get 'like'
+        get 'like_cards'
       end
     end
 
+    resources :relationships, only: [ :create, :destroy ]
 
     # resources :offering_individual_participations
     post 'offering_individual_participations/create'
-    post 'offering_individual_participations/destroy'    
+    post 'offering_individual_participations/destroy'
 
     devise_for :accounts, :controllers => {:registrations => "registrations"}
 
