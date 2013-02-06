@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130122141454) do
+ActiveRecord::Schema.define(:version => 20130206140152) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -51,6 +51,21 @@ ActiveRecord::Schema.define(:version => 20130122141454) do
     t.boolean  "team_participation"
   end
 
+  create_table "flaggings", :force => true do |t|
+    t.string   "flaggable_type"
+    t.integer  "flaggable_id"
+    t.string   "flagger_type"
+    t.integer  "flagger_id"
+    t.string   "flag"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "flaggings", ["flag", "flaggable_type", "flaggable_id"], :name => "index_flaggings_on_flag_and_flaggable_type_and_flaggable_id"
+  add_index "flaggings", ["flag", "flagger_type", "flagger_id", "flaggable_type", "flaggable_id"], :name => "access_flag_flaggings"
+  add_index "flaggings", ["flaggable_type", "flaggable_id"], :name => "index_flaggings_on_flaggable_type_and_flaggable_id"
+  add_index "flaggings", ["flagger_type", "flagger_id", "flaggable_type", "flaggable_id"], :name => "access_flaggings"
+
   create_table "offering_administrations", :force => true do |t|
     t.integer  "administrator_id"
     t.string   "offering_type"
@@ -89,6 +104,17 @@ ActiveRecord::Schema.define(:version => 20130122141454) do
 
   add_index "profiles", ["first_name", "last_name"], :name => "index_profiles_on_first_name_and_last_name"
   add_index "profiles", ["user_id"], :name => "index_profiles_on_user_id"
+
+  create_table "relationships", :force => true do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "relationships", ["followed_id", "follower_id"], :name => "index_relationships_on_followed_id_and_follower_id", :unique => true
+  add_index "relationships", ["followed_id"], :name => "index_relationships_on_followed_id"
+  add_index "relationships", ["follower_id"], :name => "index_relationships_on_follower_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

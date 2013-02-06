@@ -1,7 +1,21 @@
 class EventsController < ApplicationController
   include SessionsHelper
- 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy]
+ 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
+
+  def like
+    @event = Event.find(params[:id])
+
+    if current_user.flagged?(@event, :like)
+      current_user.unflag(@event, :like)
+      msg = "you now don't like this event."
+    else
+      current_user.flag(@event, :like)
+      msg = "you now like this event."
+    end
+    
+    redirect_to @event, notice: msg
+  end
 
   def index
     @events = Event.all
@@ -58,7 +72,7 @@ class EventsController < ApplicationController
     else
       render 'edit'
     end
-end
+	end
 
   def user_must_be_admin?
     @offering = Event.find(params[:id])

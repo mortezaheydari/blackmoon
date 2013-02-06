@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
   attr_accessible :name, :profile_attributes
   validates :name, presence: true, length: {maximum: 50}, uniqueness: true
 
+  make_flaggable :like
+
+
   after_create do |user|
     if user.profile.nil?
     	user.create_profile
@@ -33,5 +36,25 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :profile  
   belongs_to :account
+
+  # D - follow relationship
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  has_many :followed_users, through: :relationships, source: :followed
+  
+  has_many :reverse_relationships, class_name: "Relationship", :foreign_key => "followed_id", dependent: :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower
+
+
+  def following?(other_user)
+    relationships.find_by_followed_id(other_user.id)
+  end
+
+  def follow!(other_user)
+    relationships.create!(followed_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    relationships.find_by_followed_id(other_user.id).destroy
+  end
 
 end
