@@ -58,7 +58,7 @@ class EventsController < ApplicationController
     else
       render 'edit'
     end
-	end
+end
 
   def user_must_be_admin?
     @offering = Event.find(params[:id])

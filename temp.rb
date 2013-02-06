@@ -1,7 +1,3 @@
-<%= link_to "<div class='joinButton'></div>", 
-					offering_individual_participations_create_path(offering_type: "event", 
-									offering_id: @event.id, joining_user: current_user), method: :post %>
+    link_to "join", controller: :offering_individual_participations_controller, action: :create, offering_type: "event", offering_id: "offering_id", joining_user: current_user
 
-<%= link_to "<div class='joinButton'></div>', 
-					offering_individual_participations_create_path(offering_type: "event", 
-									offering_id: @event.id, joining_user: current_user), method: :post %>
+    link_to "leave", controller: :offering_individual_participations_controller, action: :destroy, offering_type: "event", offering_id: "offering_id", leaving_user: current_user

@@ -3,7 +3,6 @@ Blackmoon::Application.routes.draw do
     resources :events
     # resources :offering_individual_participations
     post 'offering_individual_participations/create'
-    post 'offering_individual_participations/destroy'    
 
     devise_for :accounts, :controllers => {:registrations => "registrations"}
 
