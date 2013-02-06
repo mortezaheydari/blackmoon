@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130206121505) do
+ActiveRecord::Schema.define(:version => 20130206140152) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -50,6 +50,21 @@ ActiveRecord::Schema.define(:version => 20130206121505) do
     t.integer  "number_of_attendings"
     t.boolean  "team_participation"
   end
+
+  create_table "flaggings", :force => true do |t|
+    t.string   "flaggable_type"
+    t.integer  "flaggable_id"
+    t.string   "flagger_type"
+    t.integer  "flagger_id"
+    t.string   "flag"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "flaggings", ["flag", "flaggable_type", "flaggable_id"], :name => "index_flaggings_on_flag_and_flaggable_type_and_flaggable_id"
+  add_index "flaggings", ["flag", "flagger_type", "flagger_id", "flaggable_type", "flaggable_id"], :name => "access_flag_flaggings"
+  add_index "flaggings", ["flaggable_type", "flaggable_id"], :name => "index_flaggings_on_flaggable_type_and_flaggable_id"
+  add_index "flaggings", ["flagger_type", "flagger_id", "flaggable_type", "flaggable_id"], :name => "access_flaggings"
 
   create_table "offering_administrations", :force => true do |t|
     t.integer  "administrator_id"
