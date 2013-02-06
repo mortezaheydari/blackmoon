@@ -1,6 +1,12 @@
 Blackmoon::Application.routes.draw do
     resources :users
-    resources :events
+    resources :events do
+      member do
+        get 'like'  
+      end
+    end
+
+
     # resources :offering_individual_participations
     post 'offering_individual_participations/create'
     post 'offering_individual_participations/destroy'    

@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
   attr_accessible :name, :profile_attributes
   validates :name, presence: true, length: {maximum: 50}, uniqueness: true
 
+  make_flaggable :like
+
+
   after_create do |user|
     if user.profile.nil?
     	user.create_profile
