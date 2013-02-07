@@ -13,8 +13,10 @@ class EventsController < ApplicationController
       current_user.flag(@event, :like)
       msg = "you now like this event."
     end
-
-    redirect_to @event, notice: msg
+    respond_to do |format|
+        format.html { redirect_to @event, notice: msg }
+        format.js
+    end
   end
 
   def like_cards
