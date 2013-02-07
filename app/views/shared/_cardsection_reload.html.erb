@@ -1,6 +1,6 @@
+<!-- remeber the doppelganger -->
 <%= content_tag("div", "", class: "cardsection #{class_name}", remote: :true) do %>
-
-<%  @likes.each do |individual| %>
-        <%= render 'users/usercards', person: individual.flagger %>
-<% end %>
+    <%  @likes.each do |individual| %>
+            <%= render 'users/usercards', person: individual.flagger %>
+    <% end %>
 <% end %>

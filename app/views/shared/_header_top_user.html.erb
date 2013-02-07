@@ -41,12 +41,13 @@
     <a href="#">Create New</a>
   </div>
   <div id="userMenu">
-    <a href="#"><%= image_tag "rails.png", :class => "left" %> Morteza Heydari</a>
+    <%= link_to image_tag("rails.png", class: "left")+current_user.name, user_path(current_user) %>
+    <!-- <a href="#"><%= image_tag "rails.png", :class => "left" %> Morteza Heydari</a> -->
     <ul id="userDrop">
       <li>
         <div id="editProfile" class="left">
           <div class="left"></div>
-          <%= link_to "Edit Profile", edit_user_path(current_user.id) %>
+          <%= link_to "Edit Profile", edit_user_path(current_user) %>
         </div>
       </li>
       <li>

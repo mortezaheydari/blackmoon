@@ -79,7 +79,7 @@
     </div>
 
    <!--  <a href="#" class="button blue left">Follow</a> -->
-   <%= render 'shared/follow_form' %>
+   <%= render 'shared/follow_form' if signed_in?  %>
     <a href="#" class="button blue left">Challenge</a>
     <a href="#" class="button blue left">Recommend</a>
 
@@ -89,11 +89,10 @@
   <div class="secondMenu">
     <nav id="secondary">
       <ul>
-        <li id="activities"><a href="#">Activities</a></li>
-        <li id="players"><a href="#">Players</a></li>
-        <li><a href="#">Likes (14)</a></li>
-        <li><a href="#">Following (21)</a></li>
-        <li><a href="#">Followers (22)</a></li>
+        <li id="activities"><a href="#">Activities (<%= @user.events_participating.count %>)</a></li>
+        <li id="likeSection"><a href="#">Likes (<%= @likes.with_flag(:like).count %>)</a></li>
+        <li id="FollowingSection"><a href="#">Following (<%= @user.followed_users.count %>)</a></li>
+        <li id="FollowerSection"><a href="#">Followers (<%= @user.followers.count %>)</a></li>
       </ul>
     </nav>
   </div>
@@ -101,64 +100,25 @@
 
 
 <div class="body">
-    <div class="cards">
-      <% i = 0
-         while i<12 do %>
-          <article class="userCard">
-            <header class="userCardHeader">
-              <a href="#">
-                <%= image_tag "bg.png", :class => "userCardImage left" %>
-              </a>
-              <h5 class="userCardTitle text-left">
-                <a href="#">Abdulmohsen al Abdulmuralib</a>
-              </h5>
-            </header>
-
-            <div class="userCardLevel">
-              <p>Level: First Boomer</p>
-            </div>
-
-            <div class="userCardRecent text-left">
-              <p>Recent Activities</p>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </article>
-
-      <% i = i + 1
-         end %>
-
+    <div class="likeSection">
+        <% @likes.each do |e| %>
+            <% @f = Event.find_by_id(e.flaggable_id) %>
+            <%= render 'events/event', event: @f %>
+        <% end %>
     </div>
 
 
     <div class="activityCards">
-      <% i = 0
-         while i<6 do %>
-          <article class="activityBox">
-            <header class="activityHeader">
-              <a href="#">
-                <%= image_tag "bg.png", :class => "activityImage" %>
-              </a>
-              <h5 class="activityTitle text-left">
-                <a href="#">The maximum words available okay</a>
-              </h5>
-              <p class="text-left">Cross Country Running</p>
-            </header>
+        <% @user.events_participating.each do |e| %>
+            <%= render 'events/event', event: e %>
+        <% end %>
+    </div>
 
-            <div class="activityBody text-center">
-              <ul class="block-grid three-up">
-                <li><%= image_tag "1.png" %></li>
-                <li><div class="thumbsUp"></div> <span class="small-text">22</span> </li>
-                <li><div class="featureStar"></div> </li>
-              </ul>
+    <div class="FollowingSection">
+        <%= render 'shared/cardsection', individuals: @user.followed_users, class_name: "FollowedUsers" %>
+    </div>
 
-            </div>
-          </article>
-
-      <% i = i + 1
-         end %>
-
+    <div class="FollowerSection">
+        <%= render 'shared/cardsection', individuals: @user.followers, class_name: "Followers" %>
     </div>
 </div>

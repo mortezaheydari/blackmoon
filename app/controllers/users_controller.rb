@@ -1,15 +1,16 @@
 class UsersController < ApplicationController
-  include SessionsHelper  
+  include SessionsHelper
   def index
-    @users = User.all  	
+    @users = User.all
   end
 
   def show
   	@user = User.find(params[:id])
+           @likes = @user.flaggings.with_flag(:like)
   end
 
   def edit
-    @user = User.find(params[:id]) 
+    @user = User.find(params[:id])
     @user.profile ||= Profile.new
     @date_of_birth = @user.profile.date_of_birth
   end
@@ -23,6 +24,6 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
-  end  
+  end
 
 end

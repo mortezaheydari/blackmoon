@@ -14,7 +14,7 @@
             <div class="activityBody text-center">
               <ul class="block-grid three-up">
                 <li><%= image_tag "1.png" %></li>
-                <li><%= toggle_like_card_button(event, current_user) %> <span id="likecount<%= event.id %>" class="small-text"><%= event.flaggings.with_flag(:like).count %></span> </li>
+                <li><%= toggle_like_card_button(event, current_user) if signed_in? %> <span id="likecount<%= event.id %>" class="small-text"><%= event.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
                 <li><div class="featureStar"></div> </li>
               </ul>
 

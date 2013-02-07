@@ -81,6 +81,9 @@ $buttonBgHover: #ffffff;
 
 // start of shared styles
 
+.guestMenu {
+    width:300px;
+}
 
 a {
   color: $linkColor;
@@ -139,6 +142,7 @@ div.small {
   font-size: 12px;
   cursor: pointer;
   text-decoration: none;
+  border:none;
   @include transition-property(all);
   @include transition-duration(0.1s);
   @include transition-timing-function(linear);
@@ -330,7 +334,7 @@ div.page {
     margin: 0 auto;
     height:100%;
 
-    div.cards, div.activityCards, div.leftContent, div.Description, div.cardsection {
+    div.cards, div.activityCards, div.leftContent, div.Description, div.cardsection, div.likeSection, div.FollowingSection, div.FollowerSection {
       @include column(14);
       @include divReset;
       min-height: 500px;
