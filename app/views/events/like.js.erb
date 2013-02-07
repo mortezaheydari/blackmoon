@@ -1,1 +1,3 @@
 $("#likeContainer").html("<%= escape_javascript(render('shared/like_button')) %>")
+$('span#likeCount').html("<%= @event.flaggings.with_flag(:like).count %>")
+$("div.likes").html("<%= escape_javascript(render('shared/cardsection', individuals: @likes, class_name: 'likes')) %>")

@@ -62,6 +62,11 @@ class EventsController < ApplicationController
 
   def show
   	@event = Event.find(params[:id])
+           @likes = @event.flaggings.with_flag(:like)
+           # flaggings.each do |flagging|
+           #      @likes = []
+           #      @likes << flagging.flagger
+           # end
            if @event.team_participation == false
                 @participator = @event.individual_participators
            else
