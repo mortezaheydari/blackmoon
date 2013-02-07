@@ -15,7 +15,7 @@ gem 'devise'
 gem "heroku"
 gem 'thin'
 
-gem 'make_flaggable'
+gem 'make_flaggable', :git => 'git://github.com/cavneb/make_flaggable.git'
 
 group :development, :test do
 	gem 'sqlite3', '1.3.5'
