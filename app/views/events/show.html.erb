@@ -26,7 +26,7 @@
     <div class="activityOrigin">
         <div class="OriginTitle">Activity Originator</div>
         <div class="UserimgName">
-            <div class="img"></div>
+            <div class="img"><%= gravatar_for(@event.creator) %></div>
             <%= link_to @event.creator.name , user_path(@event.creator) %>
         </div>
       <!-- <a href="#" class="originTitle"><%= @event.creator.name %></a> -->

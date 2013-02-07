@@ -50,29 +50,37 @@
     <div class="sideBar">
 
         <div class="HomeForm">
+            <% unless account_signed_in? %>
             <div class="signup">
                 <h3>New to GOBOOM? JOIN NOW</h3>
-                <%= form_for("user", :url => new_account_registration_path) do |f| %>
+                <%= form_for(@account,:as => resource_name, :url => account_registration_path) do |f| %>
+                  <%= f.fields_for :user do |user_form| %>
+                     <%= user_form.text_field :name, placeholder: "Name", class: "textField" %>
+                   <% end %>
                   <%= f.text_field :email, placeholder: "Email", class: "textField" %>
                   <%= f.password_field :password, placeholder: "Password", class: "textField" %>
                   <%= f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "textField" %>
                   <%= f.submit 'Register me', class: "button grey submitBtn homeBtn" %>
                 <% end %>
-                <div class="button grey facebookLogin">Sign up with facebook</div>
+                <!-- <div class="button grey facebookLogin">Sign up with facebook</div> -->
             </div>
 
             <div class="signin">
                 <h3>SIGN IN</h3>
-                <%= form_for("user", :url => account_session_path) do |f| %>
+                <%= form_for("account", :url => account_session_path) do |f| %>
                   <%= f.text_field :email, placeholder: "Email", class: "textField" %>
                   <%= f.password_field :password, placeholder: "Password", class: "textField" %>
                   <%= f.submit 'Sign In', class: "button grey submitBtn homeBtn" %>
-                  <div class="button grey facebookLogin">Sign in with facebook</div>
+                  <!-- <div class="button grey facebookLogin">Sign in with facebook</div> -->
                   <%= f.check_box :remember_me %>
                   <%= f.label :remember_me %>
                   <li><%= link_to "Forgot your password?", new_account_password_path('user') %></li>
                 <% end %>
             </div>
+
+            <% end %>
+
+
         </div>
 
 

@@ -6,7 +6,7 @@ class Account < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_attributes
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_attributes, :user
 
   has_one :user, :dependent => :destroy
   accepts_nested_attributes_for :user, :allow_destroy => true
