@@ -20,17 +20,11 @@ class EventsController < ApplicationController
   end
 
   def like_cards
-    @event = Event.find(params[:card_id])
+    @event = Event.find(params[:id])
 
-    if current_user.flagged?(@event, :like)
-      current_user.unflag(@event, :like)
-      msg = "you now don't like this event."
-    else
-      current_user.flag(@event, :like)
-      msg = "you now like this event."
-    end
+    # current_user.unflag(@event, :like)
+    current_user.toggle_flag(@event, :like)
     respond_to do |format|
-        format.html { redirect_to @event }
         format.js
     end
   end

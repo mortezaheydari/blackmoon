@@ -792,6 +792,16 @@ article.activityBox {
             background-position: -96px -32px;
           }
         }
+
+        .thumbedUp {
+          background: url("icons.png") no-repeat;
+          @include background-size(128px 160px);
+          border: none;
+          width: 16px;
+          height: 16px;
+          float: left;
+          background-position: -96px -32px;
+        }
         div.featureStar {
           background: url("icons.png") no-repeat;
           @include background-size(128px 160px);
