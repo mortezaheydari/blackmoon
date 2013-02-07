@@ -27,7 +27,7 @@
         <div class="OriginTitle">Activity Originator</div>
         <div class="UserimgName">
             <div class="img"></div>
-            <%= link_to @event.creator.name , user_path %>
+            <%= link_to @event.creator.name , user_path(@event.creator) %>
         </div>
       <!-- <a href="#" class="originTitle"><%= @event.creator.name %></a> -->
         <p>Level 2: Game Originator</p>
@@ -36,12 +36,8 @@
     <%= render 'shared/like_button' if signed_in? %>
     <%= render 'shared/join_link' if signed_in? %>
 
-
-<!--     <a href="#"><div class="likeButton"></div></a>
-        <%= link_to "<div class='joinButton'></div>", offering_individual_participations_create_path(offering_type: "event", offering_id: @event.id, joining_user: current_user), method: :post %> -->
-
-    <!-- <a href="#"><div class="joinButton"></div></a> -->
     <a href="#"><div class="shareButton"></div></a>
+    <%= link_to "Edit", edit_event_path(@event), class: "button blue left" if signed_in? && current_user == @event.creator %>
 
   </div>
 

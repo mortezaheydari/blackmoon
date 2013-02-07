@@ -4,7 +4,7 @@
       <%= image_tag "bg.png", class: "userCardImage left" %>
     </a>
     <h5 class="userCardTitle text-left">
-      <a href="#"><%= person.name %></a>
+      <%= link_to person.name, user_path(person) %>
     </h5>
   </header>
 
