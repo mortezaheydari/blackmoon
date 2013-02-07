@@ -33,7 +33,7 @@
         <p>Level 2: Game Originator</p>
     </div>
 
-    <%= render 'shared/like_button', offering: @event if signed_in? %>
+    <%= render 'shared/like_button' if signed_in? %>
     <%= render 'shared/join_link' if signed_in? %>
 
 
