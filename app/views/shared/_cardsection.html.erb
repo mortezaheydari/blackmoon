@@ -1,6 +1,10 @@
 <%= content_tag("div", "", class: "cardsection #{class_name}", remote: :true) do %>
 
     <%  individuals.each do |individual| %>
-        <%= render 'users/usercards', person: individual %>
+        <% if class_name == "likes" %>
+            <%= render 'users/usercards', person: individual.flagger %>
+        <% else %>
+            <%= render 'users/usercards', person: individual %>
+        <% end %>
     <% end %>
 <% end %>
