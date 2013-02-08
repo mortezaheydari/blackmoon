@@ -1,0 +1,3 @@
+// alert("#event<%= @event.id %>")
+$("#event<%= @event.id %>").html("<%= escape_javascript(render('events/event_reload')) %>")
+$('span#likecount<%= @event.id %>').html("<%= @event.flaggings.with_flag(:like).count %>")

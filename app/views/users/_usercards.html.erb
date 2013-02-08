@@ -1,0 +1,20 @@
+<article class="userCard">
+  <header class="userCardHeader">
+     <%= link_to  gravatar_for(person, gravatar_class: "userCardImage left"), user_path(person)%>
+    <h5 class="userCardTitle text-left">
+      <%= link_to person.name, user_path(person) %>
+    </h5>
+  </header>
+
+  <div class="userCardLevel">
+    <p>Level: First Boomer</p>
+  </div>
+
+  <div class="userCardRecent text-left">
+    <p>Recent Activities</p>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</article>

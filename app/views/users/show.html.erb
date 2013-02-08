@@ -1,0 +1,124 @@
+  <div class="userInfo">
+    <div class="UserProfileCard">
+      <div class="large"><%= gravatar_for(@user, size: 156) %></div>
+      <h1><%= @user.profile.first_name %> <%= @user.profile.last_name %></h1>
+      <div class="small"></div>
+      <div class="small"></div>
+      <div class="small"></div>
+      <p><%= @user.profile.about %></p>
+      <footer>
+        <span>First Boomer</span>
+        <span >1</span>
+        <%= image_tag "test.png" %><span>122</span>
+      </footer>
+    </div>
+
+    <div class="stats">
+      <span class="statsHeader">Basic Stats</span>
+      <div>
+        <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="statLabel">
+              Classes:
+            </td>
+            <td class="statNumber">
+              11
+            </td>
+          </tr>
+          <tr>
+            <td class="statLabel">
+              Games:
+            </td>
+            <td class="statNumber">
+              7
+            </td>
+          </tr>
+          <tr>
+            <td class="statLabel">
+              Tournaments:
+            </td>
+            <td class="statNumber">
+              1
+            </td>
+          </tr>
+          <tr>
+            <td class="statLabel">
+              Teams:
+            </td>
+            <td class="statNumber">
+              4
+            </td>
+          </tr>
+          <tr>
+            <td class="statLabel">
+              Wins:
+            </td>
+            <td class="statNumber">
+              7
+            </td>
+          </tr>
+          <tr>
+            <td class="statLabel">
+              Losses:
+            </td>
+            <td class="statNumber">
+              2
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="activityOrigin">
+      <div class="OriginTitle">Activity Originator</div>
+        <div class="UserimgName">
+            <div class="img"></div>
+            <a href="#">Morteza Mansour Heydari</a>
+        </div>
+      <p>Level 2: Game Originator</p>
+    </div>
+
+   <!--  <a href="#" class="button blue left">Follow</a> -->
+   <%= render 'shared/follow_form' if signed_in?  %>
+    <a href="#" class="button blue left">Challenge</a>
+    <a href="#" class="button blue left">Recommend</a>
+
+
+  </div>
+
+  <div class="secondMenu">
+    <nav id="secondary">
+      <ul>
+        <li id="activities"><a href="#">Activities (<%= @user.events_participating.count %>)</a></li>
+        <li id="likeSection"><a href="#">Likes (<%= @likes.with_flag(:like).count %>)</a></li>
+        <li id="FollowingSection"><a href="#">Following (<%= @user.followed_users.count %>)</a></li>
+        <li id="FollowerSection"><a href="#">Followers (<%= @user.followers.count %>)</a></li>
+      </ul>
+    </nav>
+  </div>
+
+
+
+<div class="body">
+    <div class="likeSection">
+        <% @likes.each do |e| %>
+            <% @f = Event.find_by_id(e.flaggable_id) %>
+            <%= render 'events/event', event: @f %>
+        <% end %>
+    </div>
+
+
+    <div class="activityCards">
+        <% @user.events_participating.each do |e| %>
+            <%= render 'events/event', event: e %>
+        <% end %>
+    </div>
+
+    <div class="FollowingSection">
+        <%= render 'shared/cardsection', individuals: @user.followed_users, class_name: "FollowedUsers" %>
+    </div>
+
+    <div class="FollowerSection">
+        <%= render 'shared/cardsection', individuals: @user.followers, class_name: "Followers" %>
+    </div>
+</div>

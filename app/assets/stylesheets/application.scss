@@ -1,0 +1,1274 @@
+/*
+*= require_self
+*/
+
+@import "compass";
+@import "blueprint";
+@import "compass/css3";
+@import "compass/utilities";
+@import "compass/typography/lists/horizontal-list";
+@import "compass/css3/images";
+@import "compass/layout/sticky-footer";
+@import "compass/layout/stretching";
+
+
+$blueprint_grid_columns: 20;
+$blueprint_grid_width: 40px;
+
+// variables declaration
+
+$objBg: #f5f5f5;
+$TextColor: #666666;
+$boxPadding: 10px;
+$linkColor: #159fa4;
+$white: #ffffff;
+
+$grey: #E6E6E6;
+$timePassedGrey: #B3B3B3;
+$lighGray: #f5f5f5;
+
+
+$NavTextColor: #666666;
+$NavTextColorHover: #666666;
+$NavHeight: 35px;
+$FontFamily: "Helvetica Neue", helvetica;
+$navHoverBorder: #d3d3d3;
+
+
+$buttonColor: #ffffff;
+$buttonBg: #159fa4;
+$buttonColorHover: #159fa4;
+$buttonBgHover: #ffffff;
+
+
+/* end of variables declaration */
+
+
+
+// mixin declaration
+
+@mixin SideText {
+  a {
+    color: $linkColor;
+    font-size: 13px;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+
+  }
+  span {
+    color: $TextColor;
+    font-size: 11px;
+    padding: 0;
+  }
+}
+
+@mixin TextFields {
+    height: 20px;
+    @include background($grey);
+    @include border-radius(10px);
+    @include background($grey);
+    @include box-shadow(none);
+    border: 1px solid $TextColor;
+    margin: 5px 0;
+    @include transition-property(width);
+    @include transition-duration(0.3s);
+    @include transition-timing-function(ease-in-out);
+}
+
+// end of mixin declaration
+
+// start of shared styles
+
+.guestMenu {
+    width:300px;
+}
+
+a {
+  color: $linkColor;
+  font-size: 13px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+span {
+  color: $TextColor;
+  font-size: 11px;
+  padding: 0;
+}
+
+p {
+    color: $TextColor;
+    font-size: 0.8em;
+}
+
+div.small {
+    width: 18px;
+    height: 18px;
+    background: #add8e6;
+    float: left;
+    margin: 0 5px 0 5px;
+    @include border-radius(5px);
+}
+
+
+
+.small-text {
+  font-size: 10px;
+  position: relative;
+  top: -2px;
+  color: $timePassedGrey;
+}
+
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+
+.button {
+  padding: 5px;
+  margin: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  border:none;
+  @include transition-property(all);
+  @include transition-duration(0.1s);
+  @include transition-timing-function(linear);
+  @include border-radius(5px);
+}
+
+.follow {
+
+}
+
+.event {
+  display:table;
+  height:100%;
+  background:$objBg;
+  width:100%;
+}
+
+
+
+.blue {
+  @extend button;
+  background: $buttonBg;
+  color: $buttonColor;
+  text-decoration:none;
+  &:hover {
+    background: $grey;
+    color: $TextColor;
+    text-decoration:none;
+  }
+  &:active {
+    background: $TextColor;
+    color: $grey;
+  }
+}
+
+.grey {
+  background: $grey;
+  color: $TextColor;
+  border: 1px solid $TextColor;
+  &:hover {
+    background: $TextColor;
+    color: $grey;
+    border: 1px solid $grey;
+  }
+}
+
+
+
+div.BallSports {
+  background: url("icons.png") no-repeat;
+  @include background-size(400px 500px);
+  background-position: -50px 0px;
+  border: none;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  &:hover {
+    background-position: -50px -50px;
+  }
+  &:active {
+    background-position: -50px -100px;
+  }
+}
+div.Fitness {
+  background: url("icons.png") no-repeat;
+  @include background-size(400px 500px);
+  background-position: -100px 0px;
+  border: none;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  &:hover {
+    background-position: -100px -50px;
+  }
+  &:active {
+    background-position: -100px -100px;
+  }
+}
+div.WaterSports {
+  background: url("icons.png") no-repeat;
+  @include background-size(400px 500px);
+  background-position: -150px 0px;
+  border: none;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  &:hover {
+    background-position: -150px -50px;
+  }
+  &:active {
+    background-position: -150px -100px;
+  }
+}
+div.Other {
+  background: url("icons.png") no-repeat;
+  @include background-size(400px 500px);
+  background-position: -200px 0px;
+  border: none;
+  width: 50px;
+  height: 50px;
+  &:hover {
+    background-position: -200px -50px;
+  }
+  &:active {
+    background-position: -200px -100px;
+  }
+}
+
+
+
+@mixin divReset {
+    margin: 0 auto;
+    overflow: visible;
+    display: block;
+    float: none;
+    margin-bottom: 50px;
+}
+
+
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: $FontFamily;
+}
+
+
+div.page {
+  @include container;
+  @include divReset;
+  margin-bottom: 0px;
+
+
+
+  width: 100%;
+
+  div#headerContainer {
+    width: 100%;
+    @include background($objBg);
+    @include box-shadow(#ccc 0px 2px 5px);
+    header#main {
+      @include column(20);
+      @include divReset;
+    }
+  }
+
+
+  div.userInfo {
+    @include column(20);
+    @include divReset;
+    div.stats{
+      margin: 0 75px 0 75px;
+    }
+    div.locationPartial {
+      margin: 0 20px 0 20px;
+    }
+  }
+
+  div.secondMenu {
+    @include column(20);
+    @include background($objBg);
+    @include box-shadow(#ccc 0px 2px 5px);
+    border-top: 1px solid #d3d3d3;
+    display: inline;
+    float: left;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  div.dashboard {
+    width: 990px;
+    margin:0 auto;
+    div.topText {
+      width:990px;
+      float:left;
+      padding-top:10px;
+      padding-bottom:10px;
+      span {
+        font-size:18px;
+      }
+    }
+  }
+
+  div.body {
+    @include column(20);
+    display: block;
+    float: none;
+    margin: 0 auto;
+    height:100%;
+
+    div.cards, div.activityCards, div.leftContent, div.Description, div.cardsection, div.likeSection, div.FollowingSection, div.FollowerSection {
+      @include column(14);
+      @include divReset;
+      min-height: 500px;
+      float: left;
+    }
+    div.Description {
+        margin-top: 20px;
+    }
+    div.sideBar {
+      @include column(6);
+      @include divReset;
+      float: left;
+    }
+  }
+}
+
+
+div.likeButton {
+  float: left;
+  margin: 10px;
+  background: url("icons.png") no-repeat;
+  @include background-size(320px 400px);
+  background-position: -40px -160px;
+  border: none;
+  width: 40px;
+  height: 40px;
+  &:hover {
+    background-position: -40px -200px;
+  }
+  &:active {
+    background-position: -40px -240px;
+  }
+}
+
+.UnlikeButton {
+  float: left;
+  margin: 10px;
+  background: url("icons.png") no-repeat;
+  @include background-size(320px 400px);
+  background-position: -40px -240px;
+  border: none;
+  width: 40px;
+  height: 40px;
+}
+
+div.joinButton {
+  float: left;
+  margin: 10px;
+  background: url("icons.png") no-repeat;
+  @include background-size(320px 400px);
+  background-position: -80px -160px;
+  border: none;
+  width: 40px;
+  height: 40px;
+  &:hover {
+    background-position: -80px -200px;
+  }
+  &:active {
+    background-position: -80px -240px;
+  }
+}
+
+div.joinedButton {
+  float: left;
+  margin: 10px;
+  background: url("icons.png") no-repeat;
+  @include background-size(320px 400px);
+  background-position: -80px -240px;
+  border: none;
+  width: 40px;
+  height: 40px;
+}
+
+div.shareButton {
+  float: left;
+  margin: 10px;
+  background: url("icons.png") no-repeat;
+  @include background-size(320px 400px);
+  background-position: -120px -160px;
+  border: none;
+  width: 40px;
+  height: 40px;
+  &:hover {
+    background-position: -120px -200px;
+  }
+  &:active {
+    background-position: -120px -240px;
+  }
+}
+
+li.navActive {
+  @include background(linear-gradient(bottom, rgb(230,230,230) 0%, rgb(207,207,207) 73%));
+    border-right: 1px solid $navHoverBorder;
+    border-left: 1px solid $navHoverBorder;
+    a {
+      color: $NavTextColorHover;
+    }
+}
+
+nav#secondary {
+  height: $NavHeight;
+  @include stretch;
+  @include background($objBg);
+  position: relative;
+  width: 990px;
+  margin: 0 auto;
+
+  ul {
+    @include horizontal-list-container;
+
+    li{
+      @include horizontal-list-item;
+      height: $NavHeight;
+      padding-left: 15px;
+      padding-right: 15px;
+      &:last-child {
+        padding-right: 15px;
+      }
+      &:first-child {
+        padding-left: 15px;
+      }
+      a {
+        text-decoration: none;
+        color: $NavTextColor;
+        font-family: $FontFamily;
+        text-align: center;
+        font-size: 12px;
+        line-height: $NavHeight;
+      }
+      &:hover{
+        @include background(linear-gradient(bottom, rgb(230,230,230) 0%, rgb(207,207,207) 73%));
+        border-right: 1px solid $navHoverBorder;
+        border-left: 1px solid $navHoverBorder;
+        a {
+          color: $NavTextColorHover;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+div.stats {
+  @include background($objBg);
+  @include box-shadow(#ccc 0px 2px 5px);
+  padding: 2px 10px 2px 10px;
+  float: left;
+  color: $TextColor;
+  width: 147px;
+  table {
+    width:100%;
+    padding-top: 10px;
+  }
+  div table tr td {
+    border-bottom: 2px solid #fff;
+    padding-bottom: 5px;
+  }
+  .statsHeader {
+    font-size: 20px;
+  }
+  .statLabel,  .statNumber{
+    font-size: 12px;
+  }
+  .statLabel {
+    width: 85%;
+    text-align: left;
+  }
+  .statNumber {
+    color: $buttonColorHover;
+    width: 15%;
+    text-align: left;
+  }
+
+}
+
+div.sideBox {
+  background: #ffffff;
+  border: 1px solid $timePassedGrey;
+  float: left;
+  width: 280px;
+  margin: 20px 10px 20px 10px;
+  @include border-radius(15px);
+  hr {
+    color: $timePassedGrey;
+    width: 100%;
+    padding: 0;
+  }
+  .sideTitle {
+    text-align: left;
+    font-size: 16px;
+    line-height: 16px;;
+    padding: 10px;
+  }
+  .sideTag span {
+    background: $grey;
+    padding: 5px 10px 5px 10px;
+    @include border-radius(5px);
+    float: left;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #d3d3d3;
+    &:hover {
+      background: $TextColor;
+      color: $grey;
+    }
+
+  }
+
+  div.sideEvents {
+    padding-left: 10px;
+    @include SideText;
+  }
+
+  div.sideImage {
+    div {
+      width: 32px;
+      height: 32px;
+      background: #add8e6;
+      float: left;
+      margin-left: 10px;
+      margin-bottom: 10px;
+    }
+  }
+
+  div.sideActivity {
+    padding: 5px;
+    @include SideText;
+    div {
+      width: 32px;
+      height: 32px;
+      background: #add8e6;
+      float: left;
+      margin-left: 5px;
+      margin-bottom: 10px;
+      margin-right: 5px;
+    }
+    span {
+      font-size: 11px;
+      color: $timePassedGrey;
+    }
+    p {
+      margin: 0;
+      padding: 0;
+      font-size: 13px;
+      color: $TextColor;
+      display: inline;
+    }
+  }
+
+}
+
+div.eventProfileCard {
+  @include background($objBg);
+  @include box-shadow(#ccc 0px 2px 5px);
+  padding: $boxPadding;
+  float: left;
+  color: $TextColor;
+  width: 520px;
+  height: 154px;
+  @include SideText;
+  img {
+    position: relative;
+  }
+  h1 {
+    font-size: 30px;
+    color: $linkColor;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+    padding-bottom: 15px;
+
+  }
+  p {
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    color: $TextColor;
+  }
+  div.large {
+    width: 156px;
+    height: 156px;
+    background: #add8e6;
+    float: left;
+    margin: 0 10px 0 0;
+    @include border-radius(10px);
+  }
+  footer {
+
+  }
+}
+
+div.activityOrigin {
+  @include background($objBg);
+  @include box-shadow(#ccc 0px 2px 5px);
+  padding: $boxPadding;
+  float: left;
+  color: $TextColor;
+  width: 210px;
+  height: 154px;
+  div.OriginTitle {
+    font-size: 20px;
+    margin-bottom: 23px;
+  }
+  div.UserimgName {
+    min-height: 50px;
+    p {
+        padding: 0;
+        font-size: 12px;
+    }
+    div.img {
+        background: #add8e6;
+        float: left;
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        @include border-radius(10px);
+    }
+  }
+
+  h5 {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    float: left;
+
+    font-size: 16px;
+    font-weight: normal;
+  }
+  a {
+    color: $linkColor;
+    text-decoration: none;
+    width: 100px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+
+
+div.locationPartial {
+  @include background($objBg);
+  @include box-shadow(#ccc 0px 2px 5px);
+  padding: $boxPadding;
+  float: left;
+  color: $TextColor;
+  width: 147px;
+  height: 154px;
+  div.locationTitle {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  div.map {
+    background: #add8e6;
+    width: 123px;
+    height: 117px;
+    margin: 0 auto;
+
+  }
+}
+
+
+
+div.UserProfileCard {
+  @include background($objBg);
+  @include box-shadow(#ccc 0px 2px 5px);
+  padding: $boxPadding;
+  float: left;
+  color: $TextColor;
+  width: 410px;
+  height: 154px;
+  @include SideText;
+  div.small {
+    width: 18px;
+    height: 18px;
+    background: #add8e6;
+    float: left;
+    margin: 0 5px 0 5px;
+    @include border-radius(5px);
+  }
+  img {
+    position: relative;
+  }
+  div.large {
+    width: 156px;
+    height: 156px;
+    background: #add8e6;
+    float: left;
+    margin: 0 10px 0 0;
+    @include border-radius(10px);
+  }
+  h1 {
+    font-size: 30px;
+    color: $linkColor;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+  }
+  p {
+    font-size: 13px;
+    margin-top: 2em;
+  }
+}
+
+article.activityBox {
+  width: 200px;
+  background: $objBg;
+  float: left;
+  margin: 20px 10px 20px 10px;
+  @include border-radius(5%);
+  img.activityImage {
+    width: 200px;
+    height: 160px;
+    @include border-top-left-radius(5%);
+    @include border-top-right-radius(5%);
+  }
+  header {
+    h5, p{
+      margin-left: 3%;
+    }
+    a {
+      color: $linkColor;
+      font-size: 16px;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    p {
+      color: $TextColor;
+      font-size: 12px;
+    }
+  }
+  .activityBody {
+    border-top: 1px solid #ffffff;
+    margin: 5px auto;
+    ul {
+      li {
+        display: inline;
+        float: left;
+        margin: 0 5% 0 5%;
+        div.thumbsUp {
+          background: url("icons.png") no-repeat;
+          @include background-size(128px 160px);
+          background-position: -96px 0px;
+          border: none;
+          width: 16px;
+          height: 16px;
+          float: left;
+          &:active {
+            background-position: -96px -32px;
+          }
+        }
+
+        .thumbedUp {
+          background: url("icons.png") no-repeat;
+          @include background-size(128px 160px);
+          border: none;
+          width: 16px;
+          height: 16px;
+          float: left;
+          background-position: -96px -32px;
+        }
+        div.featureStar {
+          background: url("icons.png") no-repeat;
+          @include background-size(128px 160px);
+          background-position: -112px -32px;
+          border: none;
+          width: 16px;
+          height: 16px;
+          float: left;
+        }
+      }
+    }
+  }
+}
+
+div.Notification {
+  background: transparent;
+  border: 1px solid $timePassedGrey;
+  float: left;
+  width: 652px;
+  @include border-radius(10px);
+  h1 {
+    margin: 0;
+    color: $TextColor;
+    font-weight: normal;
+    text-align: left;
+    font-size: 18px;
+    line-height: 16px;;
+    padding: 10px;
+  }
+  .notiBody {
+    float: none;
+    display: block;
+    overflow: hidden;
+    hr {
+      color: $timePassedGrey;
+      width: 100%;
+    }
+    p {
+      color: $TextColor;
+      font-size: 13px;
+      display: inline;
+    }
+    a {
+      color: $linkColor;
+      font-size: 13px;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    div.notiImg {
+      width: 60px;
+      height: 60px;
+      background: #add8e6;
+      float: left;
+      margin: 0 10px 0 10px;
+      @include border-radius(10px);
+    }
+    .button {
+      margin: 0 5px 0 5px;
+    }
+
+  }
+
+}
+
+/*
+section.page {
+  width: 100%;
+  position: absolute;
+}
+  */
+
+header#main {
+  @include background($objBg);
+  border-top: 1px solid #d3d3d3;
+  position: relative;
+  top: 0;
+  height: 75px;
+  z-index: 1;
+  div#headerLeft {
+    vertical-align: middle;
+    height: 75px;
+    margin-top: 12px;
+    float: left;
+    a img, input {
+      vertical-align: middle;
+      margin: 0 10px 0 10px;
+    }
+  }
+  div#headerMenu {
+    float: left;
+    height: 75px;
+    vertical-align: middle;
+    margin: 40px 20px 40px 20px;
+    a {
+      color: $TextColor;
+      text-decoration: none;
+      text-align: right;
+      line-height: 20px;
+      font-size: 12px;
+      margin-left: 5px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    div#dashboard {
+      margin: auto 20px auto 20px;
+        width: 84px;
+
+      div.explore {
+        background: url("icons.png") no-repeat;
+        @include background-size(160px 200px);
+        background-position: -40px -160px;
+        border: none;
+        width: 20px;
+        height: 20px;
+      }
+      img {
+        width: 20px;
+        height: 20px;
+      }
+      ul#ExploreDrop {
+        padding: 0;
+        margin: 10px 0 0 0;
+        width: 84px;
+        background: $objBg;
+        border: $TextColor;
+
+        border-bottom: 1px solid #999999;
+        border-left: 1px solid #999999;
+        border-right: 1px solid #999999;
+        hr {
+          border: solid 1px #999999;
+        }
+         li {
+            width: 100%;
+           display: table-row;
+           padding: 10px;
+           div.exploresub {
+                padding: 5px 4px;
+                text-align: center;
+                width: 100%;
+                &:hover {
+                    background: #999999;
+                    color: $white;
+                    a {
+                        color: $white;
+                    }
+                }
+           }
+        }
+      }
+    }
+    div#notiMenu {
+      margin: auto 20px auto 20px;
+
+      div {
+        background: url("icons.png") no-repeat;
+        @include background-size(160px 200px);
+        background-position: -60px -160px;
+        border: none;
+        width: 20px;
+        height: 20px;
+      }
+    }
+    div#createNewMenu {
+      margin: auto 20px auto 20px;
+
+      div {
+        background: url("icons.png") no-repeat;
+        @include background-size(160px 200px);
+        background-position: -80px -160px;
+        border: none;
+        width: 20px;
+        height: 20px;
+      }
+    }
+    div#userMenu {
+      margin: auto 20px auto 20px;
+
+      float: left;
+      margin-left: 5px;
+      img {
+        width: 20px;
+        height: 20px;
+      }
+      ul#userDrop {
+        padding: 0;
+        margin: 10px 0 0 0;
+        background: $objBg;
+        border: $TextColor;
+
+        border-bottom: 1px solid #999999;
+        border-left: 1px solid #999999;
+        border-right: 1px solid #999999;
+        hr {
+          border: solid 1px #999999;
+        }
+         li {
+           display: table-row;
+           div#editProfile {
+             padding: 5px;
+
+             div {
+               background: url("icons.png") no-repeat;
+               @include background-size(160px 200px);
+               background-position: -100px -160px;
+               border: none;
+               width: 20px;
+               height: 20px;
+             }
+           }
+           div#manageOffering {
+             padding: 5px;
+
+             div {
+               background: url("icons.png") no-repeat;
+               @include background-size(160px 200px);
+               background-position: -20px -160px;
+               border: none;
+               width: 20px;
+               height: 20px;
+             }
+           }
+           a#signOutTop {
+             margin-left: 25px;
+             padding: 5px;
+
+           }
+         }
+      }
+    }
+  }
+}
+
+
+
+article.userCard {
+  width: 200px;
+  height: 200px;
+  background: $objBg;
+  float: left;
+  margin: 20px 10px 20px 10px;
+  @include border-radius(5%);
+  header {
+    margin: 15px 0 0 15px;
+    height: 60px;
+    h5, p{
+      margin-left: 3%;
+    }
+    h5 {
+      font-size: 16px;
+      font-weight: normal;
+      padding: 0;
+      margin: 0;
+    }
+    a {
+      color: $linkColor;
+      font-size: 16px;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    img.userCardImage {
+      width: 50px;
+      height: 50px;
+      margin-right: 5px;
+      @include border-radius(10px);
+    }
+  }
+  .userCardLevel {
+    border-top: solid 1px #ffffff;
+    border-bottom: solid 1px #ffffff;
+    padding: 15px;
+    p {
+      color: $TextColor;
+      padding: 0;
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+
+  div.userCardRecent {
+    padding: 15px;
+    p {
+      color: $TextColor;
+      padding: 0;
+      margin: 0;
+      font-size: 10px;
+    }
+    div {
+      background: #add8e6;
+      float: left;
+      margin: 5px;
+      height: 32px;
+      width: 32px;
+      @include border-radius(5px);
+    }
+  }
+}
+
+
+
+div.intrestCat {
+  width: 100%;
+  float: left;
+  h1 {
+    color: $TextColor;
+    font-weight: normal;
+    font-size: 18px;
+    margin-left: 15px;
+  }
+
+  div.Categories {
+    width: 990px;
+    float: left;
+    padding: 10px 20px 10px 20px;
+    border-bottom: 1px solid $grey;
+    div {
+      text-align: center;
+      margin: 0 30px 0px 0px;
+      div {
+        margin: 0px 15px 10px 15px;
+      }
+      span {
+        color: $TextColor;
+        font-size: 12px;
+      }
+    }
+  }
+  div.intrestFooter {
+    float: left;
+    border-top: 1px solid $grey;
+    width: 990px;
+    padding: 20px;
+  }
+  div.sportSelect {
+    text-align: center;
+    width: 800px;
+
+    div {
+      width: 80px;
+      float: left;
+      margin: 15px 0 15px 0;
+      span {
+        color: $TextColor;
+        font-size: 12px;
+      }
+    }
+    label {
+      display: none;
+    }
+    .regular-checkbox {
+      display: none;
+    }
+    .regular-checkbox + label {
+      background-color: #ffffff;
+      border: 1px solid $linkColor;
+      padding: 9px;
+      @include border-radius(50%);
+      display: inline-block;
+      position: relative;
+    }
+    .regular-checkbox + label:active, .regular-checkbox:checked + label:active {
+      content: '';
+      background-color: $linkColor;
+    }
+    .regular-checkbox:checked + label {
+      background-color: $linkColor;
+      border: 1px solid $linkColor;
+    }
+    .regular-checkbox:checked + label:after {
+      content: '';
+      background-color: $linkColor;
+    }
+
+  }
+}
+
+
+// forms
+
+form {
+  input.TextField {
+    width: 45%;
+    @include TextFields;
+    &:focus {
+      @include background($TextColor);
+      color: #ffffff;
+      width: 50%;
+    }
+  }
+
+  select {
+    width: 14.5%;
+    @include TextFields;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: $grey url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
+    overflow:hidden;
+  }
+  .submitBtn {
+    border: none;
+  }
+
+  textarea {
+    width: 45%;
+    @include TextFields;
+    height: 200px;
+        &:focus {
+      @include background($TextColor);
+      color: #ffffff;
+      width: 50%;
+    }
+  }
+}
+
+// modal
+
+
+#modal-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 10;
+}
+
+#modal {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  width: 600px;
+  left: 50%;
+  margin-left: (-600px - 40px) / 2;
+  padding: 20px;
+  background: #fff;
+  border: 5px solid #eee;
+
+  & > .close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #666;
+    &:hover, &:active {
+      color: #000;
+    }
+  }
+}
+
+// end of shared styles
+
+
+/* End of declarations */
+
+
+
+
+
+@import "registrations";
+
+@import "pages";

@@ -1,0 +1,24 @@
+  <div class="body">
+    <div class="cardsection">
+        <% @events.each do |e| %>
+            <%= render 'events/event', event: e %>
+        <% end %>
+    </div>
+
+    <div class="sideBar">
+
+
+        <div class="sideBox">
+            <div class="sideTitle">Your Upcoming Events</div>
+            <% @events.each do |e| %>
+                <%= render 'shared/upcoming_offering', offering: e, offering_name: "event" %>
+            <% end %>
+        </div>
+
+
+      <div class="sideBox">
+        <div class="sideTitle">Activity</div>
+            <%= render 'shared/activity_sidebar' %>
+      </div>
+    </div>
+  </div>
