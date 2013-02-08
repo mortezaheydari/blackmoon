@@ -11,10 +11,6 @@ end
 
 module Blackmoon
   class Application < Rails::Application
-
-     # Added for heroku
-    config.assets.initialize_on_precompile = false
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -45,7 +41,6 @@ module Blackmoon
 
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
-
 
     # Use SQL instead of Active Record's schema dumper when creating the database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,
