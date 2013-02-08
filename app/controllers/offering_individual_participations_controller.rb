@@ -19,7 +19,7 @@ class OfferingIndividualParticipationsController < ApplicationController
         offerings_participating = user.send("#{offering}s_participating")
         joining_offering = offering.camelize.constantize.find_by_id(offering_id)
         number_of_attendings = joining_offering.number_of_attendings
-        if offerings_participating.count < number_of_attendings or number_of_attendings = 0
+        if offerings_participating.count < number_of_attendings or number_of_attendings == 0
             # todo: check participation deadline is not pass
             offerings_participating << joining_offering
         end
