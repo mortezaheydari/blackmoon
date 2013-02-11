@@ -10,16 +10,16 @@ class OfferingIndividualParticipationsController < ApplicationController
 
   # joining an offering
   def create
-      offering = params[:offering_type]
+      offering_type = params[:offering_type]
       user = User.find_by_id(params[:joining_user])
       offering_id = params[:offering_id]
 
-      if name_is_valid?(user, offering)
+      if name_is_valid?(user, offering_type)
 
-        offerings_participating = user.send("#{offering}s_participating")
-        joining_offering = offering.camelize.constantize.find_by_id(offering_id)
+        offerings_participating = user.send("#{offering_type}s_participating")
+        joining_offering = offering_type.camelize.constantize.find_by_id(offering_id)
         number_of_attendings = joining_offering.number_of_attendings
-        if offerings_participating.count < number_of_attendings or number_of_attendings = 0
+        if offerings_participating.count < number_of_attendings or number_of_attendings == 0
             # todo: check participation deadline is not pass
             offerings_participating << joining_offering
         end
@@ -29,18 +29,18 @@ class OfferingIndividualParticipationsController < ApplicationController
             format.js
         end
       else
-          redirect_to @user
+          redirect_to root
       end
   end
 
   # leaving an offering
   def destroy
-      offering = params[:offering_type]
+      offering_type = params[:offering_type]
       user = User.find_by_id(params[:leaving_user])
       offering_id = params[:offering_id]
 
-      if name_is_valid?(user, offering)
-      participations = user.offering_individual_participations.where(offering_type: offering, offering_id: offerign_id)
+      if name_is_valid?(user, offering_type)
+      participations = user.offering_individual_participations.where(offering_type: offering_type, offering_id: offerign_id)
       # todo: check participation deadline is not pass
       participations.each.destroy unless participations == []
 
@@ -51,7 +51,7 @@ class OfferingIndividualParticipationsController < ApplicationController
             format.js
         end
       else
-          redirect_to @user
+          redirect_to root
       end    
   end
 
