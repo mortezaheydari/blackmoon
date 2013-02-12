@@ -12,6 +12,13 @@ class Team < ActiveRecord::Base
   has_many :act_memberships, as: :act, :dependent => :destroy
   accepts_nested_attributes_for :act_memberships  
 
+      # offering participation:
+  has_many :offering_team_participations, foreign_key: :participator_id
+      #   1.events participating
+  has_many :events_participating, through: :offering_team_participations, source: :offering, source_type: "Event"
+  accepts_nested_attributes_for :events_participating
+
+
 	def creator
 		User.find_by_id(self.act_creation.creator_id) unless self.act_creation.nil?
 	end
