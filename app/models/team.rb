@@ -4,7 +4,7 @@ class Team < ActiveRecord::Base
 	make_flaggable :like  
 
   has_one :act_creation, as: :act, :dependent => :destroy
-  accepts_nested_attributes_for :offering_creation	
+  accepts_nested_attributes_for :act_creation	
 
 
 	def creator
