@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
 
   has_one :profile, :dependent => :destroy
 
-### Relations
 ## Offerings
 
       # A - offering creations:
@@ -40,15 +39,6 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
   belongs_to :account
 
-## Followers
-
-      # D - follow relationship
-  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
-  has_many :followed_users, through: :relationships, source: :followed
-
-  has_many :reverse_relationships, class_name: "Relationship", :foreign_key => "followed_id", dependent: :destroy
-  has_many :followers, through: :reverse_relationships, source: :follower
-
 ## Acts
 
       # E - Act creation
@@ -60,12 +50,24 @@ class User < ActiveRecord::Base
       # F - act administrations:
   has_many :act_administrations, foreign_key: :administrator_id
       #   1.team administrating
-  has_many :team_administrating, through: :act_administrations, source: :act, source_type: "Event"
-  accepts_nested_attributes_for :team_administrating
+  has_many :teams_administrating, through: :act_administrations, source: :act, source_type: "Team"
+  accepts_nested_attributes_for :teams_administrating
 
-##
-###
+      # G - act memberships:
+  has_many :act_memberships, foreign_key: :member_id
+      #   1.team memberships
+  has_many :team_memberships, through: :act_memberships, source: :act, source_type: "Team"
+  accepts_nested_attributes_for :team_memberships  
 
+
+## Followers
+
+      # D - follow relationship
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  has_many :followed_users, through: :relationships, source: :followed
+
+  has_many :reverse_relationships, class_name: "Relationship", :foreign_key => "followed_id", dependent: :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower
 
   def following?(other_user)
     relationships.find_by_followed_id(other_user.id)
@@ -78,5 +80,7 @@ class User < ActiveRecord::Base
   def unfollow!(other_user)
     relationships.find_by_followed_id(other_user.id).destroy
   end
+
+##
 
 end
