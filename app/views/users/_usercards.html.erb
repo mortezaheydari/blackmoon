@@ -16,5 +16,12 @@
     <div></div>
     <div></div>
     <div></div>
+    <% if user_is_admin?(event) %>
+        <% if !user_is_admin?(event,person) %>
+            <%= render 'users/make_admin', person: person,  event_id: event.id %>
+        <% elsif user_is_admin?(event, person) && (user_created_this?(event) or current_user?(person)) && event.administrators.count > 1 %>
+            <%= render 'users/remove_admin', person: person,  event_id: event.id %>
+        <% end %>
+    <% end %>
   </div>
 </article>

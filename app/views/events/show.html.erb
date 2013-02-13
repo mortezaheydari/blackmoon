@@ -52,12 +52,12 @@
   </div>
   <div class="event">
     <div class="body">
-        <%= render 'shared/cardsection', individuals: @participator, class_name: "joined" %>
+        <%= render 'shared/cardsection', individuals: @participator, event: @event, class_name: "joined" %>
     <div class="Description">
         <div class="<%= @event.category %>"></div>
         <p><%= @event.descreption %></p>
     </div>
-        <%= render 'shared/cardsection', individuals: @likes, class_name: "likes" %>
+        <%= render 'shared/cardsection', individuals: @likes, event: @event, class_name: "likes" %>
 
 
 <!--

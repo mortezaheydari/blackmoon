@@ -13,6 +13,12 @@ Blackmoon::Application.routes.draw do
     post 'offering_individual_participations/create'
     post 'offering_individual_participations/destroy'
 
+
+    # resources :offering_administrations_controller
+    post 'offering_administrations/create'
+    post 'offering_administrations/destroy'
+
+
     devise_for :accounts, :controllers => {:registrations => "registrations"}
 
   # The priority is based upon order of creation:

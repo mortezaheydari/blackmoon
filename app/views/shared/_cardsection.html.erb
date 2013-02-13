@@ -3,9 +3,9 @@
 
     <%  individuals.each do |individual| %>
         <% if class_name == "likes" %>
-            <%= render 'users/usercards', person: individual.flagger %>
+            <%= render 'users/usercards', person: individual.flagger, event: event %>
         <% else %>
-            <%= render 'users/usercards', person: individual %>
+            <%= render 'users/usercards', person: individual, event: event %>
         <% end %>
     <% end %>
 <% end %>
