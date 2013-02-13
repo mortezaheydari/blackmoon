@@ -21,7 +21,7 @@ def create
                 format.js
             end
     else
-    	redirect_to  event_path(offering_id)
+    	redirect_to  send("#{act_type}_path", offering_id)
     end
 end
 
@@ -47,7 +47,7 @@ def destroy
                 format.js
             end
     else
-        redirect_to event_path(offering_id)
+        redirect_to send("#{act_type}_path", offering_id)
     end
 end
 
