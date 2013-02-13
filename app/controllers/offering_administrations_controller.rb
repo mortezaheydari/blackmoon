@@ -2,54 +2,54 @@ class OfferingAdministrationsController < ApplicationController
             include SessionsHelper
 	before_filter :authenticate_account!
 
-	def create
+def create
     offering_type = params[:offering_type]
     user = User.find_by_id(params[:admin_id_added])
     offering_id = params[:offering_id]
 
     if name_is_valid?(user, offering_type)
 
-    	offerings_administrating = user.send("#{offering_type}s_administrating")
-			offering_to_administrate = offering_type.camelize.constantize.find_by_id(offering_id)
+        offerings_administrating = user.send("#{offering_type}s_administrating")
+        	offering_to_administrate = offering_type.camelize.constantize.find_by_id(offering_id)
 
-			if offering_to_administrate.administrators.include? current_user
-        # todo: check user has the right rank
-				offerings_administrating << offering_to_administrate
-			end
-	    respond_to do |format|
-	        format.html { redirect_to offering_to_administrate }
-	    end
-	  else
-			redirect_to          format.js
- event_path(offering_id)
-		end
-  end
+        	if offering_to_administrate.administrators.include? current_user
+            # todo: check user has the right rank
+                offerings_administrating << offering_to_administrate
+            end
+            respond_to do |format|
+                format.html { redirect_to offering_to_administrate }
+                format.js
+            end
+    else
+    	redirect_to  event_path(offering_id)
+    end
+end
 
-	def destroy
+def destroy
     offering_type = params[:offering_type]
     user = User.find_by_id(params[:admin_id_deleted])
     offering_id = params[:offering_id]
 
     if name_is_valid?(user, offering_type)
 
-			offering_to_remove_admin_from = offering_type.camelize.constantize.find_by_id(offering_id)
+        offering_to_remove_admin_from = offering_type.camelize.constantize.find_by_id(offering_id)
 
-			if current_user_can_delete_admin?(user, offering_to_remove_admin_from)
-                                            administrations = []
-				administrations = user.offering_administrations.where(offering_type: offering_type.camelize , offering_id: offering_id)
-				administrations.each do |a|
-                                                a.destroy
-                                            end unless administrations == []
-			end
+        if current_user_can_delete_admin?(user, offering_to_remove_admin_from)
+            administrations = []
+            administrations = user.offering_administrations.where(offering_type: offering_type.camelize , offering_id: offering_id)
+            administrations.each do |a|
+                a.destroy
+                end unless administrations == []
+            end
 
-	    respond_to do |format|
-	        format.html { redirect_to offering_to_remove_admin_from }
-	        format.js
-	    end
-	  else
-			redirect_to event_path(offering_id)
-		end
-	end
+            respond_to do |format|
+                format.html { redirect_to offering_to_remove_admin_from }
+                format.js
+            end
+    else
+        redirect_to event_path(offering_id)
+    end
+end
 
 
   private
