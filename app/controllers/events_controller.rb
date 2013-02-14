@@ -50,7 +50,7 @@ class EventsController < ApplicationController
   def destroy
   	@user = current_user
   	@event = Event.find(params[:id])
-		if true #user_is_admin?(@user, @event)
+    if user_is_admin?(@event) && user_created_this?(@event)
 			@event.destroy
 			# @event.offering_creation.destroy
       # @event.offering_administrations.destroy
@@ -92,9 +92,9 @@ class EventsController < ApplicationController
 	end
 
   def user_must_be_admin?
-    @offering = Event.find(params[:id])
+    @event = Event.find(params[:id])
     @user = current_user
-    redirect_to(@offering) unless @offering.administrators.include?(@user)
+    redirect_to(@event) unless @event.administrators.include?(@user)
   end
 
 end
