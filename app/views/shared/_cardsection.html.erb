@@ -3,9 +3,17 @@
 
     <%  individuals.each do |individual| %>
         <% if class_name == "likes" %>
-            <%= render 'users/usercards', person: individual.flagger, event: event %>
+            <% if makeadmin == true %>
+                <%= render 'users/usercards', person: individual.flagger, event: event %>
+            <% else %>
+                <%= render 'users/usercardslist', person: individual.flagger %>
+            <% end %>
         <% else %>
-            <%= render 'users/usercards', person: individual, event: event %>
+            <% if makeadmin == true %>
+                <%= render 'users/usercards', person: individual, event: event %>
+            <% else %>
+                <%= render 'users/usercardslist', person: individual %>
+            <% end %>
         <% end %>
     <% end %>
 <% end %>

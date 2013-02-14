@@ -115,10 +115,10 @@
     </div>
 
     <div class="FollowingSection">
-        <%= render 'shared/cardsection', individuals: @user.followed_users, class_name: "FollowedUsers" %>
+        <%= render 'shared/cardsection', individuals: @user.followed_users, class_name: "FollowedUsers", makeadmin: false %>
     </div>
 
     <div class="FollowerSection">
-        <%= render 'shared/cardsection', individuals: @user.followers, class_name: "Followers" %>
+        <%= render 'shared/cardsection', individuals: @user.followers, class_name: "Followers", makeadmin: false %>
     </div>
 </div>
