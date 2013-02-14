@@ -1,7 +1,7 @@
 class CreateTeams < ActiveRecord::Migration
   def change
     create_table :teams do |t|
-      t.title :name
+      t.string :title
       t.text :descreption
       t.string :sport
 

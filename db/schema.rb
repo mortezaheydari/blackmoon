@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130206140152) do
+ActiveRecord::Schema.define(:version => 20130214085535) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -30,6 +30,30 @@ ActiveRecord::Schema.define(:version => 20130206140152) do
 
   add_index "accounts", ["email"], :name => "index_accounts_on_email", :unique => true
   add_index "accounts", ["reset_password_token"], :name => "index_accounts_on_reset_password_token", :unique => true
+
+  create_table "act_administrations", :force => true do |t|
+    t.integer  "administrator_id"
+    t.integer  "act_id"
+    t.string   "act_type"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "act_creations", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "act_id"
+    t.string   "act_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "act_memberships", :force => true do |t|
+    t.integer  "member_id"
+    t.integer  "act_id"
+    t.string   "act_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -90,6 +114,14 @@ ActiveRecord::Schema.define(:version => 20130206140152) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "offering_team_participations", :force => true do |t|
+    t.integer  "participator_id"
+    t.integer  "offering_id"
+    t.string   "offering_type"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "profiles", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -115,6 +147,15 @@ ActiveRecord::Schema.define(:version => 20130206140152) do
   add_index "relationships", ["followed_id", "follower_id"], :name => "index_relationships_on_followed_id_and_follower_id", :unique => true
   add_index "relationships", ["followed_id"], :name => "index_relationships_on_followed_id"
   add_index "relationships", ["follower_id"], :name => "index_relationships_on_follower_id"
+
+  create_table "teams", :force => true do |t|
+    t.string   "title"
+    t.text     "descreption"
+    t.string   "sport"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.integer  "number_of_attendings"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"
