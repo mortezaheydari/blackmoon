@@ -1,5 +1,6 @@
 class ActAdministrationsController < ApplicationController
 
+    include SessionsHelper
 
 	def create
 		act_type = params[:offering_type]
@@ -27,7 +28,7 @@ class ActAdministrationsController < ApplicationController
 	def destroy
     act_type = params[:offering_type]
     user = User.find_by_id(params[:admin_id_deleted])
-    act_id = params[:offering_id]		
+    act_id = params[:offering_id]
 
     if name_is_valid?(user, act_type)
 
@@ -59,9 +60,9 @@ class ActAdministrationsController < ApplicationController
       user.respond_to? "#{name}s_administrating" and ["event","class","game"].include? name
     end
 
-		def current_user_can_delete_admin?(admin, act)
-			# todo: add superadmin
-			user_is_admin?(act) && (user_created_this?(act) or current_user?(admin)) && act.administrators.count > 1
-		end
+		# def current_user_can_delete_admin?(admin, act)
+		# 	# todo: add superadmin
+		# 	user_is_admin?(act) && (user_created_this?(act) or current_user?(admin)) && act.administrators.count > 1
+		# end
 
 end

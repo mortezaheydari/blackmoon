@@ -60,8 +60,8 @@ end
       user.respond_to? "#{name}s_administrating" and ["event","class","game"].include? name
     end
 
-		def current_user_can_delete_admin?(admin, offering)
-			# todo: add superadmin
-			user_is_admin?(offering) && (user_created_this?(offering) or current_user?(admin)) && offering.administrators.count > 1
-		end
+		# def current_user_can_delete_admin?(admin, offering)
+		# 	# todo: add superadmin
+		# 	user_is_admin?(offering) && (user_created_this?(offering) or current_user?(admin)) && offering.administrators.count > 1
+		# end
 end

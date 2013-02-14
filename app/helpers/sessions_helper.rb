@@ -29,4 +29,9 @@ module SessionsHelper
 			"#{date[:year]}-#{date[:month]}-#{date[:day]}"
 		end
 
+            def current_user_can_delete_admin?(admin, this)
+                # todo: add superadmin
+                user_is_admin?(this) && (user_created_this?(this) or current_user?(admin)) && this.administrators.count > 1
+            end
+
 end
