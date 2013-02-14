@@ -16,11 +16,11 @@
     <div></div>
     <div></div>
     <div></div>
-    <% if user_is_admin?(event) %>
-        <% if !user_is_admin?(event,person) %>
-            <%= render 'users/make_admin', person: person,  event_id: event.id %>
-        <% elsif user_is_admin?(event, person) && (user_created_this?(event) or current_user?(person)) && event.administrators.count > 1 %>
-            <%= render 'users/remove_admin', person: person,  event_id: event.id %>
+    <% if user_is_admin?(offering) %>
+        <% if !user_is_admin?(offering,person) %>
+            <%= render 'users/make_admin', person: person,  offering_id: offering.id %>
+        <% elsif user_is_admin?(offering, person) && (user_created_this?(offering) or current_user?(person)) && offering.administrators.count > 1 %>
+            <%= render 'users/remove_admin', person: person,  offering_id: offering.id %>
         <% end %>
     <% end %>
   </div>
