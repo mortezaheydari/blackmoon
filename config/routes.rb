@@ -18,9 +18,13 @@ Blackmoon::Application.routes.draw do
     post 'offering_administrations/create'
     post 'offering_administrations/destroy'
 
-    # resources :act_administrations_controller
+
     post 'act_administrations/create'
     post 'act_administrations/destroy'
+
+
+    post 'act_memberships/create'
+    post 'act_memberships/destroy'
 
     devise_for :accounts, :controllers => {:registrations => "registrations"}
 

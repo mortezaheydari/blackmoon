@@ -56,8 +56,8 @@ class User < ActiveRecord::Base
       # G - act memberships:
   has_many :act_memberships, foreign_key: :member_id
       #   1.team memberships
-  has_many :team_memberships, through: :act_memberships, source: :act, source_type: "Team"
-  accepts_nested_attributes_for :team_memberships
+  has_many :teams_membership, through: :act_memberships, source: :act, source_type: "Team"
+  accepts_nested_attributes_for :teams_membership
 
 
 ## Followers

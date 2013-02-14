@@ -40,7 +40,7 @@ class OfferingIndividualParticipationsController < ApplicationController
       offering_id = params[:offering_id]
 
       if name_is_valid?(user, offering_type)
-      participations = user.offering_individual_participations.where(offering_type: offering_type, offering_id: offerign_id)
+      participations = user.offering_individual_participations.where(offering_type: offering_type, offering_id: offering_id)
       # todo: check participation deadline is not pass
       participations.each.destroy unless participations == []
 
@@ -57,7 +57,7 @@ class OfferingIndividualParticipationsController < ApplicationController
 
   private
 
-    # checks if offerign name is valid for user
+    # checks if offering name is valid for user
     # note: this function is controller specific
     def name_is_valid?(user, name)
       user.respond_to? "#{name}s_participating" and ["event","class","game"].include? name

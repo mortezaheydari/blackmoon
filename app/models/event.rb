@@ -3,6 +3,7 @@ class Event < ActiveRecord::Base
   attr_accessible :category, :custom_address, :date_and_time, :descreption,
   				 :location_type, :title, :tournament_id, :duration_type, :time_from,
   				 :time_to, :fee, :fee_type, :sport, :number_of_attendings, :team_participation
+  before_save :default_values
 
 	make_flaggable :like
 
@@ -46,4 +47,7 @@ class Event < ActiveRecord::Base
 		Team.find(@participators)
 	end
 
+  def default_values
+    self.number_of_attendings ||= 0
+  end
 end

@@ -1,5 +1,6 @@
 class Team < ActiveRecord::Base
-  attr_accessible :descreption, :name, :sport
+  attr_accessible :descreption, :name, :sport, :number_of_attendings
+  before_save :default_values
 
 	make_flaggable :like  
 
@@ -39,4 +40,8 @@ class Team < ActiveRecord::Base
 		User.find(@members)
 	end	
 
+
+  def default_values
+    self.number_of_attendings ||= 0
+  end
 end
