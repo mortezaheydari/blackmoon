@@ -21,6 +21,11 @@ Blackmoon::Application.routes.draw do
     post 'offering_individual_participations/create'
     post 'offering_individual_participations/destroy'
 
+    # resources :offering_individual_participations
+    post 'offering_team_participations/create'
+    post 'offering_team_participations/destroy'
+
+
 
     # resources :offering_administrations_controller
     post 'offering_administrations/create'
