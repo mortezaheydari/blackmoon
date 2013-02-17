@@ -1,3 +1,2 @@
-alert("Hello")
-// $("#likeContainer").html("<%= escape_javascript(render('shared/like_button')) %>")
-// $('span#likeCount').html("<%= @event.flaggings.with_flag(:like).count %>")
+$("#likeContainer").html("<%= escape_javascript(render('shared/like_button', offering: @event)) %>")
+$('span#likeCount').html("<%= @event.flaggings.with_flag(:like).count %>")

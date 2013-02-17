@@ -1,2 +1,2 @@
-$("#likeContainer").html("<%= escape_javascript(render('shared/like_button')) %>")
+$("#likeContainer").html("<%= escape_javascript(render('shared/like_button', offering: @team)) %>")
 $('span#likeCount').html("<%= @team.flaggings.with_flag(:like).count %>")
