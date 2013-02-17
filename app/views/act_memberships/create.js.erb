@@ -1,0 +1,3 @@
+$("#join_container").html("<%= escape_javascript(render('teams/joined')) %>")
+$("div.joined").html("<%= escape_javascript(render('shared/cardsection',  individuals: @members, offering: @offering, class_name: 'joined', makeadmin: true, typefor: 'team')) %>")
+$('span#joinCount').html("<%= @members.count %>")
