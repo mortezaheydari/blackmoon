@@ -1,1 +1,1 @@
-<%= link_to content_tag("div", "", class: "joinButton"), offering_individual_participations_create_path(offering_type: "event", offering_id: @event.id, joining_user: current_user), method: :post, remote: :true, id: "joinButton" %>
+<%= link_to content_tag("div", "", class: "joinButton"), act_memberships_create_path(offering_type: "team", offering_id: @team.id, joining_user: current_user), method: :post, remote: :true, id: "joinButton" %>

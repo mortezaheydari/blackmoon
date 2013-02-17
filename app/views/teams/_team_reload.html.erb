@@ -1,20 +1,20 @@
-          <% event = @event %>
+          <% team = @team %>
             <header class="activityHeader">
-              <%= link_to image_tag("bg.png", class: "activityImage"), event_path(event) %>
+              <%= link_to image_tag("bg.png", class: "activityImage"), team_path(team) %>
 <!--               <a href="#">
                 <%= image_tag "bg.png", class: "activityImage" %>
               </a> -->
               <h5 class="activityTitle text-left">
-                <%= link_to event.title, event_path(event) %>
+                <%= link_to team.title, team_path(team) %>
               </h5>
-              <p class="text-left"><strong>Originator:</strong> <%= event.creator.name %><br><%= event.date_and_time.strftime("%A, %B %d, %Y") %></p>
-              <div class="<%= event.category %>"></div>
+              <p class="text-left"><strong>Originator:</strong> <%= team.creator.name %><br><%= team.date_and_time.strftime("%A, %B %d, %Y") %></p>
+<!--               <div class="<%= team.category %>"></div> -->
             </header>
 
             <div class="activityBody text-center">
               <ul class="block-grid three-up">
                 <li><%= image_tag "1.png" %></li>
-                <li><%= toggle_like_card_button(event, current_user) %> <span id="likecount<%= event.id %>" class="small-text"><%= event.flaggings.with_flag(:like).count %></span> </li>
+                <li><%= toggle_like_card_button(team, current_user) %> <span id="likecount<%= team.id %>" class="small-text"><%= team.flaggings.with_flag(:like).count %></span> </li>
                 <li><div class="featureStar"></div> </li>
               </ul>
 

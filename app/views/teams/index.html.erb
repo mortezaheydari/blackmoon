@@ -1,7 +1,7 @@
   <div class="body">
     <div class="cardsection">
-        <% @events.each do |e| %>
-            <%= render 'events/event', event: e %>
+        <% @teams.each do |t| %>
+            <%= render 'teams/team', team: t %>
         <% end %>
     </div>
 
@@ -9,8 +9,8 @@
 
 
         <div class="sideBox">
-            <div class="sideTitle">Your Upcoming Events</div>
-            <% @events.each do |e| %>
+            <div class="sideTitle">Teams</div>
+            <% @teams.each do |e| %>
                 <%= render 'shared/upcoming_offering', offering: e, offering_name: "event" %>
             <% end %>
         </div>

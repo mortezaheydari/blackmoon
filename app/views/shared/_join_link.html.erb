@@ -1,7 +1,22 @@
 <div id="join_container">
-    <% if user_is_participating?(@event) %>
-            <%= render 'joined' %>
-    <% else %>
-            <%= render 'join' %>
+    <% if participating_actor == "user" && ["events", "games", "classes"].include?(dir) %>
+        <% if user_is_participating?(offering) %>
+                <%= render "#{dir}/joined" %>
+        <% else %>
+                <%= render "#{dir}/join" %>
+        <% end %>
+    <% elsif participating_actor == "user" && ["teams", "sponsors", "organizations"].include?(dir) %>
+        <% if user_is_member?(offering) %>
+                <%= render "#{dir}/joined" %>
+        <% else %>
+                <%= render "#{dir}/join" %>
+        <% end %>
+    <% elsif participating_actor == "team" %>
+        <% if team_is_participating?(offering) %>
+                <%= render "#{dir}/joined" %>
+        <% else %>
+                <%= render "#{dir}/join" %>
+        <% end %>
     <% end %>
+
 </div>

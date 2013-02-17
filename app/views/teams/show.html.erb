@@ -1,20 +1,10 @@
   <div class="userInfo">
     <div class="eventProfileCard">
       <div class="large"></div>
-      <div class="<%= @event.category %> left"></div>
-      <h1><%= @event.title %></h1>
-      <p>Sports: <%= @event.sport %></p>
-      <p>Time: <%= @event.time_from.strftime("%I:%M %p") %> - <%= @event.time_to.strftime("%I:%M %p")  %></p>
-      <p>Date: <%= @event.date_and_time.strftime("%A, %B %d, %Y") %></p>
-      <p>Location: <%= @event.custom_address %></p>
+      <h1><%= @team.title %></h1>
+      <p>Sports: <%= @team.sport %></p>
       <footer>
-        <span>Fee:</span>
-        <% if @event.fee_type == "Free" %>
-            <a href="#">Free</a>
-        <% else %>
-            <a href="#"><%= @event.fee %> KD</a>
-        <% end %>
-        <span class="right">players: <%= @event.number_of_attendings %></span>
+        <span class="right">players: <%= @team.number_of_attendings %></span>
       </footer>
     </div>
 
@@ -26,38 +16,36 @@
     <div class="activityOrigin">
         <div class="OriginTitle">Activity Originator</div>
         <div class="UserimgName">
-            <div class="img"><%= gravatar_for(@event.creator) %></div>
-            <%= link_to @event.creator.name , user_path(@event.creator) %>
+            <div class="img"><%= gravatar_for(@team.creator) %></div>
+            <%= link_to @team.creator.name , user_path(@team.creator) %>
         </div>
-      <!-- <a href="#" class="originTitle"><%= @event.creator.name %></a> -->
         <p>Level 2: Game Originator</p>
     </div>
 
-    <%= render 'shared/like_button' if signed_in? %>
-    <%= render 'shared/join_link' if signed_in? %>
+    <%= render 'shared/like_button', offering: @team if signed_in? %>
+    <%= render 'shared/join_link', offering: @team, participating_actor: "user", dir: "teams" if signed_in? %>
 
     <a href="#"><div class="shareButton"></div></a>
-    <%= link_to "Edit", edit_event_path(@event), class: "button blue left" if signed_in? && current_user == @event.creator %>
+    <%= link_to "Edit", edit_event_path(@team), class: "button blue left" if signed_in? && current_user == @team.creator %>
 
   </div>
 
   <div class="secondMenu">
     <nav id="secondary">
       <ul>
-        <li id="joined"><a href="#">Joined (<span id="joinCount"><%= @participator.count %></span>)</a></li>
+        <li id="joined"><a href="#">Joined (<span id="joinCount"><%= @members.count %></span>)</a></li>
         <li id="Description"><a href="#">Description</a></li>
-        <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @event.flaggings.with_flag(:like).count %></span>)</a></li>
+        <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @team.flaggings.with_flag(:like).count %></span>)</a></li>
       </ul>
     </nav>
   </div>
-  <div class="event">
+  <div class="team">
     <div class="body">
-        <%= render 'shared/cardsection', individuals: @participator, offering: @event, class_name: "joined", makeadmin: true %>
+        <%= render 'shared/cardsection', individuals: @members, offering: @team, class_name: "joined", makeadmin: true, typefor: "team" %>
     <div class="Description">
-        <div class="<%= @event.category %>"></div>
-        <p><%= @event.descreption %></p>
+        <p><%= @team.descreption %></p>
     </div>
-        <%= render 'shared/cardsection', individuals: @likes, offering: @event, class_name: "likes", makeadmin: true  %>
+        <%= render 'shared/cardsection', individuals: @likes, offering: @team, class_name: "likes", makeadmin: true, typefor: "team"  %>
 
 
 <!--

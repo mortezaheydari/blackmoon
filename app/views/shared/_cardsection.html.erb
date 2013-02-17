@@ -4,13 +4,13 @@
     <%  individuals.each do |individual| %>
         <% if class_name == "likes" %>
             <% if makeadmin == true %>
-                <%= render 'users/usercards', person: individual.flagger, offering: offering %>
+                <%= render 'users/usercards', person: individual.flagger, offering: offering, typefor: typefor %>
             <% else %>
                 <%= render 'users/usercardslist', person: individual.flagger %>
             <% end %>
         <% else %>
             <% if makeadmin == true %>
-                <%= render 'users/usercards', person: individual, offering: offering %>
+                <%= render 'users/usercards', person: individual, offering: offering, typefor: typefor %>
             <% else %>
                 <%= render 'users/usercardslist', person: individual %>
             <% end %>
