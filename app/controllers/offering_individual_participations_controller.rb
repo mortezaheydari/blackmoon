@@ -24,6 +24,7 @@ class OfferingIndividualParticipationsController < ApplicationController
             offerings_participating << joining_offering unless offerings_participating.include? joining_offering
         end
         @participator = joining_offering.individual_participators
+        @offering = joining_offering
         respond_to do |format|
             format.html { redirect_to joining_offering }
             format.js

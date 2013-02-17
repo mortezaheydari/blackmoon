@@ -6,7 +6,7 @@ class ActMembershipsController < ApplicationController
   # getting membership in an act
 
   ## note:	process is open to everybody now. to be controlled by act admin later
-	
+
   def create
       act_type = params[:offering_type]
       user = User.find_by_id(params[:joining_user])
@@ -21,6 +21,7 @@ class ActMembershipsController < ApplicationController
 
             acts_membership << joining_act
         end
+        @offering = joining_act
         @members = joining_act.members
         respond_to do |format|
             format.html { redirect_to joining_act }
@@ -49,7 +50,7 @@ class ActMembershipsController < ApplicationController
         end
       else
           redirect_to root
-      end    
+      end
   end
 
 
