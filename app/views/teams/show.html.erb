@@ -26,7 +26,7 @@
     <%= render 'shared/join_link', offering: @team, participating_actor: "user", dir: "teams" if signed_in? %>
 
     <a href="#"><div class="shareButton"></div></a>
-    <%= link_to "Edit", edit_event_path(@team), class: "button blue left" if signed_in? && current_user == @team.creator %>
+    <%= link_to "Edit", edit_team_path(@team), class: "button blue left" if signed_in? && current_user == @team.creator %>
 
   </div>
 

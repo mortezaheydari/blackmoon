@@ -35,7 +35,7 @@ class Team < ActiveRecord::Base
 	def members
 		@members = []
 		self.act_memberships.each do |member|
-			@members << member.administrator_id
+			@members << member.member_id
 		end
 		User.find(@members)
 	end
