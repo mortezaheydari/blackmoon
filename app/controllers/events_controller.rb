@@ -14,7 +14,7 @@ class EventsController < ApplicationController
       msg = "you now like this event."
     end
     respond_to do |format|
-        format.html { redirect_to @event, notice: msg }
+        format.html { redirect_to @event}
         format.js
     end
   end
