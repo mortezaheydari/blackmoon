@@ -35,7 +35,7 @@
 
     <%= render 'shared/like_button', offering: @event if signed_in? %>
     <% if @event.team_participation == true %>
-            <%= render 'shared/join_link', offering: @event, participating_actor: "team" if signed_in? %>
+            <%= render 'shared/join_link', offering: @event, participating_actor: "team", dir: "events" if signed_in? %>
     <% else %>
             <%= render 'shared/join_link', offering: @event, participating_actor: "user", dir: "events" if signed_in? %>
     <% end %>
@@ -63,16 +63,6 @@
         <p><%= @event.descreption %></p>
     </div>
         <%= render 'shared/cardsection', individuals: @likes, offering: @event, class_name: "likes", makeadmin: true, typefor: "team" %>
-
-
-<!--
-      <div class="sideBar">
-
-        <%= render 'shared/side_intrest' %>
-
-        <%= render 'shared/similar_players' %>
-
-      </div> -->
     </div>
   </div>
 </div>
