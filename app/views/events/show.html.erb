@@ -57,12 +57,12 @@
   </div>
   <div class="event">
     <div class="body">
-        <%= render 'shared/cardsection', individuals: @participator, offering: @event, class_name: "joined", makeadmin: true, typefor: "team" %>
+        <%= render 'shared/cardsection', individuals: @participator, offering: @event, class_name: "joined", makeadmin: true, typefor: "event" %>
     <div class="Description">
         <div class="<%= @event.category %>"></div>
         <p><%= @event.descreption %></p>
     </div>
-        <%= render 'shared/cardsection', individuals: @likes, offering: @event, class_name: "likes", makeadmin: true, typefor: "team" %>
+        <%= render 'shared/cardsection', individuals: @likes, offering: @event, class_name: "likes", makeadmin: true, typefor: "event" %>
     </div>
   </div>
 </div>

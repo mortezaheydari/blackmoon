@@ -54,7 +54,7 @@ module SessionsHelper
 	end
 
 	def toggle_like_card_button(this, user)
-		class_name = this.class.to_s.downcase		
+		class_name = this.class.to_s.downcase
 		if user.flagged?(this, :like)
 			link_to content_tag("div", "", class: "thumbedUp"), send("like_cards_#{class_name}_path", this), id: this.id, remote: true
 		else
@@ -62,6 +62,9 @@ module SessionsHelper
 		end
 	end
 
+        # def class_name(this)
+        #     this.class.to_s.downcase
+        # end
 
 
 end

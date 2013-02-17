@@ -21,7 +21,7 @@ class OfferingIndividualParticipationsController < ApplicationController
         number_of_attendings = joining_offering.number_of_attendings
         if offerings_participating.count < number_of_attendings or number_of_attendings == 0
             # todo: check participation deadline is not pass
-            offerings_participating << joining_offering
+            offerings_participating << joining_offering unless offerings_participating.include? joining_offering
         end
         @participator = joining_offering.individual_participators
         respond_to do |format|
@@ -52,7 +52,7 @@ class OfferingIndividualParticipationsController < ApplicationController
         end
       else
           redirect_to root
-      end    
+      end
   end
 
   private

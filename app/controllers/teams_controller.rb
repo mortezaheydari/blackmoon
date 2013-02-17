@@ -19,7 +19,6 @@ class TeamsController < ApplicationController
     end
   end
 
-
   def like_cards
     @team = Team.find(params[:id])
 
