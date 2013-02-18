@@ -1,3 +1,7 @@
 <span class="makeAdmin">
-    <%= link_to  "Make Admin", offering_administrations_create_path(offering_type: typefor, admin_id_added: person.id, offering_id: offering_id), method: :post %>
+    <% if this_is_offering?(this) %>
+        <%= link_to  "Make Admin", offering_administrations_create_path(this_type:  k_lower(this), admin_id_added: person.id, this_id: this.id), method: :post, remote: :true %>
+    <% elsif this_is_act?(this) %>
+        <%= link_to  "Make Admin", act_administrations_create_path(this_type:  k_lower(this), admin_id_added: person.id, this_id: this.id), method: :post, remote: :true %>
+    <% end %>
 </span>
