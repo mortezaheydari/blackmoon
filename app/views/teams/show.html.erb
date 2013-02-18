@@ -23,7 +23,7 @@
     </div>
 
     <%= render 'shared/like_button', offering: @team if signed_in? %>
-    <%= render 'shared/join_link', offering: @team, participating_actor: "user", dir: "teams" if signed_in? %>
+    <%= render 'shared/join_link', this: @team, participating_actor: "user" if signed_in? %>
 
     <a href="#"><div class="shareButton"></div></a>
     <%= link_to "Edit", edit_team_path(@team), class: "button blue left" if signed_in? && current_user == @team.creator %>
@@ -41,11 +41,11 @@
   </div>
   <div class="team">
     <div class="body">
-        <%= render 'shared/cardsection', individuals: @members, offering: @team, class_name: "joined", makeadmin: true, typefor: "team" %>
+        <%= render 'shared/cardsection', individuals: @members, this: @team, class_name: "joined", makeadmin: true %>
     <div class="Description">
         <p><%= @team.descreption %></p>
     </div>
-        <%= render 'shared/cardsection', individuals: @likes, offering: @team, class_name: "likes", makeadmin: true, typefor: "team"  %>
+        <%= render 'shared/cardsection', individuals: @likes, this: @team, class_name: "likes", makeadmin: true %>
 
 
 <!--
