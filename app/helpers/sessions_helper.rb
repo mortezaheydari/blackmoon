@@ -61,7 +61,29 @@ module SessionsHelper
 			link_to content_tag("div", "", class: "thumbsUp"), send("like_cards_#{class_name}_path", this), id: this.id, remote: true
 		end
 	end
+            def k_lower(this)
+                this.class.to_s.downcase
+            end
 
+            def k_lower_p(this)
+                this.class.to_s.downcase.pluralize
+            end
+
+            def this_is_offering?(this)
+                if this.class.to_s == "String"
+                    ["event", "game", "class"].include?(this)
+                else
+                    ["event", "game", "class"].include?(k_lower(this))
+                end
+            end
+
+            def this_is_act?(this)
+                if this.class.to_s == "String"
+                    ["team", "sponsor", "organization"].include?(this)
+                else
+                    ["team", "sponsor", "organization"].include?(k_lower(this))
+                end
+            end
         # def class_name(this)
         #     this.class.to_s.downcase
         # end
