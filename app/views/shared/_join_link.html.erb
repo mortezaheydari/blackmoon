@@ -1,21 +1,21 @@
 <div id="join_container">
-    <% if participating_actor == "user" && ["events", "games", "classes"].include?(dir) %>
-        <% if user_is_participating?(offering) %>
-                <%= render "#{dir}/joined" %>
+    <% if participating_actor == "user" && this_is_offering?(this) %>
+        <% if user_is_participating?(this) %>
+                <%= render "#{k_lower_p(this)}/joined" %>
         <% else %>
-                <%= render "#{dir}/join" %>
+                <%= render "#{k_lower_p(this)}/join" %>
         <% end %>
-    <% elsif participating_actor == "user" && ["teams", "sponsors", "organizations"].include?(dir) %>
-        <% if user_is_member?(offering) %>
-                <%= render "#{dir}/joined" %>
+    <% elsif participating_actor == "user" && this_is_act?(this) %>
+        <% if user_is_member?(this) %>
+                <%= render "#{k_lower_p(this)}/joined" %>
         <% else %>
-                <%= render "#{dir}/join" %>
+                <%= render "#{k_lower_p(this)}/join" %>
         <% end %>
     <% elsif participating_actor == "team" %>
-        <% if team_is_participating?(offering) %>
-                <%= render "#{dir}/joined" %>
+        <% if team_is_participating?(this) %>
+                <%= render "#{k_lower_p(this)}/joined" %>
         <% else %>
-                <%= render "#{dir}/join" %>
+                <%= render "#{k_lower_p(this)}/join" %>
         <% end %>
     <% end %>
 
