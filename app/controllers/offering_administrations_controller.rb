@@ -3,13 +3,13 @@ class OfferingAdministrationsController < ApplicationController
 	before_filter :authenticate_account!
 
 def create
-    offering_type = params[:offering_type]
+    offering_type = params[:this_type]
     user = User.find_by_id(params[:admin_id_added])
-    offering_id = params[:offering_id]
+    offering_id = params[:this_id]
 
     if name_is_valid?(user, offering_type)
 
-        offerings_administrating = user.send("#{offering_type}s_administrating")
+        offerings_administrating = user.send("#{offering_type.pluralize}_administrating")
         	offering_to_administrate = offering_type.camelize.constantize.find_by_id(offering_id)
 
         	if offering_to_administrate.administrators.include? current_user
@@ -26,9 +26,9 @@ def create
 end
 
 def destroy
-    offering_type = params[:offering_type]
+    offering_type = params[:this_type]
     user = User.find_by_id(params[:admin_id_deleted])
-    offering_id = params[:offering_id]
+    offering_id = params[:this_id]
 
     if name_is_valid?(user, offering_type)
 
