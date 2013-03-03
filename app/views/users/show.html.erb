@@ -103,14 +103,14 @@
     <div class="likeSection">
         <% @likes.each do |e| %>
             <% @f = Event.find_by_id(e.flaggable_id) %>
-            <%= render 'events/event', event: @f %>
+            <%= render 'events/event', event: @f, class_name: "likeSection" %>
         <% end %>
     </div>
 
 
     <div class="activityCards">
         <% @user.events_participating.each do |e| %>
-            <%= render 'events/event', event: e %>
+            <%= render 'events/event', event: e, class_name: "activityCards" %>
         <% end %>
     </div>
 

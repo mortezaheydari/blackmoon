@@ -53,13 +53,19 @@ module SessionsHelper
 		end
 	end
 
-	def toggle_like_card_button(this, user)
+	def toggle_like_card_button(this, user, options = {})
 		class_name = this.class.to_s.downcase
+                      style_id = ""
+                      style_id = options[:style_id] unless options[:style_id].nil?
+
 		if user.flagged?(this, :like)
-			link_to content_tag("div", "", class: "thumbedUp"), send("like_cards_#{class_name}_path", this), id: this.id, remote: true
+			thumbs ="thumbedUp"
 		else
-			link_to content_tag("div", "", class: "thumbsUp"), send("like_cards_#{class_name}_path", this), id: this.id, remote: true
+			thumbs ="thumbsUp"
 		end
+
+                      # link_to content_tag("div", "", class: thumbs), like_cards_event_path(this, id: this.id, style_id: style_id, class_name: options[:class_name]), remote: true
+                      link_to content_tag("div", "", class: thumbs, id: "thumbs"), send("like_cards_#{class_name}_path", this, id: this.id, style_id: style_id, class_name: options[:class_name]), remote: true
 	end
             def k_lower(this)
                 this.class.to_s.downcase
