@@ -6,6 +6,8 @@ def create
     act_type = params[:this_type]
     user = User.find_by_id(params[:admin_id_added])
     act_id = params[:this_id]
+    act = act_type.camelize.constantize
+    this = act.find_by_id(params[:this_id])
 
     if name_is_valid?(user, act_type)
 
@@ -20,7 +22,7 @@ def create
         @act =  act_to_administrate
         respond_to do |format|
             format.html { redirect_to act_to_administrate }
-            format.js
+            format.js { render 'act_administrations/create', :locals => { this: this, person: user } }
         end
     else
         redirect_to  send("#{act_type}_path", act_id)
@@ -31,6 +33,8 @@ end
     act_type = params[:this_type]
     user = User.find_by_id(params[:admin_id_deleted])
     act_id = params[:this_id]
+    act = act_type.camelize.constantize
+    this = act.find_by_id(params[:this_id])
 
     if name_is_valid?(user, act_type)
 
@@ -46,7 +50,7 @@ end
 
         respond_to do |format|
           format.html { redirect_to act_to_remove_admin_from }
-          format.js
+          format.js { render 'act_administrations/destroy', :locals => { this: this, person: user } }
         end
     else
       redirect_to send("#{act_type}_path", act_id)
