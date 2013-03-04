@@ -1,0 +1,2 @@
+$("#game<%= style_id %>").html("<%= escape_javascript(render('games/game', class_name: class_name, game: @game, reload: true)) %>")
+$('span#likecount<%= @game.id %>').html("<%= @game.flaggings.with_flag(:like).count %>")

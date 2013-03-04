@@ -1,0 +1,24 @@
+            <% reload ||= false %>
+          <% style_id = class_name + game.id.to_s %>
+          <%= "<article class=\"activityBox\" id=\"game #{style_id} \">".html_safe unless reload == true %>
+            <header class="activityHeader">
+              <%= link_to image_tag("bg.png", class: "activityImage"), game_path(game) %>
+<!--               <a href="#">
+                <%= image_tag "bg.png", class: "activityImage" %>
+              </a> -->
+              <h5 class="activityTitle text-left">
+                <%= link_to game.title, game_path(game) %>
+              </h5>
+              <p class="text-left"><strong>Originator:</strong> <%= game.creator.name %><br><%= game.date_and_time.strftime("%A, %B %d, %Y") %></p>
+              <div class="<%= game.category %>"></div>
+            </header>
+
+            <div class="activityBody text-center">
+              <ul class="block-grid three-up">
+                <li><%= image_tag "1.png" %></li>
+                <li><%= toggle_like_card_button(game, current_user, {style_id: style_id, class_name: class_name}) if signed_in? %> <span id="likecount<%= game.id %>" class="small-text"><%= game.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
+                <li><div class="featureStar"></div> </li>
+              </ul>
+
+            </div>
+          <%= "</article>".html_safe unless reload == true %>

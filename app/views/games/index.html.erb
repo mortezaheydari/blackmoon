@@ -1,0 +1,24 @@
+  <div class="body">
+    <div class="cardsection">
+        <% @games.each do |g| %>
+            <%= render 'games/game', game: g, class_name: "gameList" %>
+        <% end %>
+    </div>
+
+    <div class="sideBar">
+
+
+        <div class="sideBox">
+            <div class="sideTitle">Your Upcoming games</div>
+            <% @games.each do |e| %>
+                <%= render 'shared/upcoming_offering', offering: e, offering_name: "game" %>
+            <% end %>
+        </div>
+
+
+      <div class="sideBox">
+        <div class="sideTitle">Activity</div>
+            <%= render 'shared/activity_sidebar' %>
+      </div>
+    </div>
+  </div>

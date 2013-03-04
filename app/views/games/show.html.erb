@@ -1,0 +1,68 @@
+  <div class="userInfo">
+    <div class="eventProfileCard">
+      <div class="large"></div>
+      <div class="<%= @game.category %> left"></div>
+      <h1><%= @game.title %></h1>
+      <p>Sports: <%= @game.sport %></p>
+      <p>Time: <%= @game.time_from.strftime("%I:%M %p") %> - <%= @game.time_to.strftime("%I:%M %p")  %></p>
+      <p>Date: <%= @game.date_and_time.strftime("%A, %B %d, %Y") %></p>
+      <p>Location: <%= @game.custom_address %></p>
+      <footer>
+        <span>Fee:</span>
+        <% if @game.fee_type == "Free" %>
+            <a href="#">Free</a>
+        <% else %>
+            <a href="#"><%= @game.fee %> KD</a>
+        <% end %>
+        <span class="right">players: <%= @game.number_of_attendings %></span>
+      </footer>
+    </div>
+
+    <div class="locationPartial">
+      <div class="locationTitle">Location</div>
+      <div class="map"></div>
+    </div>
+
+    <div class="activityOrigin">
+        <div class="OriginTitle">Activity Originator</div>
+        <div class="UserimgName">
+            <div class="img"><%= gravatar_for(@game.creator) %></div>
+            <%= link_to @game.creator.name , user_path(@game.creator) %>
+        </div>
+      <!-- <a href="#" class="originTitle"><%= @game.creator.name %></a> -->
+        <p>Level 2: Game Originator</p>
+    </div>
+
+    <%= render 'shared/like_button', offering: @game if signed_in? %>
+    <% if @game.team_participation == true %>
+            <%= render 'shared/join_link', this: @game, participating_actor: "team" if signed_in? %>
+    <% else %>
+            <%= render 'shared/join_link', this: @game, participating_actor: "user" if signed_in? %>
+    <% end %>
+
+
+    <a href="#"><div class="shareButton"></div></a>
+    <%= link_to "Edit", edit_game_path(@game), class: "button blue left" if signed_in? && user_is_admin?(@game) %>
+
+  </div>
+
+  <div class="secondMenu">
+    <nav id="secondary">
+      <ul>
+        <li id="joined"><a href="#">Joined (<span id="joinCount"><%= @participator.count %></span>)</a></li>
+        <li id="Description"><a href="#">Description</a></li>
+        <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @game.flaggings.with_flag(:like).count %></span>)</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="game">
+    <div class="body">
+        <%= render 'shared/cardsection', individuals: @participator, this: @game, class_name: "joined", makeadmin: true%>
+    <div class="Description">
+        <div class="<%= @game.category %>"></div>
+        <p><%= @game.description %></p>
+    </div>
+        <%= render 'shared/cardsection', individuals: @likes, this: @game, class_name: "likes", makeadmin: true %>
+    </div>
+  </div>
+</div>

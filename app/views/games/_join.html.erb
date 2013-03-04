@@ -1,0 +1,1 @@
+<%= link_to content_tag("div", "", class: "joinButton"), offering_individual_participations_create_path(offering_type: "game", offering_id: @game.id, joining_user: current_user), method: :post, remote: :true, id: "joinButton" %>
