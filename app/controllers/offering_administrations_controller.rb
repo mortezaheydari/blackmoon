@@ -6,6 +6,8 @@ def create
     offering_type = params[:this_type]
     user = User.find_by_id(params[:admin_id_added])
     offering_id = params[:this_id]
+    offering = offering_type.camelize.constantize
+    this = offering.find_by_id(params[:this_id])
 
     if name_is_valid?(user, offering_type)
 
@@ -18,7 +20,7 @@ def create
             end
             respond_to do |format|
                 format.html { redirect_to offering_to_administrate }
-                format.js
+                format.js { render 'offering_administrations/create', :locals => { this: this, person: user } }
             end
     else
     	redirect_to  send("#{act_type}_path", offering_id)
@@ -29,6 +31,8 @@ def destroy
     offering_type = params[:this_type]
     user = User.find_by_id(params[:admin_id_deleted])
     offering_id = params[:this_id]
+    offering = offering_type.camelize.constantize
+    this = offering.find_by_id(params[:this_id])
 
     if name_is_valid?(user, offering_type)
 
@@ -44,7 +48,7 @@ def destroy
 
             respond_to do |format|
                 format.html { redirect_to offering_to_remove_admin_from }
-                format.js
+                format.js { render 'offering_administrations/destroy', :locals => { this: this, person: user } }
             end
     else
         redirect_to send("#{act_type}_path", offering_id)
