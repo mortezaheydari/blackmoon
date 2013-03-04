@@ -43,7 +43,6 @@ class TeamsController < ApplicationController
     @team.save
   	@team.create_act_creation(creator_id: @current_user_id)
     @team.act_administrations.create(administrator_id: @current_user_id)
-    @team.act_membership.create(member_id: @current_user_id)    
 		redirect_to @team
   end
 
