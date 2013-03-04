@@ -1,4 +1,5 @@
 <% reload ||= false %>
+<% person ||= current_user %>
 <% style_id = "team" + team.id.to_s %>
 
 <%= "<article class=\"activityBox\" id=\"#{style_id} \">".html_safe unless reload == true %>
@@ -11,16 +12,16 @@
       <%= link_to team.title, team_path(team) %>
     </h5>
     <h5 class="activityTitle text-left">
-      <% if user_created_this? team %>
+      <% if user_created_this? team, person %>
         (creator)
-      <% elsif user_is_admin? team %>
+      <% elsif user_is_admin? team,  person %>
         (admin)
-      <% elsif user_is_member? team %>      
+      <% elsif user_is_member? team, person %>
         (member)
+    </h5>
+      <% elsif signed_in? %>
+        Join this team <%= link_to "->", team_path(team), class: "teamCardJoin" %>
       <% end %>
-
-      <%= link_to team.title, team_path(team) %>
-    </h5>              
   </header>
 
   <div class="activityBody text-center">
