@@ -93,6 +93,8 @@
         <li id="likeSection"><a href="#">Likes (<%= @likes.with_flag(:like).count %>)</a></li>
         <li id="FollowingSection"><a href="#">Following (<%= @user.followed_users.count %>)</a></li>
         <li id="FollowerSection"><a href="#">Followers (<%= @user.followers.count %>)</a></li>
+
+        <li id="TeamSection"><a href="#">Teams (<%= @user.teams_membership.count %>)</a></li>
       </ul>
     </nav>
   </div>
@@ -121,4 +123,11 @@
     <div class="FollowerSection">
         <%= render 'shared/cardsection', individuals: @user.followers, class_name: "Followers", makeadmin: false %>
     </div>
+
+    <div class="teamCards">
+        <% @user.teams_membership.each do |t| %>
+            <%= render 'teams/team', team: t, class_name: "teamCards", person: @user %>
+        <% end %>
+    </div>
+
 </div>

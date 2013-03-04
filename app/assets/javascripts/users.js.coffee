@@ -7,6 +7,7 @@ $ ->
     $('div.likeSection').hide()
     $('div.FollowingSection').hide()
     $('div.FollowerSection').hide()
+    $('div.teamCards').hide()
     $('nav#secondary ul li:first').addClass('navActive')
 
   $('div.dashboard a#editIntrest').click (e) ->
@@ -20,6 +21,7 @@ $ ->
     $('div.likeSection').fadeOut('fast')
     $('div.FollowerSection').fadeOut('fast')
     $('div.FollowingSection').fadeOut('fast')
+    $('div.teamCards').fadeOut('fast')
     $('div.activityCards').fadeIn('fast')
 
   $('nav#secondary ul li#likeSection').click (e) ->
@@ -29,6 +31,7 @@ $ ->
     $('div.activityCards').fadeOut('fast')
     $('div.FollowerSection').fadeOut('fast')
     $('div.FollowingSection').fadeOut('fast')
+    $('div.teamCards').fadeOut('fast')
     $('div.likeSection').fadeIn('fast')
 
   $('nav#secondary ul li#FollowingSection').click (e) ->
@@ -38,6 +41,7 @@ $ ->
     $('div.activityCards').fadeOut('fast')
     $('div.likeSection').fadeOut('fast')
     $('div.FollowerSection').fadeOut('fast')
+    $('div.teamCards').fadeOut('fast')
     $('div.FollowingSection').fadeIn('fast')
 
   $('nav#secondary ul li#FollowerSection').click (e) ->
@@ -47,4 +51,15 @@ $ ->
     $('div.activityCards').fadeOut('fast')
     $('div.likeSection').fadeOut('fast')
     $('div.FollowingSection').fadeOut('fast')
+    $('div.teamCards').fadeOut('fast')
     $('div.FollowerSection').fadeIn('fast')
+
+  $('nav#secondary ul li#TeamSection').click (e) ->
+    e.preventDefault()
+    $('nav#secondary ul li.navActive').removeClass()
+    $(@).addClass('navActive')
+    $('div.activityCards').fadeOut('fast')
+    $('div.likeSection').fadeOut('fast')
+    $('div.FollowingSection').fadeOut('fast')
+    $('div.FollowerSection').fadeOut('fast')
+    $('div.teamCards').fadeIn('fast')
