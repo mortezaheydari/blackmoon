@@ -36,7 +36,6 @@ class TeamsController < ApplicationController
   def new
   	@team = Team.new
   end
-  
 
   def create
     @current_user_id = current_user.id
@@ -44,6 +43,7 @@ class TeamsController < ApplicationController
     @team.save
   	@team.create_act_creation(creator_id: @current_user_id)
     @team.act_administrations.create(administrator_id: @current_user_id)
+    @team.act_memberships.create(member_id: @current_user_id)    
 		redirect_to @team
   end
 
