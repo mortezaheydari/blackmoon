@@ -21,20 +21,26 @@ class User < ActiveRecord::Base
   has_many :events_created, through: :offering_creations, source: :offering, source_type: "Event"
   accepts_nested_attributes_for :events_created
       #   2.games created
-  ##  has_many :games_created, through: :offering_creations, source: :offering, source_type: "Game"
-  ##  accepts_nested_attributes_for :games_created
+  has_many :games_created, through: :offering_creations, source: :offering, source_type: "Game"
+  accepts_nested_attributes_for :games_created
 
       # B - offering administrations:
   has_many :offering_administrations, foreign_key: :administrator_id
       #   1.events administrating
   has_many :events_administrating, through: :offering_administrations, source: :offering, source_type: "Event"
   accepts_nested_attributes_for :events_administrating
+      #   2.games administrating
+  has_many :games_administrating, through: :offering_administrations, source: :offering, source_type: "Game"
+  accepts_nested_attributes_for :games_administrating  
 
       # C - offering participation:
   has_many :offering_individual_participations, foreign_key: :participator_id
       #   1.events participating
   has_many :events_participating, through: :offering_individual_participations, source: :offering, source_type: "Event"
   accepts_nested_attributes_for :events_participating
+      #   2.games participating
+  has_many :games_participating, through: :offering_individual_participations, source: :offering, source_type: "Game"
+  accepts_nested_attributes_for :games_participating  
 
   accepts_nested_attributes_for :profile
   belongs_to :account
