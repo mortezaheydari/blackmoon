@@ -1,3 +1,2 @@
-// alert("#event<%= @event.id %>")
-$("#team<%= @team.id %>").html("<%= escape_javascript(render('teams/team', reload: true)) %>")
+$("#team<%= @team.id %>").html("<%= escape_javascript(render('teams/team',team: @team, reload: true)) %>")
 $('span#likecount<%= @team.id %>').html("<%= @team.flaggings.with_flag(:like).count %>")
