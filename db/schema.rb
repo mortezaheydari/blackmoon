@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130214085535) do
+ActiveRecord::Schema.define(:version => 20130304102021) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -89,6 +89,26 @@ ActiveRecord::Schema.define(:version => 20130214085535) do
   add_index "flaggings", ["flag", "flagger_type", "flagger_id", "flaggable_type", "flaggable_id"], :name => "access_flag_flaggings"
   add_index "flaggings", ["flaggable_type", "flaggable_id"], :name => "index_flaggings_on_flaggable_type_and_flaggable_id"
   add_index "flaggings", ["flagger_type", "flagger_id", "flaggable_type", "flaggable_id"], :name => "access_flaggings"
+
+  create_table "games", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "location_type"
+    t.string   "custom_address"
+    t.string   "category"
+    t.datetime "date_and_time"
+    t.integer  "tournament_id"
+    t.string   "duration_type"
+    t.time     "time_from"
+    t.time     "time_to"
+    t.float    "fee"
+    t.string   "fee_type"
+    t.string   "sport"
+    t.integer  "number_of_attendings"
+    t.boolean  "team_participation"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
 
   create_table "offering_administrations", :force => true do |t|
     t.integer  "administrator_id"

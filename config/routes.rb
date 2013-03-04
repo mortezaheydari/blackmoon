@@ -14,6 +14,12 @@ Blackmoon::Application.routes.draw do
       end
     end
 
+    resources :games do
+      member do
+        get 'like'
+        get 'like_cards'
+      end
+    end
 
     resources :relationships, only: [ :create, :destroy ]
 
