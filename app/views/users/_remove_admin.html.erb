@@ -1,7 +1,5 @@
-<span id="makeAdmin<%= person.id %>">
     <% if this_is_offering?(this) %>
         <%= link_to  "Kick Admin", offering_administrations_destroy_path(this_type:  k_lower(this), admin_id_deleted: person.id, this_id: this.id), method: :post, remote: :true %>
     <% elsif this_is_act?(this) %>
         <%= link_to  "Kick Admin", act_administrations_destroy_path(this_type:  k_lower(this), admin_id_deleted: person.id, this_id: this.id), method: :post, remote: :true %>
     <% end %>
-</span>

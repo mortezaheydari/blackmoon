@@ -16,6 +16,7 @@
     <div></div>
     <div></div>
     <div></div>
+<span id="makeAdmin<%= person.id %>">
     <% if user_is_admin?(this) %>
         <% if !user_is_admin?(this,person) %>
             <%= render 'users/make_admin', person: person,  this: this  %>
@@ -23,5 +24,6 @@
             <%= render 'users/remove_admin', person: person,  this: this %>
         <% end %>
     <% end %>
+</span>
   </div>
 </article>
