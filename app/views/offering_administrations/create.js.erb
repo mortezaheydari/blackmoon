@@ -1,1 +1,1 @@
-$("#makeAdmin").html("<%= escape_javascript(render('users/remove_admin')) %>")
+$("span#makeAdmin<%= person.id %>").html("<%= escape_javascript(render('users/remove_admin', person: person,  this: this)) %>")
