@@ -36,6 +36,7 @@ class TeamsController < ApplicationController
   def new
   	@team = Team.new
   end
+  
 
   def create
     @current_user_id = current_user.id
