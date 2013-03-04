@@ -4,13 +4,13 @@
     <%  individuals.each do |individual| %>
         <% if class_name == "likes" %>
             <% if makeadmin == true %>
-                <%= render 'users/usercards', person: individual.flagger, this: this %>
+                <%= render 'users/usercards', person: individual.flagger, this: this, class_name: class_name %>
             <% else %>
                 <%= render 'users/usercardslist', person: individual.flagger %>
             <% end %>
         <% else %>
             <% if makeadmin == true %>
-                <%= render 'users/usercards', person: individual, this: this  %>
+                <%= render 'users/usercards', person: individual, this: this, class_name: class_name  %>
             <% else %>
                 <%= render 'users/usercardslist', person: individual %>
             <% end %>
