@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :events_administrating
       #   2.games administrating
   has_many :games_administrating, through: :offering_administrations, source: :offering, source_type: "Game"
-  accepts_nested_attributes_for :games_administrating  
+  accepts_nested_attributes_for :games_administrating
 
       # C - offering participation:
   has_many :offering_individual_participations, foreign_key: :participator_id
@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :events_participating
       #   2.games participating
   has_many :games_participating, through: :offering_individual_participations, source: :offering, source_type: "Game"
-  accepts_nested_attributes_for :games_participating  
+  accepts_nested_attributes_for :games_participating
 
   accepts_nested_attributes_for :profile
   belongs_to :account
@@ -88,5 +88,37 @@ class User < ActiveRecord::Base
   end
 
 ##
+    def offerings_participating
+        @participatings = []
+        events_participating.each do |event_participating|
+            @participatings << event_participating
+        end
+        games_participating.each do |game_participating|
+            @participatings << game_participating
+        end
+        @participatings
+    end
 
+
+    def offerings_administrating
+        @administratings = []
+        events_administrating.each do |event_administrating|
+            @administratings << event_administrating
+        end
+        games_administrating.each do |game_administrating|
+            @administratings << game_administrating
+        end
+        @administratings
+    end
+
+    def offerings_created
+        @createds = []
+        events_created.each do |event_created|
+            @createds << event_created
+        end
+        games_created.each do |game_created|
+            @createds << game_created
+        end
+        @createds
+    end
 end
