@@ -25,7 +25,7 @@ class GamesController < ApplicationController
     # current_user.unflag(@game, :like)
     current_user.toggle_flag(@game, :like)
     respond_to do |format|
-        format.js { render 'games/like_cards', :locals => { style_id: params[:style_id], class_name: params[:class_name] } }
+        format.js { render 'shared/offering/like_cards', :locals => { offering: @game, style_id: params[:style_id], class_name: params[:class_name] } }
     end
   end
 

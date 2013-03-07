@@ -25,7 +25,7 @@ class EventsController < ApplicationController
     # current_user.unflag(@event, :like)
     current_user.toggle_flag(@event, :like)
     respond_to do |format|
-        format.js { render 'events/like_cards', :locals => { style_id: params[:style_id], class_name: params[:class_name] } }
+        format.js { render 'shared/offering/like_cards', :locals => { offering: @event, style_id: params[:style_id], class_name: params[:class_name] } }
     end
   end
 
