@@ -1,0 +1,12 @@
+$("#<%= style_id %>").html("<%= escape_javascript(render('shared/offering/offering', class_name: class_name, offering: offering, reload: true)) %>")
+$('span#likecount<%= k_lower(offering) + offering.id.to_s %>').html("<%= offering.flaggings.with_flag(:like).count %>")
+
+if ($('#thumbs<%= style_id + "like" %>').hasClass('thumbsUp')) {
+    $('#thumbs<%= style_id + "like" %>').removeClass("thumbsUp")
+    $('#thumbs<%= style_id + "like" %>').addClass("thumbedUp")
+} else if($('#thumbs<%= style_id + "like" %>').hasClass('thumbedUp')) {
+    $('#thumbs<%= style_id + "like" %>').removeClass("thumbedUp")
+    $('#thumbs<%= style_id + "like" %>').addClass("thumbsUp")
+} else {
+    alert("Sorry there has been some connectivity issue please try after refreshing the page.")
+}

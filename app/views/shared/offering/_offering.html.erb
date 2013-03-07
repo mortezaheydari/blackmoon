@@ -1,0 +1,37 @@
+          <% reload ||= false %>
+          <% style_id = k_lower(offering) + class_name + offering.id.to_s %>
+          <%= "<article class=\"activityBox\" id=\"#{style_id} \">".html_safe unless reload == true %>
+            <header class="activityHeader">
+              <%= link_to image_tag("bg.png", class: "activityImage"), send(k_lower(offering) + "_path" ,offering) %>
+<!--               <a href="#">
+                <%= image_tag "bg.png", class: "activityImage" %>
+              </a> -->
+              <h5 class="activityTitle text-left">
+                <%= link_to offering.title, send(k_lower(offering) + "_path" ,offering) %>
+              </h5>
+              <p class="text-left"><%= k_lower(offering).capitalize %></p>
+              <% unless this_is_act?(offering) %>
+                  <p class="text-left"><strong>Originator:</strong> <%= offering.creator.name %><br><%= offering.date_and_time.strftime("%A, %B %d, %Y") %></p>
+                  <div class="<%= offering.category %>"></div>
+
+              <% end -%>
+              <% if this_is_act?(offering) %>
+                  <div class="teamMembers">
+                    <p>Team Members</p>
+                    <div class="smallImg"></div>
+                    <div class="smallImg"></div>
+                    <div class="smallImg"></div>
+                    <div class="smallImg"></div>
+                  </div>
+              <% end %>
+            </header>
+
+            <div class="activityBody text-center">
+              <ul class="block-grid three-up">
+                <li><%= image_tag "1.png" %></li>
+                <li><%= toggle_like_card_button(offering, current_user, {style_id: style_id, class_name: class_name}) if signed_in? %> <span id="likecount<%= k_lower(offering) + offering.id.to_s %>" class="small-text"><%= offering.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
+                <li><div class="featureStar"></div> </li>
+              </ul>
+
+            </div>
+          <%= "</article>".html_safe unless reload == true %>
