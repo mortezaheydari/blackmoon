@@ -34,4 +34,10 @@ Blackmoon::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+
+  # User added to
+  config.assets.precompile += %w( *.js *.css )
+
+  config.serve_static_assets = true
 end
