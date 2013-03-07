@@ -89,7 +89,7 @@
   <div class="secondMenu">
     <nav id="secondary">
       <ul>
-        <li id="activities"><a href="#">Activities (<%= @user.events_participating.count %>)</a></li>
+        <li id="activities"><a href="#">Activities (<%= @user.offerings_participating.count %>)</a></li>
         <li id="likeSection"><a href="#">Likes (<%= @likes.with_flag(:like).count %>)</a></li>
         <li id="FollowingSection"><a href="#">Following (<%= @user.followed_users.count %>)</a></li>
         <li id="FollowerSection"><a href="#">Followers (<%= @user.followers.count %>)</a></li>
@@ -100,19 +100,20 @@
   </div>
 
 
+<div class="userBottom">
 
-<div class="body">
+<div class="body userBottom">
     <div class="likeSection">
         <% @likes.each do |e| %>
-            <% @f = Event.find_by_id(e.flaggable_id) %>
-            <%= render 'events/event', event: @f, class_name: "likeSection" %>
+            <% @f = e.flaggable %>
+            <%= render 'shared/offering/offering', offering: @f, class_name: "likeSection" %>
         <% end %>
     </div>
 
 
     <div class="activityCards">
-        <% @user.events_participating.each do |e| %>
-            <%= render 'events/event', event: e, class_name: "activityCards" %>
+        <% @user.offerings_participating.each do |offering| %>
+            <%= render 'shared/offering/offering', offering: offering, class_name: "activityCards" %>
         <% end %>
     </div>
 
@@ -130,4 +131,5 @@
         <% end %>
     </div>
 
+</div>
 </div>

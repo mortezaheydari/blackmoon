@@ -1,7 +1,7 @@
   <div class="body">
     <div class="cardsection">
         <% @events.each do |e| %>
-            <%= render 'events/event', event: e, class_name: "eventList" %>
+            <%= render 'shared/offering/offering', offering: e, class_name: "eventList" %>
         <% end %>
     </div>
 
