@@ -4,17 +4,10 @@
         <a href="#">Explore</a>
         <ul id="ExploreDrop">
           <li>
-            <div class="left exploresub">
-              <div class="left"></div>
-              <%= link_to "Events", events_path %>
-            </div>
+              <%= link_to content_tag("div", "Events", class: "left exploresub"), events_path %>
           </li>
           <li>
-            <div class="left exploresub">
-              <div class="left"></div>
-              <%= link_to "Games", games_path %>
-              <!-- <%= link_to "Games", events_path %> -->
-            </div>
+              <%= link_to content_tag("div", "Games", class: "left exploresub"), games_path %>
           </li>
           <li>
             <div class="left exploresub">
@@ -31,10 +24,7 @@
             </div>
           </li>
           <li>
-            <div class="left exploresub">
-              <div class="left"></div>
-              <%= link_to "Teams", teams_path %>
-            </div>
+              <%= link_to content_tag("div", "Teams", class: "left exploresub"), teams_path %>
           </li>
         </ul>
   </div>
