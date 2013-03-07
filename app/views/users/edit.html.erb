@@ -28,7 +28,7 @@
             				<%= profile_form.text_field :phone, class: "TextField" %></div>
 
             				<div><%= profile_form.label :date_of_birth %><br />
-            				<%= select_date @date_of_birth, :prefix => :date_of_birth %></div>
+            				<%= select_date @date_of_birth, :prefix => :date_of_birth, :start_year => Time.now.year, :end_year => Time.now.year - 95 %></div>
 
             				<div><%= profile_form.label :about %><br />
                 		<%= profile_form.text_area :about,

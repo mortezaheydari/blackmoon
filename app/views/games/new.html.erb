@@ -42,7 +42,7 @@
 
                             <div>
                                 <%= f.label :date_and_time %><br />
-                                <%= select_date @date_and_time, :prefix => :date_and_time %>
+                                <%= select_date @date_and_time, :prefix => :date_and_time, :start_year => Time.now.year, :end_year => Time.now.year + 5  %>
                             </div>
 
                             <div>
