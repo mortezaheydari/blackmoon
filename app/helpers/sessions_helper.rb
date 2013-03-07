@@ -6,7 +6,11 @@ module SessionsHelper
 		end
 
 		def current_user
+                            if account_signed_in?
 			@current_user ||= current_account.user
+                            else
+                                @current_user ||= User.new
+                            end
 		end
 
 	def current_user?(user)
@@ -64,8 +68,8 @@ module SessionsHelper
 			thumbs ="thumbsUp"
 		end
 
-                      # link_to content_tag("div", "", class: thumbs), like_cards_event_path(this, id: this.id, style_id: style_id, class_name: options[:class_name]), remote: true
-                      link_to content_tag("div", "", class: thumbs, id: "thumbs"), send("like_cards_#{class_name}_path", this, id: this.id, style_id: style_id, class_name: options[:class_name]), remote: true
+
+                      link_to content_tag("div", "", class: thumbs, id: "thumbs#{style_id + "like"}"), send("like_cards_#{class_name}_path", this, id: this.id, style_id: style_id, class_name: options[:class_name]), remote: true
 	end
             def k_lower(this)
                 this.class.to_s.downcase
