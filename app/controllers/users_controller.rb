@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_account!, only: [:edit, :update]
+
   include SessionsHelper
+
   def index
     @users = User.all
   end
@@ -11,18 +14,26 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    @user.profile ||= Profile.new
-    @date_of_birth = @user.profile.date_of_birth
+    if current_user == @user
+        @user.profile ||= Profile.new
+        @date_of_birth = @user.profile.date_of_birth
+    else
+        redirect_to root_path
+    end
   end
 
   def update
     @user = User.find(params[:id])
-    @user.profile.date_of_birth = date_helper_to_str(params[:date_of_birth])
-    if @user.update_attributes(params[:user])
-      flash[:success] = "Profile updated"
-      redirect_to @user
-    else
-      render 'edit'
+    if current_user == @user
+        @user.profile.date_of_birth = date_helper_to_str(params[:date_of_birth])
+        if @user.update_attributes(params[:user])
+          flash[:success] = "Profile updated"
+          redirect_to @user
+        else
+          render 'edit'
+        end
+     else
+        redirect_to root_path
     end
   end
 
