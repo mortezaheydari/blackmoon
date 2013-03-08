@@ -45,7 +45,12 @@ Blackmoon::Application.routes.draw do
     post 'act_memberships/create'
     post 'act_memberships/destroy'
 
-    devise_for :accounts, :controllers => {:registrations => "registrations"}
+    # devise_for :accounts
+    # there was an issue were delete method didn't wotk for sign_out in production mode
+    # https://github.com/RailsApps/rails3-mongoid-devise/issues/4
+    devise_for :accounts do
+      get "/accounts/sign_out" => "devise/sessions#destroy", :as => :destroy_user_session
+    end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
