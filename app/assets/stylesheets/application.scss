@@ -127,7 +127,11 @@ div.small {
     @include border-radius(5px);
 }
 
-
+div#Sign {
+    a {
+      color: #666666;
+    }
+}
 
 .small-text {
   font-size: 10px;
