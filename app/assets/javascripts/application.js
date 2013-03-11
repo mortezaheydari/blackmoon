@@ -11,6 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery_ujs
+//= require fancybox
 //= require_tree .
 
 $(document).ready(function() {
@@ -37,21 +39,32 @@ $(document).ready(function() {
         $("ul#ExploreDrop").hide();
     });
 
-// Modal JavaScript Begin
-
-    $('div#createNewMenu').click(function(e) {
-        $modal
-          .prepend($modal_close)
-          .css('top', $(window).scrollTop() + 40)
-          .show();
-        $modal_container.show();
+    $("div#createNewMenu a").fancybox({
+            padding: 0,
+            margin: 0
     });
 
-    $('.close', '#modal').live('click', function(){
-        $modal_container.hide();
-        $modal.hide();
-        return false;
-      });
+    $("div#Sign a#SignInTop").fancybox({
+        padding: 0,
+        margin: 0,
+        minWidth: 600
+    });
+
+// Modal JavaScript Begin
+
+    // $('div#createNewMenu').click(function(e) {
+    //     $modal
+    //       .prepend($modal_close)
+    //       .css('top', $(window).scrollTop() + 40)
+    //       .show();
+    //     $modal_container.show();
+    // });
+
+    // $('.close', '#modal').live('click', function(){
+    //     $modal_container.hide();
+    //     $modal.hide();
+    //     return false;
+    //   });
 
 // Modal JavaScript End
 });
