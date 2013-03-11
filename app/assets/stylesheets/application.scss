@@ -1,5 +1,6 @@
 /*
 *= require_self
+*= require fancybox
 */
 
 @import "compass";
@@ -1243,39 +1244,79 @@ form {
 
 // modal
 
-
-#modal-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 10;
-}
-
-#modal {
-  display: none;
-  position: absolute;
-  z-index: 10;
-  width: 600px;
-  left: 50%;
-  margin-left: (-600px - 40px) / 2;
-  padding: 20px;
-  background: #fff;
-  border: 5px solid #eee;
-
-  & > .close {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    color: #666;
-    &:hover, &:active {
-      color: #000;
+.modal {
+    background: #ffffff url("modal-top-left.png") top left no-repeat;
+    @include background-size(50%);
+    height: 325px;
+    @include box-shadow(#666666 0px 5px 15px inset);
+    .header {
+        position: relative;
+        width: 47%;
+        left: 53%;
+        top:20%;
+           .icon {
+            background:url("sign-in-modal.png") no-repeat;
+            background-size: 70px 56px;
+            width: 70px;
+            height: 56px;
+        }
+        h3 {
+            display: inline-block;
+            word-wrap:break-word;
+            margin-top: 35px;
+        }
     }
-  }
+
+    form {
+        position: relative;
+        top: 20%;
+        width: 50%;
+        margin: 0 auto;
+        input.textField {
+            @include TextFields;
+            background-color: #fff;
+            @include border-radius(10px);
+        }
+    }
 }
+
+.fancybox-skin {
+    padding: 0;
+}
+
+
+// #modal-container {
+//   display: none;
+//   position: fixed;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   background: rgba(0,0,0,0.4);
+//   z-index: 10;
+// }
+
+// #modal {
+//   display: none;
+//   position: absolute;
+//   z-index: 10;
+//   width: 600px;
+//   left: 50%;
+//   margin-left: (-600px - 40px) / 2;
+//   padding: 20px;
+//   background: #fff;
+//   border: 5px solid #eee;
+
+//   & > .close {
+//     position: absolute;
+//     right: 5px;
+//     top: 5px;
+//     color: #666;
+//     &:hover, &:active {
+//       color: #000;
+//     }
+//   }
+// }
 
 // end of shared styles
 

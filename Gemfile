@@ -41,6 +41,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'fancybox2-rails', '~> 0.2.4'
 
 group :test do
 	gem 'capybara', '1.1.2'
