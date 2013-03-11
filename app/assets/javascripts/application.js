@@ -263,6 +263,7 @@ $(document).ready(function() {
             img.attr("src", "/assets/drop-icon.png");
         }
     });
+
 // Modal JavaScript Begin
 
     // $('div#createNewMenu').click(function(e) {
