@@ -126,6 +126,11 @@ GEM
     pg (0.12.2)
     pg (0.12.2-x86-mingw32)
     polyglot (0.3.3)
+    public_activity (1.0.3)
+      actionpack (~> 3.0)
+      activesupport (~> 3.0)
+      i18n (>= 0.5.0)
+      railties (~> 3.0)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -224,6 +229,7 @@ DEPENDENCIES
   jquery-rails
   make_flaggable!
   pg (= 0.12.2)
+  public_activity
   rails (= 3.2.9)
   rspec-rails (= 2.11.0)
   sass-rails (~> 3.2.3)
