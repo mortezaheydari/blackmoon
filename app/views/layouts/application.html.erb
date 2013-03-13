@@ -23,8 +23,8 @@
     </div>
 
 <%= yield %>
-<div class="VideoContainer"><%= debug(params) if Rails.env.development? %></div>
-</div>
+<!-- <div class="VideoContainer"><%= debug(params) if Rails.env.development? %></div>
+</div> -->
 <%= render 'shared/modal' %>
 <%= render 'shared/signin_modal' %>
 <%= render 'shared/signup_modal' %>
