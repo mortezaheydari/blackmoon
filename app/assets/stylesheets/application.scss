@@ -218,6 +218,10 @@ div.signPage {
   float: left;
 }
 
+.center {
+    margin: 0 auto;
+}
+
 .right {
   float: right;
 }
@@ -1323,11 +1327,17 @@ form {
         width: 47%;
         left: 53%;
         top:20%;
-           .icon {
+       .icon {
             background:url("sign-in-modal.png") no-repeat;
             background-size: 70px 56px;
             width: 70px;
             height: 56px;
+        }
+       .Createicon {
+            background: url("icons.png");
+            background-position: -400px -800px;
+            width: 100px;
+            height: 100px;
         }
         h3 {
             display: inline-block;
@@ -1345,6 +1355,37 @@ form {
             @include TextFields;
             background-color: #fff;
             @include border-radius(10px);
+        }
+    }
+}
+
+div#Create {
+    width: 600px;
+    .header {
+        height: 160px;
+        left: 300px;
+        top: 25px;
+    }
+    .linkContainer {
+        margin: 0 auto;
+        width: 100%;
+        div {
+            width: 31%;
+        }
+        div.classIcon {
+                background: url("class-icon.png") no-repeat;
+                width: 74px;
+                height: 100px;
+        }
+        div.eventIcon {
+                background: url("event-icon.png") no-repeat;
+                width: 85px;
+                height: 100px;
+        }
+        div.tourIcon {
+                background: url("tournament-icon.png") no-repeat;
+                width: 218px;
+                height: 100px;
         }
     }
 }
