@@ -161,6 +161,18 @@ div.signPage {
 
         }
     }
+    header#editprofile {
+        width: 27%;
+        .editicon {
+            background: url("icons.png");
+            background-position: -500px -800px;
+            width: 100px;
+            height: 100px;
+        }
+        h3  {
+            margin-left: 10px;
+        }
+    }
 
     header#editprofile {
         width: 27%;
