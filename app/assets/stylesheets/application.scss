@@ -139,10 +139,12 @@ div.signPage {
     width: 300px;
     @include background-size(50%);
     height: auto !important;
+
     header {
         height: 135px;
         margin: 0 auto;
         width: 22%;
+
         .icon {
             background:url("sign-in-modal.png") no-repeat;
             background-size: 100px 80px;
@@ -159,6 +161,7 @@ div.signPage {
 
         }
     }
+
     header#editprofile {
         width: 27%;
         .editicon {
@@ -188,6 +191,7 @@ div.signPage {
             background-color: #fff;
             @include border-radius(10px);
         }
+
         select {
             @include appearance(none);
             background: url("drop-icon.png") no-repeat scroll right center;
