@@ -142,7 +142,7 @@ div.signPage {
         height: 135px;
         margin: 0 auto;
         width: 22%;
-           .icon {
+        .icon {
             background:url("sign-in-modal.png") no-repeat;
             background-size: 100px 80px;
             width: 100px;
@@ -156,6 +156,18 @@ div.signPage {
             font-weight: normal;
             color: $TextColor;
 
+        }
+    }
+    header#editprofile {
+        width: 27%;
+        .editicon {
+            background: url("icons.png");
+            background-position: -500px -800px;
+            width: 100px;
+            height: 100px;
+        }
+        h3  {
+            margin-left: 10px;
         }
     }
 
@@ -172,11 +184,19 @@ div.signPage {
             background-color: #fff;
             @include border-radius(10px);
         }
+        select {
+            -moz-appearance: none;
+            background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat scroll right center;
+            border: 1px solid #666666;
+            border-radius: 10px 10px 10px 10px;
+            width: 31.5%;
+        }
         table {
             margin: 0 auto;
             tr {
                 td {
                     padding: 5px 5px;
+
                 }
             }
         }
