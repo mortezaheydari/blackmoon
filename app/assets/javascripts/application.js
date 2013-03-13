@@ -50,6 +50,12 @@ $(document).ready(function() {
         minWidth: 600
     });
 
+
+    $("div#Sign a#SignUpTop").fancybox({
+        padding: 0,
+        margin: 0,
+        minWidth: 600
+    });
 // Modal JavaScript Begin
 
     // $('div#createNewMenu').click(function(e) {

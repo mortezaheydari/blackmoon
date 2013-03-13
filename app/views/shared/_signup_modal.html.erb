@@ -1,0 +1,35 @@
+<div style="display:none">
+<div id="SignUp" class="modal">
+    <div class="header"><div class="icon left"></div><h3>SIGN UP</h3></div>
+        <%= form_for(@account,:as => resource_name, :url => account_registration_path) do |f| %>
+        <table colspan="5">
+            <tr>
+                <%= f.fields_for :user do |user_form| %>
+                    <td><%= f.label :name, class: "right" %></td>
+                    <td><%= user_form.text_field :name, class: "textField" %></td>
+                <% end %>
+            </tr>
+             <tr>
+                <td><%= f.label :email, class: "right" %></td>
+                <td><%= f.email_field :email, class: "textField" %></td>
+            </tr>
+            <tr>
+                <td><%= f.label :password, class: "right" %></td>
+                <td><%= f.password_field :password, class: "textField" %></td>
+            </tr>
+            <tr>
+                <td><%= f.label :password_confirmation, class: "right" %></td>
+                <td><%= f.password_field :password_confirmation, class: "textField" %></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><%= f.submit 'Sign Up', class: "button grey submitBtn homeBtn right" %></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><%= link_to "Sign In", new_account_session_path, class: "right" %></td>
+            </tr>
+        </table>
+    <% end %>
+</div>
+</div>
