@@ -23,6 +23,7 @@ $TextColor: #666666;
 $boxPadding: 10px;
 $linkColor: #159fa4;
 $white: #ffffff;
+$FormBorder: #B8B8B8;
 
 $grey: #E6E6E6;
 $timePassedGrey: #B3B3B3;
@@ -67,15 +68,10 @@ $buttonBgHover: #ffffff;
 
 @mixin TextFields {
     height: 20px;
-    @include background($grey);
-    @include border-radius(10px);
-    @include background($grey);
+    @include border-radius(15px);
     @include box-shadow(none);
-    border: 1px solid $TextColor;
+    border: 1px solid $FormBorder;
     margin: 5px 0;
-    @include transition-property(width);
-    @include transition-duration(0.3s);
-    @include transition-timing-function(ease-in-out);
 }
 
 // end of mixin declaration
@@ -94,6 +90,11 @@ div.teamMembers {
         @include border-radius(5px);
     }
 }
+
+.inline {
+    display: inline;
+}
+
 
 .guestMenu {
     width:300px;
@@ -189,8 +190,8 @@ div.signPage {
         }
         select {
             -moz-appearance: none;
-            background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat scroll right center;
-            border: 1px solid #666666;
+            background: url("drop-icon.png") no-repeat scroll right center;
+            background-size: 20px 20px;
             border-radius: 10px 10px 10px 10px;
             width: 31.5%;
         }
@@ -258,8 +259,6 @@ div.signPage {
   background:$objBg;
   width:100%;
 }
-
-
 
 .blue {
   @extend button;
@@ -1292,19 +1291,19 @@ form {
     width: 45%;
     @include TextFields;
     &:focus {
-      @include background($TextColor);
       color: #ffffff;
       width: 50%;
     }
   }
 
   select {
-    width: 14.5%;
+    width: 50%;
     @include TextFields;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: $grey url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
+    background: url("drop-icon.png") no-repeat right center;
+    background-size: 30px 30px;
     overflow:hidden;
   }
   .submitBtn {
@@ -1315,13 +1314,65 @@ form {
     width: 45%;
     @include TextFields;
     height: 200px;
-        &:focus {
-      @include background($TextColor);
-      color: #ffffff;
-      width: 50%;
-    }
   }
 }
+
+////////// Offering create/edit  //////////
+
+.offering {
+      @include column(20);
+      @include divReset;
+      min-height: 500px;
+      float: left;
+      h1, h2 {
+        color: $TextColor;
+        font-weight: bold;
+      }
+      table {
+        td {
+            vertical-align: top;
+        }
+      }
+      hr {
+        border:none;
+        border-top: 1px solid $TextColor;
+      }
+      table#categoryChoice {
+        td {
+            text-align: center;
+            color: $TextColor;
+            padding: 0 10px;
+            img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+      }
+      form {
+        label {
+            font-size: 0.8em;
+            line-height: 30px;
+            color: $TextColor;
+        }
+        input {
+            @include TextFields;
+            height: 20px;
+            padding: 5px;
+            width: 25%;
+        }
+        select {
+            height: 30px;
+            width: 25%;
+            padding: 5px;
+        }
+        textarea {
+            width: 25%;
+            padding: 5px;
+        }
+      }
+}
+
+
 
 // modal
 

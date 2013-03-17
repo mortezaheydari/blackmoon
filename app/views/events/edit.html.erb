@@ -11,8 +11,9 @@
                             </div>
 
                             <div>
-                                <%= f.label :category, "Category" %>
-                                <%= f.select :category, ["BallSports", "Fitness", "WaterSports"] %>
+                                <%= f.radio_button :category, "BallSports", value: "BallSports", checked: true %>
+                                <%= f.radio_button :category, "Fitness", value: "Fitness" %>
+                                <%= f.radio_button :category, "WaterSports", value: "WaterSports" %>
                             </div>
 
                             <div>
