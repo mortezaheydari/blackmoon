@@ -223,6 +223,7 @@ $(document).ready(function() {
         }
     });
 
+
     $("#event_fee_type").change( function() {
         if ($(this).val() == 'Free') {
             $("tr#AmountRow").hide();

@@ -1405,6 +1405,7 @@ form {
             &:focus {
                 border: 1px solid $TextColor;
             }
+
         }
         textarea {
             width: 25%;
@@ -1412,9 +1413,11 @@ form {
             &:focus {
                 border: 1px solid $TextColor;
             }
+
         }
       }
 }
+
 
 
 .offering_management {

@@ -8,6 +8,7 @@
                             <div class="<%= @event.category %> left"></div> <br>
 
                             <div>
+<<<<<<< HEAD
                                 <table  width="100%">
                                     <tr>
                                         <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
@@ -30,6 +31,11 @@
                                         <td></td>
                                     </tr>
                                 </table>
+=======
+                                <%= f.radio_button :category, "BallSports", value: "BallSports", checked: true %>
+                                <%= f.radio_button :category, "Fitness", value: "Fitness" %>
+                                <%= f.radio_button :category, "WaterSports", value: "WaterSports" %>
+>>>>>>> Create Event Updated
                             </div>
 <hr>
 
