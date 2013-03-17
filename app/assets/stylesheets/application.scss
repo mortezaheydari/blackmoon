@@ -170,6 +170,9 @@ div.signPage {
             margin-left: 10px;
         }
     }
+    header#forgotHeader {
+        width: 41%;
+    }
 
     form {
         border-top :solid 1px $TextColor;
@@ -208,6 +211,11 @@ div.signPage {
   position: relative;
   top: -2px;
   color: $timePassedGrey;
+}
+
+.borderlr {
+    border-left: solid 1px $TextColor;
+    border-right: solid 1px $TextColor;
 }
 
 .text-left { text-align: left; }
@@ -1335,9 +1343,10 @@ form {
         }
        .Createicon {
             background: url("icons.png");
-            background-position: -400px -800px;
-            width: 100px;
-            height: 100px;
+            @include background-size(400px 500px);
+            background-position: -200px -400px;
+            width: 50px;
+            height: 50px;
         }
         h3 {
             display: inline-block;
@@ -1361,16 +1370,33 @@ form {
 
 div#Create {
     width: 600px;
+    height: 350px;
     .header {
-        height: 160px;
+        height: 0;
         left: 300px;
-        top: 25px;
+        top: 73px;
+        h3 {
+            margin-top: 13px;
+        }
     }
     .linkContainer {
-        margin: 0 auto;
         width: 100%;
+        margin: 140px auto;
         div {
-            width: 31%;
+            width: 25%;
+            padding: 2%;
+            a {
+                color: $TextColor;
+                font-size: 1em;
+                p {
+                    text-align: center;
+                }
+            }
+        }
+        div#tour {
+            p {
+                width: 149%;
+            }
         }
         div.classIcon {
                 background: url("class-icon.png") no-repeat;
