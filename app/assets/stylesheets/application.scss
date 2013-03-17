@@ -138,7 +138,7 @@ div#Sign {
 div.signPage {
     width: 300px;
     @include background-size(50%);
-    height: 325px;
+    height: auto !important;
     header {
         height: 135px;
         margin: 0 auto;
@@ -1359,15 +1359,24 @@ form {
             height: 20px;
             padding: 5px;
             width: 25%;
+            &:focus {
+                border: 1px solid $TextColor;
+            }
         }
         select {
             height: 30px;
             width: 25%;
             padding: 5px;
+            &:focus {
+                border: 1px solid $TextColor;
+            }
         }
         textarea {
             width: 25%;
             padding: 5px;
+            &:focus {
+                border: 1px solid $TextColor;
+            }
         }
       }
 }
