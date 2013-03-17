@@ -1,6 +1,6 @@
 
 <div class="body signPage">
-        <header><div class="icon left"></div><h3>Sign up</h3></header>
+        <header id="forgotHeader"><div class="icon left"></div><h3>Forgot My Password</h3></header>
         <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
           <%= devise_error_messages! %>
 
