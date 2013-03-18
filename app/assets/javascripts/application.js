@@ -148,6 +148,7 @@ $(document).ready(function() {
     $("tr.cldata").hide();
     $("tr.evdata").hide();
 
+
     $("div#userMenu").mouseenter(function(e) {
         e.preventDefault();
         $("ul#userDrop").show();
@@ -223,7 +224,6 @@ $(document).ready(function() {
         }
     });
 
-
     $("#event_fee_type").change( function() {
         if ($(this).val() == 'Free') {
             $("tr#AmountRow").hide();
@@ -231,6 +231,7 @@ $(document).ready(function() {
             $("tr#AmountRow").show();
         }
     });
+
 
     $("td#ptType").click(function(e) {
         e.preventDefault();
