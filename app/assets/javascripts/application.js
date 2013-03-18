@@ -143,6 +143,8 @@ $(document).ready(function() {
     $("#BallList").show();
     $("#FitList").hide();
     $("#WaterList").hide();
+    $("tr#AmountRow").hide();
+
     $("div#userMenu").mouseenter(function(e) {
         e.preventDefault();
         $("ul#userDrop").show();
@@ -209,6 +211,14 @@ $(document).ready(function() {
             $("div#WaterList").show();
             $("div#BallList").hide();
             $("div#FitList").hide();
+        }
+    });
+
+    $("#event_fee_type").change( function() {
+        if ($(this).val() == 'Free') {
+            $("tr#AmountRow").hide();
+        } else if  ($(this).val() == 'Cash') {
+            $("tr#AmountRow").show();
         }
     });
 // Modal JavaScript Begin
