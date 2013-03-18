@@ -72,7 +72,7 @@
                                         <td width="130"><%= f.label :fee_type, "Payment Option" %></td>
                                         <td><%= f.select :fee_type, ["Free", "Cash"] %></td>
                                     </tr>
-                                    <tr>
+                                    <tr id="AmountRow">
                                         <td><%= f.label :fee, "Amount" %></td>
                                         <td><%= f.number_field :fee %></td>
                                     </tr>
