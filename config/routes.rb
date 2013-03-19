@@ -47,6 +47,14 @@ Blackmoon::Application.routes.draw do
 
     devise_for :accounts, :controllers => {:registrations => "registrations"}
 
+<<<<<<< HEAD
+    get 'pages/offering_management'
+=======
+
+    resources :activities
+>>>>>>> Offering Management statick view completed
+
+
     get 'pages/offering_management'
 
 

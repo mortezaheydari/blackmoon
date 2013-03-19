@@ -148,7 +148,6 @@ $(document).ready(function() {
     $("tr.cldata").hide();
     $("tr.evdata").hide();
 
-
     $("div#userMenu").mouseenter(function(e) {
         e.preventDefault();
         $("ul#userDrop").show();
@@ -231,7 +230,6 @@ $(document).ready(function() {
             $("tr#AmountRow").show();
         }
     });
-
 
     $("td#ptType").click(function(e) {
         e.preventDefault();

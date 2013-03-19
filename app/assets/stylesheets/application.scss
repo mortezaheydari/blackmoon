@@ -1418,6 +1418,56 @@ form {
 }
 
 
+.offering_management {
+      @include column(20);
+      @include divReset;
+      min-height: 500px;
+      float: left;
+      h1, h2 {
+        color: $TextColor;
+        font-weight: bold;
+      }
+      table {
+        th {
+            background: $grey;
+            color: $TextColor;
+            font-size: 1em;
+            text-align: left;
+            padding: 10px;
+        }
+        td {
+            vertical-align: bottom;
+            padding: 10px;
+            border-bottom: solid 1px $grey;
+            color: $TextColor;
+            font-size: 0.8em;
+            a {
+                color: $linkColor;
+                font-size: 1em;
+                margin-left: 15px;
+            }
+
+            img {
+                vertical-align: bottom;
+                @include border-radius(5px);
+            }
+        }
+        td.offeringtype {
+            vertical-align: bottom;
+            padding: 10px;
+            font-size: 1em;
+            a {
+                color: $linkColor;
+                font-size: 1em;
+                margin-left: 15px;
+            }
+            img {
+                vertical-align: bottom;
+            }
+        }
+      }
+  }
+
 
 .offering_management {
       @include column(20);
