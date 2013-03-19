@@ -11,7 +11,7 @@
 @import "compass/css3/images";
 @import "compass/layout/sticky-footer";
 @import "compass/layout/stretching";
-
+@import "compass/css3/appearance";
 
 $blueprint_grid_columns: 20;
 $blueprint_grid_width: 40px;
@@ -189,7 +189,7 @@ div.signPage {
             @include border-radius(10px);
         }
         select {
-            -moz-appearance: none;
+            @include appearance(none);
             background: url("drop-icon.png") no-repeat scroll right center;
             background-size: 20px 20px;
             border-radius: 10px 10px 10px 10px;
