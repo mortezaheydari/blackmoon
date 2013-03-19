@@ -52,6 +52,7 @@
         <li id="joined"><a href="#">Joined (<span id="joinCount"><%= @participator.count %></span>)</a></li>
         <li id="Description"><a href="#">Description</a></li>
         <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @event.flaggings.with_flag(:like).count %></span>)</a></li>
+        <li id="gallery"><a href="#">gallery</a></li>
       </ul>
     </nav>
   </div>
@@ -63,6 +64,8 @@
         <p><%= @event.descreption %></p>
     </div>
         <%= render 'shared/cardsection', individuals: @likes, this: @event, class_name: "likes", makeadmin: true %>
+
+        <%= render 'shared/gallery' %>
     </div>
   </div>
 </div>
