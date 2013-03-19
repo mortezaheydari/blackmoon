@@ -144,6 +144,9 @@ $(document).ready(function() {
     $("#FitList").hide();
     $("#WaterList").hide();
     $("tr#AmountRow").hide();
+    $("tr.ptdata").hide();
+    $("tr.cldata").hide();
+    $("tr.evdata").hide();
 
     $("div#userMenu").mouseenter(function(e) {
         e.preventDefault();
@@ -219,6 +222,39 @@ $(document).ready(function() {
             $("tr#AmountRow").hide();
         } else if  ($(this).val() == 'Cash') {
             $("tr#AmountRow").show();
+        }
+    });
+
+    $("td#ptType").click(function(e) {
+        e.preventDefault();
+        img = $("td#ptType img.drop");
+        $("tr.ptdata").fadeToggle("fast");
+        if (img.attr("src") != "/assets/up-icon.png") {
+            img.attr("src", "/assets/up-icon.png");
+        } else {
+            img.attr("src", "/assets/drop-icon.png");
+        }
+    });
+
+    $("td#clType").click(function(e) {
+        e.preventDefault();
+        img = $("td#clType img.drop");
+        $("tr.cldata").fadeToggle("fast");
+        if (img.attr("src") != "/assets/up-icon.png") {
+            img.attr("src", "/assets/up-icon.png");
+        } else {
+            img.attr("src", "/assets/drop-icon.png");
+        }
+    });
+
+    $("td#evType").click(function(e) {
+        e.preventDefault();
+        img = $("td#evType img.drop");
+        $("tr.evdata").fadeToggle("fast");
+        if (img.attr("src") != "/assets/up-icon.png") {
+            img.attr("src", "/assets/up-icon.png");
+        } else {
+            img.attr("src", "/assets/drop-icon.png");
         }
     });
 // Modal JavaScript Begin
