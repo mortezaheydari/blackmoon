@@ -1138,7 +1138,23 @@ header#main {
   }
 }
 
-
+.gallery {
+    width: 200px;
+    height: 200px;
+    background: transparent;
+    float: left;
+    margin: 20px 10px 20px 10px;
+    @include border-radius(5%);
+    img {
+        @include border-radius(5%);
+        @include box-shadow(0 10px 0 0 $grey);
+        &:active {
+            @include box-shadow(none);
+            position: relative;
+            top:10px;
+        }
+    }
+}
 
 article.userCard {
   width: 200px;
