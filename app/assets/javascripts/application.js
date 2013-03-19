@@ -184,6 +184,12 @@ $(document).ready(function() {
         minWidth: 600
     });
 
+    $("div.gallery a.imageModal").fancybox({
+        padding: 0,
+        margin: 0,
+        minWidth: 400
+    });
+
     $("input[name='event[category]']").imageTick({
         tick_image_path: {
             BallSports: "/assets/ballsport-checked.png",
