@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
   end
 
   has_one :profile, :dependent => :destroy
-
+  has_one :album, :dependent => :destroy
+  has_one :logo, :dependent => :destroy
 ## Offerings
 
       # A - offering creations:

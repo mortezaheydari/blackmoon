@@ -10,6 +10,9 @@ class Event < ActiveRecord::Base
 
 	make_flaggable :like
 
+  has_one :album, :dependent => :destroy
+  has_one :logo, :dependent => :destroy	
+
   has_one :offering_creation, as: :offering, :dependent => :destroy
   accepts_nested_attributes_for :offering_creation
 
