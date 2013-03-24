@@ -42,6 +42,7 @@ class GamesController < ApplicationController
     @game = Game.new(params[:game])
     @game.date_and_time = date_helper_to_str(params[:date_and_time])
     @game.team_participation ||= false
+    @game.album = Album.new
     @game.save
     @game.create_offering_creation(creator_id: @current_user_id)
     @game.offering_administrations.create(administrator_id: @current_user_id)

@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if current_user == @user
         @user.profile ||= Profile.new
+        @user.album ||= Album.new
         @date_of_birth = @user.profile.date_of_birth
     else
         redirect_to root_path
