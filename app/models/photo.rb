@@ -13,4 +13,14 @@ class Photo < ActiveRecord::Base
 	has_many :album_photos, :dependent => :destroy
 	accepts_nested_attributes_for :album_photos
 
+	def uses
+		@uses = []
+		logos.each do |logo|
+			@uses << logo
+		end
+		album_photos.each do |album_photo|
+			@uses << album_photo
+		end 
+	end
+	
 end
