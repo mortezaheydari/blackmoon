@@ -34,22 +34,39 @@ class AlbumPhotosController < ApplicationController
   end
 
   def destroy
+    owner_type = params[:owner_type]
+    owner_id = params[:owner_id]
 
+    if name_is_valid?(owner_type)
+      @owner = owner_type.camelize.constantize.find_by_id(owner_id)     
 
-    @album = Album.find(params[:album_id])    
-    @photo = @album.photos.find_by_id(params[:id])
-    @photo.destroy
+      # checking photo upload premission
+      if owner_type == "user"
+        redirect_to @owner, notice: 'you don\'t have premission edit this page.' unless @owner == current_user
+      else
+        redirect_to @owner, notice: 'you don\'t have premission edit this page.' unless @owner.administrators.include? current_user
+      end
 
-    respond_to do |format|
-      format.html { redirect_to @album }
-      format.json { head :no_content }
+      @album = @owner.album
+      @album_photo = @album.album_photo.find_by_id(params[:album_photo_id])
+      @photo = @album_photo.photo
+
+      if @photo.uses.count == 1
+        @photo.destroy
+      else
+        @album_photo.destory 
+      end 
+      respond_to do |format| 
+        if @album.save
+          format.html { redirect_to @owner, notice: 'Photo was successfully removed.' }
+          format.js   
+      end
+    else
+        redirect_to root
     end
   end
 
-
-
   private
-
     # checks if offering name is valid for user
     # note: this function is controller specific
     def name_is_valid?(name)
