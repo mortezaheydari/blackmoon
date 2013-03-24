@@ -18,15 +18,18 @@ class AlbumPhotosController < ApplicationController
 	    @photo.build_album_photo(album_id: @album.id)
 
 			if @photo.save
-		    respond_to do |format| 
 		      if @album.save
-		        format.html { redirect_to @owner, notice: 'Photo was successfully added.' }
-		        format.js
-		      else
-		        redirect_to @owner, notice: 'error while uploading the photo.'
-		      end			
-				end
-	    end
+            respond_to do |format| 
+    	        format.html { redirect_to @owner, notice: 'Photo was successfully added.' }
+    	        format.js
+            end
+  	      else
+  	        redirect_to @owner, notice: 'error while uploading the photo.'
+  	      end			
+        end
+	    else
+        redirect_to @owner, notice: 'error while uploading the photo.'
+      end
 
     else
         redirect_to root
@@ -52,23 +55,32 @@ class AlbumPhotosController < ApplicationController
       @photo = @album_photo.photo
 
       if @photo.uses.count == 1
-        @photo.destroy
+        if @photo.destroy
+          respond_to do |format|           
+            format.html { redirect_to @owner, notice: 'Photo was successfully removed.' }
+            format.js   
+          end
+        else
+          redirect_to @owner, notice: 'error while removing the photo.' 
+        end
       else
-        @album_photo.destory 
+        if @album_photo.destory 
+          respond_to do |format|           
+            format.html { redirect_to @owner, notice: 'Photo was successfully removed.' }
+            format.js   
+          end
+        else
+          redirect_to @owner, notice: 'error while removing the photo.' 
+        end        
       end 
-      respond_to do |format| 
-        if @album.save
-          format.html { redirect_to @owner, notice: 'Photo was successfully removed.' }
-          format.js   
-      end
+      
     else
         redirect_to root
     end
   end
 
   private
-    # checks if offering name is valid for user
-    # note: this function is controller specific
+
     def name_is_valid?(name)
       ["event","class","game", "user"].include? name
     end	
