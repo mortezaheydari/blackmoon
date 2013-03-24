@@ -54,12 +54,9 @@ Blackmoon::Application.routes.draw do
 
     get 'pages/offering_management'
 
-<<<<<<< HEAD
-=======
     resources :activities
 
     resources :notifications
->>>>>>> trying public_activity gem
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
