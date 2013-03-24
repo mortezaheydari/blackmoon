@@ -10,7 +10,7 @@ class Photo < ActiveRecord::Base
 
 	has_many :logos
 	accepts_nested_attributes_for :logos
-	has_many :album_photos
+	has_many :album_photos, :dependent => :destroy
 	accepts_nested_attributes_for :album_photos
 
 end
