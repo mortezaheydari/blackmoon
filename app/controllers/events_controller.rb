@@ -42,6 +42,7 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
     @event.date_and_time = date_helper_to_str(params[:date_and_time])
     @event.team_participation ||= false
+    @event.album = Album.new
     if @event.save
       @event.create_activity :create, owner: current_user
       @event.create_offering_creation(creator_id: @current_user_id)
