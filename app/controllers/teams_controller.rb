@@ -65,11 +65,11 @@ class TeamsController < ApplicationController
   	@team = Team.find(params[:id])
 		@likes = @team.flaggings.with_flag(:like)
 		@members = @team.members
-
+    @photo = Photo.new
   end
 
   def edit
-        @team = Team.find(params[:id])
+    @team = Team.find(params[:id])
   end
 
   def update
