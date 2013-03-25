@@ -18,7 +18,16 @@ class LogosController < ApplicationController
 	    @photo = Photo.new(params[:photo])
 
 	    if remove_logo == true
-	    	@logo.photo_id = nil
+	      if @photo.uses.count == 1
+	        if @photo.destroy
+	          respond_to do |format|           
+	            format.html { redirect_to @owner, notice: 'Photo was successfully removed.' }
+	            format.js   
+	          end
+	        else
+	        	@logo.photo_id = nil
+	          redirect_to @owner, notice: 'error while removing the photo.' 
+	        end
 	    else
 	    	@logo.photo_id = @photo.id
 	    end 
