@@ -64,16 +64,17 @@ class GamesController < ApplicationController
 
   def show
   	@game = Game.find(params[:id])
-           @likes = @game.flaggings.with_flag(:like)
-           # flaggings.each do |flagging|
-           #      @likes = []
-           #      @likes << flagging.flagger
-           # end
-           if @game.team_participation == false
-                @participator = @game.individual_participators
-           else
-                @participator = @game.team_participators
-           end
+    @likes = @game.flaggings.with_flag(:like)
+    @photo = Photo.new
+    # flaggings.each do |flagging|
+    #      @likes = []
+    #      @likes << flagging.flagger
+    # end
+    if @game.team_participation == false
+        @participator = @game.individual_participators
+    else
+        @participator = @game.team_participators
+    end
   end
 
   def edit

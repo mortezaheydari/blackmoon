@@ -9,7 +9,8 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
-           @likes = @user.flaggings.with_flag(:like)
+    @likes = @user.flaggings.with_flag(:like)
+    @photo = Photo.new    
   end
 
   def edit
