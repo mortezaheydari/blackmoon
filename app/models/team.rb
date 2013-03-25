@@ -19,6 +19,14 @@ class Team < ActiveRecord::Base
   has_many :events_participating, through: :offering_team_participations, source: :offering, source_type: "Event"
   accepts_nested_attributes_for :events_participating
 
+      # invitations as invited and inviter
+  has_many :invitations_sent, as: :inviter, class_name: "Invitation", dependent: :destroy
+	accepts_nested_attributes_for :invitations_sent  
+  has_many :invitations_received, as: :invited, class_name: "Invitation", dependent: :destroy
+	accepts_nested_attributes_for :invitations_sent
+	
+	has_many :invitations, as: :subject, dependent: :destroy
+	accepts_nested_attributes_for :invitations
 
 	def creator
 		User.find_by_id(self.act_creation.creator_id) unless self.act_creation.nil?
