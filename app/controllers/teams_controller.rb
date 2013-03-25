@@ -40,6 +40,7 @@ class TeamsController < ApplicationController
   def create
     @current_user_id = current_user.id
   	@team = Team.new(params[:team])
+    @team.album = Album.new
     @team.save
   	@team.create_act_creation(creator_id: @current_user_id)
     @team.act_administrations.create(administrator_id: @current_user_id)

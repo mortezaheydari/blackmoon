@@ -4,6 +4,9 @@ class Game < ActiveRecord::Base
   	:team_participation, :time_from, :time_to, :title, :tournament_id
 
   before_save :default_values
+
+  has_one :album, :dependent => :destroy
+  has_one :logo, :dependent => :destroy  
 	
 	make_flaggable :like
 

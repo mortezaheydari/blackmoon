@@ -1,11 +1,17 @@
 class Event < ActiveRecord::Base
 
+	include PublicActivity::Model
+  # tracked except: :destroy, owner: ->(controller, model) {controller && controller.current_user}
+
   attr_accessible :category, :custom_address, :date_and_time, :descreption,
   				 :location_type, :title, :tournament_id, :duration_type, :time_from,
   				 :time_to, :fee, :fee_type, :sport, :number_of_attendings, :team_participation
   before_save :default_values
 
 	make_flaggable :like
+
+  has_one :album, :dependent => :destroy
+  has_one :logo, :dependent => :destroy	
 
   has_one :offering_creation, as: :offering, :dependent => :destroy
   accepts_nested_attributes_for :offering_creation

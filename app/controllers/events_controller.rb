@@ -42,10 +42,15 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
     @event.date_and_time = date_helper_to_str(params[:date_and_time])
     @event.team_participation ||= false
-    @event.save
-    @event.create_offering_creation(creator_id: @current_user_id)
-    @event.offering_administrations.create(administrator_id: @current_user_id)
-    redirect_to @event
+    @event.album = Album.new
+    if @event.save
+      @event.create_activity :create, owner: current_user
+      @event.create_offering_creation(creator_id: @current_user_id)
+      @event.offering_administrations.create(administrator_id: @current_user_id)
+      redirect_to @event, notice: "Event was created"
+    else
+      redirect_to 'new'
+    end
   end
 
   def destroy
@@ -86,7 +91,8 @@ class EventsController < ApplicationController
     # @event.date_and_time = date_helper_to_str(params[:date_and_time])
     params[:event][:date_and_time] = date_helper_to_str(params[:date_and_time])
     if @event.update_attributes(params[:event])
-      redirect_to @event
+      @event.create_activity :update, owner: current_user
+      redirect_to @event, notice: "Event was updated"
     else
       render 'edit'
     end

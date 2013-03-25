@@ -14,6 +14,9 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'devise'
 gem "heroku"
 gem 'thin'
+gem 'public_activity'
+gem 'rmagick', '2.13.2'
+gem "paperclip", "~> 3.0"
 
 gem 'make_flaggable', :git => 'git://github.com/cavneb/make_flaggable.git'
 
