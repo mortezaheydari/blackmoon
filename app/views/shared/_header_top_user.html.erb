@@ -38,7 +38,7 @@
     <a href="#Create">Create New</a>
   </div>
   <div id="userMenu">
-    <%= link_to gravatar_for(current_user) + " " + current_user.name, user_path(current_user) %>
+    <%= link_to logo_for(current_user,size: :small) + " " + current_user.name, user_path(current_user) %>
     <!-- <a href="#"><%= image_tag "rails.png", :class => "left" %> Morteza Heydari</a> -->
     <ul id="userDrop">
       <li>
