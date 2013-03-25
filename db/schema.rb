@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130324100234) do
+ActiveRecord::Schema.define(:version => 20130324132050) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -72,6 +72,22 @@ ActiveRecord::Schema.define(:version => 20130324100234) do
   add_index "activities", ["recipient_id", "recipient_type"], :name => "index_activities_on_recipient_id_and_recipient_type"
   add_index "activities", ["trackable_id", "trackable_type"], :name => "index_activities_on_trackable_id_and_trackable_type"
 
+  create_table "album_photos", :force => true do |t|
+    t.integer  "album_id"
+    t.integer  "photo_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "title"
+  end
+
+  create_table "albums", :force => true do |t|
+    t.string   "title"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "events", :force => true do |t|
     t.string   "title"
     t.text     "descreption"
@@ -125,6 +141,14 @@ ActiveRecord::Schema.define(:version => 20130324100234) do
     t.boolean  "team_participation"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+  end
+
+  create_table "logos", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.integer  "photo_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "offering_administrations", :force => true do |t|
