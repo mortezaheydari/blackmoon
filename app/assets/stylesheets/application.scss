@@ -1164,14 +1164,65 @@ header#main {
     float: left;
     margin: 20px 10px 20px 10px;
     @include border-radius(5%);
-    img {
+    @include box-shadow(0 10px 0 0 $grey);
+    &:active {
+        @include box-shadow(none);
+        position: relative;
+        top:10px;
+    }
+    .img {
+        @include border-radius(5%);
+    }
+    #new_photo {
+        width: 180px;
+        height: 180px;
+        padding: 10px 10px;
+        background: $buttonBg;
         @include border-radius(5%);
         @include box-shadow(0 10px 0 0 $grey);
-        &:active {
-            @include box-shadow(none);
-            position: relative;
-            top:10px;
+        label {
+            color: $white;
         }
+        input {
+            @include TextFields;
+            height: 20px;
+            padding: 5px;
+            width: 90%;
+            &:focus {
+                border: 1px solid $TextColor;
+            }
+        }
+        input[type="submit"] {
+            height:auto;
+            width:auto;
+        }
+    }
+}
+
+.SI-FILES-STYLIZED label.cabinet
+{
+    width: 79px;
+    height: 22px;
+    background: url('upload.png') 0 0 no-repeat;
+
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    input.file
+    {
+        position: relative;
+        height: 100%;
+        width: auto;
+        opacity: 0;
+        -moz-opacity: 0;
+        filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+    }
+}
+div.upload {
+    &:active {
+        @include box-shadow(0 10px 0 0 $grey);
+        position: relative;
+        top:0;
     }
 }
 

@@ -70,6 +70,8 @@ class EventsController < ApplicationController
   	@event = Event.find(params[:id])
     @likes = @event.flaggings.with_flag(:like)
     @photo = Photo.new
+    @album = @event.album
+    @owner = @event
     # flaggings.each do |flagging|
     #      @likes = []
     #      @likes << flagging.flagger

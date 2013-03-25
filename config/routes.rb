@@ -61,6 +61,10 @@ Blackmoon::Application.routes.draw do
 
     resources :notifications
 
+    resources :album_photos
+
+    resources :logos
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

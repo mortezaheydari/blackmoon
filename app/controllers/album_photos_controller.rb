@@ -16,7 +16,7 @@ class AlbumPhotosController < ApplicationController
 
         @album = @owner.album
         @photo = Photo.new(params[:photo])
-        @album_photo = @photo.build_album_photo(album_id: @album.id)
+        @album_photo = @photo.album_photos.build(album_id: @album.id)
 
         if photo_title == ""
             @album_photo.title = @photo.title
@@ -37,7 +37,7 @@ class AlbumPhotosController < ApplicationController
             redirect_to @owner, notice: 'error while uploading the photo.'
         end
     else
-        redirect_to root
+        redirect_to root_path
     end
   end
 
@@ -80,7 +80,7 @@ class AlbumPhotosController < ApplicationController
       end
 
     else
-        redirect_to root
+        redirect_to root_path
     end
   end
 
@@ -118,13 +118,13 @@ class AlbumPhotosController < ApplicationController
         redirect_to @owner, notice: 'error while uploading the photo.'
       end
     else
-        redirect_to root
+        redirect_to root_path
     end
   end
 
   private
 
     def name_is_valid?(name)
-      ["event","class","game", "user"].include? name
+      ["event","class","game", "user", "team"].include? name.downcase
     end
 end

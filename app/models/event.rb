@@ -10,8 +10,10 @@ class Event < ActiveRecord::Base
 
 	make_flaggable :like
 
-  has_one :album, :dependent => :destroy
-  has_one :logo, :dependent => :destroy	
+  has_one :album, as: :owner, :dependent => :destroy
+  accepts_nested_attributes_for :album
+
+  has_one :logo, as: :owner, :dependent => :destroy
 
   has_one :offering_creation, as: :offering, :dependent => :destroy
   accepts_nested_attributes_for :offering_creation
@@ -23,7 +25,7 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :offering_individual_participations
 
   has_many :offering_team_participations, as: :offering, :dependent => :destroy
-  accepts_nested_attributes_for :offering_team_participations  
+  accepts_nested_attributes_for :offering_team_participations
 
 	def creator
 		User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
@@ -32,10 +34,10 @@ class Event < ActiveRecord::Base
 	def administrators
 		@admins = []
 		self.offering_administrations.each do |admin|
-			@admins << admin.administrator_id 
+			@admins << admin.administrator_id
 		end
 		User.find(@admins)
-	end	
+	end
 
 	def individual_participators
 		@participators = []
