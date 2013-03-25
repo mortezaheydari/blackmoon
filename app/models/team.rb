@@ -2,8 +2,8 @@ class Team < ActiveRecord::Base
   attr_accessible :descreption, :name, :sport, :number_of_attendings, :title
   before_save :default_values
 
-  has_one :album, :dependent => :destroy
-  has_one :logo, :dependent => :destroy  
+  has_one :album, as: :owner, :dependent => :destroy
+  has_one :logo, as: :owner, :dependent => :destroy
 
 	make_flaggable :like
 

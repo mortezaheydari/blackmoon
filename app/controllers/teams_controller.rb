@@ -44,7 +44,7 @@ class TeamsController < ApplicationController
     @team.save
   	@team.create_act_creation(creator_id: @current_user_id)
     @team.act_administrations.create(administrator_id: @current_user_id)
-    @team.act_memberships.create(member_id: @current_user_id)    
+    @team.act_memberships.create(member_id: @current_user_id)
 		redirect_to @team
   end
 
@@ -66,6 +66,7 @@ class TeamsController < ApplicationController
 		@likes = @team.flaggings.with_flag(:like)
 		@members = @team.members
     @photo = Photo.new
+    @album = @team.album
   end
 
   def edit

@@ -1,13 +1,13 @@
 class Game < ActiveRecord::Base
-  attr_accessible :category, :custom_address, :date_and_time, :description, :duration_type, 
-  	:fee, :fee_type, :location_type, :number_of_attendings, :sport, 
+  attr_accessible :category, :custom_address, :date_and_time, :description, :duration_type,
+  	:fee, :fee_type, :location_type, :number_of_attendings, :sport,
   	:team_participation, :time_from, :time_to, :title, :tournament_id
 
   before_save :default_values
 
-  has_one :album, :dependent => :destroy
-  has_one :logo, :dependent => :destroy  
-	
+  has_one :album, as: :owner, :dependent => :destroy
+  has_one :logo, as: :owner, :dependent => :destroy
+
 	make_flaggable :like
 
   has_one :offering_creation, as: :offering, :dependent => :destroy
@@ -20,7 +20,7 @@ class Game < ActiveRecord::Base
   accepts_nested_attributes_for :offering_individual_participations
 
   has_many :offering_team_participations, as: :offering, :dependent => :destroy
-  accepts_nested_attributes_for :offering_team_participations  
+  accepts_nested_attributes_for :offering_team_participations
 
 	def creator
 		User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
@@ -29,10 +29,10 @@ class Game < ActiveRecord::Base
 	def administrators
 		@admins = []
 		self.offering_administrations.each do |admin|
-			@admins << admin.administrator_id 
+			@admins << admin.administrator_id
 		end
 		User.find(@admins)
-	end	
+	end
 
 	def individual_participators
 		@participators = []

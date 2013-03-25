@@ -66,6 +66,7 @@ class GamesController < ApplicationController
   	@game = Game.find(params[:id])
     @likes = @game.flaggings.with_flag(:like)
     @photo = Photo.new
+    @album = @game.album
     # flaggings.each do |flagging|
     #      @likes = []
     #      @likes << flagging.flagger

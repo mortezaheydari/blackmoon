@@ -134,6 +134,11 @@ http://stackoverflow.com/questions/3114166/#3114911
 
 })(jQuery);
 
+window.onload = function(){
+    SI.Files.stylizeAll();
+}
+
+
 $(document).ready(function() {
     var $modal = $('#modal');
     var $modal_close = $modal.find('.close');

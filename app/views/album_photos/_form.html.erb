@@ -1,0 +1,11 @@
+<div class="gallery upload">
+    <%= form_for(@photo, :url => album_photos_path(@photo, owner_type: @album.owner_type, owner_id: @album.owner_id), :html => { :method => "post" }) do |p| %>
+
+        <%= p.label :title %><br />
+        <%= p.text_field :title %>
+        <label class="cabinet">
+        <%= p.file_field :image, class: "file" %></label>
+
+        <%= p.submit 'Add Photo', class: "button grey submitBtn homeBtn right" %>
+    <% end %>
+</div>
