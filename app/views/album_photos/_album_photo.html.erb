@@ -1,3 +1,3 @@
 <div class="gallery">
-    <%= link_to content_tag("div", "", style:"background:url(#{album_photo.photo.image.url()}) center center;background-size:cover;width:200px;height:200px;", class: "img"),album_photo.photo.image.url(:large), class: "imageModal" %>
+    <%= link_to content_tag("div", "", style:"background:url(#{album_photo.photo.image.url()}) center center;background-size:cover;width:200px;height:200px;", class: "img"),album_photo.photo.image.url(:large), class: "imageModal", title: "#{album_photo.photo.title}", rel: "gallery1" %>
 </div>
