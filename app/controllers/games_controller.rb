@@ -67,6 +67,7 @@ class GamesController < ApplicationController
     @likes = @game.flaggings.with_flag(:like)
     @photo = Photo.new
     @album = @game.album
+    @owner = @game
     # flaggings.each do |flagging|
     #      @likes = []
     #      @likes << flagging.flagger
@@ -81,7 +82,10 @@ class GamesController < ApplicationController
   def edit
         @game = Game.find(params[:id])
         @date_and_time = @game.date_and_time
-  end
+        @game.album ||= Album.new
+        @photo = Photo.new
+        @photo.title = "Logo"
+end
 
   def update
     @game = Game.find(params[:id])

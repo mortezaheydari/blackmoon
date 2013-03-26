@@ -217,8 +217,40 @@ $(document).ready(function() {
         image_tick_class: "Type",
     });
 
+    $("input[name='game[category]']").imageTick({
+        tick_image_path: {
+            BallSports: "/assets/ballsport-checked.png",
+            Fitness: "/assets/fitness-checked.png",
+            WaterSports: "/assets/water-checked.png"
+            //"default": "images/gender/default_checked.jpg" //optional default can be used
+        },
+        no_tick_image_path: {
+            BallSports: "/assets/ballsport-uncheck.png",
+            Fitness: "/assets/fitness-uncheck.png",
+            WaterSports: "/assets/water-uncheck.png"
+            //"default": "images/gender/default_unchecked.jpg" //optional default can be used
+        },
+        image_tick_class: "Type",
+    });
+
 
     $("input:radio[name='event[category]']").change( function() {
+        if ($(this).is(':checked') && $(this).val() == 'BallSports') {
+            $("div#BallList").show();
+            $("div#FitList").hide();
+            $("div#WaterList").hide();
+        } else if ($(this).is(':checked') && $(this).val() == 'Fitness') {
+            $("div#FitList").show();
+            $("div#WaterList").hide();
+            $("div#BallList").hide();
+        } else if ($(this).is(':checked') && $(this).val() == 'WaterSports') {
+            $("div#WaterList").show();
+            $("div#BallList").hide();
+            $("div#FitList").hide();
+        }
+    });
+
+    $("input:radio[name='game[category]']").change( function() {
         if ($(this).is(':checked') && $(this).val() == 'BallSports') {
             $("div#BallList").show();
             $("div#FitList").hide();

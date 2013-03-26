@@ -1,6 +1,6 @@
   <div class="userInfo">
     <div class="eventProfileCard">
-      <div class="large"></div>
+      <div class="large"><%= logo_for(@game, size: :user_profile) %></div>
       <div class="<%= @game.category %> left"></div>
       <h1><%= @game.title %></h1>
       <p>Sports: <%= @game.sport %></p>
@@ -52,6 +52,7 @@
         <li id="joined"><a href="#">Joined (<span id="joinCount"><%= @participator.count %></span>)</a></li>
         <li id="Description"><a href="#">Description</a></li>
         <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @game.flaggings.with_flag(:like).count %></span>)</a></li>
+        <li id="gallery"><a href="#">gallery</a></li>
       </ul>
     </nav>
   </div>
@@ -63,6 +64,9 @@
         <p><%= @game.description %></p>
     </div>
         <%= render 'shared/cardsection', individuals: @likes, this: @game, class_name: "likes", makeadmin: true %>
+
+        <%= render 'shared/gallery' %>
+
     </div>
   </div>
 </div>
