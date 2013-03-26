@@ -42,6 +42,7 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
     @event.date_and_time = date_helper_to_str(params[:date_and_time])
     @event.team_participation ||= false
+    @event.album = Album.new
     if @event.save
       @event.create_activity :create, owner: current_user
       @event.create_offering_creation(creator_id: @current_user_id)
@@ -67,21 +68,28 @@ class EventsController < ApplicationController
 
   def show
   	@event = Event.find(params[:id])
-           @likes = @event.flaggings.with_flag(:like)
-           # flaggings.each do |flagging|
-           #      @likes = []
-           #      @likes << flagging.flagger
-           # end
-           if @event.team_participation == false
-                @participator = @event.individual_participators
-           else
-                @participator = @event.team_participators
-           end
+    @likes = @event.flaggings.with_flag(:like)
+    @photo = Photo.new
+    @album = @event.album
+    @owner = @event
+    # flaggings.each do |flagging|
+    #      @likes = []
+    #      @likes << flagging.flagger
+    # end
+    if @event.team_participation == false
+        @participator = @event.individual_participators
+    else
+        @participator = @event.team_participators
+    end
+
   end
 
   def edit
         @event = Event.find(params[:id])
         @date_and_time = @event.date_and_time
+        @event.album ||= Album.new
+        @photo = Photo.new
+        @photo.title = "Logo"        
   end
 
   def update

@@ -55,6 +55,10 @@ GEM
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
     chunky_png (1.2.6)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.1)
+      climate_control (>= 0.0.3, < 1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -88,6 +92,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.0.1)
       i18n (~> 0.4)
+    fancybox2-rails (0.2.4)
+      railties (>= 3.1.0)
     ffi (1.2.0)
     ffi (1.2.0-x86-mingw32)
     fssm (0.2.9)
@@ -121,6 +127,12 @@ GEM
     nokogiri (1.5.5)
     nokogiri (1.5.5-x86-mingw32)
     orm_adapter (0.4.0)
+    paperclip (3.4.1)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.0)
+      mime-types
     pg (0.12.2)
     pg (0.12.2-x86-mingw32)
     polyglot (0.3.3)
@@ -222,9 +234,11 @@ DEPENDENCIES
   devise
   factory_girl_rails (= 4.1.0)
   faker (= 1.0.1)
+  fancybox2-rails (~> 0.2.4)
   heroku
   jquery-rails
   make_flaggable!
+  paperclip (~> 3.0)
   pg (= 0.12.2)
   public_activity
   rails (= 3.2.9)

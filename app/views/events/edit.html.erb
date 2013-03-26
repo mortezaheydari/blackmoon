@@ -1,68 +1,135 @@
-<h1>Events#edit</h1>
 
-<--  Back to <%= link_to "index", events_path %>
+<div class="body">
+    <div class="offering">
+                    <h1><%= image_tag "class-icon.png", width: 50 %> Update Event Information</h1>
 
-<div class="row">
-	<div class="span6 offset3">
-		<%= form_for(@event) do |f| %>
-                            <div>
-                                <%= f.label :title, "Event Title" %>
-                                <%= f.text_field :title %>
-                            </div>
 
-                            <div>
-                                <%= f.label :category, "Category" %>
-                                <%= f.select :category, ["BallSports", "Fitness", "WaterSports"] %>
-                            </div>
+            <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "Event", owner_id: @event.id), :html => { :method => "post" }) do |p| %>
+                    <h2>Image</h2>
 
-                            <div>
-                                <%= f.label :sport, "sport" %>
-                                <%= f.text_field :sport %>
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <div class="gravatarContainer">
+                                <%= logo_for @event, size: :medium %>
                             </div>
-                            <div>
-                                <%= f.label :fee_type, "fee type" %>
-                                <%= f.select :fee_type, ["Free", "Cash"] %>
-                            </div>
-                            <div>
-                                <%= f.label :fee, "fee" %>
-                                <%= f.number_field :fee %>
-                            </div>
-                            <div>
-                                <%= f.label :number_of_attendings, "Number of attendings" %>
-                                <%= f.number_field :number_of_attendings %>
-                            </div>
-                            <div>
-                                <%= f.label :time_from, "time from" %>
-                                <%= f.time_select :time_from %>
-                            </div>
-                            <div>
-                                <%= f.label :time_to, "time to" %>
-                                <%= f.time_select :time_to %>
-                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="cabinet left">
+                                <%= p.file_field :image, class: "file" %>
+                            </label>
+                            <br>
+                            <p id="fileName"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn left" %>
+                        </td>
+                    </tr>
 
-                            <div>
-                                <%= f.label :date_and_time %><br />
-                                <%= select_date @date_and_time, :prefix => :date_and_time, :start_year => Time.now.year, :end_year => Time.now.year + 5 %>
-                            </div>
+                </table>
+            <% end %>
+
+
+        <%= form_for(@event) do |f| %>
+
+                            <p>Category</p>
+                            <div class="<%= @event.category %> left"></div> <br>
 
                             <div>
-                                <%= f.label :descreption, "Description" %>
-                                <%= f.text_area :descreption %>
+                                <table  width="100%">
+                                    <tr>
+                                        <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
+                                        <td><label><%= @event.sport %></label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :title, "Event Title: " %></td>
+                                        <td><%= f.text_field :title %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :descreption, "Description" %></td>
+                                        <td><%= f.text_area :descreption %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Add Image</label></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Special Requirements</label></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
                             </div>
+<hr>
+
+                    <h2>2. <%= image_tag "location-icon.png", width: 50 %> Location</h2>
 
                             <div>
-                                <%= f.label :custom_address, "Address" %>
-                                <%= f.text_area :custom_address %>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="130"><%= f.label :custom_address, "Select the city:" %></td>
+                                        <td><%= f.select :custom_address, ["Al-Salmiyah", "Kuwait City"] %></td>
+                                    </tr>
+                                </table>
+
                             </div>
-<!--                             <div>
-                                <%= f.label :team_participation, "Team Participation" %>
-                                <%= f.select :team_participation, ["No", "Yes"] %>
-                            </div> -->
+
+<hr>
+                    <h2>3. <%= image_tag "payment-icon.png", width: 50 %> Payment</h2>
+                            <div>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="130"><%= f.label :fee_type, "Payment Option" %></td>
+                                        <td><%= f.select :fee_type, ["Free", "Cash"] %></td>
+                                    </tr>
+                                    <tr id="AmountRow">
+                                        <td><%= f.label :fee, "Amount" %></td>
+                                        <td><%= f.number_field :fee %></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+<hr>
+
+                    <h2>4. Time &amp; Limits</h2>
 
                             <div>
-                                <%= f.submit "Update the Event", class: "btn btn-large btn-primary" %>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
+                                        <td><%= f.number_field :number_of_attendings %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :date_and_time %></td>
+                                        <td><%= select_date @date_and_time, :prefix => :date_and_time, :start_year => Time.now.year, :end_year => Time.now.year + 5  %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :time_from, "Time From" %></td>
+                                        <td><%= f.time_select :time_from %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :time_to, "Time To" %></td>
+                                        <td><%= f.time_select :time_to %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :team_participation, "Team Participation" %></td>
+                                        <td><%= f.select :team_participation, ["No", "Yes"] %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :team_participation, "Team Participation" %></td>
+                                        <td><%= f.select :team_participation, ["No", "Yes"] %></td>
+                                    </tr>
+                                </table>
                             </div>
-        		<% end %>
-	</div>
+
+
+
+    </div>
+                <%= f.submit "Update the Event", class: "button grey submitBtn homeBtn left" %>
+
+
+        <% end %>
 </div>
-

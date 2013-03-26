@@ -6,13 +6,17 @@ class User < ActiveRecord::Base
 
 
   after_create do |user|
-    if user.profile.nil?
-    	user.create_profile
-    end
+        user.create_profile if user.profile.nil?
+        user.create_album if user.album.nil?
+        user.create_logo if user.logo.nil?
   end
 
   has_one :profile, :dependent => :destroy
-
+  accepts_nested_attributes_for :profile
+  has_one :album, as: :owner, :dependent => :destroy
+  accepts_nested_attributes_for :album
+  has_one :logo, as: :owner, :dependent => :destroy
+  accepts_nested_attributes_for :logo
 ## Offerings
 
       # A - offering creations:

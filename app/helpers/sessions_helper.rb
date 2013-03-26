@@ -1,6 +1,5 @@
 module SessionsHelper
 
-
 	def current_user=(user)
 		@current_user = user
 	end
@@ -47,6 +46,25 @@ module SessionsHelper
 		user_is_admin?(this) && (user_created_this?(this) or current_user?(admin)) && this.administrators.count > 1
 	end
 
+	def logo_for(this, options = {size: 100, css_class: ""})
+		if this.class.to_s == "User"
+			if this.logo.photo.nil?
+				gravatar_for(this, options)
+			else
+				size = options[:size]
+		    css_class = options[:css_class]
+				image_tag(this.logo.photo.image.url(size), als: this.name, class: "gravatar #{css_class}")
+			end
+		else
+			if this.logo.photo.nil?
+				image_tag("/assets/bg.png", als: this.title, class: "#{css_class}")
+			else
+				size = options[:size]
+		    css_class = options[:css_class]
+				image_tag(this.logo.photo.image.url(size), als: this.title, class: "#{css_class}")
+			end
+		end
+	end
 
 	def toggle_like_button(this, user)
 		class_name = this.class.to_s.downcase

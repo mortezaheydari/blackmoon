@@ -42,6 +42,7 @@ class GamesController < ApplicationController
     @game = Game.new(params[:game])
     @game.date_and_time = date_helper_to_str(params[:date_and_time])
     @game.team_participation ||= false
+    @game.album = Album.new
     @game.save
     @game.create_offering_creation(creator_id: @current_user_id)
     @game.offering_administrations.create(administrator_id: @current_user_id)
@@ -63,16 +64,18 @@ class GamesController < ApplicationController
 
   def show
   	@game = Game.find(params[:id])
-           @likes = @game.flaggings.with_flag(:like)
-           # flaggings.each do |flagging|
-           #      @likes = []
-           #      @likes << flagging.flagger
-           # end
-           if @game.team_participation == false
-                @participator = @game.individual_participators
-           else
-                @participator = @game.team_participators
-           end
+    @likes = @game.flaggings.with_flag(:like)
+    @photo = Photo.new
+    @album = @game.album
+    # flaggings.each do |flagging|
+    #      @likes = []
+    #      @likes << flagging.flagger
+    # end
+    if @game.team_participation == false
+        @participator = @game.individual_participators
+    else
+        @participator = @game.team_participators
+    end
   end
 
   def edit

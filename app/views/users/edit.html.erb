@@ -1,19 +1,71 @@
-<div class="body">
-    <div class="leftContent">
+<div class="body signPage">
 
-            <h1>Update your profile <%= @user.name.to_s.humanize %></h1>
+            <header id="editprofile"><div class="editicon left"></div><h3>Edit Profile</h3></header>
 
             <div class="row">
-            	<div class="span6 offset3">
-            		<%= form_for(@user) do |f| %>
-            			<%= render 'shared/error_messages', object: f.object %>
+
+            <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "User", owner_id: @user.id), :html => { :method => "post" }) do |p| %>
+
+                <table>
+                    <tr>
+                        <td colspan="2">
                             <div class="gravatarContainer">
-                                <%= gravatar_for @user %>
-                                <a href="http://gravatar.com/emails" class="button grey">change</a>
+                                <%= logo_for @user, size: :medium %>
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="cabinet center">
+                                <%= p.file_field :image, class: "file" %>
+                            </label>
+                            <br>
+                            <p id="fileName"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn center" %>
+                        </td>
+                    </tr>
+
+                </table>
+            <% end %>
+
+                <%= form_for(@user) do |f| %>
+            			<%= render 'shared/error_messages', object: f.object %>
+
+                <table colspan="5">
+                    <tr>
+                        <td><%= f.label "User Name", class: "right" %></td>
+                        <td><%= f.text_field :name, class: "textField" %></td>
+                    </tr>
+                    <%= f.fields_for :profile do |profile_form| %>
+                     <tr>
+                        <td><%= profile_form.label :first_name, class: "right" %></td>
+                        <td><%= profile_form.text_field :first_name, class: "textField" %></td>
+                    </tr>
+                     <tr>
+                        <td><%= profile_form.label :last_name, class: "right" %></td>
+                        <td><%= profile_form.text_field :last_name, class: "textField" %></td>
+                    </tr>
+                     <tr>
+                        <td><%= profile_form.label :phone, class: "right" %></td>
+                        <td><%= profile_form.text_field :phone, class: "textField" %></td>
+                    </tr>
+                     <tr>
+                        <td><%= profile_form.label :date_of_birth, class: "right" %></td>
+                        <td><%= select_date @date_of_birth, :prefix => :date_of_birth, :start_year => Time.now.year, :end_year => Time.now.year - 95 %></td>
+                    </tr>
+                    <% end %>
+                    <tr>
+                        <td></td>
+                        <td><%= f.submit 'Save Changes', class: "button grey submitBtn homeBtn right" %></td>
+                    </tr>
+                </table>
 
 
-            			<div><%= f.label "User Name" %><br />
+<!--             			<div><%= f.label "User Name" %><br />
             			<%= f.text_field :name, class: "TextField" %></div>
 
             			<%= f.fields_for :profile do |profile_form| %>
@@ -36,50 +88,8 @@
 
             			<% end %>
 
-            			<div><%= f.submit "Save changes", class: " submitBtn button blue" %></div>
+            			<div><%= f.submit "Save changes", class: " submitBtn button blue" %></div> -->
             		<% end %>
 
-            	</div>
             </div>
-      </div>
-
-<!--       <div class="sideBar">
-
-          <div class="sideBox">
-            <div class="sideTitle">Intrests</div>
-            <hr>
-            <div class="sideTag">
-              <span>Football</span>
-              <span>Basketball</span>
-              <span>Volleyball</span>
-              <span>Jet Ski</span>
-              <span>Karate</span>
-              <span>Fitness</span>
-            </div>
-          </div>
-
-
-          <div class="sideBox">
-            <div class="sideTitle">Similar Players</div>
-            <hr>
-            <div class="sideImage">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-     </div>
- -->
-
-
-
 </div>

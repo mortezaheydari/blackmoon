@@ -47,10 +47,17 @@ Blackmoon::Application.routes.draw do
 
     devise_for :accounts, :controllers => {:registrations => "registrations"}
 
+
+
+    get 'pages/offering_management'
+
     resources :activities
 
     resources :notifications
 
+    resources :album_photos
+
+    post 'logos/update'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

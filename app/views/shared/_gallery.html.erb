@@ -1,0 +1,6 @@
+<%= content_tag("div", "", class: "cardsection") do %>
+    <%= render  "album_photos/form" %>
+    <% @owner.album.album_photos.each do |album_photo| %>
+        <%= render album_photo %>
+    <% end -%>
+<% end -%>

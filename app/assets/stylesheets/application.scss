@@ -1,5 +1,6 @@
 /*
 *= require_self
+*= require fancybox
 */
 
 @import "compass";
@@ -10,7 +11,7 @@
 @import "compass/css3/images";
 @import "compass/layout/sticky-footer";
 @import "compass/layout/stretching";
-
+@import "compass/css3/appearance";
 
 $blueprint_grid_columns: 20;
 $blueprint_grid_width: 40px;
@@ -22,6 +23,7 @@ $TextColor: #666666;
 $boxPadding: 10px;
 $linkColor: #159fa4;
 $white: #ffffff;
+$FormBorder: #B8B8B8;
 
 $grey: #E6E6E6;
 $timePassedGrey: #B3B3B3;
@@ -66,15 +68,10 @@ $buttonBgHover: #ffffff;
 
 @mixin TextFields {
     height: 20px;
-    @include background($grey);
-    @include border-radius(10px);
-    @include background($grey);
+    @include border-radius(15px);
     @include box-shadow(none);
-    border: 1px solid $TextColor;
+    border: 1px solid $FormBorder;
     margin: 5px 0;
-    @include transition-property(width);
-    @include transition-duration(0.3s);
-    @include transition-timing-function(ease-in-out);
 }
 
 // end of mixin declaration
@@ -93,6 +90,11 @@ div.teamMembers {
         @include border-radius(5px);
     }
 }
+
+.inline {
+    display: inline;
+}
+
 
 .guestMenu {
     width:300px;
@@ -127,7 +129,86 @@ div.small {
     @include border-radius(5px);
 }
 
+div#Sign {
+    a {
+      color: #666666;
+    }
+}
 
+div.signPage {
+    width: 300px;
+    @include background-size(50%);
+    height: auto !important;
+    header {
+        height: 135px;
+        margin: 0 auto;
+        width: 22%;
+        .icon {
+            background:url("sign-in-modal.png") no-repeat;
+            background-size: 100px 80px;
+            width: 100px;
+            height: 80px;
+        }
+        h3 {
+            display: inline-block;
+            word-wrap:break-word;
+            margin-top: 40px;
+            font-size:2em;
+            font-weight: normal;
+            color: $TextColor;
+
+        }
+    }
+    header#editprofile {
+        width: 27%;
+        .editicon {
+            background: url("icons.png");
+            background-position: -500px -800px;
+            width: 100px;
+            height: 100px;
+        }
+        h3  {
+            margin-left: 10px;
+        }
+    }
+    header#forgotHeader {
+        width: 41%;
+    }
+    #new_photo {
+        border-top :solid 1px $TextColor;
+        border-bottom:solid 1px $TextColor;
+    }
+    form {
+        padding-top:20px;
+        position: relative;
+        top: 20%;
+        width: 50%;
+        margin: 0 auto;
+        color: $TextColor;
+        input.textField {
+            @include TextFields;
+            background-color: #fff;
+            @include border-radius(10px);
+        }
+        select {
+            @include appearance(none);
+            background: url("drop-icon.png") no-repeat scroll right center;
+            background-size: 20px 20px;
+            border-radius: 10px 10px 10px 10px;
+            width: 31.5%;
+        }
+        table {
+            margin: 0 auto;
+            tr {
+                text-align: center;
+                td {
+                    padding: 5px 5px;
+
+                }
+            }
+        }
+    }
+}
 
 .small-text {
   font-size: 10px;
@@ -136,12 +217,21 @@ div.small {
   color: $timePassedGrey;
 }
 
+.borderlr {
+    border-left: solid 1px $TextColor;
+    border-right: solid 1px $TextColor;
+}
+
 .text-left { text-align: left; }
 .text-right { text-align: right; }
 .text-center { text-align: center; }
 
 .left {
   float: left;
+}
+
+.center {
+    margin: 0 auto;
 }
 
 .right {
@@ -172,8 +262,6 @@ div.small {
   background:$objBg;
   width:100%;
 }
-
-
 
 .blue {
   @extend button;
@@ -1206,19 +1294,19 @@ form {
     width: 45%;
     @include TextFields;
     &:focus {
-      @include background($TextColor);
       color: #ffffff;
       width: 50%;
     }
   }
 
   select {
-    width: 14.5%;
+    width: 50%;
     @include TextFields;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: $grey url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
+    background: url("drop-icon.png") no-repeat right center;
+    background-size: 30px 30px;
     overflow:hidden;
   }
   .submitBtn {
@@ -1229,49 +1317,355 @@ form {
     width: 45%;
     @include TextFields;
     height: 200px;
-        &:focus {
-      @include background($TextColor);
-      color: #ffffff;
-      width: 50%;
-    }
   }
 }
+
+////////// Offering create/edit/management  //////////
+
+.offering {
+      @include column(20);
+      @include divReset;
+      min-height: 500px;
+      float: left;
+      h1, h2 {
+        color: $TextColor;
+        font-weight: bold;
+      }
+      table {
+        td {
+            vertical-align: top;
+        }
+      }
+      hr {
+        border:none;
+        border-top: 1px solid $TextColor;
+      }
+      table#categoryChoice {
+        td {
+            text-align: center;
+            color: $TextColor;
+            padding: 0 10px;
+            img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+      }
+      form {
+        label {
+            font-size: 0.8em;
+            line-height: 30px;
+            color: $TextColor;
+        }
+        input {
+            @include TextFields;
+            height: 20px;
+            padding: 5px;
+            width: 25%;
+            &:focus {
+                border: 1px solid $TextColor;
+            }
+        }
+        select {
+            height: 30px;
+            width: 25%;
+            padding: 5px;
+            &:focus {
+                border: 1px solid $TextColor;
+            }
+        }
+        textarea {
+            width: 25%;
+            padding: 5px;
+            &:focus {
+                border: 1px solid $TextColor;
+            }
+        }
+      }
+    #new_photo {
+        border-top :solid 1px $TextColor;
+        border-bottom:solid 1px $TextColor;
+        td {
+            text-align: left;
+            input{
+                height:30px !important;
+                width:40% !important;
+            }
+        }
+    }
+}
+
+
+.offering_management {
+      @include column(20);
+      @include divReset;
+      min-height: 500px;
+      float: left;
+      h1, h2 {
+        color: $TextColor;
+        font-weight: bold;
+      }
+      table {
+        th {
+            background: $grey;
+            color: $TextColor;
+            font-size: 1em;
+            text-align: left;
+            padding: 10px;
+        }
+        td {
+            vertical-align: bottom;
+            padding: 10px;
+            border-bottom: solid 1px $grey;
+            color: $TextColor;
+            font-size: 0.8em;
+            a {
+                color: $linkColor;
+                font-size: 1em;
+                margin-left: 15px;
+            }
+
+            img {
+                vertical-align: bottom;
+                @include border-radius(5px);
+            }
+        }
+        td.offeringtype {
+            vertical-align: bottom;
+            padding: 10px;
+            font-size: 1em;
+            a {
+                color: $linkColor;
+                font-size: 1em;
+                margin-left: 15px;
+            }
+            img {
+                vertical-align: bottom;
+            }
+        }
+      }
+  }
+
+// Gallery
+
+.gallery {
+    width: 200px;
+    height: 200px;
+    background: transparent;
+    float: left;
+    margin: 20px 10px 20px 10px;
+    @include border-radius(5%);
+    @include box-shadow(0 10px 0 0 $grey);
+    &:active {
+        @include box-shadow(none);
+        position: relative;
+        top:10px;
+    }
+    form {
+      border-top: none;
+    }
+    .img {
+        @include border-radius(5%);
+    }
+    #new_photo {
+        width: 180px;
+        height: 180px;
+        padding: 10px 10px;
+        background: $buttonBg;
+        @include border-radius(5%);
+        @include box-shadow(0 10px 0 0 $grey);
+        label {
+            color: $white;
+        }
+        input {
+            @include TextFields;
+            height: 20px;
+            padding: 5px;
+            width: 90%;
+            &:focus {
+                border: 1px solid $TextColor;
+            }
+        }
+        input[type="submit"] {
+            height:auto;
+            width:auto;
+        }
+    }
+}
+
+.SI-FILES-STYLIZED label.cabinet
+{
+    width: 79px;
+    height: 22px;
+    background: url('upload.png') 0 0 no-repeat;
+
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    input.file
+    {
+        position: relative;
+        height: 100%;
+        width: auto;
+        opacity: 0;
+        -moz-opacity: 0;
+        filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+    }
+}
+div.upload {
+    &:active {
+        @include box-shadow(0 10px 0 0 $grey);
+        position: relative;
+        top:0;
+    }
+    p {
+        color: $white;
+    }
+}
+
+
+
 
 // modal
 
-
-#modal-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 10;
-}
-
-#modal {
-  display: none;
-  position: absolute;
-  z-index: 10;
-  width: 600px;
-  left: 50%;
-  margin-left: (-600px - 40px) / 2;
-  padding: 20px;
-  background: #fff;
-  border: 5px solid #eee;
-
-  & > .close {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    color: #666;
-    &:hover, &:active {
-      color: #000;
+.modal {
+    background: #ffffff url("modal-top-left.png") top left no-repeat;
+    @include background-size(50%);
+    height: 325px;
+    @include box-shadow(#666666 0px 5px 15px inset);
+    .header {
+        position: relative;
+        width: 47%;
+        left: 53%;
+        top:20%;
+       .icon {
+            background:url("sign-in-modal.png") no-repeat;
+            background-size: 70px 56px;
+            width: 70px;
+            height: 56px;
+        }
+       .Createicon {
+            background: url("icons.png");
+            @include background-size(400px 500px);
+            background-position: -200px -400px;
+            width: 50px;
+            height: 50px;
+        }
+        h3 {
+            display: inline-block;
+            word-wrap:break-word;
+            margin-top: 35px;
+        }
     }
-  }
+
+    form {
+        position: relative;
+        top: 20%;
+        width: 50%;
+        margin: 0 auto;
+        input.textField {
+            @include TextFields;
+            background-color: #fff;
+            @include border-radius(10px);
+        }
+    }
 }
+
+div#Create {
+    width: 600px;
+    height: 350px;
+    .header {
+        height: 0;
+        left: 300px;
+        top: 73px;
+        h3 {
+            margin-top: 13px;
+        }
+    }
+    .linkContainer {
+        width: 100%;
+        margin: 140px auto;
+        div {
+            width: 25%;
+            padding: 2%;
+            a {
+                color: $TextColor;
+                font-size: 1em;
+                p {
+                    text-align: center;
+                }
+            }
+        }
+        div#tour {
+            p {
+                width: 149%;
+            }
+        }
+        div.classIcon {
+                background: url("class-icon.png") no-repeat;
+                width: 74px;
+                height: 100px;
+        }
+        div.eventIcon {
+                background: url("event-icon.png") no-repeat;
+                width: 85px;
+                height: 100px;
+        }
+        div.tourIcon {
+                background: url("tournament-icon.png") no-repeat;
+                width: 218px;
+                height: 100px;
+        }
+    }
+}
+
+div#SignUp {
+    height:400px;
+    .header {
+        top: 17%;
+    }
+    form {
+        width:70%;
+    }
+}
+
+.fancybox-skin {
+    padding: 0;
+}
+
+
+// #modal-container {
+//   display: none;
+//   position: fixed;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   background: rgba(0,0,0,0.4);
+//   z-index: 10;
+// }
+
+// #modal {
+//   display: none;
+//   position: absolute;
+//   z-index: 10;
+//   width: 600px;
+//   left: 50%;
+//   margin-left: (-600px - 40px) / 2;
+//   padding: 20px;
+//   background: #fff;
+//   border: 5px solid #eee;
+
+//   & > .close {
+//     position: absolute;
+//     right: 5px;
+//     top: 5px;
+//     color: #666;
+//     &:hover, &:active {
+//       color: #000;
+//     }
+//   }
+// }
 
 // end of shared styles
 

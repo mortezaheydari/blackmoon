@@ -40,10 +40,11 @@ class TeamsController < ApplicationController
   def create
     @current_user_id = current_user.id
   	@team = Team.new(params[:team])
+    @team.album = Album.new
     @team.save
   	@team.create_act_creation(creator_id: @current_user_id)
     @team.act_administrations.create(administrator_id: @current_user_id)
-    @team.act_memberships.create(member_id: @current_user_id)    
+    @team.act_memberships.create(member_id: @current_user_id)
 		redirect_to @team
   end
 
@@ -64,11 +65,12 @@ class TeamsController < ApplicationController
   	@team = Team.find(params[:id])
 		@likes = @team.flaggings.with_flag(:like)
 		@members = @team.members
-
+    @photo = Photo.new
+    @album = @team.album
   end
 
   def edit
-        @team = Team.find(params[:id])
+    @team = Team.find(params[:id])
   end
 
   def update
