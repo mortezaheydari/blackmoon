@@ -139,6 +139,8 @@ window.onload = function(){
 }
 
 
+
+
 $(document).ready(function() {
     var $modal = $('#modal');
     var $modal_close = $modal.find('.close');
@@ -152,6 +154,10 @@ $(document).ready(function() {
     $("tr.ptdata").hide();
     $("tr.cldata").hide();
     $("tr.evdata").hide();
+
+    $('input.file').change(function() {
+        $("p#fileName").text(this.value);
+    });
 
     $("div#userMenu").mouseenter(function(e) {
         e.preventDefault();
