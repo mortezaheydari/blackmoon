@@ -4,28 +4,36 @@
 
             <div class="row">
 
-                                <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "User", owner_id: @user.id), :html => { :method => "post" }) do |p| %>
+            <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "User", owner_id: @user.id), :html => { :method => "post" }) do |p| %>
 
-                                        <label class="cabinet">
-                                            <%= p.file_field :image, class: "file" %>
-                                        </label>
-                                        <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn right" %>
-                                <% end %>
-                                <br> <br> <br>
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <div class="gravatarContainer">
+                                <%= logo_for @user, size: :medium %>
+                            </div>
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <td colspan="2">
+                            <label class="cabinet center">
+                                <%= p.file_field :image, class: "file" %>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn center" %>
+                        </td>
+                    </tr> 
+                    
+                </table>
+            <% end %>
 
                 <%= form_for(@user) do |f| %>
             			<%= render 'shared/error_messages', object: f.object %>
 
                 <table colspan="5">
-                    <tr>
-                        <td></td>
-                        <td>
-                            <div class="gravatarContainer">
-                                <%= logo_for @user, size: :medium %>
-
-                            </div>
-                        </td>
-                    </tr>
                     <tr>
                         <td><%= f.label "User Name", class: "right" %></td>
                         <td><%= f.text_field :name, class: "textField" %></td>
