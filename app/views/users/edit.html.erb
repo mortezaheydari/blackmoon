@@ -13,20 +13,22 @@
                                 <%= logo_for @user, size: :medium %>
                             </div>
                         </td>
-                    </tr>                    
+                    </tr>
                     <tr>
                         <td colspan="2">
                             <label class="cabinet center">
                                 <%= p.file_field :image, class: "file" %>
                             </label>
+                            <br>
+                            <p id="fileName"></p>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
                             <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn center" %>
                         </td>
-                    </tr> 
-                    
+                    </tr>
+
                 </table>
             <% end %>
 
