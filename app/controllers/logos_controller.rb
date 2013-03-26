@@ -31,11 +31,12 @@ class LogosController < ApplicationController
         else
             if @logo.photo.nil?
                 @photo = Photo.new(params[:photo])
-                @photo.save
+                double_check {@photo.save}
                 @logo.photo_id = @photo.id
             elsif @logo.photo.uses.count == 1
                 @logo.photo.destroy
                 @logo.photo.create(params[:photo])
+                @logo.photo_id = @photo.id                
             else
                 @photo = Photo.new(params[:photo])
                 @logo.photo_id = @photo.id
@@ -58,6 +59,10 @@ class LogosController < ApplicationController
 
     def name_is_valid?(name)
       ["event","class","game", "user", "team"].include? name.downcase
+    end
+
+    def double_check(&b)
+        redirect_to @owner, notice: 'error' and return unless b.call == true
     end
 
 end
