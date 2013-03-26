@@ -4,7 +4,8 @@ class LogosController < ApplicationController
   	owner_type = params[:owner_type]
   	owner_id = params[:owner_id]
   	remove_logo = true unless params[:remove_logo].nil?
-    photo_exists = true unless params[:photo_exists].nil?
+            @photo_exists = false
+           @photo_exists = true unless params[:photo_exists].nil?
 
     double_check_name_is_valid owner_type
 
@@ -31,7 +32,7 @@ class LogosController < ApplicationController
             end
         end
     else
-        
+
         if @logo.photo.nil?
             unless_photo_exists{
                 @photo = Photo.new(params[:photo])
@@ -41,10 +42,10 @@ class LogosController < ApplicationController
             double_check {@logo.photo.destroy}
             unless_photo_exists{
                 @photo = Photo.new(params[:photo])
-                double_check {@photo.save} }   
+                double_check {@photo.save} }
 
         else
-            unless_photo_exists{            
+            unless_photo_exists{
                 @photo = Photo.new(params[:photo])
                 double_check {@photo.save} }
         end
@@ -74,14 +75,13 @@ class LogosController < ApplicationController
 
     def double_check_name_is_valid(name)
       redirect_to rooth_path and return unless name_is_valid?(name)
-    end    
+    end
 
     def unless_photo_exists(&b)
-        if photo_exists
-            b.call
-        else 
+        if @photo_exists
             @photo = Photo.find_by_id(params[:photo_id])
+        else
+            b.call
         end
     end
 end
-photo_exists
