@@ -27,3 +27,5 @@ app/assets/.DS_Store
 app/assets/images/.DS_Store
 
 *.jpg
+
+*.jpeg

@@ -1423,6 +1423,16 @@ form {
                 color: $linkColor;
                 font-size: 1em;
                 margin-left: 15px;
+
+            }
+            a.button {
+                color: $white;
+                &:hover {
+                    color: $TextColor;
+                }
+                &:active {
+                    color: $white;
+                }
             }
 
             img {

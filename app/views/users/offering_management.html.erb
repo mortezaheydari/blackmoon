@@ -1,7 +1,7 @@
 
 <div class="body">
     <div class="offering_management">
-                    <h1>Manage Offerings</h1>
+                    <h1>Manage Offerings </h1>
 
                     <table width="100%">
                         <tr>
@@ -11,107 +11,136 @@
                             <th>Location</th>
                             <th>Joined</th>
                             <th>Liked</th>
+                            <th>Link</th>
                         </tr>
                         <tr>
-                            <td colspan="6" class="offeringtype" id="ptType">
-                                 <%= image_tag "fitness-icon.png", width: 25 %> <a href="#">Personal Training (2)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
+                            <td colspan="7" class="offeringtype" id="ptType">
+                                 <%= image_tag "fitness-icon.png", width: 25 %> <a href="#">Personal Training (0)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
                             </td>
                         </tr>
 
-
-                        <tr class="ptdata">
-                            <td></td>
-                            <td><%= image_tag "bg.png", width: 40 %> <a href="#">Yalla let’s Volley</a> </td>
-                            <td>16/6/2012</td>
-                            <td>Salmiya Beach</td>
-                            <td> <a href="#">(2) Teams</a> </td>
-                            <td> <a href="#">(24)</a> </td>
-                        </tr>
-
-                        <tr class="ptdata">
-                            <td></td>
-                            <td><%= image_tag "bg.png", width: 40 %> <a href="#">Yalla let’s Volley</a> </td>
-                            <td>16/6/2012</td>
-                            <td>Salmiya Beach</td>
-                            <td> <a href="#">(2) Teams</a> </td>
-                            <td> <a href="#">(24)</a> </td>
-                        </tr>
-
+<!--                         <% @events.each do |e| %>
+                            <tr class="ptdata">
+                                <td></td>
+                                <td><%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %></td>
+                                <td><%= e.date_and_time.strftime("%A, %B %d, %Y") %></td>
+                                <td><%= e.custom_address %></td>
+                                <td> <a href="#">
+                                    <%     if e.team_participation == false
+                                                    @participator = e.individual_participators
+                                            else
+                                                @participator = e.team_participators
+                                            end %>
+                                         (<%= @participator.count %>)
+                                        </a> </td>
+                                <td> <a href="#">(<%= e.flaggings.with_flag(:like).count  %>)</a> </td>
+                            </tr>
+                        <% end -%> -->
 
 
-
-                        <tr>
-                            <td colspan="6" class="offeringtype" id="clType">
-                                <%= image_tag "class-icon.png", width: 25 %> <a href="#">Classes (1)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
-                            </td>
-                        </tr>
-
-
-
-                        <tr class="cldata">
-                            <td></td>
-                            <td><%= image_tag "bg.png", width: 40 %> <a href="#">Yalla let’s Volley</a> </td>
-                            <td>16/6/2012</td>
-                            <td>Salmiya Beach</td>
-                            <td> <a href="#">(2) Teams</a> </td>
-                            <td> <a href="#">(24)</a> </td>
-                        </tr>
 
 
 
                         <tr>
-                            <td colspan="6" class="offeringtype" id="evType">
-                                 <%= image_tag "event-icon.png", width: 25 %> <a href="#">Event (5)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
+                            <td colspan="7" class="offeringtype" id="clType">
+                                <%= image_tag "class-icon.png", width: 25 %> <a href="#">Classes (0)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
                             </td>
                         </tr>
 
 
-                        <tr class="evdata">
+
+<!--                         <tr class="cldata">
                             <td></td>
                             <td><%= image_tag "bg.png", width: 40 %> <a href="#">Yalla let’s Volley</a> </td>
                             <td>16/6/2012</td>
                             <td>Salmiya Beach</td>
                             <td> <a href="#">(2) Teams</a> </td>
                             <td> <a href="#">(24)</a> </td>
-                        </tr>
+                        </tr> -->
 
-                        <tr class="evdata">
-                            <td></td>
-                            <td><%= image_tag "bg.png", width: 40 %> <a href="#">Yalla let’s Volley</a> </td>
-                            <td>16/6/2012</td>
-                            <td>Salmiya Beach</td>
-                            <td> <a href="#">(2) Teams</a> </td>
-                            <td> <a href="#">(24)</a> </td>
-                        </tr>
+<!-- Events -->
 
-
-                        <tr class="evdata">
-                            <td></td>
-                            <td><%= image_tag "bg.png", width: 40 %> <a href="#">Yalla let’s Volley</a> </td>
-                            <td>16/6/2012</td>
-                            <td>Salmiya Beach</td>
-                            <td> <a href="#">(2) Teams</a> </td>
-                            <td> <a href="#">(24)</a> </td>
-                        </tr>
-
-                        <tr class="evdata">
-                            <td></td>
-                            <td><%= image_tag "bg.png", width: 40 %> <a href="#">Yalla let’s Volley</a> </td>
-                            <td>16/6/2012</td>
-                            <td>Salmiya Beach</td>
-                            <td> <a href="#">(2) Teams</a> </td>
-                            <td> <a href="#">(24)</a> </td>
+                        <tr>
+                            <td colspan="7" class="offeringtype" id="evType">
+                                 <%= image_tag "event-icon.png", width: 25 %> <a href="#">Events (<%= @events.count %>)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
+                            </td>
                         </tr>
 
 
-                        <tr class="evdata">
-                            <td></td>
-                            <td><%= image_tag "bg.png", width: 40 %> <a href="#">Yalla let’s Volley</a> </td>
-                            <td>16/6/2012</td>
-                            <td>Salmiya Beach</td>
-                            <td> <a href="#">(2) Teams</a> </td>
-                            <td> <a href="#">(24)</a> </td>
+                        <% @events.each do |e| %>
+                            <tr class="evdata">
+                                <td></td>
+                                <td><%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %></td>
+                                <td><%= e.date_and_time.strftime("%A, %B %d, %Y") %></td>
+                                <td><%= e.custom_address %></td>
+                                <td>
+                                    <%     if e.team_participation == false
+                                                    @participator = e.individual_participators
+                                            else
+                                                @participator = e.team_participators
+                                            end %>
+                                         <%= link_to "("+@participator.count.to_s+")", event_path(e) %>
+                                        </td>
+                                <td><%= link_to "("+e.flaggings.with_flag(:like).count.to_s+")", event_path(e)  %> </td>
+                                <td>
+                                    <%= link_to "Edit", edit_event_path(e), class: "button blue" %>
+                                </td>
+                            </tr>
+                        <% end -%>
+
+<!-- Game -->
+
+                        <tr>
+                            <td colspan="7" class="offeringtype" id="gmType">
+                                 <%= image_tag "event-icon.png", width: 25 %> <a href="#">Games (<%= @games.count %>)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
+                            </td>
                         </tr>
+
+
+                        <% @games.each do |e| %>
+                            <tr class="gmdata">
+                                <td></td>
+                                <td><%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %></td>
+                                <td><%= e.date_and_time.strftime("%A, %B %d, %Y") %></td>
+                                <td><%= e.custom_address %></td>
+                                <td>
+                                    <%     if e.team_participation == false
+                                                    @participator = e.individual_participators
+                                            else
+                                                @participator = e.team_participators
+                                            end %>
+                                         <%= link_to "("+@participator.count.to_s+")", game_path(e) %>
+                                        </td>
+                                <td><%= link_to "("+e.flaggings.with_flag(:like).count.to_s+")", game_path(e)  %> </td>
+                                <td>
+                                    <%= link_to "Edit", edit_game_path(e), class: "button blue" %>
+                                </td>
+                            </tr>
+                        <% end -%>
+
+<!-- Teams -->
+
+                        <tr>
+                            <td colspan="7" class="offeringtype" id="tmType">
+                                 <%= image_tag "event-icon.png", width: 25 %> <a href="#">Teams (<%= @teams.count %>)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
+                            </td>
+                        </tr>
+
+
+                        <% @teams.each do |e| %>
+                            <tr class="tmdata">
+                                <td></td>
+                                <td colspan="3"><%= logo_for(e, size: :small) %> <%= link_to e.title, team_path(e) %></td>
+                                <td>
+                                         <%= link_to "("+e.members.count.to_s+")", team_path(e) %>
+                                        </td>
+                                <td><%= link_to "("+e.flaggings.with_flag(:like).count.to_s+")", team_path(e)  %> </td>
+                                <td>
+                                    <%= link_to "Edit", edit_team_path(e), class: "button blue" %>
+                                </td>
+                            </tr>
+                        <% end -%>
+
                     </table>
     </div>
 </div>
