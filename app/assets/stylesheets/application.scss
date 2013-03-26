@@ -1382,6 +1382,17 @@ form {
             }
         }
       }
+    #new_photo {
+        border-top :solid 1px $TextColor;
+        border-bottom:solid 1px $TextColor;
+        td {
+            text-align: left;
+            input{
+                height:30px !important;
+                width:40% !important;
+            }
+        }
+    }
 }
 
 
