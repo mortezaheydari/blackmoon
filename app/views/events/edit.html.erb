@@ -2,6 +2,35 @@
 <div class="body">
     <div class="offering">
                     <h1><%= image_tag "class-icon.png", width: 50 %> Update Event Information</h1>
+
+
+            <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "Event", owner_id: @event.id), :html => { :method => "post" }) do |p| %>
+
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <div class="gravatarContainer">
+                                <%= logo_for @event, size: :medium %>
+                            </div>
+                        </td>
+                    </tr>                    
+                    <tr>
+                        <td colspan="2">
+                            <label class="cabinet center">
+                                <%= p.file_field :image, class: "file" %>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn center" %>
+                        </td>
+                    </tr> 
+                    
+                </table>
+            <% end %>
+
+
         <%= form_for(@event) do |f| %>
 
                             <p>Category</p>

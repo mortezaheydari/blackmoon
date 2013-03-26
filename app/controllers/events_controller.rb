@@ -87,6 +87,9 @@ class EventsController < ApplicationController
   def edit
         @event = Event.find(params[:id])
         @date_and_time = @event.date_and_time
+        @event.album ||= Album.new
+        @photo = Photo.new
+        @photo.title = "Logo"        
   end
 
   def update
