@@ -1,34 +1,94 @@
-<h1>Events#edit</h1>
 
-<--  Back to <%= link_to "index", events_path %>
+<div class="body">
+    <div class="offering">
+                    <h1><%= image_tag "class-icon.png", width: 50 %> Create New Team</h1>
 
-<div class="row">
-	<div class="span6 offset3">
-		<%= form_for(@team) do |f| %>
+            <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "Team", owner_id: @team.id), :html => { :method => "post" }) do |p| %>
+                    <h2>Image</h2>
+
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <div class="gravatarContainer">
+                                <%= logo_for @team, size: :medium %>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="cabinet left">
+                                <%= p.file_field :image, class: "file" %>
+                            </label>
+                            <br>
+                            <p id="fileName"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn left" %>
+                        </td>
+                    </tr>
+
+                </table>
+            <% end %>
+
+        <%= form_for(@team) do |f| %>
+                            <h2>1. Set up Activity</h2>
+
+                            <p>a. Select a Category</p>
+
                             <div>
-                                <%= f.label :title, "Event Title" %>
-                                <%= f.text_field :title %>
+                                <table id="categoryChoice">
+                                    <tr>
+                                        <td><%= f.radio_button :category, "BallSports", value: "BallSports", checked: true %></td>
+                                        <td><%= f.radio_button :category, "Fitness", value: "Fitness" %></td>
+                                        <td><%= f.radio_button :category, "WaterSports", value: "WaterSports" %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ball Sports</td>
+                                        <td>Fitness</td>
+                                        <td>Water Sports</td>
+                                    </tr>
+                                </table>
+                            </div> <br>
+
+                            <div>
+                                <table  width="100%">
+                                    <tr>
+                                        <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
+                                        <td>
+                                            <div id="BallList"><%= f.select :sport, ["Football", "Handball"]%></div>
+                                            <div id="FitList"><%= f.select :sport, ["Marathon", "Sky diving"] %></div>
+                                            <div id="WaterList"><%= f.select :sport, ["Water Polo", "Swimming"]%></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :title, "team Title: " %></td>
+                                        <td><%= f.text_field :title %></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
+                                        <td><%= f.number_field :number_of_attendings %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :descreption, "Description" %></td>
+                                        <td><%= f.text_area :descreption %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Add Image</label></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Special Requirements</label></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <div>
-                                <%= f.label :sport, "sport" %>
-                                <%= f.text_field :sport %>
-                            </div>
 
-                            <div>
-                                <%= f.label :number_of_attendings, "Number of attendings" %>
-                                <%= f.number_field :number_of_attendings %>
-                            </div>
+    </div>
+                <%= f.submit "Update the team", class: "button grey submitBtn homeBtn left" %>
 
-                            <div>
-                                <%= f.label :descreption, "Description" %>
-                                <%= f.text_area :descreption %>
-                            </div>
 
-                            <div>
-                                <%= f.submit "Update the Team", class: "btn btn-large btn-primary" %>
-                            </div>
-        		<% end %>
-	</div>
+        <% end %>
 </div>
-

@@ -1,53 +1,44 @@
 
 <div class="body">
     <div class="offering">
-                    <h1><%= image_tag "class-icon.png", width: 50 %> Update Game Information</h1>
+                    <h1><%= image_tag "class-icon.png", width: 50 %> Create New Event</h1>
+        <%= form_for(@event) do |f| %>
+                            <h2>1. Set up Activity</h2>
 
+                            <p>a. Select a Category</p>
 
-            <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "Game", owner_id: @game.id), :html => { :method => "post" }) do |p| %>
-                    <h2>Image</h2>
-
-                <table>
-                    <tr>
-                        <td colspan="2">
-                            <div class="gravatarContainer">
-                                <%= logo_for @game, size: :medium %>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label class="cabinet left">
-                                <%= p.file_field :image, class: "file" %>
-                            </label>
-                            <br>
-                            <p id="fileName"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn left" %>
-                        </td>
-                    </tr>
-
-                </table>
-            <% end %>
-
-
-        <%= form_for(@game) do |f| %>
-
-                            <p>Category</p>
-                            <div class="<%= @game.category %> left"></div> <br>
+                            <div>
+                                <table id="categoryChoice">
+                                    <tr>
+                                        <td><%= f.radio_button :category, "BallSports", value: "BallSports", checked: true %></td>
+                                        <td><%= f.radio_button :category, "Fitness", value: "Fitness" %></td>
+                                        <td><%= f.radio_button :category, "WaterSports", value: "WaterSports" %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ball Sports</td>
+                                        <td>Fitness</td>
+                                        <td>Water Sports</td>
+                                    </tr>
+                                </table>
+                            </div> <br>
 
                             <div>
                                 <table  width="100%">
                                     <tr>
                                         <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
-                                        <td><label><%= @game.sport %></label></td>
+                                        <td>
+                                            <div id="BallList"><%= f.select :sport, ["Football", "Handball"]%></div>
+                                            <div id="FitList"><%= f.select :sport, ["Marathon", "Sky diving"] %></div>
+                                            <div id="WaterList"><%= f.select :sport, ["Water Polo", "Swimming"]%></div>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><%= f.label :title, "game Title: " %></td>
+                                        <td><%= f.label :title, "Event Title: " %></td>
                                         <td><%= f.text_field :title %></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
+                                        <td><%= f.number_field :number_of_attendings %></td>
                                     </tr>
                                     <tr>
                                         <td><%= f.label :descreption, "Description" %></td>
@@ -63,72 +54,10 @@
                                     </tr>
                                 </table>
                             </div>
-<hr>
-
-                    <h2>2. <%= image_tag "location-icon.png", width: 50 %> Location</h2>
-
-                            <div>
-                                <table width="100%">
-                                    <tr>
-                                        <td width="130"><%= f.label :custom_address, "Select the city:" %></td>
-                                        <td><%= f.select :custom_address, ["Al-Salmiyah", "Kuwait City"] %></td>
-                                    </tr>
-                                </table>
-
-                            </div>
-
-<hr>
-                    <h2>3. <%= image_tag "payment-icon.png", width: 50 %> Payment</h2>
-                            <div>
-                                <table width="100%">
-                                    <tr>
-                                        <td width="130"><%= f.label :fee_type, "Payment Option" %></td>
-                                        <td><%= f.select :fee_type, ["Free", "Cash"] %></td>
-                                    </tr>
-                                    <tr id="AmountRow">
-                                        <td><%= f.label :fee, "Amount" %></td>
-                                        <td><%= f.number_field :fee %></td>
-                                    </tr>
-                                </table>
-                            </div>
-
-<hr>
-
-                    <h2>4. Time &amp; Limits</h2>
-
-                            <div>
-                                <table width="100%">
-                                    <tr>
-                                        <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
-                                        <td><%= f.number_field :number_of_attendings %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :date_and_time %></td>
-                                        <td><%= select_date @date_and_time, :prefix => :date_and_time, :start_year => Time.now.year, :end_year => Time.now.year + 5  %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :time_from, "Time From" %></td>
-                                        <td><%= f.time_select :time_from %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :time_to, "Time To" %></td>
-                                        <td><%= f.time_select :time_to %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :team_participation, "Team Participation" %></td>
-                                        <td><%= f.select :team_participation, ["No", "Yes"] %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :team_participation, "Team Participation" %></td>
-                                        <td><%= f.select :team_participation, ["No", "Yes"] %></td>
-                                    </tr>
-                                </table>
-                            </div>
-
 
 
     </div>
-                <%= f.submit "Update the game", class: "button grey submitBtn homeBtn left" %>
+                <%= f.submit "Create the Event", class: "button grey submitBtn homeBtn left" %>
 
 
         <% end %>
