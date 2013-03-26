@@ -1,22 +1,22 @@
 class LogosController < ApplicationController
 
   def update
-  	owner_type = params[:owner_type]
-  	owner_id = params[:owner_id]
-  	remove_logo = true unless params[:remove_logo].nil?
+    owner_type  = params[:owner_type]
+    owner_id    = params[:owner_id]
+    remove_logo = true unless params[:remove_logo].nil?
     photo_exists = true unless params[:photo_exists].nil?
 
     double_check_name_is_valid owner_type
 
-	@owner = owner_type.camelize.constantize.find_by_id(owner_id)
-	# checking photo upload premission
-	if owner_type == "User"
-		redirect_to @owner, notice: 'you don\'t have premission to upload photos to this page.' unless @owner == current_user
-	else
-		redirect_to @owner, notice: 'you don\'t have premission to upload photos to this page.' unless @owner.administrators.include? current_user
-	end
+    @owner = owner_type.camelize.constantize.find_by_id(owner_id)
+    # checking photo upload premission
+    if owner_type == "User"
+        redirect_to @owner, notice: 'you don\'t have premission to upload photos to this page.' unless @owner == current_user
+    else
+        redirect_to @owner, notice: 'you don\'t have premission to upload photos to this page.' unless @owner.administrators.include? current_user
+    end
 
-	@logo = @owner.logo
+    @logo = @owner.logo
 
     if remove_logo == true
         if @photo.uses.count == 1
@@ -59,7 +59,7 @@ class LogosController < ApplicationController
             redirect_to @owner, notice: 'error while updating the photo.'
         end
     end
-
+    
   end
 
   private

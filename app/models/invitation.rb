@@ -8,4 +8,8 @@ class Invitation < ActiveRecord::Base
   belongs_to :subject, polymorphic: true    
   accepts_nested_attributes_for :subject  
 
+  validates :inviter_id, presence: true
+  validates :invited_id, presence: true
+  validates :subject_id, presence: true  
+
 end

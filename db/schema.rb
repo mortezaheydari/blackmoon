@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130324132050) do
+ActiveRecord::Schema.define(:version => 20130325101445) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -141,6 +141,21 @@ ActiveRecord::Schema.define(:version => 20130324132050) do
     t.boolean  "team_participation"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+  end
+
+  create_table "invitations", :force => true do |t|
+    t.integer  "inviter_id"
+    t.string   "inviter_type"
+    t.integer  "invited_id"
+    t.string   "invited_type"
+    t.integer  "subject_id"
+    t.string   "subject_type"
+    t.string   "state"
+    t.text     "message"
+    t.datetime "submission_datetime"
+    t.datetime "response_datetime"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "logos", :force => true do |t|
