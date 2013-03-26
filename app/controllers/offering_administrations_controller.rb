@@ -9,22 +9,20 @@ def create
     offering = offering_type.camelize.constantize
     this = offering.find_by_id(params[:this_id])
 
-    if name_is_valid?(user, offering_type)
+    double_check_name_is_valid(user, offering_type)
 
-        offerings_administrating = user.send("#{offering_type.pluralize}_administrating")
-        	offering_to_administrate = offering_type.camelize.constantize.find_by_id(offering_id)
+    offerings_administrating = user.send("#{offering_type.pluralize}_administrating")
+	offering_to_administrate = offering_type.camelize.constantize.find_by_id(offering_id)
 
-        	if offering_to_administrate.administrators.include? current_user
-            # todo: check user has the right rank
-                offerings_administrating << offering_to_administrate
-            end
-            respond_to do |format|
-                format.html { redirect_to offering_to_administrate }
-                format.js { render 'offering_administrations/create', :locals => { this: this, person: user } }
-            end
-    else
-    	redirect_to  send("#{act_type}_path", offering_id)
+	if offering_to_administrate.administrators.include? current_user
+    # todo: check user has the right rank
+        offerings_administrating << offering_to_administrate
     end
+    respond_to do |format|
+        format.html { redirect_to offering_to_administrate }
+        format.js { render 'offering_administrations/create', :locals => { this: this, person: user } }
+    end
+
 end
 
 def destroy
@@ -34,24 +32,21 @@ def destroy
     offering = offering_type.camelize.constantize
     this = offering.find_by_id(params[:this_id])
 
-    if name_is_valid?(user, offering_type)
+    double_check_name_is_valid(user, offering_type)
 
-        offering_to_remove_admin_from = offering_type.camelize.constantize.find_by_id(offering_id)
+    offering_to_remove_admin_from = offering_type.camelize.constantize.find_by_id(offering_id)
 
-        if current_user_can_delete_admin?(user, offering_to_remove_admin_from)
-            administrations = []
-            administrations = user.offering_administrations.where(offering_type: offering_type.camelize , offering_id: offering_id)
-            administrations.each do |a|
-                a.destroy
-                end unless administrations == []
-            end
+    if current_user_can_delete_admin?(user, offering_to_remove_admin_from)
+        administrations = []
+        administrations = user.offering_administrations.where(offering_type: offering_type.camelize , offering_id: offering_id)
+        administrations.each do |a|
+            a.destroy
+        end unless administrations == []
+    end
 
-            respond_to do |format|
-                format.html { redirect_to offering_to_remove_admin_from }
-                format.js { render 'offering_administrations/destroy', :locals => { this: this, person: user } }
-            end
-    else
-        redirect_to send("#{act_type}_path", offering_id)
+    respond_to do |format|
+        format.html { redirect_to offering_to_remove_admin_from }
+        format.js { render 'offering_administrations/destroy', :locals => { this: this, person: user } }
     end
 end
 
@@ -63,6 +58,11 @@ end
     def name_is_valid?(user, name)
       user.respond_to? "#{name}s_administrating" and ["event","class","game"].include? name
     end
+
+
+    def double_check_name_is_valid(user, name)
+      redirect_to rooth_path and return unless name_is_valid?(user, name)
+    end    
 
 		# def current_user_can_delete_admin?(admin, offering)
 		# 	# todo: add superadmin
