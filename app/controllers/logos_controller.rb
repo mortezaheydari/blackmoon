@@ -3,7 +3,8 @@ class LogosController < ApplicationController
   def update
   	owner_type = params[:owner_type]
   	owner_id = params[:owner_id]
-  	remove_logo = params[:remove_logo]
+  	remove_logo = true unless params[:remove_logo].nil?
+    photo_exists = true unless params[:photo_exists].nil?
 
     double_check_name_is_valid owner_type
 
@@ -30,20 +31,25 @@ class LogosController < ApplicationController
             end
         end
     else
+        
         if @logo.photo.nil?
-            @photo = Photo.new(params[:photo])
-            double_check {@photo.save}
-            @logo.photo_id = @photo.id
+            unless_photo_exists{
+                @photo = Photo.new(params[:photo])
+                double_check {@photo.save} }
+
         elsif @logo.photo.uses.count == 1
             double_check {@logo.photo.destroy}
-            @photo = Photo.new(params[:photo])
-            double_check {@photo.save}                 
-            @logo.photo_id = @photo.id                
+            unless_photo_exists{
+                @photo = Photo.new(params[:photo])
+                double_check {@photo.save} }   
+
         else
-            @photo = Photo.new(params[:photo])
-            double_check {@photo.save}                
-            @logo.photo_id = @photo.id
+            unless_photo_exists{            
+                @photo = Photo.new(params[:photo])
+                double_check {@photo.save} }
         end
+
+        @logo.photo_id = @photo.id
         if @logo.save
             respond_to do |format|
                 format.html { redirect_to @owner, notice: 'Photo was successfully added.' }
@@ -70,4 +76,12 @@ class LogosController < ApplicationController
       redirect_to rooth_path and return unless name_is_valid?(name)
     end    
 
+    def unless_photo_exists(&b)
+        if photo_exists
+            b.call
+        else 
+            @photo = Photo.find_by_id(params[:photo_id])
+        end
+    end
 end
+photo_exists
