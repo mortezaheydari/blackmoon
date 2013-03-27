@@ -35,12 +35,14 @@ class EventsController < ApplicationController
 
   def new
   	@event = Event.new
+    @event.happening_case = HappeningCase.new
   end
 
   def create
     @current_user_id = current_user.id
     @event = Event.new(params[:event])
-    @event.date_and_time = date_helper_to_str(params[:date_and_time])
+    @event.happening_case ||= HappeningCase.new
+    @event.happening_case.date_and_time = date_helper_to_str(params[:date_and_time])
     @event.team_participation ||= false
     @event.album = Album.new
     if @event.save
@@ -86,7 +88,7 @@ class EventsController < ApplicationController
 
   def edit
         @event = Event.find(params[:id])
-        @date_and_time = @event.date_and_time
+        @date_and_time = @event.happening_case.date_and_time
         @event.album ||= Album.new
         @photo = Photo.new
         @photo.title = "Logo"        
@@ -96,7 +98,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
 
     # @event.date_and_time = date_helper_to_str(params[:date_and_time])
-    params[:event][:date_and_time] = date_helper_to_str(params[:date_and_time])
+    params[:event][:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
     if @event.update_attributes(params[:event])
       @event.create_activity :update, owner: current_user
       redirect_to @event, notice: "Event was updated"
