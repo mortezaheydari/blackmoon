@@ -25,7 +25,9 @@
         <% end %>
     <% end %>
 
-    <%= link_to "invite", invitations_path(inviter_id: this.creator.id, inviter_type: "User", invited_id: person.id, invited_type: "User", subject_id: this.id, subject_type: this.class.to_s, return_object_id: this.id, return_object_type: this.class.to_s), method: :post %>
+    <%= render 'shared/invite_button', this: this, person: person %>
+
 </span>
+
   </div>
 </article>
