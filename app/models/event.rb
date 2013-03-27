@@ -33,6 +33,9 @@ class Event < ActiveRecord::Base
   has_many :offering_team_participations, as: :offering, :dependent => :destroy
   accepts_nested_attributes_for :offering_team_participations
 
+	has_many :invitations, as: :subject, dependent: :destroy
+	accepts_nested_attributes_for :invitations
+	
 	def creator
 		User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
 	end
