@@ -17,7 +17,7 @@ class LogosController < ApplicationController
         redirect_to @owner, notice: 'you don\'t have premission to upload photos to this page.' unless @owner == current_user
     else
         redirect_to @owner, notice: 'you don\'t have premission to upload photos to this page.' unless @owner.administrators.include? current_user
-    endÏ
+    end
 
     @logo = @owner.logo
 

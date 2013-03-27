@@ -62,6 +62,8 @@ Blackmoon::Application.routes.draw do
 
     resources :album_photos
 
+    resources :invitations, only: [ :create, :update ]
+
     post 'logos/update'
   # The priority is based upon order of creation:
   # first created -> highest priority.

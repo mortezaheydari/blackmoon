@@ -34,22 +34,22 @@ class InvitationsController < ApplicationController
 				@invitation.state = "accepted"
 			elsif params[:respond] = "reject"
 				@invitation.state = "rejected"
-			else 
+			else
 				redirect_to redirect_object, notice:'error' and return
 			end
-		@invitation.response_datetime = Time.now		
-			
+		@invitation.response_datetime = Time.now
+
 		double_check {@invitation.save}
 
         respond_to do |format|
             format.html { redirect_to redirect_object, notice: 'invitation has been sent.' }
             format.js
-        end		
+        end
 
 	end
 
 	private
-	
+
 		def params_initializer
 			inviter_id         = params[:inviter_id]
 			inviter_type       = params[:inviter_type]
@@ -58,7 +58,7 @@ class InvitationsController < ApplicationController
 			subject_id         = params[:subject_id]
 			subject_type       = params[:subject_type]
 			return_object_id   = params[:return_object_id]
-			return_object_type = params[:return_object_type]			
+			return_object_type = params[:return_object_type]
 
 			@inviter           = find_and_assign inviter_type, inviter_id
 			@invited           = find_and_assign invited_type, invited_id
@@ -72,7 +72,7 @@ class InvitationsController < ApplicationController
 				if ["user", "team"].includs? this_type.downcase and this_id.not_nil?
 					double_check { this = this_type.camelize.constantize.find_by_id(this_id) }
 				end
-			end	    	
+			end
 	    end
 
 	    def double_check(&b)

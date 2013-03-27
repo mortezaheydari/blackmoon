@@ -52,6 +52,7 @@ module SessionsHelper
 				gravatar_for(this, options)
 			else
 				size = options[:size]
+                                            size = :small if size == 50
 		    css_class = options[:css_class]
 				image_tag(this.logo.photo.image.url(size), als: this.name, class: "gravatar #{css_class}")
 			end
