@@ -88,23 +88,3 @@ class InvitationsController < ApplicationController
     end
 
 end
-
-
-    def create
-        if params[:object_to_be_saved] = "book"
-            @book = Book.new(params[:book])
-            double_check { @book.save }
-
-        elsif params[:object_to_be_saved] = "newspaper"
-            @newspaper = Newspaper.new(params[:newspaper])
-            double_check { @newspaper.save }
-
-        elsif params[:object_to_be_saved] = "letter"
-            @letter = Letter.new(params[:letter])
-            double_check { @letter.save }
-        else
-            redirect_to rooth_path, notice: "bad object" and return
-        end
-
-        redirect_to show, notice: "success."
-    end
