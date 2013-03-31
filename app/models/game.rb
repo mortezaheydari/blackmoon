@@ -36,6 +36,9 @@ class Game < ActiveRecord::Base
 
 	has_many :invitations, as: :subject, dependent: :destroy
 	accepts_nested_attributes_for :invitations
+
+	has_one :happening_case, as: :happening, :dependent => :destroy
+	accepts_nested_attributes_for :happening_case	
 	
 	def creator
 		User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?

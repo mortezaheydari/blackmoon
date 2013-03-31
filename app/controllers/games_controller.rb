@@ -35,18 +35,24 @@ class GamesController < ApplicationController
 
   def new
   	@game = Game.new
+    @game.happening_case = HappeningCase.new
+
   end
 
   def create
     @current_user_id = current_user.id
     @game = Game.new(params[:game])
-    @game.date_and_time = date_helper_to_str(params[:date_and_time])
+    @game.happening_case ||= HappeningCase.new    
+    @game.happening_case.date_and_time = date_helper_to_str(params[:date_and_time])
     @game.team_participation ||= false
     @game.album = Album.new
-    @game.save
-    @game.create_offering_creation(creator_id: @current_user_id)
-    @game.offering_administrations.create(administrator_id: @current_user_id)
-    redirect_to @game
+    if @game.save
+      @game.create_offering_creation(creator_id: @current_user_id)
+      @game.offering_administrations.create(administrator_id: @current_user_id)
+      redirect_to @game
+    else
+      redirect_to 'new'
+    end    
   end
 
   def destroy
@@ -81,19 +87,18 @@ class GamesController < ApplicationController
 
   def edit
         @game = Game.find(params[:id])
-        @date_and_time = @game.date_and_time
+        @date_and_time = @game.happening_case.date_and_time
         @game.album ||= Album.new
         @photo = Photo.new
         @photo.title = "Logo"
-end
 
   def update
     @game = Game.find(params[:id])
 
     # @game.date_and_time = date_helper_to_str(params[:date_and_time])
-    params[:game][:date_and_time] = date_helper_to_str(params[:date_and_time])
+    params[:game][:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
     if @game.update_attributes(params[:game])
-      redirect_to @game
+      redirect_to @game, notice: "Game was updated"
     else
       render 'edit'
     end
