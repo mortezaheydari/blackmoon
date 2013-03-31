@@ -19,7 +19,7 @@ class InvitationsController < ApplicationController
 
             respond_to do |format|
                 format.html { redirect_to(@redirect_object, notice: 'invitation has been sent.') and return }
-                format.js
+                format.js { render('invitations/create', :locals => { this: @subject, person: @invited }) and return  }
             end
         end
         redirect_to(@redirect_object, notice: 'there was a problem with the request.') and return
