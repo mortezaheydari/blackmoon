@@ -1,0 +1,5 @@
+<% if activity.trackable %>
+	the event "<%= link_to activity.trackable.title, activity.trackable %>"  which you been tracking has expired.<br>
+<% else %>
+	an event which you been tracking has expired.
+<%- end %>

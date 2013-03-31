@@ -1,0 +1,46 @@
+<% if activity.recipient_type == "Game" %>
+
+	Game created
+	<% if activity.owner %>
+	by <%= link_to "#{activity.owner.name}", activity.owner %>
+	<%- end %>
+	.<br>	
+
+<% elsif activity.recipient_type == "User" %>
+
+	<% if activity.trackable %>
+		new game "<%= link_to activity.trackable.title, activity.trackable %>" was created
+		<% if activity.owner %>
+		by <%= link_to "#{activity.owner.name}", activity.owner %>
+		<%- end %>
+		.<br>
+
+	<% else %>
+		new game was created, which has since been removed.
+	<%- end %>
+
+<% elsif activity.recipient_type == "Public" %>
+	a new Game "<%= link_to activity.trackable.title, activity.trackable if activity.trackable %>" was executed.<br>
+<% else %>
+	a Game was expired.<br>
+<%- end %>
+
+
+
+
+
+
+
+
+
+
+<% if activity.trackable %>
+	new game "<%= link_to activity.trackable.title, activity.trackable %>" has been created
+	<% if activity.owner %>
+	by <%= link_to "#{activity.owner.name}", activity.owner %>
+	<%- end %>
+	 .<br>
+
+<% else %>
+	an event was created, which has since been removed.
+<%- end %>

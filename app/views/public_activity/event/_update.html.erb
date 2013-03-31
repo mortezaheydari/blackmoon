@@ -1,0 +1,5 @@
+<% if activity.trackable %>
+	the event "<%= link_to activity.trackable.title, activity.trackable %>"which you are tracking is updated.<br>
+<% else %>
+	an event was updated, which has since been removed.
+<%- end %>
