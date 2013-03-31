@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130325101445) do
+ActiveRecord::Schema.define(:version => 20130331082304) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -94,13 +94,9 @@ ActiveRecord::Schema.define(:version => 20130325101445) do
     t.string   "location_type"
     t.string   "custom_address"
     t.string   "category"
-    t.datetime "date_and_time"
     t.integer  "tournament_id"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
-    t.string   "duration_type"
-    t.time     "time_from"
-    t.time     "time_to"
     t.float    "fee"
     t.string   "fee_type"
     t.string   "sport"
@@ -129,11 +125,7 @@ ActiveRecord::Schema.define(:version => 20130325101445) do
     t.string   "location_type"
     t.string   "custom_address"
     t.string   "category"
-    t.datetime "date_and_time"
     t.integer  "tournament_id"
-    t.string   "duration_type"
-    t.time     "time_from"
-    t.time     "time_to"
     t.float    "fee"
     t.string   "fee_type"
     t.string   "sport"
@@ -141,6 +133,18 @@ ActiveRecord::Schema.define(:version => 20130325101445) do
     t.boolean  "team_participation"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+  end
+
+  create_table "happening_cases", :force => true do |t|
+    t.string   "title"
+    t.integer  "happening_id"
+    t.string   "happening_type"
+    t.string   "duration_type"
+    t.datetime "date_and_time"
+    t.time     "time_from"
+    t.time     "time_to"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "invitations", :force => true do |t|
@@ -241,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20130325101445) do
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
     t.integer  "number_of_attendings"
+    t.string   "category"
   end
 
   create_table "users", :force => true do |t|

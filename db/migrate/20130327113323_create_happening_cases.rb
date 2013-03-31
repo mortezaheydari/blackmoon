@@ -3,7 +3,7 @@ class CreateHappeningCases < ActiveRecord::Migration
     create_table :happening_cases do |t|
       t.string :title
       t.integer :happening_id
-      t.type :happening_type
+      t.string :happening_type
       t.string :duration_type
       t.datetime :date_and_time
       t.time :time_from
