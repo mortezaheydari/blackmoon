@@ -108,15 +108,15 @@
                                             <td><%= h.label :duration_type %></td>
                                             <td><%= h.select :duration_type, ["All Day", "Range"] %></td>
                                         </tr>
-                                        <tr>
+                                        <tr class="allday">
                                             <td><%= h.label :date_and_time %></td>
                                             <td><%= select_date @date_and_time, :prefix => :date_and_time, :start_year => Time.now.year, :end_year => Time.now.year + 5  %></td>
                                         </tr>
-                                        <tr>
+                                        <tr class="range">
                                             <td><%= h.label :time_from, "Time From" %></td>
                                             <td><%= h.time_select :time_from %></td>
                                         </tr>
-                                        <tr>
+                                        <tr class="range">
                                             <td><%= h.label :time_to, "Time To" %></td>
                                             <td><%= h.time_select :time_to %></td>
                                         </tr>

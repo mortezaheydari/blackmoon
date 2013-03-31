@@ -36,23 +36,24 @@ class GamesController < ApplicationController
   def new
   	@game = Game.new
     @game.happening_case = HappeningCase.new
+           @date_and_time = Time.now
 
   end
 
   def create
     @current_user_id = current_user.id
     @game = Game.new(params[:game])
-    @game.happening_case ||= HappeningCase.new    
-    @game.happening_case.date_and_time = date_helper_to_str(params[:date_and_time])
     @game.team_participation ||= false
     @game.album = Album.new
     if @game.save
+      params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
+      @game.create_happening_case(params[:happening_case])
       @game.create_offering_creation(creator_id: @current_user_id)
       @game.offering_administrations.create(administrator_id: @current_user_id)
       redirect_to @game
     else
-      redirect_to 'new'
-    end    
+      redirect_to new_event_path, notice: "there has been a problem with data entry."
+    end
   end
 
   def destroy
@@ -91,18 +92,19 @@ class GamesController < ApplicationController
         @game.album ||= Album.new
         @photo = Photo.new
         @photo.title = "Logo"
+    end
 
   def update
     @game = Game.find(params[:id])
 
     # @game.date_and_time = date_helper_to_str(params[:date_and_time])
-    params[:game][:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
+    params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
     if @game.update_attributes(params[:game])
       redirect_to @game, notice: "Game was updated"
     else
       render 'edit'
     end
-	end
+  end
 
   def user_must_be_admin?
     @game = Game.find(params[:id])

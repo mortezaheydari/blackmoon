@@ -4,8 +4,10 @@
       <div class="<%= @game.category %> left"></div>
       <h1><%= @game.title %></h1>
       <p>Sports: <%= @game.sport %></p>
-      <p>Time: <%= @game.time_from.strftime("%I:%M %p") %> - <%= @game.time_to.strftime("%I:%M %p")  %></p>
-      <p>Date: <%= @game.date_and_time.strftime("%A, %B %d, %Y") %></p>
+      <% unless @game.happening_case.duration_type == "All Day" %>
+            <p>Time: <%= @game.happening_case.time_from.strftime("%I:%M %p") %> - <%= @game.happening_case.time_to.strftime("%I:%M %p")  %></p>
+      <% end -%>
+      <p>Date: <%= @game.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></p>
       <p>Location: <%= @game.custom_address %></p>
       <footer>
         <span>Fee:</span>

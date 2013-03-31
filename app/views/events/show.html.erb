@@ -4,7 +4,9 @@
       <div class="<%= @event.category %> left"></div>
       <h1><%= @event.title %></h1>
       <p>Sports: <%= @event.sport %></p>
-      <p>Time: <%= @event.happening_case.time_from.strftime("%I:%M %p") %> - <%= @event.happening_case.time_to.strftime("%I:%M %p")  %></p>
+      <% unless @event.happening_case.duration_type == "All Day" %>
+            <p>Time: <%= @event.happening_case.time_from.strftime("%I:%M %p") %> - <%= @event.happening_case.time_to.strftime("%I:%M %p")  %></p>
+      <% end -%>
       <p>Date: <%= @event.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></p>
       <p>Location: <%= @event.custom_address %></p>
       <footer>

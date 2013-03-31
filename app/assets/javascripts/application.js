@@ -156,6 +156,8 @@ $(document).ready(function() {
     $("tr.evdata").hide();
     $("tr.gmdata").hide();
     $("tr.tmdata").hide();
+    $("tr.allday").show();
+    $("tr.range").hide();
 
     $('input.file').change(function() {
         $("p#fileName").text(this.value);
@@ -265,6 +267,15 @@ $(document).ready(function() {
             $("div#WaterList").show();
             $("div#BallList").hide();
             $("div#FitList").hide();
+        }
+    });
+
+    $("#happening_case_duration_type").change( function() {
+        if ($(this).val() == 'All Day') {
+            $("tr.allday").show();
+            $("tr.range").hide();
+        } else if ($(this).val() == 'Range') {
+            $("tr.range").show();
         }
     });
 

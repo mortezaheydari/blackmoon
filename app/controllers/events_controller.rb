@@ -53,7 +53,7 @@ class EventsController < ApplicationController
       @event.offering_administrations.create(administrator_id: @current_user_id)
       redirect_to @event, notice: "Event was created"
     else
-      redirect_to new_event_path, notice: "there has been a problem with data entry.#{date_helper_to_str(params[:date_and_time])}"
+      redirect_to new_event_path, notice: "there has been a problem with data entry."
     end
   end
 
