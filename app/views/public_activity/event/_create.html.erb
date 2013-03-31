@@ -1,0 +1,10 @@
+<% if activity.trackable %>
+	new event "<%= link_to activity.trackable.title, activity.trackable %>" has been created
+	<% if activity.owner %>
+	by <%= link_to "#{activity.owner.name}", activity.owner %>
+	<%- end %>
+	 .<br>
+
+<% else %>
+	an event was created, which has since been removed.
+<%- end %>
