@@ -1,19 +1,25 @@
-<% if activity.recipient_type == "Game" %>
+<!-- game.destroy -->
 
-	Game expired.<br>
+<!-- 1. Game activity -->
 
-<% elsif activity.recipient_type == "User" %>
+	<% if activity.recipient_type == "Game" %>
 
-	<% if activity.trackable %>
-		the game "<%= link_to activity.trackable.title, activity.trackable %>"  which you been tracking has expired.<br>
+		Game expired.
+
+<!-- 2. user notification -->
+
+	<% elsif activity.recipient_type == "User" %>
+
+		<% if activity.trackable %>
+			the game "<%= link_to activity.trackable.title, activity.trackable %>"  which you been tracking has expired.
+		<% else %>
+			a game which you been tracking has expired.
+		<%- end %>
+
+<!-- 3. other -->	
+
 	<% else %>
-		an event which you been tracking has expired.
+		a Game was expired.
+
 	<%- end %>
-
-<% elsif activity.recipient_type == "Public" %>
-	a Game "<%= link_to activity.trackable.title, activity.trackable if activity.trackable %>" was executed.<br>
-<% else %>
-	a Game was expired.<br>
-<%- end %>
-
 

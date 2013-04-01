@@ -1,0 +1,25 @@
+<!-- offering_administration.destroy -->
+
+<!-- 1. Offering activity -->
+	<% if ["Game", "Event"].include? activity.recipient_type  %>
+
+		"<%= link_to activity.owner.title, activity.owner %>" was removed from administration board.
+
+<!-- 2. user notification -->
+	
+	<% elsif activity.recipient_type == "User" %>
+
+		<% if activity.trackable %>
+			"you no longer administrate "<%= link_to activity.trackable.title, activity.trackable %>".
+		<% else %>
+			you were removed from administrating an offering, which has since been removed.
+		<%- end %>
+
+<!-- 3. other -->	
+
+	<% else %>
+		an admin was removed.
+		
+	<%- end %>
+
+

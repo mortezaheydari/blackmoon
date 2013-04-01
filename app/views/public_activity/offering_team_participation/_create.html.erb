@@ -1,0 +1,25 @@
+<!-- offering_team_participation.create -->
+
+<!-- 1. Offering activity -->
+	<% if ["Game", "Event"].include? activity.recipient_type  %>
+
+		"new team "<%= link_to activity.owner.title, activity.owner %>" added to participate.
+
+<!-- 2. user notification -->
+	
+	<% elsif activity.recipient_type == "Team" %>
+
+		<% if activity.trackable %>
+			"Team was added to participate in "<%= link_to activity.trackable.title, activity.trackable %>".
+		<% else %>
+			you were added to participate in offering, which has since been removed.
+		<%- end %>
+
+<!-- 3. other -->	
+
+	<% else %>
+		participator added.
+		
+	<%- end %>
+
+

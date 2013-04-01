@@ -1,5 +1,28 @@
-<% if activity.trackable %>
-	the game "<%= link_to activity.trackable.title, activity.trackable %>"which you are tracking is updated.<br>
-<% else %>
-	a game was updated, which has since been removed.
-<%- end %>
+<!-- game.update -->
+
+<!-- 1. Game activity -->
+
+	<% if activity.recipient_type == "Game" %>
+
+		Game updated
+		<% if activity.owner %>
+			by <%= link_to "#{activity.owner.name}", activity.owner %>
+		<%- end %>
+		.
+
+<!-- 2. user notification -->
+
+	<% elsif activity.recipient_type == "User" %>
+
+		<% if activity.trackable %>
+			the game "<%= link_to activity.trackable.title, activity.trackable %>" which you are tracking is updated.
+		<% else %>
+			a game was updated, which has since been removed.
+		<%- end %>
+
+<!-- 3. other -->	
+
+	<% else %>
+		a Game was updated.
+		
+	<%- end %>

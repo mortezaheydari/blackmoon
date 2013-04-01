@@ -1,10 +1,18 @@
-<% if activity.trackable %>
-	an event "<%= link_to activity.trackable.title, activity.trackable %>" has been created
-	<% if activity.owner %>
-	by <%= link_to "#{activity.owner.name}", activity.owner %>
-	<%- end %>
-	 .<br>
+<!-- relationship.create -->
 
-<% else %>
-	an event was created, which has since been removed.
-<%- end %>
+<!-- 1. user notification -->
+
+	<% if activity.recipient_type == "User" %>
+
+		<% if activity.trackable %>
+			you have a new follower: "<%= link_to activity.trackable.title, activity.trackable %>".
+		<% else %>
+			you had a new follower, which has since been removed.
+		<%- end %>
+
+<!-- 2. other -->		
+
+	<% else %>
+		a new game is available.
+
+	<%- end %>
