@@ -42,4 +42,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def offering_management
+    @user = User.find(params[:id])
+    @events = @user.events_administrating
+    @games = @user.games_administrating
+    @teams = @user.teams_administrating
+  end
+
 end

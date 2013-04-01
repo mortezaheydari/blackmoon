@@ -1,6 +1,6 @@
 <hr>
 <div class="sideEvents">
     <%= link_to offering.title, send("#{offering_name}_path", offering) %><br>
-    <span><%= offering.date_and_time.strftime("%B %d") %></span><br>
-    <span><%= offering.time_from.strftime("%I:%M %p") %> - <%= offering.time_to.strftime("%I:%M %p")  %></span>
+    <span><%= offering.happening_case.date_and_time.strftime("%B %d") %></span><br>
+    <span><%= offering.happening_case.time_from.strftime("%I:%M %p") %> - <%= offering.happening_case.time_to.strftime("%I:%M %p")  %></span>
 </div>

@@ -102,18 +102,8 @@
                                         <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
                                         <td><%= f.number_field :number_of_attendings %></td>
                                     </tr>
-                                    <tr>
-                                        <td><%= f.label :date_and_time %></td>
-                                        <td><%= select_date @date_and_time, :prefix => :date_and_time, :start_year => Time.now.year, :end_year => Time.now.year + 5  %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :time_from, "Time From" %></td>
-                                        <td><%= f.time_select :time_from %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :time_to, "Time To" %></td>
-                                        <td><%= f.time_select :time_to %></td>
-                                    </tr>
+
+                                    <%= render "shared/happening_case", date_and_time: @date_and_time %>
                                     <tr>
                                         <td><%= f.label :team_participation, "Team Participation" %></td>
                                         <td><%= f.select :team_participation, ["No", "Yes"] %></td>

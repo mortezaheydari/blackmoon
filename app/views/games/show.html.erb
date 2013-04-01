@@ -1,11 +1,13 @@
   <div class="userInfo">
     <div class="eventProfileCard">
-      <div class="large"></div>
+      <div class="large"><%= logo_for(@game, size: :user_profile) %></div>
       <div class="<%= @game.category %> left"></div>
       <h1><%= @game.title %></h1>
       <p>Sports: <%= @game.sport %></p>
-      <p>Time: <%= @game.time_from.strftime("%I:%M %p") %> - <%= @game.time_to.strftime("%I:%M %p")  %></p>
-      <p>Date: <%= @game.date_and_time.strftime("%A, %B %d, %Y") %></p>
+      <% unless @game.happening_case.duration_type == "All Day" %>
+            <p>Time: <%= @game.happening_case.time_from.strftime("%I:%M %p") %> - <%= @game.happening_case.time_to.strftime("%I:%M %p")  %></p>
+      <% end -%>
+      <p>Date: <%= @game.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></p>
       <p>Location: <%= @game.custom_address %></p>
       <footer>
         <span>Fee:</span>
@@ -52,6 +54,7 @@
         <li id="joined"><a href="#">Joined (<span id="joinCount"><%= @participator.count %></span>)</a></li>
         <li id="Description"><a href="#">Description</a></li>
         <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @game.flaggings.with_flag(:like).count %></span>)</a></li>
+        <li id="gallery"><a href="#">gallery</a></li>
       </ul>
     </nav>
   </div>
@@ -61,8 +64,13 @@
     <div class="Description">
         <div class="<%= @game.category %>"></div>
         <p><%= @game.description %></p>
+        <%= render "shared/activity_table" %>
+
     </div>
         <%= render 'shared/cardsection', individuals: @likes, this: @game, class_name: "likes", makeadmin: true %>
+
+        <%= render 'shared/gallery' %>
+
     </div>
   </div>
 </div>

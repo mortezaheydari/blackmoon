@@ -154,6 +154,10 @@ $(document).ready(function() {
     $("tr.ptdata").hide();
     $("tr.cldata").hide();
     $("tr.evdata").hide();
+    $("tr.gmdata").hide();
+    $("tr.tmdata").hide();
+    $("tr.allday").show();
+    $("tr.range").hide();
 
     $('input.file').change(function() {
         $("p#fileName").text(this.value);
@@ -217,8 +221,81 @@ $(document).ready(function() {
         image_tick_class: "Type",
     });
 
+    $("input[name='game[category]']").imageTick({
+        tick_image_path: {
+            BallSports: "/assets/ballsport-checked.png",
+            Fitness: "/assets/fitness-checked.png",
+            WaterSports: "/assets/water-checked.png"
+            //"default": "images/gender/default_checked.jpg" //optional default can be used
+        },
+        no_tick_image_path: {
+            BallSports: "/assets/ballsport-uncheck.png",
+            Fitness: "/assets/fitness-uncheck.png",
+            WaterSports: "/assets/water-uncheck.png"
+            //"default": "images/gender/default_unchecked.jpg" //optional default can be used
+        },
+        image_tick_class: "Type",
+    });
+
+
+    $("input[name='team[category]']").imageTick({
+        tick_image_path: {
+            BallSports: "/assets/ballsport-checked.png",
+            Fitness: "/assets/fitness-checked.png",
+            WaterSports: "/assets/water-checked.png"
+            //"default": "images/gender/default_checked.jpg" //optional default can be used
+        },
+        no_tick_image_path: {
+            BallSports: "/assets/ballsport-uncheck.png",
+            Fitness: "/assets/fitness-uncheck.png",
+            WaterSports: "/assets/water-uncheck.png"
+            //"default": "images/gender/default_unchecked.jpg" //optional default can be used
+        },
+        image_tick_class: "Type",
+    });
 
     $("input:radio[name='event[category]']").change( function() {
+        if ($(this).is(':checked') && $(this).val() == 'BallSports') {
+            $("div#BallList").show();
+            $("div#FitList").hide();
+            $("div#WaterList").hide();
+        } else if ($(this).is(':checked') && $(this).val() == 'Fitness') {
+            $("div#FitList").show();
+            $("div#WaterList").hide();
+            $("div#BallList").hide();
+        } else if ($(this).is(':checked') && $(this).val() == 'WaterSports') {
+            $("div#WaterList").show();
+            $("div#BallList").hide();
+            $("div#FitList").hide();
+        }
+    });
+
+    $("#happening_case_duration_type").change( function() {
+        if ($(this).val() == 'All Day') {
+            $("tr.allday").show();
+            $("tr.range").hide();
+        } else if ($(this).val() == 'Range') {
+            $("tr.range").show();
+        }
+    });
+
+    $("input:radio[name='game[category]']").change( function() {
+        if ($(this).is(':checked') && $(this).val() == 'BallSports') {
+            $("div#BallList").show();
+            $("div#FitList").hide();
+            $("div#WaterList").hide();
+        } else if ($(this).is(':checked') && $(this).val() == 'Fitness') {
+            $("div#FitList").show();
+            $("div#WaterList").hide();
+            $("div#BallList").hide();
+        } else if ($(this).is(':checked') && $(this).val() == 'WaterSports') {
+            $("div#WaterList").show();
+            $("div#BallList").hide();
+            $("div#FitList").hide();
+        }
+    });
+
+    $("input:radio[name='team[category]']").change( function() {
         if ($(this).is(':checked') && $(this).val() == 'BallSports') {
             $("div#BallList").show();
             $("div#FitList").hide();
@@ -268,6 +345,28 @@ $(document).ready(function() {
         e.preventDefault();
         img = $("td#evType img.drop");
         $("tr.evdata").fadeToggle("fast");
+        if (img.attr("src") != "/assets/up-icon.png") {
+            img.attr("src", "/assets/up-icon.png");
+        } else {
+            img.attr("src", "/assets/drop-icon.png");
+        }
+    });
+
+    $("td#gmType").click(function(e) {
+        e.preventDefault();
+        img = $("td#gmType img.drop");
+        $("tr.gmdata").fadeToggle("fast");
+        if (img.attr("src") != "/assets/up-icon.png") {
+            img.attr("src", "/assets/up-icon.png");
+        } else {
+            img.attr("src", "/assets/drop-icon.png");
+        }
+    });
+
+    $("td#tmType").click(function(e) {
+        e.preventDefault();
+        img = $("td#tmType img.drop");
+        $("tr.tmdata").fadeToggle("fast");
         if (img.attr("src") != "/assets/up-icon.png") {
             img.attr("src", "/assets/up-icon.png");
         } else {

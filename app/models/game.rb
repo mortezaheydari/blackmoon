@@ -8,7 +8,19 @@ class Game < ActiveRecord::Base
   has_one :album, as: :owner, :dependent => :destroy
   has_one :logo, as: :owner, :dependent => :destroy
 
+
+    after_create do |event|
+        event.create_album if event.album.nil?
+        event.create_logo if event.logo.nil?
+    end
+
 	make_flaggable :like
+
+  has_one :album, as: :owner, :dependent => :destroy
+  accepts_nested_attributes_for :album
+
+  has_one :logo, as: :owner, :dependent => :destroy
+  accepts_nested_attributes_for :logo
 
   has_one :offering_creation, as: :offering, :dependent => :destroy
   accepts_nested_attributes_for :offering_creation
@@ -26,8 +38,8 @@ class Game < ActiveRecord::Base
 	accepts_nested_attributes_for :invitations
 
 	has_one :happening_case, as: :happening, :dependent => :destroy
-	accepts_nested_attributes_for :happening_case	
-	
+	accepts_nested_attributes_for :happening_case
+
 	def creator
 		User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
 	end
@@ -55,6 +67,25 @@ class Game < ActiveRecord::Base
 		end
 		Team.find(@participators)
 	end
+
+            def inviteds
+                @invited = []
+                self.invitations.each do |invitation|
+                    @invited << invitation.invited
+                end
+                @invited
+            end
+
+            def joineds
+                @joineds = []
+                self.individual_participators.each do |joined|
+                    @joineds << joined
+                end
+                self.team_participators.each do |joined|
+                    @joineds << joined
+                end
+                @joineds
+            end
 
   def default_values
     self.number_of_attendings ||= 0

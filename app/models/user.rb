@@ -95,7 +95,7 @@ class User < ActiveRecord::Base
 ## invitations
       # F - invitations as invited and inviter
   has_many :invitations_sent, as: :inviter, class_name: "Invitation", dependent: :destroy
-  accepts_nested_attributes_for :invitations_sent  
+  accepts_nested_attributes_for :invitations_sent
   has_many :invitations_received, as: :invited, class_name: "Invitation", dependent: :destroy
   accepts_nested_attributes_for :invitations_sent
 ##

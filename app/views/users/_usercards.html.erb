@@ -24,6 +24,11 @@
             <%= render 'users/remove_admin', person: person,  this: this %>
         <% end %>
     <% end %>
+<span id="inviteBtn<%= person.id %>" class="right">
+    <%= render 'shared/invite_button', this: this, person: person %>
 </span>
+
+</span>
+
   </div>
 </article>

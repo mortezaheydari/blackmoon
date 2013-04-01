@@ -1,38 +1,8 @@
 
 <div class="body">
     <div class="offering">
-                    <h1><%= image_tag "class-icon.png", width: 50 %> Create New Team</h1>
-
-            <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "Team", owner_id: @team.id), :html => { :method => "post" }) do |p| %>
-                    <h2>Image</h2>
-
-                <table>
-                    <tr>
-                        <td colspan="2">
-                            <div class="gravatarContainer">
-                                <%= logo_for @team, size: :medium %>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label class="cabinet left">
-                                <%= p.file_field :image, class: "file" %>
-                            </label>
-                            <br>
-                            <p id="fileName"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn left" %>
-                        </td>
-                    </tr>
-
-                </table>
-            <% end %>
-
-        <%= form_for(@team) do |f| %>
+                    <h1><%= image_tag "class-icon.png", width: 50 %> Create New Event</h1>
+        <%= form_for(@event) do |f| %>
                             <h2>1. Set up Activity</h2>
 
                             <p>a. Select a Category</p>
@@ -63,7 +33,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><%= f.label :title, "team Title: " %></td>
+                                        <td><%= f.label :title, "Event Title: " %></td>
                                         <td><%= f.text_field :title %></td>
                                     </tr>
                                     <tr>
@@ -87,7 +57,7 @@
 
 
     </div>
-                <%= f.submit "Update the team", class: "button grey submitBtn homeBtn left" %>
+                <%= f.submit "Create the Event", class: "button grey submitBtn homeBtn left" %>
 
 
         <% end %>

@@ -1,0 +1,18 @@
+    <% if user_is_admin?(this) %>
+        <% if this.inviteds.include?(person) %>
+            <% person.invitations_received.where(subject_type: this.class.to_s, subject_id: this.id).each do |s| %>
+                <% @state = s.state %>
+            <% end -%>
+            <p><%= @state %></p>
+        <% else %>
+            <% if this.joineds.include?(person) %>
+                <p>joined</p>
+            <% elsif this.administrators.include?(person) %>
+                <p>admin</p>
+            <% elsif current_user == person %>
+                 <p></p>
+            <% else %>
+                <%= link_to "invite", invitations_path(inviter_id: current_user.id, inviter_type: person.class.to_s, invited_id: person.id, invited_type: person.class.to_s, subject_id: this.id, subject_type: this.class.to_s, return_object_id: this.id, return_object_type: this.class.to_s), method: :post, remote: :true %>
+            <% end %>
+        <% end -%>
+    <% end %>

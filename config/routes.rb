@@ -1,5 +1,10 @@
 Blackmoon::Application.routes.draw do
-    resources :users
+    resources :users do
+        member do
+            get 'offering_management'
+        end
+    end
+
     resources :events do
       member do
         get 'like'
@@ -49,13 +54,15 @@ Blackmoon::Application.routes.draw do
 
 
 
-    get 'pages/offering_management'
+
 
     resources :activities
 
     resources :notifications
 
     resources :album_photos
+
+    resources :invitations, only: [ :create, :update ]
 
     post 'logos/update'
   # The priority is based upon order of creation:

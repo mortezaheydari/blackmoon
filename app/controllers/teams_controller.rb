@@ -67,10 +67,14 @@ class TeamsController < ApplicationController
 		@members = @team.members
     @photo = Photo.new
     @album = @team.album
+    @owner = @team
   end
 
   def edit
     @team = Team.find(params[:id])
+    @team.album ||= Album.new
+    @photo = Photo.new
+    @photo.title = "Logo"
   end
 
   def update
