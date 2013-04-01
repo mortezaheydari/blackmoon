@@ -1,1 +1,28 @@
-event <%= link_to activity.trackable.title, activity.trackable %> has been updated<br>
+<!-- team.update -->
+
+<!-- 1. team activity -->
+
+	<% if activity.recipient_type == "Team" %>
+
+		team updated
+		<% if activity.owner %>
+			by <%= link_to "#{activity.owner.name}", activity.owner %>
+		<%- end %>
+		.
+
+<!-- 2. user notification -->
+
+	<% elsif activity.recipient_type == "User" %>
+
+		<% if activity.trackable %>
+			the team "<%= link_to activity.trackable.title, activity.trackable %>" which you are tracking is updated.
+		<% else %>
+			a team was updated, which has since been removed.
+		<%- end %>
+
+<!-- 3. other -->	
+
+	<% else %>
+		a team was updated.
+		
+	<%- end %>

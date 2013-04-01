@@ -1,5 +1,25 @@
-<% if activity.trackable %>
-	the event "<%= link_to activity.trackable.title, activity.trackable %>"  which you been tracking has expired.<br>
-<% else %>
-	an event which you been tracking has expired.
-<%- end %>
+<!-- event.destroy -->
+
+<!-- 1. event activity -->
+
+	<% if activity.recipient_type == "Event" %>
+
+		Event expired.
+
+<!-- 2. user notification -->
+
+	<% elsif activity.recipient_type == "User" %>
+
+		<% if activity.trackable %>
+			the event "<%= link_to activity.trackable.title, activity.trackable %>"  which you been tracking has expired.
+		<% else %>
+			an event which you been tracking has expired.
+		<%- end %>
+
+<!-- 3. other -->	
+
+	<% else %>
+		an event was expired.
+
+	<%- end %>
+

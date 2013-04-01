@@ -1,10 +1,38 @@
-<% if activity.trackable %>
-	new event "<%= link_to activity.trackable.title, activity.trackable %>" has been created
-	<% if activity.owner %>
-	by <%= link_to "#{activity.owner.name}", activity.owner %>
-	<%- end %>
-	 .<br>
+<!-- event.create -->
 
-<% else %>
-	an event was created, which has since been removed.
-<%- end %>
+<!-- 1. event activity -->
+
+	<% if activity.recipient_type == "Event" %>
+
+		event created
+		<% if activity.owner %>
+			by <%= link_to activity.owner.name, activity.owner %>
+		<%- end %>
+			
+
+<!-- 2. user notification -->
+
+	<% elsif activity.recipient_type == "User" %>
+
+		<% if activity.trackable %>
+			new event "<%= link_to activity.trackable.title, activity.trackable %>" was created
+			<% if activity.owner %>
+				by <%= link_to activity.owner.name, activity.owner %>
+			<%- end %>
+			.
+
+		<% else %>
+			new event was created, which has since been removed.
+		<%- end %>
+
+<!-- 3. public -->
+
+	<% elsif activity.recipient_type == "Public" %>
+		a new event "<%= link_to activity.trackable.title, activity.trackable if activity.trackable %>" is available.
+
+<!-- 4. other -->		
+
+	<% else %>
+		a new event is available.
+
+	<%- end %>
