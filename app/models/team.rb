@@ -35,10 +35,10 @@ class Team < ActiveRecord::Base
 
       # invitations as invited and inviter
   has_many :invitations_sent, as: :inviter, class_name: "Invitation", dependent: :destroy
-	accepts_nested_attributes_for :invitations_sent  
+	accepts_nested_attributes_for :invitations_sent
   has_many :invitations_received, as: :invited, class_name: "Invitation", dependent: :destroy
 	accepts_nested_attributes_for :invitations_sent
-	
+
 	has_many :invitations, as: :subject, dependent: :destroy
 	accepts_nested_attributes_for :invitations
 
@@ -61,6 +61,22 @@ class Team < ActiveRecord::Base
 		end
 		User.find(@members)
 	end
+
+            def inviteds
+                @invited = []
+                self.invitations.each do |invitation|
+                    @invited << invitation.invited
+                end
+                @invited
+            end
+
+            def joineds
+                @joineds = []
+                self.members.each do |joined|
+                    @joineds << joined
+                end
+                @joineds
+            end
 
 
   def default_values

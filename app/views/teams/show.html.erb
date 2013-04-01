@@ -44,7 +44,14 @@
     <div class="body">
         <%= render 'shared/cardsection', individuals: @members, this: @team, class_name: "joined", makeadmin: true %>
     <div class="Description">
-        <p><%= @team.descreption %></p>
+        <div class="teamDesc">
+            <div class="desctext">
+                <div class="<%= @team.category %>"></div>
+                <p><%= @team.descreption %></p>
+            </div>
+            <%= render "shared/upcoming_offering_test" %>
+        </div>
+        <%= render "shared/activity_table" %>
     </div>
         <%= render 'shared/cardsection', individuals: @likes, this: @team, class_name: "likes", makeadmin: true %>
 

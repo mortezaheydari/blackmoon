@@ -972,6 +972,69 @@ div.Notification {
 
 }
 
+.teamDesc {
+    width:990px;
+    .desctext {
+        width:650px;
+        float:left;
+    }
+    .sideBox {
+        width:300px;
+        float:right;
+    }
+}
+
+div.activity_table {
+        border-top: 3px solid $TextColor;
+
+  background: transparent;
+  // border: 1px solid $timePassedGrey;
+  float: left;
+  width: 990px;
+  margin:20px 0;
+  h1 {
+    margin: 0;
+    color: $TextColor;
+    font-weight: normal;
+    text-align: left;
+    font-size: 18px;
+    line-height: 16px;;
+    padding: 10px;
+  }
+  .notiBody {
+    float: none;
+    display: block;
+    overflow: hidden;
+    hr {
+      color: $white;
+      width: 100%;
+    }
+    p {
+      color: $TextColor;
+      font-size: 13px;
+      display: inline;
+    }
+    a {
+      color: $linkColor;
+      font-size: 13px;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    div.notiImg {
+      width: 60px;
+      height: 60px;
+      background: #add8e6;
+      float: left;
+      margin: 0 10px 0 10px;
+      @include border-radius(10px);
+    }
+
+  }
+
+}
+
 /*
 section.page {
   width: 100%;
