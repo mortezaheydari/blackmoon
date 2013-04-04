@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+
+  include PublicActivity::Model    
   attr_accessible :name, :profile_attributes
   validates :name, presence: true, length: {maximum: 50}, uniqueness: true
 

@@ -1,18 +1,18 @@
 <!-- act_creation.create -->
 
-<!-- 1. user notification -->
+<!-- 1. team log -->
 
-	<% if activity.recipient_type == "User" %>
+	<% if activity.recipient_type == "Team" %>
 
-		<% if activity.trackable %>
-			You created a new team "<%= link_to activity.trackable.title, activity.trackable %>".
+		<% if activity.owner %>
+			Team created by <%= activity.owner.name %>.
 		<% else %>
-			You created a new team which since has been removed.
+			Team created.
 		<%- end %>
 
 <!-- 2. other -->		
 
 	<% else %>
-		a new game is available.
+		a new team created.
 
 	<%- end %>

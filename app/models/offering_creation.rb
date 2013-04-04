@@ -1,4 +1,6 @@
 class OfferingCreation < ActiveRecord::Base
+  
+  include PublicActivity::Model  	
   attr_accessible :creator_id, :offering_id, :offering_type  
 
   belongs_to :offering, polymorphic: true

@@ -1,4 +1,6 @@
 class Team < ActiveRecord::Base
+
+  include PublicActivity::Model  
   attr_accessible :descreption, :name, :sport, :number_of_attendings, :title, :category
   before_save :default_values
 
