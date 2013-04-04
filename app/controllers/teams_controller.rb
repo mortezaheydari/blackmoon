@@ -45,8 +45,16 @@ class TeamsController < ApplicationController
   	@team.create_act_creation(creator_id: @current_user_id)
     @team.act_administrations.create(administrator_id: @current_user_id)
     @team.act_memberships.create(member_id: @current_user_id)
+<<<<<<< HEAD
     @team.create_activity :create, owner: current_user
 
+=======
+    # activities
+      
+      @team.create_activity :create, owner: current_user, recipient: @team
+      @team.create_activity :create, owner: current_user, recipient_type "User"
+    # # #
+>>>>>>> public_activity views updated more
 		redirect_to @team
   end
 
@@ -56,6 +64,13 @@ class TeamsController < ApplicationController
 		if user_is_admin?(@team) && user_created_this?(@team)
       @team.create_activity :destroy, owner: current_user
 			@team.destroy
+<<<<<<< HEAD
+=======
+      # activities    
+        @team.create_activity :destroy, owner: current_user, recipient: @team
+        @team.create_activity :destroy, owner: current_user, recipient_type: "User"
+      # # #
+>>>>>>> public_activity views updated more
 
 			# @team.offering_creation.destroy
       # @team.offering_administrations.destroy
@@ -84,8 +99,15 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
     if @team.update_attributes(params[:team])
+<<<<<<< HEAD
     @team.create_activity :update, owner: current_user
 
+=======
+      # activities    
+        @team.create_activity :update , owner: current_user, recipient: @team
+        @team.create_activity :update , owner: current_user, recipient_type: "User"
+      # # #
+>>>>>>> public_activity views updated more
       redirect_to @team
     else
       render 'edit'
