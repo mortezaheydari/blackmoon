@@ -1,38 +1,35 @@
-<!-- team.create -->
+<%# team.create %>
 
-<!-- 1. team activity -->
+<%# 1. feed %>
+	<% if render_for.nil? || render_for == "feed" %>
+		<% if activity.owner && activity.trackable %>
+			"<%= link_to activity.owner.name, activity.owner %>" created "<%= link_to activity.trackable.title, activity.trackable %>".
 
-	<% if activity.recipient_type == "Team" %>
-
-		Team created
-		<% if activity.owner %>
-			by <%= link_to activity.owner.name, activity.owner %>
 		<%- end %>
-			
 
-<!-- 2. user notification -->
-
-	<% elsif activity.recipient_type == "User" %>
-
-		<% if activity.trackable %>
-			new team "<%= link_to activity.trackable.title, activity.trackable %>" was created
-			<% if activity.owner %>
-				by <%= link_to activity.owner.name, activity.owner %>
-			<%- end %>
-			.
+<%# 2. log %>
+	<% elsif render_for == "log" %>
+		<% if activity.owner %>	
+			created by "<%= link_to activity.owner.name, activity.owner %>".
 
 		<% else %>
-			new team was created, which has since been removed.
+			created.
+
+		<%- end %>		
+
+<%# 3. notification %>
+	<% elsif render_for == "notification" %>
+	
+
+<%# 4. public %>
+	<% elsif render_for == "public" %>
+		<% if activity.trackable %>
+			"new <%= link_to activity.trackable.class.to_s, activity.trackable %>" was created.
+
 		<%- end %>
-
-<!-- 3. public -->
-
-	<% elsif activity.recipient_type == "Public" %>
-		a new team "<%= link_to activity.trackable.title, activity.trackable if activity.trackable %>" is available.
-
-<!-- 4. other -->		
+<%# 5. else %>
 
 	<% else %>
-		a new team is available.
+		new group created.
 
 	<%- end %>

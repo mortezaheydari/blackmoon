@@ -1,25 +1,28 @@
-<!-- event.destroy -->
+<%# event.destroy %>
 
-<!-- 1. event activity -->
+<%# 1. feed %>
+	<% if render_for.nil? || render_for == "feed" %>
 
-	<% if activity.recipient_type == "Event" %>
+<%# 2. log %>
+	<% elsif render_for == "log" %>
+		<% if activity.owner %>
+			canceled "<%= link_to activity.owner.title, activity.owner %>".
 
-		Event expired.
-
-<!-- 2. user notification -->
-
-	<% elsif activity.recipient_type == "User" %>
-
-		<% if activity.trackable %>
-			the event "<%= link_to activity.trackable.title, activity.trackable %>"  which you been tracking has expired.
 		<% else %>
-			an event which you been tracking has expired.
+			canceled.
+
 		<%- end %>
 
-<!-- 3. other -->	
+<%# 3. notification %>
+	<% elsif render_for == "notification" %>
+
+<%# 4. public %>
+	<% elsif render_for == "public" %>
+
+<%# 5. else %>
 
 	<% else %>
-		an event was expired.
+		event canceled.
 
 	<%- end %>
 

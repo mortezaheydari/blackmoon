@@ -35,8 +35,8 @@ class EventsController < ApplicationController
 
   def new
   	@event = Event.new
-           @event.happening_case = HappeningCase.new
-           @date_and_time = Time.now
+    @event.happening_case = HappeningCase.new
+    @date_and_time = Time.now
   end
 
   def create
@@ -51,6 +51,7 @@ class EventsController < ApplicationController
       @event.create_activity :create, owner: current_user
       @event.create_offering_creation(creator_id: @current_user_id)
       @event.offering_administrations.create(administrator_id: @current_user_id)
+      @event.create_activity :create, owner: current_user
       redirect_to @event, notice: "Event was created"
     else
       redirect_to new_event_path, notice: "there has been a problem with data entry."
@@ -61,6 +62,7 @@ class EventsController < ApplicationController
   	@user = current_user
   	@event = Event.find(params[:id])
     if user_is_admin?(@event) && user_created_this?(@event)
+      @event.create_activity :destroy, owner: current_user      
 			@event.destroy
 			# @event.offering_creation.destroy
       # @event.offering_administrations.destroy

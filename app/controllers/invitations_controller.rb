@@ -16,7 +16,7 @@ class InvitationsController < ApplicationController
             end
 
             double_check { @invitation.save }
-
+            @invitation.create_activity 
             respond_to do |format|
                 format.html { redirect_to(@redirect_object, notice: 'invitation has been sent.') and return }
                 format.js { render('invitations/create', :locals => { this: @subject, person: @invited }) and return  }
