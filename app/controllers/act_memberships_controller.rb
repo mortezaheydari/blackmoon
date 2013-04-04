@@ -18,11 +18,11 @@ class ActMembershipsController < ApplicationController
         joining_act = act_type.camelize.constantize.find_by_id(act_id)
         number_of_attendings = joining_act.number_of_attendings
         if acts_membership.count < number_of_attendings or number_of_attendings == 0
-
             acts_membership << joining_act
         end
         @offering = joining_act
         @members = joining_act.members
+        joining_act.create_activity :create, owner: current_user, recipient: user
         respond_to do |format|
             format.html { redirect_to joining_act }
             format.js
@@ -43,6 +43,8 @@ class ActMembershipsController < ApplicationController
       acts_memberships.each.destroy unless acts_memberships == []
 
         leaving_act = act.camelize.constantize.find_by_id(act_id)
+        leaving_act.create_activity :destroy, owner: current_user, recipient: user
+
         @members = leaving_act.members
         respond_to do |format|
             format.html { redirect_to leaving_act }
@@ -52,7 +54,6 @@ class ActMembershipsController < ApplicationController
           redirect_to root
       end
   end
-
 
   def name_is_valid?(user, name)
     user.respond_to? "#{name}s_membership" and ["team", "sponsor", "organization"].include? name

@@ -1,28 +1,27 @@
-<!-- event.update -->
+<%# event.update %>
 
-<!-- 1. event activity -->
+<%# 1. feed %>
+	<% if render_for.nil? || render_for == "feed" %>
 
-	<% if activity.recipient_type == "Event" %>
-
-		Event updated
+<%# 2. log %>
+	<% elsif render_for == "log" %>
 		<% if activity.owner %>
-			by <%= link_to "#{activity.owner.name}", activity.owner %>
-		<%- end %>
-		.
+			updated by "<%= link_to activity.owner.title, activity.owner %>".
 
-<!-- 2. user notification -->
-
-	<% elsif activity.recipient_type == "User" %>
-
-		<% if activity.trackable %>
-			the event "<%= link_to activity.trackable.title, activity.trackable %>"which you are tracking is updated.
 		<% else %>
-			an event was updated, which has since been removed.
+			updated.
+
 		<%- end %>
 
-<!-- 3. other -->	
+<%# 3. notification %>
+	<% elsif render_for == "notification" %>
+	
+<%# 4. public %>
+	<% elsif render_for == "public" %>
+
+<%# 5. else %>
 
 	<% else %>
-		an event was updated.
-		
+		event updated.
+
 	<%- end %>

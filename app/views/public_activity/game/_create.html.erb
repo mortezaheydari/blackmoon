@@ -1,38 +1,31 @@
-<!-- game.create -->
+<%# game.create %>
+  
+<%# 1. feed %>
+	<% if render_for.nil? || render_for == "feed" %>
+		<% if activity.owner && activity.trackable %>
+			"new member "<%= link_to activity.owner.title, activity.owner %>" created a new game "<%= link_to activity.trackable.title, activity.trackable %>".
 
-<!-- 1. Game activity -->
-
-	<% if activity.recipient_type == "Game" %>
-
-		Game created
-		<% if activity.owner %>
-			by <%= link_to activity.owner.name, activity.owner %>
 		<%- end %>
-			
 
-<!-- 2. user notification -->
-
-	<% elsif activity.recipient_type == "User" %>
-
-		<% if activity.trackable %>
-			new game "<%= link_to activity.trackable.title, activity.trackable %>" was created
-			<% if activity.owner %>
-				by <%= link_to activity.owner.name, activity.owner %>
-			<%- end %>
-			.
+<%# 2. log %>
+	<% elsif render_for == "log" %>
+		<% if activity.owner %>
+			created by "<%= link_to activity.owner.title, activity.owner %>".
 
 		<% else %>
-			new game was created, which has since been removed.
+			created.
+
 		<%- end %>
 
-<!-- 3. public -->
+<%# 3. notification %>
 
-	<% elsif activity.recipient_type == "Public" %>
-		a new Game "<%= link_to activity.trackable.title, activity.trackable if activity.trackable %>" is available.
+<%# 4. public %>
+	<% elsif render_for == "public" %>
+		new <%= link_to "game", activity.owner %> is available.
 
-<!-- 4. other -->		
+<%# 5. else %>
 
 	<% else %>
-		a new game is available.
+		new game is available.
 
 	<%- end %>
