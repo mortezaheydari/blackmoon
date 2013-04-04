@@ -93,6 +93,13 @@ class User < ActiveRecord::Base
     relationships.find_by_followed_id(other_user.id).destroy
   end
 
+  def title
+    if profile.first_name || profile.last_name
+      profile.first_name+" "+profile.last_name
+    else
+      name
+    end
+  end
 
 ## invitations
       # F - invitations as invited and inviter
@@ -101,8 +108,6 @@ class User < ActiveRecord::Base
   has_many :invitations_received, as: :invited, class_name: "Invitation", dependent: :destroy
   accepts_nested_attributes_for :invitations_sent
 ##
-
-
 
     def offerings_participating
         @participatings = []
