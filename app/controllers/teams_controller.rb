@@ -46,6 +46,7 @@ class TeamsController < ApplicationController
     @team.act_administrations.create(administrator_id: @current_user_id)
     @team.act_memberships.create(member_id: @current_user_id)
 <<<<<<< HEAD
+<<<<<<< HEAD
     @team.create_activity :create, owner: current_user
 
 =======
@@ -55,6 +56,10 @@ class TeamsController < ApplicationController
       @team.create_activity :create, owner: current_user, recipient_type "User"
     # # #
 >>>>>>> public_activity views updated more
+=======
+    @team.create_activity :create, owner: current_user
+
+>>>>>>> public_activity partials updated more
 		redirect_to @team
   end
 
@@ -65,12 +70,15 @@ class TeamsController < ApplicationController
       @team.create_activity :destroy, owner: current_user
 			@team.destroy
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       # activities    
         @team.create_activity :destroy, owner: current_user, recipient: @team
         @team.create_activity :destroy, owner: current_user, recipient_type: "User"
       # # #
 >>>>>>> public_activity views updated more
+=======
+>>>>>>> public_activity partials updated more
 
 			# @team.offering_creation.destroy
       # @team.offering_administrations.destroy
@@ -100,6 +108,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     if @team.update_attributes(params[:team])
 <<<<<<< HEAD
+<<<<<<< HEAD
     @team.create_activity :update, owner: current_user
 
 =======
@@ -108,6 +117,10 @@ class TeamsController < ApplicationController
         @team.create_activity :update , owner: current_user, recipient_type: "User"
       # # #
 >>>>>>> public_activity views updated more
+=======
+    @team.create_activity :update, owner: current_user
+
+>>>>>>> public_activity partials updated more
       redirect_to @team
     else
       render 'edit'

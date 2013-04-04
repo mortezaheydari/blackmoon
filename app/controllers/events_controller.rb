@@ -51,6 +51,7 @@ class EventsController < ApplicationController
       @event.create_activity :create, owner: current_user
       @event.create_offering_creation(creator_id: @current_user_id)
       @event.offering_administrations.create(administrator_id: @current_user_id)
+      @event.create_activity :create, owner: current_user
       redirect_to @event, notice: "Event was created"
     else
       redirect_to new_event_path, notice: "there has been a problem with data entry."
