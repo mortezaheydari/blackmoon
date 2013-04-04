@@ -1,28 +1,28 @@
 <!-- act_administration.create -->
 
-<!-- 1. Feed -->	
+<!-- 1. feed -->
+	<% if render_for.nil? || render_for == "feed" %>
+		<% if activity.recipient && activity.trackable %>
+			"<%= link_to activity.recipient.profile.name, activity.recipient %>" is now administrating "<%= link_to activity.trackable.title, activity.trackable %>".
 
-<!-- 1. log -->
-	<% if ["Team"].include? activity.recipient_type  %>
-
-		"<%= link_to activity.owner.title, activity.owner %>" was added to administration board.
-
-<!-- 2. notification -->
-	
-	<% elsif activity.recipient_type == "User" %>
-
-		<% if activity.trackable %>
-			"you have been added to administrate "<%= link_to activity.trackable.title, activity.trackable %>".
-		<% else %>
-			you were added to administrate a team, which has since been removed.
 		<%- end %>
 
+<!-- 2. log -->
+	<% elsif render_for == "log" %>
+		"<%= link_to activity.recipient.profile.name, activity.recipient %>" was added to administration board.
+
+<!-- 3. notification -->
+	<% elsif render_for == "notification" %>
+		<% if activity.trackable %>
+			"you have been added to administrate "<%= link_to activity.trackable.title, activity.trackable %>".
+
+		<%- end %>
+
+<!-- 4. public -->
+
+<!-- 5. else -->
+
 	<% else %>
-		a new admin was added.
-		
+		new admin added.
+
 	<%- end %>
-
-<!-- 3. Public -->
-
-
-

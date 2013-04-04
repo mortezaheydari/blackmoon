@@ -1,25 +1,23 @@
 <!-- act_administration.destroy -->
 
-<!-- 1. act activity -->
-	<% if ["Game", "Event"].include? activity.recipient_type  %>
+<!-- 1. feed -->
 
-		"<%= link_to activity.owner.title, activity.owner %>" was removed from administration board.
+<!-- 2. log -->
+	<% elsif render_for == "log" %>
+		"<%= link_to activity.recipient.profile.name, activity.recipient %>" was removed from administration board.
 
-<!-- 2. user notification -->
-	
-	<% elsif activity.recipient_type == "User" %>
-
+<!-- 3. notification -->
+	<% elsif render_for == "notification" %>
 		<% if activity.trackable %>
 			"you no longer administrate "<%= link_to activity.trackable.title, activity.trackable %>".
-		<% else %>
-			you were removed from administrating a team, which has since been removed.
+
 		<%- end %>
 
-<!-- 3. other -->	
+<!-- 4. public -->
+
+<!-- 5. else -->
 
 	<% else %>
-		an admin was removed.
-		
+		admin removed.
+
 	<%- end %>
-
-
