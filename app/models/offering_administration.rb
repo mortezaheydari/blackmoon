@@ -1,4 +1,6 @@
 class OfferingAdministration < ActiveRecord::Base
+
+  include PublicActivity::Model  	
   attr_accessible :administrator_id, :offering_id, :offering_type
 
   belongs_to :offering, polymorphic: true

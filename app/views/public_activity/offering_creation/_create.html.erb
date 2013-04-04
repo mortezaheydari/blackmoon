@@ -1,13 +1,13 @@
 <!-- offering_creation.create -->
 
-<!-- 1. user notification -->
+<!-- 1. offering log -->
 
-	<% if activity.recipient_type == "User" %>
+	<% if ["Game", "Event"].include? activity.recipient_type %>
 
-		<% if activity.trackable %>
-			You created a new offering "<%= link_to activity.trackable.title, activity.trackable %>".
+		<% if activity.owner %>
+			offering created by <%= activity.owner.name %>.
 		<% else %>
-			You created a new offering which since has been removed.
+			offering created.
 		<%- end %>
 
 <!-- 2. other -->		

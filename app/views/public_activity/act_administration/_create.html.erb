@@ -1,11 +1,13 @@
 <!-- act_administration.create -->
 
-<!-- 1. act activity -->
+<!-- 1. Feed -->	
+
+<!-- 1. log -->
 	<% if ["Team"].include? activity.recipient_type  %>
 
 		"<%= link_to activity.owner.title, activity.owner %>" was added to administration board.
 
-<!-- 2. user notification -->
+<!-- 2. notification -->
 	
 	<% elsif activity.recipient_type == "User" %>
 
@@ -15,11 +17,12 @@
 			you were added to administrate a team, which has since been removed.
 		<%- end %>
 
-<!-- 3. other -->	
-
 	<% else %>
 		a new admin was added.
 		
 	<%- end %>
+
+<!-- 3. Public -->
+
 
 
