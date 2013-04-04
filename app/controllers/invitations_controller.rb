@@ -33,6 +33,7 @@ class InvitationsController < ApplicationController
         if @invitation.invited = current_user
             if params[:respond] = "accept"
                 @invitation.state = "accepted"
+                
             elsif params[:respond] = "reject"
                 @invitation.state = "rejected"
             else

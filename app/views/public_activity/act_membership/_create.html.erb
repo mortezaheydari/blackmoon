@@ -1,23 +1,28 @@
 <!-- act_membership.create -->
 
-<!-- 1. team activity -->
-	<% if ["Team"].include? activity.recipient_type  %>
+<!-- 1. feed -->
+	<% if render_for.nil? || render_for == "feed" %>
+		<% if activity.recipient && activity.trackable %>
+			"new member "<%= link_to activity.recipient.title, activity.owner %>" is now a member of "<%= link_to activity.recipient.profile.name, activity.recipient %>".
 
-		"new member added "<%= link_to activity.owner.title, activity.owner %>" added.
-
-<!-- 2. user notification -->
-	
-	<% elsif activity.recipient_type == "User" %>
-
-		<% if activity.trackable %>
-			"you have been added to participate in "<%= link_to activity.trackable.title, activity.trackable %>".
-		<% else %>
-			you were added to participate in a team, which has since been removed.
 		<%- end %>
 
-<!-- 3. other -->	
+<!-- 2. log -->
+	<% elsif render_for == "log" %>
+		"<%= link_to activity.recipient.profile.name, activity.recipient %>" is now a member.
+
+<!-- 3. notification -->
+	<% elsif render_for == "notification" %>
+		<% if activity.trackable %>
+			you are now a member of "<%= link_to activity.trackable.title, activity.trackable %>".
+
+		<%- end %>
+
+<!-- 4. public -->
+
+<!-- 5. else -->
 
 	<% else %>
-		new participator added.
-		
+		new member added.
+
 	<%- end %>

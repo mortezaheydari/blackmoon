@@ -18,7 +18,7 @@ def create
             # todo: check user has the right rank
               acts_administrating << act_to_administrate
             # activities
-              act_to_administrate.create_activity key: "act_administration.create", owner: user, recipient: act_to_administrate
+              act_to_administrate.create_activity key: "act_administration.create", owner: current_user, recipient: user
             # # #
         end
 
@@ -52,7 +52,7 @@ end
           end unless administrations == []
         end
         # activities
-          act_to_remove_admin_from.create_activity key: "act_administration.destroy", owner: user, recipient: act_to_remove_admin_from
+          act_to_remove_admin_from.create_activity key: "act_administration.destroy", owner: current_user, recipient: user
         # # #
         respond_to do |format|
           format.html { redirect_to act_to_remove_admin_from }

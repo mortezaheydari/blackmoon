@@ -1,23 +1,23 @@
 <!-- act_membership.destroy -->
 
-<!-- 1. Offering activity -->
-	<% if ["Team"].include? activity.recipient_type  %>
+<!-- 1. feed -->
 
-		"<%= link_to activity.owner.title, activity.owner %>" is no longer a member.
+<!-- 2. log -->
+	<% elsif render_for == "log" %>
+		"<%= link_to activity.recipient.profile.name, activity.recipient %>" is no longer a member.
 
-<!-- 2. user notification -->
-	
-	<% elsif activity.recipient_type == "User" %>
-
+<!-- 3. notification -->
+	<% elsif render_for == "notification" %>
 		<% if activity.trackable %>
-			"you no longer participate in "<%= link_to activity.trackable.title, activity.trackable %>".
-		<% else %>
-			your membership was canceled in a team, which has since been removed.
+			you are no longer a member of "<%= link_to activity.trackable.title, activity.trackable %>".
+
 		<%- end %>
 
-<!-- 3. other -->	
+<!-- 4. public -->
+
+<!-- 5. else -->
 
 	<% else %>
-		participator removed.
-		
+		member removed.
+
 	<%- end %>
