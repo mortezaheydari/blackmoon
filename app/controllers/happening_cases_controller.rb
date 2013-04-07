@@ -6,6 +6,7 @@ class HappeningCasesController < ApplicationController
 			@happening_case = params[:happening_case]
 			@happening_case.date_and_time = date_helper_to_str(params[:date_and_time])
 			double_check { @happening_case.save }
+			@happening_case.create_activity :update, owner: current_user
 			respond_to do |format|
 	        	format.html { redirect_to @game}
 	        	format.js

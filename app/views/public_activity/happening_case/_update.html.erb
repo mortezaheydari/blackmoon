@@ -1,0 +1,28 @@
+<!-- invitation.action -->
+
+<!-- 1. feed -->
+	<% if render_for.nil? || render_for == "feed" %>
+
+<!-- 2. log -->
+	<% elsif render_for == "log" %>
+		<% if activity.owner %>
+			happening was updated by <%= link_to activity.owner.title, activity.owner %> .
+
+		<% else %>
+			happening was updated.
+
+		<%- end %>
+
+<!-- 3. notification -->
+	<% elsif render_for == "notification" %>
+
+<!-- 4. public -->
+	<% elsif render_for == "public" %>
+
+<!-- 5. else -->
+	<% else %>
+		happening updated.
+
+	<%- end %>
+
+
