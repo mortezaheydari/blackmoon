@@ -31,20 +31,23 @@ class TeamsController < ApplicationController
 
   def index
     @teams = Team.all
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Team")
+    @recent_activities = @recent_activities.order("created_at desc")
   end
 
   def new
-  	@team = Team.new
+    @team = Team.new
   end
 
   def create
     @current_user_id = current_user.id
-  	@team = Team.new(params[:team])
+    @team = Team.new(params[:team])
     @team.album = Album.new
     @team.save
-  	@team.create_act_creation(creator_id: @current_user_id)
+    @team.create_act_creation(creator_id: @current_user_id)
     @team.act_administrations.create(administrator_id: @current_user_id)
     @team.act_memberships.create(member_id: @current_user_id)
+    @team.create_activity :create, owner: current_user
 		redirect_to @team
   end
 
@@ -52,7 +55,9 @@ class TeamsController < ApplicationController
   	@user = current_user
   	@team = Team.find(params[:id])
 		if user_is_admin?(@team) && user_created_this?(@team)
+      @team.create_activity :destroy, owner: current_user
 			@team.destroy
+
 			# @team.offering_creation.destroy
       # @team.offering_administrations.destroy
   		redirect_to @team
@@ -62,20 +67,28 @@ class TeamsController < ApplicationController
   end
 
   def show
-  	@team = Team.find(params[:id])
-		@likes = @team.flaggings.with_flag(:like)
-		@members = @team.members
+    @team = Team.find(params[:id])
+    @likes = @team.flaggings.with_flag(:like)
+    @members = @team.members
     @photo = Photo.new
     @album = @team.album
+    @owner = @team
+
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Team", trackable_id: @team.id)
+    @recent_activities = @recent_activities.order("created_at desc")
   end
 
   def edit
     @team = Team.find(params[:id])
+    @team.album ||= Album.new
+    @photo = Photo.new
+    @photo.title = "Logo"
   end
 
   def update
     @team = Team.find(params[:id])
     if @team.update_attributes(params[:team])
+    @team.create_activity :update, owner: current_user
       redirect_to @team
     else
       render 'edit'

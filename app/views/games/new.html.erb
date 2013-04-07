@@ -1,67 +1,148 @@
-<h1>games#new</h1>
 
-<--  Back to <%= link_to "index", games_path %>
+<div class="body">
+    <div class="offering">
+                    <h1><%= image_tag "tournament-icon.png", width: 120 %> Create New Game</h1>
+        <%= form_for(@game) do |f| %>
+                            <h2>1. Set up Activity</h2>
 
-<div class="row">
-	<div class="span6 offset3">
-		<%= form_for(@game) do |f| %>
-                            <div>
-                                <%= f.label :title, "game Title" %>
-                                <%= f.text_field :title %>
-                            </div>
+                            <p>a. Select a Category</p>
 
                             <div>
-                                <%= f.label :category, "Category" %>
-                                <%= f.select :category, ["BallSports", "Fitness", "WaterSports"] %>
-                            </div>
+                                <table id="categoryChoice">
+                                    <tr>
+                                        <td><%= f.radio_button :category, "BallSports", value: "BallSports", checked: true %></td>
+                                        <td><%= f.radio_button :category, "Fitness", value: "Fitness" %></td>
+                                        <td><%= f.radio_button :category, "WaterSports", value: "WaterSports" %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ball Sports</td>
+                                        <td>Fitness</td>
+                                        <td>Water Sports</td>
+                                    </tr>
+                                </table>
+                            </div> <br>
 
                             <div>
-                                <%= f.label :sport, "sport" %>
-                                <%= f.text_field :sport %>
+                                <table  width="100%">
+                                    <tr>
+                                        <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
+                                        <td>
+                                            <div id="BallList"><%= f.select :sport, [
+                                                "Basketball",
+                                                "Volleyball",
+                                                "Football (Soccer)",
+                                                "American Football",
+                                                "Cricket",
+                                                "Badminton",
+                                                "Baseball",
+                                                "Tennis",
+                                                "Handball",
+                                                "Table Tennis",
+                                                "Foosball",
+                                                "Squash",
+                                                "Bowling",
+                                                "Golf"]%></div>
+                                            <div id="FitList"><%= f.select :sport, [
+                                                "Cycling",
+                                                "Karate",
+                                                "Judo",
+                                                "Boxing",
+                                                "Kick Boxing",
+                                                "Skating",
+                                                "Running",
+                                                "Power Walking",
+                                                "Skateboarding",
+                                                "Roller Skating",
+                                                "Taekwondo",
+                                                "Fencing",
+                                                "Paint ball",
+                                                "Yoga",
+                                                "Aikido",
+                                                "Aerobics",
+                                                "Gymnastics"]%></div></div>
+                                            <div id="WaterList"><%= f.select :sport, [
+                                                "Swimming",
+                                                "Water Polo",
+                                                "Sailing",
+                                                "Diving",
+                                                "Fishing"]%></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :title, "Game Title: " %></td>
+                                        <td><%= f.text_field :title %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :description, "Description" %></td>
+                                        <td><%= f.text_area :description %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Add Image</label></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Special Requirements</label></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
                             </div>
-                            <div>
-                                <%= f.label :fee_type, "fee type" %>
-                                <%= f.select :fee_type, ["Free", "Cash"] %>
-                            </div>
-                            <div>
-                                <%= f.label :fee, "fee" %>
-                                <%= f.number_field :fee %>
-                            </div>
-                            <div>
-                                <%= f.label :number_of_attendings, "Number of attendings" %>
-                                <%= f.number_field :number_of_attendings %>
-                            </div>
-                            <div>
-                                <%= f.label :time_from, "time from" %>
-                                <%= f.time_select :time_from %>
-                            </div>
-                            <div>
-                                <%= f.label :time_to, "time to" %>
-                                <%= f.time_select :time_to %>
-                            </div>
+<hr>
+
+                    <h2>2. <%= image_tag "location-icon.png", width: 50 %> Location</h2>
 
                             <div>
-                                <%= f.label :date_and_time %><br />
-                                <%= select_date @date_and_time, :prefix => :date_and_time, :start_year => Time.now.year, :end_year => Time.now.year + 5  %>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="130"><%= f.label :custom_address, "Select the city:" %></td>
+                                        <td><%= f.select :custom_address, ["Al-Salmiyah", "Kuwait City"] %></td>
+                                    </tr>
+                                </table>
+
                             </div>
 
+<hr>
+                    <h2>3. <%= image_tag "payment-icon.png", width: 50 %> Payment</h2>
                             <div>
-                                <%= f.label :description, "Description" %>
-                                <%= f.text_area :description %>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="130"><%= f.label :fee_type, "Payment Option" %></td>
+                                        <td><%= f.select :fee_type, ["Free", "Cash"] %></td>
+                                    </tr>
+                                    <tr id="AmountRow">
+                                        <td><%= f.label :fee, "Amount" %></td>
+                                        <td><%= f.number_field :fee %></td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <div>
-                                <%= f.label :custom_address, "Address" %>
-                                <%= f.text_area :custom_address %>
-                            </div>
-                             <div>
-                                <%= f.label :team_participation, "Team Participation" %>
-                                <%= f.select :team_participation, ["No", "Yes"] %>
-                            </div>
-                            <div>
-				<%= f.submit "Create the game", class: "btn btn-large btn-primary" %>
-			</div>
+<hr>
 
-		<% end %>
-	</div>
+                    <h2>4. Time &amp; Limits</h2>
+
+                            <div>
+                                <table width="100%">
+<tr>
+                                        <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
+                                        <td><%= f.number_field :number_of_attendings %></td>
+                                    </tr>
+
+                                    <%= render "shared/happening_case", date_and_time: @date_and_time %>
+                                    <tr>
+                                        <td><%= f.label :team_participation, "Team Participation" %></td>
+                                        <td><%= f.select :team_participation, ["No", "Yes"] %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :open_join, "Open for all to join" %></td>
+                                        <td><%= f.select :open_join, {"Yes" => true, "No" => false} %></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+
+    </div>
+                <%= f.submit "Create the game", class: "button grey submitBtn homeBtn left" %>
+
+
+        <% end %>
 </div>

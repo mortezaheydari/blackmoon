@@ -1,0 +1,24 @@
+<%# act_membership.destroy %>
+
+<%# 1. feed %>
+	<% if @render_for == "feed" %>
+
+<%# 2. log %>
+	<% elsif @render_for == "log" %>
+		<%= link_to activity.owner.title, activity.owner %> is no longer a member.
+
+<%# 3. notification %>
+	<% elsif @render_for == "notification" %>
+		<% if activity.trackable %>
+			you are no longer a member of <%= link_to activity.trackable.title, activity.trackable %>.
+
+		<%- end %>
+
+<%# 4. public %>
+	<% elsif @render_for == "public" %>
+
+<%# 5. else %>
+	<% else %>
+		member removed.
+
+	<%- end %>

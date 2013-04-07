@@ -1,3 +1,13 @@
 <% @activities.each do |activity| %>
-  <%= render_activity(activity) %>
+
+
+	<%= m = render_activity(activity, render_for: "notification") %>
+	<% unless m.nil? %>
+	 
+	  <%= actvity.created_at %>
+	  <%# if activity.key == "invitation.create" %>
+	  <%= time = activity.trackable %>
+
+	<%- end %>
+
 <% end %>

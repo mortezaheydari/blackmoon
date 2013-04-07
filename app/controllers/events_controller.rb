@@ -31,25 +31,31 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Event")
+    @recent_activities = @recent_activities.order("created_at desc")
   end
 
   def new
   	@event = Event.new
+    @event.happening_case = HappeningCase.new
+    @date_and_time = Time.now
   end
 
   def create
     @current_user_id = current_user.id
     @event = Event.new(params[:event])
-    @event.date_and_time = date_helper_to_str(params[:date_and_time])
     @event.team_participation ||= false
     @event.album = Album.new
     if @event.save
+      # @event.happening_case.save
+      params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
+      @event.create_happening_case(params[:happening_case])
       @event.create_activity :create, owner: current_user
       @event.create_offering_creation(creator_id: @current_user_id)
       @event.offering_administrations.create(administrator_id: @current_user_id)
       redirect_to @event, notice: "Event was created"
     else
-      redirect_to 'new'
+      redirect_to new_event_path, notice: "there has been a problem with data entry."
     end
   end
 
@@ -57,6 +63,7 @@ class EventsController < ApplicationController
   	@user = current_user
   	@event = Event.find(params[:id])
     if user_is_admin?(@event) && user_created_this?(@event)
+      @event.create_activity :destroy, owner: current_user
 			@event.destroy
 			# @event.offering_creation.destroy
       # @event.offering_administrations.destroy
@@ -72,6 +79,8 @@ class EventsController < ApplicationController
     @photo = Photo.new
     @album = @event.album
     @owner = @event
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Event", trackable_id: @event.id)
+    @recent_activities = @recent_activities.order("created_at desc")
     # flaggings.each do |flagging|
     #      @likes = []
     #      @likes << flagging.flagger
@@ -86,18 +95,18 @@ class EventsController < ApplicationController
 
   def edit
         @event = Event.find(params[:id])
-        @date_and_time = @event.date_and_time
+        @date_and_time = @event.happening_case.date_and_time
         @event.album ||= Album.new
         @photo = Photo.new
-        @photo.title = "Logo"        
+        @photo.title = "Logo"
   end
 
   def update
     @event = Event.find(params[:id])
 
     # @event.date_and_time = date_helper_to_str(params[:date_and_time])
-    params[:event][:date_and_time] = date_helper_to_str(params[:date_and_time])
-    if @event.update_attributes(params[:event])
+    params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
+    if @event.update_attributes(params[:event])  && @event.happening_case.update_attributes(params[:happening_case])
       @event.create_activity :update, owner: current_user
       redirect_to @event, notice: "Event was updated"
     else

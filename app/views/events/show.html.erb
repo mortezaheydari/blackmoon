@@ -4,8 +4,10 @@
       <div class="<%= @event.category %> left"></div>
       <h1><%= @event.title %></h1>
       <p>Sports: <%= @event.sport %></p>
-      <p>Time: <%= @event.time_from.strftime("%I:%M %p") %> - <%= @event.time_to.strftime("%I:%M %p")  %></p>
-      <p>Date: <%= @event.date_and_time.strftime("%A, %B %d, %Y") %></p>
+      <% unless @event.happening_case.duration_type == "All Day" %>
+            <p>Time: <%= @event.happening_case.time_from.strftime("%I:%M %p") %> - <%= @event.happening_case.time_to.strftime("%I:%M %p")  %></p>
+      <% end -%>
+      <p>Date: <%= @event.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></p>
       <p>Location: <%= @event.custom_address %></p>
       <footer>
         <span>Fee:</span>
@@ -26,7 +28,7 @@
     <div class="activityOrigin">
         <div class="OriginTitle">Activity Originator</div>
         <div class="UserimgName">
-            <div class="img"><%= gravatar_for(@event.creator) %></div>
+            <div class="img"><%= logo_for(@event.creator, size: :small, css_class: "userCardImage left") %></div>
             <%= link_to @event.creator.name , user_path(@event.creator) %>
         </div>
       <!-- <a href="#" class="originTitle"><%= @event.creator.name %></a> -->
@@ -60,8 +62,11 @@
     <div class="body">
         <%= render 'shared/cardsection', individuals: @participator, this: @event, class_name: "joined", makeadmin: true%>
     <div class="Description">
-        <div class="<%= @event.category %>"></div>
+        <div class="<%= @event.category %> left"></div> <br> <br> <br>
         <p><%= @event.descreption %></p>
+
+        <%= render "shared/activity_table", recent_activities: @recent_activities %>
+
     </div>
         <%= render 'shared/cardsection', individuals: @likes, this: @event, class_name: "likes", makeadmin: true %>
 

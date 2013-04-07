@@ -1,7 +1,7 @@
 
 <div class="body">
 	<div class="offering">
-                    <h1><%= image_tag "class-icon.png", width: 50 %> Create New Event</h1>
+                    <h1><%= image_tag "event-icon.png", width: 50 %> Create New Event</h1>
 		<%= form_for(@event) do |f| %>
                             <h2>1. Set up Activity</h2>
 
@@ -27,9 +27,45 @@
                                     <tr>
                                         <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
                                         <td>
-                                            <div id="BallList"><%= f.select :sport, ["Football", "Handball"]%></div>
-                                            <div id="FitList"><%= f.select :sport, ["Marathon", "Sky diving"] %></div>
-                                            <div id="WaterList"><%= f.select :sport, ["Water Polo", "Swimming"]%></div>
+                                            <div id="BallList"><%= f.select :sport, [
+                                                "Basketball",
+                                                "Volleyball",
+                                                "Football (Soccer)",
+                                                "American Football",
+                                                "Cricket",
+                                                "Badminton",
+                                                "Baseball",
+                                                "Tennis",
+                                                "Handball",
+                                                "Table Tennis",
+                                                "Foosball",
+                                                "Squash",
+                                                "Bowling",
+                                                "Golf"]%></div>
+                                            <div id="FitList"><%= f.select :sport, [
+                                                "Cycling",
+                                                "Karate",
+                                                "Judo",
+                                                "Boxing",
+                                                "Kick Boxing",
+                                                "Skating",
+                                                "Running",
+                                                "Power Walking",
+                                                "Skateboarding",
+                                                "Roller Skating",
+                                                "Taekwondo",
+                                                "Fencing",
+                                                "Paint ball",
+                                                "Yoga",
+                                                "Aikido",
+                                                "Aerobics",
+                                                "Gymnastics"]%></div></div>
+                                            <div id="WaterList"><%= f.select :sport, [
+                                                "Swimming",
+                                                "Water Polo",
+                                                "Sailing",
+                                                "Diving",
+                                                "Fishing"]%></div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -72,10 +108,6 @@
                                         <td width="130"><%= f.label :fee_type, "Payment Option" %></td>
                                         <td><%= f.select :fee_type, ["Free", "Cash"] %></td>
                                     </tr>
-<<<<<<< HEAD
-                                    
-=======
->>>>>>> toggle the amount on free and cash
                                     <tr id="AmountRow">
                                         <td><%= f.label :fee, "Amount" %></td>
                                         <td><%= f.number_field :fee %></td>
@@ -93,21 +125,15 @@
                                         <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
                                         <td><%= f.number_field :number_of_attendings %></td>
                                     </tr>
-                                    <tr>
-                                        <td><%= f.label :date_and_time %></td>
-                                        <td><%= select_date @date_and_time, :prefix => :date_and_time, :start_year => Time.now.year, :end_year => Time.now.year + 5  %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :time_from, "Time From" %></td>
-                                        <td><%= f.time_select :time_from %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :time_to, "Time To" %></td>
-                                        <td><%= f.time_select :time_to %></td>
-                                    </tr>
+
+                                    <%= render "shared/happening_case", date_and_time: @date_and_time %>
                                     <tr>
                                         <td><%= f.label :team_participation, "Team Participation" %></td>
                                         <td><%= f.select :team_participation, ["No", "Yes"] %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :open_join, "Open for all to join" %></td>
+                                        <td><%= f.select :open_join, {"Yes" => true, "No" => false} %></td>
                                     </tr>
                                 </table>
                             </div>

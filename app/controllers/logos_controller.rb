@@ -1,22 +1,25 @@
 class LogosController < ApplicationController
 
   def update
-  	owner_type = params[:owner_type]
-  	owner_id = params[:owner_id]
-  	remove_logo = true unless params[:remove_logo].nil?
+    owner_type  = params[:owner_type]
+    owner_id    = params[:owner_id]
+    remove_logo = false
+    remove_logo = true unless params[:remove_logo].nil?
+    photo_exists = false
     photo_exists = true unless params[:photo_exists].nil?
 
     double_check_name_is_valid owner_type
 
-	@owner = owner_type.camelize.constantize.find_by_id(owner_id)
-	# checking photo upload premission
-	if owner_type == "User"
-		redirect_to @owner, notice: 'you don\'t have premission to upload photos to this page.' unless @owner == current_user
-	else
-		redirect_to @owner, notice: 'you don\'t have premission to upload photos to this page.' unless @owner.administrators.include? current_user
-	end
+    @owner = owner_type.camelize.constantize.find_by_id(owner_id)
+    # checking photo upload premission
+    if owner_type == "User"
+        redirect_to @owner, notice: 'you don\'t have premission to upload photos to this page.' unless @owner == current_user
+    else
+        redirect_to @owner, notice: 'you don\'t have premission to upload photos to this page.' unless @owner.administrators.include? current_user
+    end
 
-	@logo = @owner.logo
+    @logo = @owner.logo
+
 
     if remove_logo == true
         if @photo.uses.count == 1
@@ -31,7 +34,7 @@ class LogosController < ApplicationController
             end
         end
     else
-        
+
         if @logo.photo.nil?
             unless_photo_exists{
                 @photo = Photo.new(params[:photo])
@@ -41,10 +44,10 @@ class LogosController < ApplicationController
             double_check {@logo.photo.destroy}
             unless_photo_exists{
                 @photo = Photo.new(params[:photo])
-                double_check {@photo.save} }   
+                double_check {@photo.save} }
 
         else
-            unless_photo_exists{            
+            unless_photo_exists{
                 @photo = Photo.new(params[:photo])
                 double_check {@photo.save} }
         end
@@ -74,14 +77,15 @@ class LogosController < ApplicationController
 
     def double_check_name_is_valid(name)
       redirect_to rooth_path and return unless name_is_valid?(name)
-    end    
+
+    end
 
     def unless_photo_exists(&b)
-        if photo_exists
-            b.call
-        else 
+        if @photo_exists
             @photo = Photo.find_by_id(params[:photo_id])
+        else
+            b.call
         end
     end
 end
-photo_exists
+

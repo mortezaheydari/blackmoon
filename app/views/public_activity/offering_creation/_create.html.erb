@@ -1,0 +1,20 @@
+<%# offering_creation.create -- needs work %>
+
+<%# 1. offering log %>
+
+	<% if ["Game", "Event"].include? activity.recipient_type %>
+
+		<% if activity.owner %>
+			offering created by <%= activity.owner.name %>.
+
+		<% else %>
+			offering created.
+
+		<%- end %>
+
+<%# 2. other %>
+
+	<% else %>
+		a new game is available.
+
+	<%- end %>

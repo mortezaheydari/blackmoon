@@ -1,0 +1,32 @@
+<%#  offering_team_participation.destroy %>
+
+<%#  1. feed %>
+    <% if @render_for.nil? || @render_for == "feed" %>
+   		<% if activity.recipient && activity.trackable %> 
+            <%= link_to activity.recipient.title, activity.recipient %> left <%= link_to activity.trackable.title, activity.trackable %>.
+            
+        <%- end %>
+
+<%#  2. log %>
+    <% elsif @render_for == "log" %>
+        <% if activity.recipient %>		
+            <%= link_to activity.recipient.title, activity.recipient %> no longer participates.
+
+        <%- end %>
+
+<%#  3. notification %>
+    <% elsif @render_for == "notification" %>
+        <% if activity.trackable && activity.owner %>
+        	<%= link_to activity.owner.title, activity.owner %> removed team from <%= link_to activity.trackable.title, activity.trackable %>.
+
+		<% elsif activity.trackable %>
+				joined <%= link_to activity.trackable.title, activity.trackable %>.    
+
+<%#  4. public %>
+    <% elsif @render_for == "public" %>
+
+<%#  5. else %>
+    <% else %>
+        participator left.
+
+    <%- end %>

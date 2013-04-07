@@ -17,7 +17,11 @@ def create
         if act_to_administrate.administrators.include? current_user
             # todo: check user has the right rank
               acts_administrating << act_to_administrate
+            # activities
+              act_to_administrate.create_activity key: "act_administration.create", owner: current_user, recipient: user
+            # # #
         end
+
         @person = user
         @act =  act_to_administrate
         respond_to do |format|
@@ -47,7 +51,9 @@ end
           a.destroy
           end unless administrations == []
         end
-
+        # activities
+          act_to_remove_admin_from.create_activity key: "act_administration.destroy", owner: current_user, recipient: user
+        # # #
         respond_to do |format|
           format.html { redirect_to act_to_remove_admin_from }
           format.js { render 'act_administrations/destroy', :locals => { this: this, person: user } }

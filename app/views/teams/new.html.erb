@@ -1,34 +1,104 @@
-<h1>Events#new</h1>
 
-<--  Back to <%= link_to "index", events_path %>
+<div class="body">
+    <div class="offering">
+                    <h1><%= image_tag "class-icon.png", width: 50 %> Create New Team</h1>
+        <%= form_for(@team) do |f| %>
+                            <h2>1. Set up Activity</h2>
 
-<div class="row">
-	<div class="span6 offset3">
-		<%= form_for(@team) do |f| %>
+                            <p>a. Select a Category</p>
+
                             <div>
-                                <%= f.label :title, "Event Title" %>
-                                <%= f.text_field :title %>
+                                <table id="categoryChoice">
+                                    <tr>
+                                        <td><%= f.radio_button :category, "BallSports", value: "BallSports", checked: true %></td>
+                                        <td><%= f.radio_button :category, "Fitness", value: "Fitness" %></td>
+                                        <td><%= f.radio_button :category, "WaterSports", value: "WaterSports" %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ball Sports</td>
+                                        <td>Fitness</td>
+                                        <td>Water Sports</td>
+                                    </tr>
+                                </table>
+                            </div> <br>
+
+                            <div>
+                                <table  width="100%">
+                                    <tr>
+                                        <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
+                                        <td>
+                                            <div id="BallList"><%= f.select :sport, [
+                                                "Basketball",
+                                                "Volleyball",
+                                                "Football (Soccer)",
+                                                "American Football",
+                                                "Cricket",
+                                                "Badminton",
+                                                "Baseball",
+                                                "Tennis",
+                                                "Handball",
+                                                "Table Tennis",
+                                                "Foosball",
+                                                "Squash",
+                                                "Bowling",
+                                                "Golf"]%></div>
+                                            <div id="FitList"><%= f.select :sport, [
+                                                "Cycling",
+                                                "Karate",
+                                                "Judo",
+                                                "Boxing",
+                                                "Kick Boxing",
+                                                "Skating",
+                                                "Running",
+                                                "Power Walking",
+                                                "Skateboarding",
+                                                "Roller Skating",
+                                                "Taekwondo",
+                                                "Fencing",
+                                                "Paint ball",
+                                                "Yoga",
+                                                "Aikido",
+                                                "Aerobics",
+                                                "Gymnastics"]%></div></div>
+                                            <div id="WaterList"><%= f.select :sport, [
+                                                "Swimming",
+                                                "Water Polo",
+                                                "Sailing",
+                                                "Diving",
+                                                "Fishing"]%></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :title, "team Title: " %></td>
+                                        <td><%= f.text_field :title %></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
+                                        <td><%= f.number_field :number_of_attendings %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :descreption, "Description" %></td>
+                                        <td><%= f.text_area :descreption %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :open_join, "Open for all to join" %></td>
+                                        <td><%= f.select :open_join, {"Yes" => true, "No" => false} %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Add Image</label></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Special Requirements</label></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
                             </div>
 
-                            <div>
-                                <%= f.label :sport, "sport" %>
-                                <%= f.text_field :sport %>
-                            </div>
 
-                            <div>
-                                <%= f.label :number_of_attendings, "Number of attendings" %>
-                                <%= f.number_field :number_of_attendings %>
-                            </div>
+    </div>
+                <%= f.submit "Create the team", class: "button grey submitBtn homeBtn left" %>
 
-                            <div>
-                                <%= f.label :descreption, "Description" %>
-                                <%= f.text_area :descreption %>
-                            </div>
 
-                            <div>
-				<%= f.submit "Create the Team", class: "btn btn-large btn-primary" %>
-			</div>
-
-		<% end %>
-	</div>
+        <% end %>
 </div>

@@ -31,28 +31,39 @@ class GamesController < ApplicationController
 
   def index
     @games = Game.all
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game")
+    @recent_activities = @recent_activities.order("created_at desc")
   end
 
   def new
   	@game = Game.new
+    @game.happening_case = HappeningCase.new
+           @date_and_time = Time.now
+
   end
 
   def create
     @current_user_id = current_user.id
     @game = Game.new(params[:game])
-    @game.date_and_time = date_helper_to_str(params[:date_and_time])
     @game.team_participation ||= false
     @game.album = Album.new
-    @game.save
-    @game.create_offering_creation(creator_id: @current_user_id)
-    @game.offering_administrations.create(administrator_id: @current_user_id)
-    redirect_to @game
+    if @game.save
+      params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
+      @game.create_happening_case(params[:happening_case])
+      @game.create_activity :create, owner: current_user
+      @game.create_offering_creation(creator_id: @current_user_id)
+      @game.offering_administrations.create(administrator_id: @current_user_id)
+      redirect_to @game
+    else
+      redirect_to new_event_path, notice: "there has been a problem with data entry."
+    end
   end
 
   def destroy
   	@user = current_user
   	@game = Game.find(params[:id])
     if user_is_admin?(@game) && user_created_this?(@game)
+      @game.create_activity :destroy, owner: current_user
 			@game.destroy
 			# @game.offering_creation.destroy
       # @game.offering_administrations.destroy
@@ -67,6 +78,9 @@ class GamesController < ApplicationController
     @likes = @game.flaggings.with_flag(:like)
     @photo = Photo.new
     @album = @game.album
+    @owner = @game
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game", trackable_id: @game.id)
+    @recent_activities = @recent_activities.order("created_at desc")
     # flaggings.each do |flagging|
     #      @likes = []
     #      @likes << flagging.flagger
@@ -80,20 +94,24 @@ class GamesController < ApplicationController
 
   def edit
         @game = Game.find(params[:id])
-        @date_and_time = @game.date_and_time
-  end
+        @date_and_time = @game.happening_case.date_and_time
+        @game.album ||= Album.new
+        @photo = Photo.new
+        @photo.title = "Logo"
+    end
 
   def update
     @game = Game.find(params[:id])
 
     # @game.date_and_time = date_helper_to_str(params[:date_and_time])
-    params[:game][:date_and_time] = date_helper_to_str(params[:date_and_time])
+    params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
     if @game.update_attributes(params[:game])
-      redirect_to @game
+      @game.create_activity :update, owner: current_user
+      redirect_to @game, notice: "Game was updated"
     else
       render 'edit'
     end
-	end
+  end
 
   def user_must_be_admin?
     @game = Game.find(params[:id])

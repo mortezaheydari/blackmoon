@@ -1,0 +1,18 @@
+<!-- act_creation.create -->
+
+<!-- 1. team log -->
+
+	<% if activity.recipient_type == "Team" %>
+
+		<% if activity.owner %>
+			Team created by <%= activity.owner.name %>.
+		<% else %>
+			Team created.
+		<%- end %>
+
+<!-- 2. other -->		
+
+	<% else %>
+		a new team created.
+
+	<%- end %>

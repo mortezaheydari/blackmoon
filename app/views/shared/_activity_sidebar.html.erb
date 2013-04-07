@@ -1,31 +1,16 @@
-<hr>
-<div class="sideActivity">
-  <div></div>
-  <a href="#">Morteza Heydari</a>
-  <p> is now following Bader Al-bader</p><br>
-  <span>20 minutes ago</span>
-</div>
-<div class="sideActivity">
-  <div></div>
-  <a href="#">Morteza Heydari</a>
-  <p> is now participating in Football Class</p><br>
-  <span>1 hour ago</span>
-</div>
-<div class="sideActivity">
-  <div></div>
-  <a href="#">Felan Al-Felani</a>
-  <p> is now following you</p><br>
-  <span>2 hour ago</span>
-</div>
-<div class="sideActivity">
-  <div></div>
-  <a href="#">Felan Al-Felani</a>
-  <p> is challenging you</p><br>
-  <span>3 hour ago</span>
-</div>
+<%
+    @render_for = nil
+    @i = 0
+ %>
+<% recent_activities.each do |activity| %>
+<% m = render_activity(activity) %>
+    <% unless m.blank?  %>
+        <hr>
         <div class="sideActivity">
-  <div></div>
-  <a href="#">Morteza Heydari</a>
-  <p> is now participating in Football Class</p><br>
-  <span>1 hour ago</span>
-</div>
+          <p><%= m %></p><br>
+          <span><%= time_ago_in_words(activity.updated_at) %> ago</span>
+        </div>
+        <% @i += 1 %>
+    <% end -%>
+    <% break if @i == 10 %>
+<% end -%>

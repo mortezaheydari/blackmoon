@@ -1,0 +1,33 @@
+<%#  invitation.create %>
+
+<%#  1. feed %>
+	<% if @render_for.nil? || @render_for == "feed" %>
+
+<%#  2. log %>
+	<% elsif @render_for == "log" %>
+		<% if activity.recipient && activity.owner %>
+			<%= link_to activity.owner.title, activity.owner %> invited <%= link_to activity.recipient.title, activity.recipient %>.
+
+		<% elsif activity.recipient %>
+			<%= link_to activity.recipient.title, activity.recipient %> was invited.
+
+		<%- end %>
+
+<%#  3. notification %>
+	<% elsif @render_for == "notification" %>
+		<% if activity.trackable && activity.owner %>
+			you were invited to "<%= link_to activity.trackable.subject.title, activity.trackable %>" by "<%= link_to activity.owner.title, activity.owner %>".
+
+		<% elsif activity.trackable%>
+			you were invited to "<%= link_to activity.trackable.title, activity.trackable %>".
+			
+		<%- end %>
+
+<%#  4. public %>
+	<% elsif @render_for == "public" %>
+
+<%#  5. else %>
+	<% else %>
+		invitation sent.
+
+	<%- end %>

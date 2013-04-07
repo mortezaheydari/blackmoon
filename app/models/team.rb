@@ -1,11 +1,24 @@
 class Team < ActiveRecord::Base
-  attr_accessible :descreption, :name, :sport, :number_of_attendings, :title
+
+  include PublicActivity::Model  
+  attr_accessible :descreption, :name, :sport, :number_of_attendings, :title, :category, :open_join
   before_save :default_values
 
   has_one :album, as: :owner, :dependent => :destroy
   has_one :logo, as: :owner, :dependent => :destroy
 
+    after_create do |team|
+        team.create_album if team.album.nil?
+        team.create_logo if team.logo.nil?
+    end
+
 	make_flaggable :like
+
+  has_one :album, as: :owner, :dependent => :destroy
+  accepts_nested_attributes_for :album
+
+  has_one :logo, as: :owner, :dependent => :destroy
+  accepts_nested_attributes_for :logo
 
   has_one :act_creation, as: :act, :dependent => :destroy
   accepts_nested_attributes_for :act_creation
@@ -22,6 +35,20 @@ class Team < ActiveRecord::Base
   has_many :events_participating, through: :offering_team_participations, source: :offering, source_type: "Event"
   accepts_nested_attributes_for :events_participating
 
+      # invitations as invited and inviter
+  has_many :invitations_sent, as: :inviter, class_name: "Invitation", dependent: :destroy
+	accepts_nested_attributes_for :invitations_sent
+  has_many :invitations_received, as: :invited, class_name: "Invitation", dependent: :destroy
+	accepts_nested_attributes_for :invitations_sent
+
+	has_many :invitations, as: :subject, dependent: :destroy
+	accepts_nested_attributes_for :invitations
+
+  has_many :join_requests_sent, as: :sender, class_name: "join_request"
+  accepts_nested_attributes_for :join_requests_sent
+
+  has_many :join_requests_received, as: :receiver, class_name: "join_request"
+  accepts_nested_attributes_for :join_requests_received  
 
 	def creator
 		User.find_by_id(self.act_creation.creator_id) unless self.act_creation.nil?
@@ -42,6 +69,22 @@ class Team < ActiveRecord::Base
 		end
 		User.find(@members)
 	end
+
+  def inviteds
+      @invited = []
+      self.invitations.each do |invitation|
+          @invited << invitation.invited
+      end
+      @invited
+  end
+
+  def joineds
+      @joineds = []
+      self.members.each do |joined|
+          @joineds << joined
+      end
+      @joineds
+  end
 
 
   def default_values

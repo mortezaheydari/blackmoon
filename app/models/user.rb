@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+
+  include PublicActivity::Model    
   attr_accessible :name, :profile_attributes
   validates :name, presence: true, length: {maximum: 50}, uniqueness: true
 
@@ -51,7 +53,7 @@ class User < ActiveRecord::Base
 
 ## Acts
 
-      # E - Act creation
+      # D - Act creation
   has_many :act_creations, foreign_key: :creator_id
       #   1.teams created
   has_many :teams_created, through: :act_creations, source: :act, source_type: "Team"
@@ -72,7 +74,7 @@ class User < ActiveRecord::Base
 
 ## Followers
 
-      # D - follow relationship
+      # E - follow relationship
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :followed_users, through: :relationships, source: :followed
 
@@ -91,7 +93,25 @@ class User < ActiveRecord::Base
     relationships.find_by_followed_id(other_user.id).destroy
   end
 
+  def title
+    if profile.first_name || profile.last_name
+      profile.first_name+" "+profile.last_name
+    else
+      name
+    end
+  end
+
+## invitations
+      # F - invitations as invited and inviter
+  has_many :invitations_sent, as: :inviter, class_name: "Invitation", dependent: :destroy
+  accepts_nested_attributes_for :invitations_sent
+  has_many :invitations_received, as: :invited, class_name: "Invitation", dependent: :destroy
+  accepts_nested_attributes_for :invitations_sent
+  
+  has_many :join_requests_sent, as: :sender, class_name: "join_request"
+  accepts_nested_attributes_for :join_requests_sent  
 ##
+
     def offerings_participating
         @participatings = []
         events_participating.each do |event_participating|

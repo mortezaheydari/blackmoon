@@ -1,0 +1,19 @@
+<%
+    @render_for = "log"
+ %>
+ <div class="activity_table">
+  <h1>Log</h1>
+<% recent_activities.each do |activity| %>
+<% m = render_activity(activity) %>
+    <% unless m.blank?  %>
+
+
+
+          <div class="notiBody">
+            <hr>
+            <p><%= m %></p> <br>
+            <span class="small-text"><%= time_ago_in_words(activity.updated_at) %> ago</span>
+          </div>
+    <% end -%>
+<% end -%>
+  </div>

@@ -1,5 +1,10 @@
 Blackmoon::Application.routes.draw do
-    resources :users
+    resources :users do
+        member do
+            get 'offering_management'
+        end
+    end
+
     resources :events do
       member do
         get 'like'
@@ -45,15 +50,9 @@ Blackmoon::Application.routes.draw do
     post 'act_memberships/create'
     post 'act_memberships/destroy'
 
+    match 'notification' => 'pages#notification', as: :notification
+
     devise_for :accounts, :controllers => {:registrations => "registrations"}
-
-<<<<<<< HEAD
-    get 'pages/offering_management'
-=======
-
-    resources :activities
->>>>>>> Offering Management statick view completed
-
 
     get 'pages/offering_management'
 
@@ -62,6 +61,8 @@ Blackmoon::Application.routes.draw do
     resources :notifications
 
     resources :album_photos
+
+    resources :invitations
 
     post 'logos/update'
   # The priority is based upon order of creation:

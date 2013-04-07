@@ -2,7 +2,8 @@
 *= require_self
 *= require fancybox
 */
-
+// @import "bootstrap";
+// @import "bootstrap-responsive";
 @import "compass";
 @import "blueprint";
 @import "compass/css3";
@@ -159,24 +160,9 @@ div.signPage {
             font-weight: normal;
             color: $TextColor;
 
-        }
-    }
-    header#editprofile {
-        width: 27%;
-        .editicon {
-            background: url("icons.png");
-            background-position: -500px -800px;
-            width: 100px;
-            height: 100px;
-        }
-        h3  {
-            margin-left: 10px;
-        }
-    }
-    header#forgotHeader {
-        width: 41%;
-    }
 
+        }
+    }
     header#editprofile {
         width: 27%;
         .editicon {
@@ -208,7 +194,6 @@ div.signPage {
             background-color: #fff;
             @include border-radius(10px);
         }
-
         select {
             @include appearance(none);
             background: url("drop-icon.png") no-repeat scroll right center;
@@ -721,6 +706,7 @@ div.eventProfileCard {
   @include SideText;
   img {
     position: relative;
+    width: 100%;
   }
   h1 {
     font-size: 30px;
@@ -990,6 +976,69 @@ div.Notification {
 
 }
 
+.teamDesc {
+    width:990px;
+    .desctext {
+        width:650px;
+        float:left;
+    }
+    .sideBox {
+        width:300px;
+        float:right;
+    }
+}
+
+div.activity_table {
+        border-top: 3px solid $TextColor;
+
+  background: transparent;
+  // border: 1px solid $timePassedGrey;
+  float: left;
+  width: 990px;
+  margin:20px 0;
+  h1 {
+    margin: 0;
+    color: $TextColor;
+    font-weight: normal;
+    text-align: left;
+    font-size: 18px;
+    line-height: 16px;;
+    padding: 10px;
+  }
+  .notiBody {
+    float: none;
+    display: block;
+    overflow: hidden;
+    hr {
+      color: $white;
+      width: 100%;
+    }
+    p {
+      color: $TextColor;
+      font-size: 13px;
+      display: inline;
+    }
+    a {
+      color: $linkColor;
+      font-size: 13px;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    div.notiImg {
+      width: 60px;
+      height: 60px;
+      background: #add8e6;
+      float: left;
+      margin: 0 10px 0 10px;
+      @include border-radius(10px);
+    }
+
+  }
+
+}
+
 /*
 section.page {
   width: 100%;
@@ -1025,7 +1074,7 @@ header#main {
       text-align: right;
       line-height: 20px;
       font-size: 12px;
-      margin-left: 5px;
+      // margin-left: 5px;  for menu space
       &:hover {
         text-decoration: underline;
       }
@@ -1409,7 +1458,7 @@ form {
             text-align: left;
             input{
                 height:30px !important;
-                width:40% !important;
+                width:100px !important;
             }
         }
     }
@@ -1443,57 +1492,16 @@ form {
                 color: $linkColor;
                 font-size: 1em;
                 margin-left: 15px;
-            }
 
-            img {
-                vertical-align: bottom;
-                @include border-radius(5px);
             }
-        }
-        td.offeringtype {
-            vertical-align: bottom;
-            padding: 10px;
-            font-size: 1em;
-            a {
-                color: $linkColor;
-                font-size: 1em;
-                margin-left: 15px;
-            }
-            img {
-                vertical-align: bottom;
-            }
-        }
-      }
-  }
-
-
-.offering_management {
-      @include column(20);
-      @include divReset;
-      min-height: 500px;
-      float: left;
-      h1, h2 {
-        color: $TextColor;
-        font-weight: bold;
-      }
-      table {
-        th {
-            background: $grey;
-            color: $TextColor;
-            font-size: 1em;
-            text-align: left;
-            padding: 10px;
-        }
-        td {
-            vertical-align: bottom;
-            padding: 10px;
-            border-bottom: solid 1px $grey;
-            color: $TextColor;
-            font-size: 0.8em;
-            a {
-                color: $linkColor;
-                font-size: 1em;
-                margin-left: 15px;
+            a.button {
+                color: $white;
+                &:hover {
+                    color: $TextColor;
+                }
+                &:active {
+                    color: $white;
+                }
             }
 
             img {
@@ -1609,8 +1617,7 @@ div.upload {
         width: 47%;
         left: 53%;
         top:20%;
-
-           .icon {
+       .icon {
             background:url("sign-in-modal.png") no-repeat;
             background-size: 70px 56px;
             width: 70px;

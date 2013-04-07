@@ -17,6 +17,7 @@ def create
 	if offering_to_administrate.administrators.include? current_user
     # todo: check user has the right rank
         offerings_administrating << offering_to_administrate
+        offering_to_administrate.create_activity key: "offering_administration.create", owner: current_user, recipient: user
     end
     respond_to do |format|
         format.html { redirect_to offering_to_administrate }
@@ -40,6 +41,8 @@ def destroy
         administrations = []
         administrations = user.offering_administrations.where(offering_type: offering_type.camelize , offering_id: offering_id)
         administrations.each do |a|
+            offering_to_remove_admin_from.create_activity key: "offering_administration.destroy", owner: current_user, recipient: user
+
             a.destroy
         end unless administrations == []
     end
@@ -62,7 +65,7 @@ end
 
     def double_check_name_is_valid(user, name)
       redirect_to rooth_path and return unless name_is_valid?(user, name)
-    end    
+    end
 
 		# def current_user_can_delete_admin?(admin, offering)
 		# 	# todo: add superadmin

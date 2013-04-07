@@ -8,17 +8,17 @@
     <div class="sideBar">
 
 
-        <div class="sideBox">
+<!--         <div class="sideBox">
             <div class="sideTitle">Your Upcoming games</div>
             <% @games.each do |e| %>
                 <%= render 'shared/upcoming_offering', offering: e, offering_name: "game" %>
             <% end %>
-        </div>
+        </div> -->
 
 
       <div class="sideBox">
         <div class="sideTitle">Activity</div>
-            <%= render 'shared/activity_sidebar' %>
+            <%= render 'shared/activity_sidebar', recent_activities: @recent_activities %>
       </div>
     </div>
   </div>

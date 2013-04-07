@@ -1,8 +1,8 @@
 
 <div class="body">
     <div class="offering">
-                    <h1><%= image_tag "class-icon.png", width: 50 %> Update Event Information</h1>
 
+                    <h1><%= image_tag "event-icon.png", width: 50 %> Update Event Information</h1>
 
             <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "Event", owner_id: @event.id), :html => { :method => "post" }) do |p| %>
                     <h2>Image</h2>
@@ -40,10 +40,7 @@
                             <div class="<%= @event.category %> left"></div> <br>
 
                             <div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Edit event view updated
+
                                 <table  width="100%">
                                     <tr>
                                         <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
@@ -66,14 +63,10 @@
                                         <td></td>
                                     </tr>
                                 </table>
-<<<<<<< HEAD
-=======
+
                                 <%= f.radio_button :category, "BallSports", value: "BallSports", checked: true %>
                                 <%= f.radio_button :category, "Fitness", value: "Fitness" %>
                                 <%= f.radio_button :category, "WaterSports", value: "WaterSports" %>
->>>>>>> Create Event Updated
-=======
->>>>>>> Edit event view updated
                             </div>
 <hr>
 
@@ -114,25 +107,15 @@
                                         <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
                                         <td><%= f.number_field :number_of_attendings %></td>
                                     </tr>
-                                    <tr>
-                                        <td><%= f.label :date_and_time %></td>
-                                        <td><%= select_date @date_and_time, :prefix => :date_and_time, :start_year => Time.now.year, :end_year => Time.now.year + 5  %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :time_from, "Time From" %></td>
-                                        <td><%= f.time_select :time_from %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :time_to, "Time To" %></td>
-                                        <td><%= f.time_select :time_to %></td>
-                                    </tr>
+
+                                    <%= render "shared/happening_case", date_and_time: @date_and_time %>
                                     <tr>
                                         <td><%= f.label :team_participation, "Team Participation" %></td>
                                         <td><%= f.select :team_participation, ["No", "Yes"] %></td>
                                     </tr>
                                     <tr>
-                                        <td><%= f.label :team_participation, "Team Participation" %></td>
-                                        <td><%= f.select :team_participation, ["No", "Yes"] %></td>
+                                        <td><%= f.label :open_join, "Open for all to join" %></td>
+                                        <td><%= f.select :open_join, {"Yes" => true, "No" => false} %></td>
                                     </tr>
                                 </table>
                             </div>
