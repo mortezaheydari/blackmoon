@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130331082304) do
+ActiveRecord::Schema.define(:version => 20130407095530) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -160,6 +160,16 @@ ActiveRecord::Schema.define(:version => 20130331082304) do
     t.datetime "response_datetime"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+  end
+
+  create_table "join_requests", :force => true do |t|
+    t.integer  "sender_id"
+    t.text     "sender_type"
+    t.integer  "receiver_id"
+    t.string   "receive_type"
+    t.text     "message"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "logos", :force => true do |t|

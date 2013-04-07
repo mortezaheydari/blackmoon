@@ -44,6 +44,12 @@ class Team < ActiveRecord::Base
 	has_many :invitations, as: :subject, dependent: :destroy
 	accepts_nested_attributes_for :invitations
 
+  has_many :join_requests_sent, as: :sender, class_name: "join_request"
+  accepts_nested_attributes_for :join_requests_sent
+
+  has_many :join_requests_received, as: :receiver, class_name: "join_request"
+  accepts_nested_attributes_for :join_requests_received  
+
 	def creator
 		User.find_by_id(self.act_creation.creator_id) unless self.act_creation.nil?
 	end
@@ -64,21 +70,21 @@ class Team < ActiveRecord::Base
 		User.find(@members)
 	end
 
-            def inviteds
-                @invited = []
-                self.invitations.each do |invitation|
-                    @invited << invitation.invited
-                end
-                @invited
-            end
+  def inviteds
+      @invited = []
+      self.invitations.each do |invitation|
+          @invited << invitation.invited
+      end
+      @invited
+  end
 
-            def joineds
-                @joineds = []
-                self.members.each do |joined|
-                    @joineds << joined
-                end
-                @joineds
-            end
+  def joineds
+      @joineds = []
+      self.members.each do |joined|
+          @joineds << joined
+      end
+      @joineds
+  end
 
 
   def default_values
