@@ -34,10 +34,26 @@ class InvitationsController < ApplicationController
             if params[:respond] = "accept"
                 @invitation.state = "accepted"
 
+                if @invitation.invited.class.to_s == "User"
+                    offering_type = k_lower(@invitation.subject)
+                    offerings_participating = @invitation.invited.send("#{offering_type}s_participating")
+                    offerings_participating << @invitation.subject unless offerings_participating.include? joining_offering
+                    @invitation.subject.create_activity key: "offering_individual_participation.create", owner: current_user, recipient: @invitation.invited
+
+                elsif @invitation.invited.class.to_s == "Team"
+                    offering_type = k_lower(@invitation.subject)
+                    offerings_participating = @invitation.invited.send("#{offering_type}s_participating")
+                    offerings_participating << @invitation.subject unless offerings_participating.include? joining_offering
+                    @invitation.subject.create_activity key: "offering_team_participation.create", owner: current_user, recipient: @invitation.invited
+
+                end
+
             elsif params[:respond] = "reject"
                 @invitation.state = "rejected"
+
             else
                 redirect_to(@redirect_object, notice:'error') and return
+                
             end
 
             @invitation.response_datetime = Time.now
