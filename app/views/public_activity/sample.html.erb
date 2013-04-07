@@ -1,32 +1,30 @@
-<!-- model_name.action -->
+<%#  model_name.action %>
 
-<!-- 1. feed -->
-	<% if render_for.nil? || render_for == "feed" %>
+<%#  1. feed %>
+	<% if @render_for.nil? || @render_for == "feed" %>
 		<% if activity.recipient && activity.trackable %>
 			"<%= link_to activity.recipient.title, activity.recipient %>" message "<%= link_to activity.trackable.title, activity.trackable %>".
 
 		<%- end %>
 
-<!-- 2. log -->
-	<% elsif render_for == "log" %>
+<%#  2. log %>
+	<% elsif @render_for == "log" %>
 		message
 
-<!-- 3. notification -->
-	<% elsif render_for == "notification" %>
+<%#  3. notification %>
+	<% elsif @render_for == "notification" %>
 		<% if activity.trackable %>
 			message
 		<% else %>
 			message
 		<%- end %>
 
-<!-- 4. public -->
-	<% elsif render_for == "public" %>
+<%#  4. public %>
+	<% elsif @render_for == "public" %>
 		message
 
-<!-- 5. else -->
+<%#  5. else %>
 	<% else %>
 		message
 
 	<%- end %>
-
-

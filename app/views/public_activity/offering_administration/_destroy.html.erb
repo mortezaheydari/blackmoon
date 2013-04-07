@@ -1,25 +1,34 @@
-<!-- offering_administration.destroy -->
+<%#  offering_administration.destroy %>
 
-<!-- 1. Offering activity -->
-	<% if ["Game", "Event"].include? activity.recipient_type  %>
+<%#  1. feed %>
+    <% if @render_for.nil? || @render_for == "feed" %>
 
-		"<%= link_to activity.owner.title, activity.owner %>" was removed from administration board.
+<%#  2. log %>
+    <% elsif @render_for == "log" %>
+        <% if activity.owner && activity.recipient  %>
+            <%= link_to activity.owner.title, activity.owner %> removed <%= link_to activity.recipient.title, activity.recipient %> from administration board.
 
-<!-- 2. user notification -->
-	
-	<% elsif activity.recipient_type == "User" %>
+        <% elsif activity.recipient %>
+            <%= link_to activity.recipient.title, activity.recipient %> was removed from administration board.
 
-		<% if activity.trackable %>
-			"you no longer administrate "<%= link_to activity.trackable.title, activity.trackable %>".
-		<% else %>
-			you were removed from administrating an offering, which has since been removed.
-		<%- end %>
+        <%- end %>
 
-<!-- 3. other -->	
+<%#  3. notification %>
+    <% elsif @render_for == "notification" %>
+        <% if activity.trackable %>
+            you no longer administrate <%= link_to activity.trackable.title, activity.trackable %>.
 
-	<% else %>
-		an admin was removed.
-		
-	<%- end %>
+        <% else %>
+            you were removed from administrating an offering, which has since been removed.
 
+        <%- end %>
+
+<%#  4. public %>
+    <% elsif @render_for == "public" %>
+
+<%#  5. else %>
+    <% else %>
+        admin removed.
+
+    <%- end %>
 

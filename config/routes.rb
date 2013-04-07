@@ -50,6 +50,8 @@ Blackmoon::Application.routes.draw do
     post 'act_memberships/create'
     post 'act_memberships/destroy'
 
+    match 'notification' => 'pages#notification', as: :notification
+
     devise_for :accounts, :controllers => {:registrations => "registrations"}
 
 
@@ -62,7 +64,7 @@ Blackmoon::Application.routes.draw do
 
     resources :album_photos
 
-    resources :invitations, only: [ :create, :update ]
+    resources :invitations
 
     post 'logos/update'
   # The priority is based upon order of creation:

@@ -26,14 +26,14 @@ class InvitationsController < ApplicationController
     end
 
     def update
-        @invitation     = Invitation.find_by_id(params[:invitation_id])
+        @invitation     = Invitation.find_by_id(params[:id])
 
         redirect_object
 
         if @invitation.invited = current_user
             if params[:respond] = "accept"
                 @invitation.state = "accepted"
-                
+
             elsif params[:respond] = "reject"
                 @invitation.state = "rejected"
             else
@@ -72,10 +72,14 @@ class InvitationsController < ApplicationController
         end
 
         def redirect_object
-            return_object_id   = params[:return_object_id]
-            return_object_type = params[:return_object_type]
-            @redirect_object   = find_and_assign return_object_type, return_object_id
-            @redirect_object = root_path if @redirect_object.nil?
+            if params[:redirect_object]
+                @redirect_object = params[:redirect_object]
+            else
+                return_object_id   = params[:return_object_id]
+                return_object_type = params[:return_object_type]
+                @redirect_object   = find_and_assign return_object_type, return_object_id
+            end
+                @redirect_object = root_path if @redirect_object.nil?
         end
 
         def find_and_assign this_type, this_id

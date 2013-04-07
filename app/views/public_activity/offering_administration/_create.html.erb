@@ -1,25 +1,37 @@
-<!-- offering_administration.create -->
+<%#  offering_administration.create %>
 
-<!-- 1. Offering activity -->
-	<% if ["Game", "Event"].include? activity.recipient_type  %>
+<%#  1. feed %>
+    <% if @render_for.nil? || @render_for == "feed" %>
+        <% if activity.recipient && activity.trackable %>
+            "<%= link_to activity.recipient.title, activity.recipient %>" message "<%= link_to activity.trackable.title, activity.trackable %>".
 
-		"<%= link_to activity.owner.title, activity.owner %>" was added to administration board.
+        <%- end %>
 
-<!-- 2. user notification -->
-	
-	<% elsif activity.recipient_type == "User" %>
+<%#  2. log %>
+    <% elsif @render_for == "log" %>
+        <% if activity.owner && activity.recipient  %>
+            <%= link_to activity.owner.title, activity.owner %> added <%= link_to activity.recipient.title, activity.recipient %> to administration board.
 
-		<% if activity.trackable %>
-			"you have been added to administrate "<%= link_to activity.trackable.title, activity.trackable %>".
-		<% else %>
-			you were added to administrate an offering, which has since been removed.
-		<%- end %>
+        <% elsif activity.recipient %>
+            <%= link_to activity.recipient.title, activity.recipient %> was added to administration board.
 
-<!-- 3. other -->	
+        <%- end %>
 
-	<% else %>
-		a new admin was added.
-		
-	<%- end %>
+<%#  3. notification %>
+    <% elsif @render_for == "notification" %>
+        <% if activity.trackable %>
+            "you have been added to administrate "<%= link_to activity.trackable.title, activity.trackable %>".
 
+        <% else %>
+            you were added to administrate an offering, which has since been removed.
 
+        <%- end %>
+
+<%#  4. public %>
+    <% elsif @render_for == "public" %>
+
+<%#  5. else %>
+    <% else %>
+        new admin added.
+
+    <%- end %>
