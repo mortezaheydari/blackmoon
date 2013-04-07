@@ -31,6 +31,8 @@ class TeamsController < ApplicationController
 
   def index
     @teams = Team.all
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Team")
+    @recent_activities = @recent_activities.order("created_at desc")
   end
 
   def new

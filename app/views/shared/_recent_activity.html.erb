@@ -6,7 +6,8 @@
 <% m = render_activity(activity) %>
     <% unless m.blank?  %>
         <div class="recentItem">
-            <p><%= m %></p>
+            <p><%= m %></p> <br>
+            <span class="small-text"><%= time_ago_in_words(activity.updated_at) %> ago</span>
         </div>
         <% @i += 1 %>
     <% end -%>

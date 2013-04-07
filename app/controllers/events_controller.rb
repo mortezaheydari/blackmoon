@@ -31,6 +31,8 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Event")
+    @recent_activities = @recent_activities.order("created_at desc")
   end
 
   def new

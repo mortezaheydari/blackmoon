@@ -31,6 +31,8 @@ class GamesController < ApplicationController
 
   def index
     @games = Game.all
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game")
+    @recent_activities = @recent_activities.order("created_at desc")
   end
 
   def new
@@ -48,7 +50,7 @@ class GamesController < ApplicationController
     if @game.save
       params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
       @game.create_happening_case(params[:happening_case])
-      @game.create_activity :create, owner: current_user            
+      @game.create_activity :create, owner: current_user
       @game.create_offering_creation(creator_id: @current_user_id)
       @game.offering_administrations.create(administrator_id: @current_user_id)
       redirect_to @game
@@ -61,7 +63,7 @@ class GamesController < ApplicationController
   	@user = current_user
   	@game = Game.find(params[:id])
     if user_is_admin?(@game) && user_created_this?(@game)
-      @game.create_activity :destroy, owner: current_user      
+      @game.create_activity :destroy, owner: current_user
 			@game.destroy
 			# @game.offering_creation.destroy
       # @game.offering_administrations.destroy
@@ -102,7 +104,7 @@ class GamesController < ApplicationController
     # @game.date_and_time = date_helper_to_str(params[:date_and_time])
     params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
     if @game.update_attributes(params[:game])
-      @game.create_activity :update, owner: current_user            
+      @game.create_activity :update, owner: current_user
       redirect_to @game, notice: "Game was updated"
     else
       render 'edit'
