@@ -107,6 +107,9 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :invitations_sent
   has_many :invitations_received, as: :invited, class_name: "Invitation", dependent: :destroy
   accepts_nested_attributes_for :invitations_sent
+  
+  has_many :join_requests_sent, as: :sender, class_name: "join_request"
+  accepts_nested_attributes_for :join_requests_sent  
 ##
 
     def offerings_participating
