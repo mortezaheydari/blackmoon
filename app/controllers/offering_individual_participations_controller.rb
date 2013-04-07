@@ -22,6 +22,7 @@ class OfferingIndividualParticipationsController < ApplicationController
     if offerings_participating.count < number_of_attendings or number_of_attendings == 0
         # todo: check participation deadline is not pass
         offerings_participating << joining_offering unless offerings_participating.include? joining_offering
+        joining_offering.create_activity key: "offering_individual_participation.create", owner: current_user, recipient: user
     end
     @participator = joining_offering.individual_participators
     @offering = joining_offering
@@ -41,9 +42,12 @@ class OfferingIndividualParticipationsController < ApplicationController
     double_check_name_is_valid(user, offering_type)
     participations = user.offering_individual_participations.where(offering_type: offering_type, offering_id: offering_id)
     # todo: check participation deadline is not pass
+
     participations.each.destroy unless participations == []
 
     leaving_offering = offering.camelize.constantize.find_by_id(offering_id)
+    leaving_offering.create_activity key: "offering_individual_participation.destroy", owner: current_user, recipient: user   
+
     @participator = leaving_offering.individual_participators
     respond_to do |format|
         format.html { redirect_to leaving_offering }

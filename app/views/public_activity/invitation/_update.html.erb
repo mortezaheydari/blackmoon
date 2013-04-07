@@ -7,14 +7,17 @@
 	<% elsif @render_for == "log" %>
 		<% if activity.trackable && activity.recipient && ["accepted", "rejected"].include?(activity.trackable.state) %>
 			<%= link_to activity.recipient.title, activity.recipient %> <%= activity.trackable.state %> invitation.
+
 		<% elsif activity.trackable && activity.recipient %>
 			<%= link_to activity.recipient.title, activity.recipient %> invitation state changed to "<%= activity.trackable.state %>".
+
 		<%- end %>
 
 <%#  3. notification %>
 	<% elsif @render_for == "notification" %>
 		<% if activity.trackable && activity.recipient %>
 			<%= link_to activity.recipient.title, activity.recipient %> invitation state changed to "<%= activity.trackable.state %>".
+			
 		<%- end %>
 
 <%#  4. public %>

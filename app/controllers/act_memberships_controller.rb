@@ -22,7 +22,7 @@ class ActMembershipsController < ApplicationController
         end
         @offering = joining_act
         @members = joining_act.members
-        joining_act.create_activity :create, owner: current_user, recipient: user
+        joining_act.create_activity :create, owner: user
         respond_to do |format|
             format.html { redirect_to joining_act }
             format.js
@@ -43,7 +43,7 @@ class ActMembershipsController < ApplicationController
       acts_memberships.each.destroy unless acts_memberships == []
 
         leaving_act = act.camelize.constantize.find_by_id(act_id)
-        leaving_act.create_activity :destroy, owner: current_user, recipient: user
+        leaving_act.create_activity :destroy, owner: user
 
         @members = leaving_act.members
         respond_to do |format|

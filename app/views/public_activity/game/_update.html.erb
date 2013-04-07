@@ -2,9 +2,9 @@
 
 <%# 1. feed %>
 	<% if @render_for.nil? || @render_for == "feed" %>
-                <% if activity.owner && activity.trackable %>
-                    <%= link_to activity.trackable.title, activity.trackable %> was updated by <%= link_to activity.owner.title, activity.owner %>.
-                <%- end %>
+	    <% if activity.owner && activity.trackable %>
+	        <%= link_to activity.trackable.title, activity.trackable %> was updated by <%= link_to activity.owner.title, activity.owner %>.
+	    <%- end %>
 <%# 2. log %>
 	<% elsif @render_for == "log" %>
 		<% if activity.owner %>

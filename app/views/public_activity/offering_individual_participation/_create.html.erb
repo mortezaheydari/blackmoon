@@ -1,23 +1,27 @@
-<!-- offering_individual_participation.create -->
+<%#  offering_individual_participation.create %>
 
-<!-- 1. Offering activity -->
-	<% if ["Game", "Event"].include? activity.recipient_type  %>
+<%#  1. feed %>
+    <% if @render_for.nil? || @render_for == "feed" %>
+   		<% if activity.owner && activity.trackable %> 
+            <%= link_to activity.owner.title, activity.owner %> joined <%= link_to activity.trackable.title, activity.trackable %>.
+            
+        <%- end %>
 
-		"new participator "<%= link_to activity.owner.title, activity.owner %>" added.
+<%#  2. log %>
+    <% elsif @render_for == "log" %>
+        <% if activity.owner %>		
+            <%= link_to activity.owner.title, activity.owner %> joined.
 
-<!-- 2. user notification -->
-	
-	<% elsif activity.recipient_type == "User" %>
+        <%- end %>
 
-		<% if activity.trackable %>
-			"you have been added to participate in "<%= link_to activity.trackable.title, activity.trackable %>".
-		<% else %>
-			you were added to participate in offering, which has since been removed.
-		<%- end %>
+<%#  3. notification %>
+    <% elsif @render_for == "notification" %>
 
-<!-- 3. other -->	
+<%#  4. public %>
+    <% elsif @render_for == "public" %>
 
-	<% else %>
-		new participator added.
-		
-	<%- end %>
+<%#  5. else %>
+    <% else %>
+        new user joined.
+
+    <%- end %>

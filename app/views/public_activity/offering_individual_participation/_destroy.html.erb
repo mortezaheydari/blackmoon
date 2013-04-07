@@ -1,23 +1,26 @@
-<!-- offering_individual_participation.destroy -->
+<%#  offering_individual_participation.destroy %>
 
-<!-- 1. Offering activity -->
-	<% if ["Game", "Event"].include? activity.recipient_type  %>
+<%#  1. feed %>
+    <% if @render_for.nil? || @render_for == "feed" %>
 
-		"<%= link_to activity.owner.title, activity.owner %>" no longer participates.
+<%#  2. log %>
+    <% elsif @render_for == "log" %>
+        <% if activity.owner %>		
+            <%= link_to activity.owner.title, activity.owner %> no longer participates.
 
-<!-- 2. user notification -->
-	
-	<% elsif activity.recipient_type == "User" %>
+        <% else %>
+            a participator was removed.
 
-		<% if activity.trackable %>
-			"you no longer participate in "<%= link_to activity.trackable.title, activity.trackable %>".
-		<% else %>
-			your participation was canceled in an offering, which has since been removed.
-		<%- end %>
+        <%- end %>
 
-<!-- 3. other -->	
+<%#  3. notification %>
+    <% elsif @render_for == "notification" %>
 
-	<% else %>
-		participator removed.
-		
-	<%- end %>
+<%#  4. public %>
+    <% elsif @render_for == "public" %>
+
+<%#  5. else %>
+    <% else %>
+        participator left.
+
+    <%- end %>

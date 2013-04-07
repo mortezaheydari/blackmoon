@@ -43,7 +43,7 @@ class InvitationsController < ApplicationController
             @invitation.response_datetime = Time.now
 
             double_check {@invitation.save}
-            @invitation.create_activity :update, owner: @invitation.inviter, recipient: @invitation.invited
+            @invitation.create_activity :update, owner: @invitation.invited, recipient: @invitation.inviter
             respond_to do |format|
                 format.html { redirect_to(@redirect_object, notice: 'invitation has been sent.' ) and return }
                 format.js

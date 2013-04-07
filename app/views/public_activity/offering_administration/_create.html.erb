@@ -3,7 +3,7 @@
 <%#  1. feed %>
     <% if @render_for.nil? || @render_for == "feed" %>
         <% if activity.recipient && activity.trackable %>
-            "<%= link_to activity.recipient.title, activity.recipient %>" message "<%= link_to activity.trackable.title, activity.trackable %>".
+            <%= link_to activity.recipient.title, activity.recipient %> is now administrating <%= link_to activity.trackable.title, activity.trackable %>.
 
         <%- end %>
 
@@ -20,7 +20,7 @@
 <%#  3. notification %>
     <% elsif @render_for == "notification" %>
         <% if activity.trackable %>
-            "you have been added to administrate "<%= link_to activity.trackable.title, activity.trackable %>".
+            you have been added to administrate <%= link_to activity.trackable.title, activity.trackable %>.
 
         <% else %>
             you were added to administrate an offering, which has since been removed.
