@@ -1,8 +1,26 @@
 <div class="body">
     <div class="Notification">
         <h1>Notifiations</h1>
+<%
+    @render_for = "notification"
+ %>
+ <div class="notiBody">
 
+ <% @recent_activities.each do |activity| %>
+<% m = render_activity(activity) %>
+    <% unless m.blank?  %>
+       <hr>
+        <p><%= m %></p> <br>
+        <span class="small-text"><%= time_ago_in_words(activity.updated_at) %> ago</span>
+        <% if ["invitation.create", "invitation.update"].include? activity.key %>
+            <% if activity.trackable.state == "sent" %>
+                <%= link_to content_tag("div", "Reject", class: "button grey right"), invitation_path(activity.trackable, respond: "reject", redirect_object: notification_path), method: :put %>
+                <%= link_to content_tag("div", "Accept", class: "button grey right"), invitation_path(activity.trackable, respond: "accept", redirect_object: notification_path), method: :put %>
+            <% end %>
+        <% end %>
+    <% end -%>
+<% end -%>
 
-            <%= render "shared/notification_message", recent_activities: @recent_activities %>
+</div>
     </div>
 </div>

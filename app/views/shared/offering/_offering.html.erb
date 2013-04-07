@@ -3,9 +3,6 @@
           <%= "<article class=\"activityBox\" id=\"#{style_id} \">".html_safe unless reload == true %>
             <header class="activityHeader">
               <%= link_to logo_for(offering, size: :user_profile, css_class: "activityImage"), send(k_lower(offering) + "_path" ,offering) %>
-<!--               <a href="#">
-                <%= image_tag "bg.png", class: "activityImage" %>
-              </a> -->
               <h5 class="activityTitle text-left">
                 <%= link_to offering.title, send(k_lower(offering) + "_path" ,offering) %>
               </h5>

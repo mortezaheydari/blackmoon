@@ -703,6 +703,7 @@ div.eventProfileCard {
   @include SideText;
   img {
     position: relative;
+    width: 100%;
   }
   h1 {
     font-size: 30px;
@@ -1453,7 +1454,7 @@ form {
             text-align: left;
             input{
                 height:30px !important;
-                width:40% !important;
+                width:100px !important;
             }
         }
     }

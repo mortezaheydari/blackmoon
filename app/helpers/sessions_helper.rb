@@ -58,7 +58,7 @@ module SessionsHelper
 			end
 		else
 			if this.logo.photo.nil?
-				image_tag("/assets/bg.png", width: 50, als: this.title, class: "#{css_class}")
+				image_tag("/assets/bg.png", width: 50, als: this.title, class: "activityImage #{css_class}")
 			else
 				size = options[:size]
 		    css_class = options[:css_class]

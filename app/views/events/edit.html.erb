@@ -1,7 +1,7 @@
 
 <div class="body">
     <div class="offering">
-                    <h1><%= image_tag "class-icon.png", width: 50 %> Update Event Information</h1>
+                    <h1><%= image_tag "event-icon.png", width: 50 %> Update Event Information</h1>
 
 
             <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "Event", owner_id: @event.id), :html => { :method => "post" }) do |p| %>
