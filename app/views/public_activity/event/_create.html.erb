@@ -1,7 +1,7 @@
 <%# event.create %>
-  
+
 <%# 1. feed %>
-	<% if render_for.nil? || render_for == "feed" %>
+	<% if @render_for.nil? || @render_for == "feed" %>
 		<% if activity.owner && activity.trackable %>
 			"new member "<%= link_to activity.owner.title, activity.owner %>" created a new event "<%= link_to activity.trackable.title, activity.trackable %>".
 
@@ -20,8 +20,11 @@
 <%# 3. notification %>
 
 <%# 4. public %>
-	<% elsif render_for == "public" %>
-		new <%= link_to "event", activity.owner %> is available.
+	<% elsif @render_for == "public" %>
+                <% if activity.trackable %>
+
+		new <%= link_to "event", activity.trackable %> is available.
+                <% end -%>
 
 <%# 5. else %>
 
