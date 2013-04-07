@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130407095530) do
+ActiveRecord::Schema.define(:version => 20130407143614) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -95,13 +95,14 @@ ActiveRecord::Schema.define(:version => 20130407095530) do
     t.string   "custom_address"
     t.string   "category"
     t.integer  "tournament_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.float    "fee"
     t.string   "fee_type"
     t.string   "sport"
     t.integer  "number_of_attendings"
     t.boolean  "team_participation"
+    t.boolean  "open_join",            :default => false, :null => false
   end
 
   create_table "flaggings", :force => true do |t|
@@ -131,8 +132,9 @@ ActiveRecord::Schema.define(:version => 20130407095530) do
     t.string   "sport"
     t.integer  "number_of_attendings"
     t.boolean  "team_participation"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.boolean  "open_join",            :default => false, :null => false
   end
 
   create_table "happening_cases", :force => true do |t|
@@ -252,10 +254,11 @@ ActiveRecord::Schema.define(:version => 20130407095530) do
     t.string   "title"
     t.text     "descreption"
     t.string   "sport"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.integer  "number_of_attendings"
     t.string   "category"
+    t.boolean  "open_join",            :default => false, :null => false
   end
 
   create_table "users", :force => true do |t|

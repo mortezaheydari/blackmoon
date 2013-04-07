@@ -111,6 +111,10 @@
                                         <td><%= f.text_area :descreption %></td>
                                     </tr>
                                     <tr>
+                                        <td><%= f.label :open_join, "Open for all to join." %></td>
+                                        <td><%= check_box(:open_join checked_value = "1", unchecked_value = "0") %></td>
+                                    </tr>                                    
+                                    <tr>
                                         <td><label>Add Image</label></td>
                                         <td></td>
                                     </tr>

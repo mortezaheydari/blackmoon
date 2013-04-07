@@ -1,7 +1,7 @@
 class Team < ActiveRecord::Base
 
   include PublicActivity::Model  
-  attr_accessible :descreption, :name, :sport, :number_of_attendings, :title, :category
+  attr_accessible :descreption, :name, :sport, :number_of_attendings, :title, :category, :open_join
   before_save :default_values
 
   has_one :album, as: :owner, :dependent => :destroy
