@@ -182,14 +182,6 @@ ActiveRecord::Schema.define(:version => 20130407143614) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "logos", :force => true do |t|
-    t.integer  "owner_id"
-    t.string   "owner_type"
-    t.integer  "photo_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "offering_administrations", :force => true do |t|
     t.integer  "administrator_id"
     t.string   "offering_type"
