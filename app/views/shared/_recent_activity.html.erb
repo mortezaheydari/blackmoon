@@ -1,0 +1,14 @@
+<%
+    @render_for = "public"
+    @i = 0
+ %>
+<% recent_activities.each do |activity| %>
+<% m = render_activity(activity) %>
+    <% unless m.blank?  %>
+        <div class="recentItem">
+            <p><%= m %></p>
+        </div>
+        <% @i += 1 %>
+    <% end -%>
+    <% break if @i == 5 %>
+<% end -%>
