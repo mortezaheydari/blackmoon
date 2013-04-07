@@ -8,7 +8,7 @@
 <%# 2. log %>
 	<% elsif @render_for == "log" %>
 		<% if activity.owner %>
-			updated by "<%= link_to activity.owner.title, activity.owner %>".
+			updated by <%= link_to activity.owner.title, activity.owner %>.
 
 		<% else %>
 			updated.

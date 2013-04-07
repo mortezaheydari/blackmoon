@@ -3,7 +3,7 @@
 <%#  1. feed %>
 	<% if @render_for.nil? || @render_for == "feed" %>
 		<% if activity.owner && activity.recipient %>
-			"<%= link_to activity.owner.title, activity.owner %>" started following "<%= link_to activity.recipient.title, activity.recipient %>".
+			<%= link_to activity.owner.title, activity.owner %> started following <%= link_to activity.recipient.title, activity.recipient %>.
 
 		<%- end %>
 
@@ -14,7 +14,7 @@
 <%#  3. notification %>
 	<% elsif @render_for == "notification" %>
 		<% if activity.trackable %>
-			you have a new follower: "<%= link_to activity.owner.title, activity.owner %>".
+			you have a new follower: <%= link_to activity.owner.title, activity.owner %>.
 		<% else %>
 
 <%#  4. public %>

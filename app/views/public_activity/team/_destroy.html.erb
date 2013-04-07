@@ -5,7 +5,7 @@
 <%# 2. log %>
 	<% elsif @render_for == "log" %>
 		<% if activity.owner %>
-			dissolved by "<%= link_to activity.owner.name, activity.owner %>".
+			dissolved by <%= link_to activity.owner.name, activity.owner %>.
 
 		<% else %>
 			dissolved.
