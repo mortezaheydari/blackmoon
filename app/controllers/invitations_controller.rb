@@ -16,7 +16,7 @@ class InvitationsController < ApplicationController
             end
 
             double_check { @invitation.save }
-            @invitation.create_activity 
+            @invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
             respond_to do |format|
                 format.html { redirect_to(@redirect_object, notice: 'invitation has been sent.') and return }
                 format.js { render('invitations/create', :locals => { this: @subject, person: @invited }) and return  }
@@ -43,7 +43,7 @@ class InvitationsController < ApplicationController
             @invitation.response_datetime = Time.now
 
             double_check {@invitation.save}
-
+            @invitation.create_activity :update, owner: @invitation.inviter, recipient: @invitation.invited
             respond_to do |format|
                 format.html { redirect_to(@redirect_object, notice: 'invitation has been sent.' ) and return }
                 format.js
