@@ -132,13 +132,9 @@
                                         <td><%= f.select :team_participation, ["No", "Yes"] %></td>
                                     </tr>
                                     <tr>
-                                        <td><%= f.label :team_participation, "Team Participation" %></td>
-                                        <td><%= f.select :team_participation, ["No", "Yes"] %></td>
+                                        <td><%= f.label :open_join, "Open for all to join" %></td>
+                                        <td><%= f.select :open_join, {"Yes" => true, "No" => false} %></td>
                                     </tr>
-                                    <tr>
-                                        <td><%= f.label :open_join, "Open for all to join." %></td>
-                                        <td><%= check_box(:open_join checked_value = "1", unchecked_value = "0") %></td>
-                                    </tr>                                    
                                 </table>
                             </div>
 

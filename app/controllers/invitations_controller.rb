@@ -27,33 +27,37 @@ class InvitationsController < ApplicationController
 
     def update
         @invitation     = Invitation.find_by_id(params[:id])
-
+        invitation_respond = params[:respond]
         redirect_object
 
-        if @invitation.invited = current_user
-            if params[:respond] = "accept"
+        if @invitation.invited == current_user
+            if invitation_respond == "reject"
+                @invitation.state = "rejected"
+
+            elsif invitation_respond == "accept"
                 @invitation.state = "accepted"
 
                 if @invitation.invited.class.to_s == "User"
                     offering_type = k_lower(@invitation.subject)
-                    offerings_participating = @invitation.invited.send("#{offering_type}s_participating")
-                    offerings_participating << @invitation.subject unless offerings_participating.include? joining_offering
+                    if @invitation.subject.class.to_s == "Team"
+                        offerings_participating = @invitation.invited.send("#{offering_type}s_membership")
+                    else
+                        offerings_participating = @invitation.invited.send("#{offering_type}s_participating")
+                    end
+                    offerings_participating << @invitation.subject unless offerings_participating.include? @invitation.subject
                     @invitation.subject.create_activity key: "offering_individual_participation.create", owner: current_user, recipient: @invitation.invited
 
                 elsif @invitation.invited.class.to_s == "Team"
                     offering_type = k_lower(@invitation.subject)
                     offerings_participating = @invitation.invited.send("#{offering_type}s_participating")
-                    offerings_participating << @invitation.subject unless offerings_participating.include? joining_offering
+                    offerings_participating << @invitation.subject unless offerings_participating.include? @invitation.subject
                     @invitation.subject.create_activity key: "offering_team_participation.create", owner: current_user, recipient: @invitation.invited
 
                 end
 
-            elsif params[:respond] = "reject"
-                @invitation.state = "rejected"
-
             else
                 redirect_to(@redirect_object, notice:'error') and return
-                
+
             end
 
             @invitation.response_datetime = Time.now
@@ -61,7 +65,7 @@ class InvitationsController < ApplicationController
             double_check {@invitation.save}
             @invitation.create_activity :update, owner: @invitation.invited, recipient: @invitation.inviter
             respond_to do |format|
-                format.html { redirect_to(@redirect_object, notice: 'invitation has been sent.' ) and return }
+                format.html { redirect_to(@redirect_object, notice: 'sent.' ) and return }
                 format.js
             end
         else
@@ -100,7 +104,7 @@ class InvitationsController < ApplicationController
 
         def find_and_assign this_type, this_id
 
-            if ["user", "team", "event"].include? this_type.downcase and this_id
+            if ["user", "team", "event", "game"].include? this_type.downcase and this_id
                 a = root_path
                 a = @redirect_object unless @redirect_object.nil?
                 redirect_to(a, notice: 'error') and return unless this = this_type.camelize.constantize.find_by_id(this_id)

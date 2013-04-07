@@ -5,20 +5,20 @@
 
 <%#  2. log %>
 	<% elsif @render_for == "log" %>
-		<% if activity.trackable && activity.recipient && ["accepted", "rejected"].include?(activity.trackable.state) %>
-			<%= link_to activity.recipient.title, activity.recipient %> <%= activity.trackable.state %> invitation.
+                <% if activity.trackable && activity.owner %>
+                    <%= link_to activity.owner.title, activity.owner %> invitation state changed to "<%= activity.trackable.state %>".
 
-		<% elsif activity.trackable && activity.recipient %>
-			<%= link_to activity.recipient.title, activity.recipient %> invitation state changed to "<%= activity.trackable.state %>".
-
-		<%- end %>
+                <%- end %>
 
 <%#  3. notification %>
 	<% elsif @render_for == "notification" %>
-		<% if activity.trackable && activity.recipient %>
-			<%= link_to activity.recipient.title, activity.recipient %> invitation state changed to "<%= activity.trackable.state %>".
-			
-		<%- end %>
+            <% if activity.trackable && activity.owner && ["accepted", "rejected"].include?(activity.trackable.state) %>
+                <%= link_to activity.owner.title, activity.owner %> <%= activity.trackable.state %> your invitation to join  <%= link_to activity.trackable.subject.title, activity.trackable.subject %>
+
+            <% elsif activity.trackable && activity.owner %>
+                <%= link_to activity.owner.title, activity.owner %> invitation state changed to "<%= activity.trackable.state %>" .
+
+            <%- end %>
 
 <%#  4. public %>
 	<% elsif @render_for == "public" %>
