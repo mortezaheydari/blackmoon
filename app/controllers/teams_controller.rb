@@ -36,32 +36,18 @@ class TeamsController < ApplicationController
   end
 
   def new
-  	@team = Team.new
+    @team = Team.new
   end
 
   def create
     @current_user_id = current_user.id
-  	@team = Team.new(params[:team])
+    @team = Team.new(params[:team])
     @team.album = Album.new
     @team.save
-  	@team.create_act_creation(creator_id: @current_user_id)
+    @team.create_act_creation(creator_id: @current_user_id)
     @team.act_administrations.create(administrator_id: @current_user_id)
     @team.act_memberships.create(member_id: @current_user_id)
-<<<<<<< HEAD
-<<<<<<< HEAD
     @team.create_activity :create, owner: current_user
-
-=======
-    # activities
-      
-      @team.create_activity :create, owner: current_user, recipient: @team
-      @team.create_activity :create, owner: current_user, recipient_type "User"
-    # # #
->>>>>>> public_activity views updated more
-=======
-    @team.create_activity :create, owner: current_user
-
->>>>>>> public_activity partials updated more
 		redirect_to @team
   end
 
@@ -71,16 +57,6 @@ class TeamsController < ApplicationController
 		if user_is_admin?(@team) && user_created_this?(@team)
       @team.create_activity :destroy, owner: current_user
 			@team.destroy
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      # activities    
-        @team.create_activity :destroy, owner: current_user, recipient: @team
-        @team.create_activity :destroy, owner: current_user, recipient_type: "User"
-      # # #
->>>>>>> public_activity views updated more
-=======
->>>>>>> public_activity partials updated more
 
 			# @team.offering_creation.destroy
       # @team.offering_administrations.destroy
@@ -91,12 +67,15 @@ class TeamsController < ApplicationController
   end
 
   def show
-  	@team = Team.find(params[:id])
-		@likes = @team.flaggings.with_flag(:like)
-		@members = @team.members
+    @team = Team.find(params[:id])
+    @likes = @team.flaggings.with_flag(:like)
+    @members = @team.members
     @photo = Photo.new
     @album = @team.album
     @owner = @team
+
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Team", trackable_id: @team.id)
+    @recent_activities = @recent_activities.order("created_at desc")
   end
 
   def edit
@@ -109,20 +88,7 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
     if @team.update_attributes(params[:team])
-<<<<<<< HEAD
-<<<<<<< HEAD
     @team.create_activity :update, owner: current_user
-
-=======
-      # activities    
-        @team.create_activity :update , owner: current_user, recipient: @team
-        @team.create_activity :update , owner: current_user, recipient_type: "User"
-      # # #
->>>>>>> public_activity views updated more
-=======
-    @team.create_activity :update, owner: current_user
-
->>>>>>> public_activity partials updated more
       redirect_to @team
     else
       render 'edit'

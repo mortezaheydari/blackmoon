@@ -64,7 +64,7 @@
     <div class="Description">
         <div class="<%= @game.category %>"></div>
         <p><%= @game.description %></p>
-        <%= render "shared/activity_table" %>
+        <%= render "shared/activity_table", recent_activities: @recent_activities %>
 
     </div>
         <%= render 'shared/cardsection', individuals: @likes, this: @game, class_name: "likes", makeadmin: true %>

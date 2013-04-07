@@ -62,10 +62,10 @@
     <div class="body">
         <%= render 'shared/cardsection', individuals: @participator, this: @event, class_name: "joined", makeadmin: true%>
     <div class="Description">
-        <div class="<%= @event.category %>"></div>
+        <div class="<%= @event.category %> left"></div> <br> <br>
         <p><%= @event.descreption %></p>
 
-        <%= render "shared/activity_table" %>
+        <%= render "shared/activity_table", recent_activities: @recent_activities %>
 
     </div>
         <%= render 'shared/cardsection', individuals: @likes, this: @event, class_name: "likes", makeadmin: true %>

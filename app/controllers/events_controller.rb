@@ -80,6 +80,9 @@ class EventsController < ApplicationController
     @photo = Photo.new
     @album = @event.album
     @owner = @event
+
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Event", trackable_id: @event.id)
+    @recent_activities = @recent_activities.order("created_at desc")
     # flaggings.each do |flagging|
     #      @likes = []
     #      @likes << flagging.flagger

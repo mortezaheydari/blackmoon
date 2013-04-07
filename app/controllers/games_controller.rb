@@ -79,6 +79,9 @@ class GamesController < ApplicationController
     @photo = Photo.new
     @album = @game.album
     @owner = @game
+
+    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game", trackable_id: @game.id)
+    @recent_activities = @recent_activities.order("created_at desc")
     # flaggings.each do |flagging|
     #      @likes = []
     #      @likes << flagging.flagger
