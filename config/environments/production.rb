@@ -64,4 +64,14 @@ Blackmoon::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  # enable S3 storage
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => ENV['immense12'],
+      :access_key_id => ENV['AKIAIK3N3RILBISSQWCA '],
+      :secret_access_key => ENV['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']
+    }
+  }
 end
