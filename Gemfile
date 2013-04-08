@@ -16,7 +16,7 @@ gem "heroku"
 gem 'thin'
 gem 'public_activity'
 gem "paperclip", "~> 3.0"
-gem 'aws-s3'
+gem 'aws-sdk'
 
 gem 'make_flaggable', :git => 'git://github.com/cavneb/make_flaggable.git'
 
