@@ -44,6 +44,7 @@ class UsersController < ApplicationController
 
   def offering_management
     @user = User.find(params[:id])
+    redirect_to root_path unless @user == current_user
     @events = @user.events_administrating
     @games = @user.games_administrating
     @teams = @user.teams_administrating
