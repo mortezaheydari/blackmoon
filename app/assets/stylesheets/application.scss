@@ -131,6 +131,7 @@ div.small {
 }
 
 div#Sign {
+    margin-top: 27px;
     a {
       color: #666666;
     }
@@ -1058,16 +1059,20 @@ header#main {
     height: 75px;
     margin-top: 12px;
     float: left;
-    a img, input {
-      vertical-align: middle;
+    a img {
       margin: 0 10px 0 10px;
+      float: left;
+    }
+    input {
+        margin: 15px 10px 0 10px;
+        float: left;
     }
   }
   div#headerMenu {
     float: left;
     height: 75px;
     vertical-align: middle;
-    margin: 40px 20px 40px 20px;
+    margin: 27px 20px 40px 20px;
     a {
       color: $TextColor;
       text-decoration: none;
