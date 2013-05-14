@@ -261,7 +261,7 @@ div.signPage {
 .event, .game, .team, .userBottom {
   display:table;
   height:100%;
-  background:$objBg;
+  background:$white;
   width:100%;
 }
 
@@ -1218,10 +1218,11 @@ header#main {
 
 article.userCard {
   width: 200px;
-  height: 200px;
+  height: 228px;
   background: $objBg;
   float: left;
   margin: 20px 10px 20px 10px;
+  @include clearfix;
   @include border-radius(5%);
   header {
     margin: 15px 0 0 15px;
