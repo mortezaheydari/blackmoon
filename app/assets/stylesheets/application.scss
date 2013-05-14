@@ -856,8 +856,6 @@ article.activityBox {
   margin: 20px 10px 20px 10px;
   @include border-radius(5%);
   img.activityImage {
-    width: 200px;
-    height: 160px;
     @include border-top-left-radius(5%);
     @include border-top-right-radius(5%);
   }
