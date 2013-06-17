@@ -1,0 +1,35 @@
+<%# user.create %>
+
+<%# 1. feed %>
+	<% if @render_for.nil? || @render_for == "feed" %>
+		<% if activity.owner && activity.trackable %>
+			new user joind.
+
+		<%- end %>
+
+<%# 2. log %>
+	<% elsif @render_for == "log" %>
+		<% if activity.owner %>
+			new user joind.
+
+		<% else %>
+			created.
+
+		<%- end %>
+
+<%# 3. notification %>
+	<% elsif @render_for == "notification" %>
+
+
+<%# 4. public %>
+	<% elsif @render_for == "public" %>
+		<% if activity.trackable %>
+			new user joind.
+
+		<%- end %>
+<%# 5. else %>
+
+	<% else %>
+		new user joind.
+
+	<%- end %>
