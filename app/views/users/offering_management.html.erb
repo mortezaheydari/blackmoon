@@ -19,23 +19,7 @@
                             </td>
                         </tr>
 
-<!--                         <% @events.each do |e| %>
-                            <tr class="ptdata">
-                                <td></td>
-                                <td><%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %></td>
-                                <td><%= e.date_and_time.strftime("%A, %B %d, %Y") %></td>
-                                <td><%= e.custom_address %></td>
-                                <td> <a href="#">
-                                    <%     if e.team_participation == false
-                                                    @participator = e.individual_participators
-                                            else
-                                                @participator = e.team_participators
-                                            end %>
-                                         (<%= @participator.count %>)
-                                        </a> </td>
-                                <td> <a href="#">(<%= e.flaggings.with_flag(:like).count  %>)</a> </td>
-                            </tr>
-                        <% end -%> -->
+
 
 
 
@@ -49,14 +33,7 @@
 
 
 
-<!--                         <tr class="cldata">
-                            <td></td>
-                            <td><%= image_tag "bg.png", width: 40 %> <a href="#">Yalla let’s Volley</a> </td>
-                            <td>16/6/2012</td>
-                            <td>Salmiya Beach</td>
-                            <td> <a href="#">(2) Teams</a> </td>
-                            <td> <a href="#">(24)</a> </td>
-                        </tr> -->
+
 
 <!-- Events -->
 
@@ -71,7 +48,7 @@
                             <tr class="evdata">
                                 <td></td>
                                 <td><%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %></td>
-                                <td><%= e.date_and_time.strftime("%A, %B %d, %Y") %></td>
+                                <td><%= e.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></td>
                                 <td><%= e.custom_address %></td>
                                 <td>
                                     <%     if e.team_participation == false
@@ -101,7 +78,7 @@
                             <tr class="gmdata">
                                 <td></td>
                                 <td><%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %></td>
-                                <td><%= e.date_and_time.strftime("%A, %B %d, %Y") %></td>
+                                <td><%= e.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></td>
                                 <td><%= e.custom_address %></td>
                                 <td>
                                     <%     if e.team_participation == false

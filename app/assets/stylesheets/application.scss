@@ -888,6 +888,9 @@ article.activityBox {
         display: inline;
         float: left;
         margin: 0 5% 0 5%;
+        a {
+            font-size: 16px;
+        }
         div.thumbsUp {
           background: url("icons.png") no-repeat;
           @include background-size(128px 160px);
