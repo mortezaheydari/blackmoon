@@ -3,13 +3,15 @@
     @i = 0
  %>
 <% recent_activities.each do |activity| %>
-<% m = render_activity(activity) %>
-    <% unless m.blank?  %>
-        <div class="recentItem">
-            <p><%= m %></p> <br>
-            <span class="small-text"><%= time_ago_in_words(activity.updated_at) %> ago</span>
-        </div>
-        <% @i += 1 %>
-    <% end -%>
+  <% unless activity.trackable_type == "User" %>
+    <% m = render_activity(activity) %>
+        <% unless m.blank? %>
+            <div class="recentItem">
+                <p><%= m %></p> <br>
+                <span class="small-text"><%= time_ago_in_words(activity.updated_at) %> ago</span>
+            </div>
+            <% @i += 1 %>
+        <% end -%>
     <% break if @i == 5 %>
+  <% end -%>
 <% end -%>
