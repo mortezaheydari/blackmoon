@@ -1,7 +1,7 @@
 <%#  relationship.destroy %>
 
 <%# 1. feed %>
-
+	<% if @render_for == "log" %>
 <%# 2. log %>
 	<% elsif @render_for == "log" %>
 		<% if activity.owner %>
