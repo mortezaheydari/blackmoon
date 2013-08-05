@@ -64,7 +64,4 @@ class OfferingIndividualParticipationsController < ApplicationController
       user.respond_to? "#{name}s_participating" and ["event","class","game"].include? name
     end
 
-    def double_check_name_is_valid(user, name)
-      redirect_to rooth_path and return unless name_is_valid?(user, name)
-    end
 end

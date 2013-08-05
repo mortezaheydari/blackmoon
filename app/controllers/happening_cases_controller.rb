@@ -13,14 +13,7 @@ class HappeningCasesController < ApplicationController
 	        end
 	    else
 	    	redirect_to @happening_case.happening, notice: 'error'
+
 	    end
     end
-
-    private
-
-	    def double_check(&b)
-	        a = root_path
-	        a = @redirect_object unless @redirect_object.nil?
-	        redirect_to a, notice: 'error' and return unless b.call == true
-	    end
 end
