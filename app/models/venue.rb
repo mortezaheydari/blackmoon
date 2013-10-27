@@ -3,9 +3,9 @@ class Venue < ActiveRecord::Base
 
   include PublicActivity::Model
 
-  after_create do |event|
-    event.create_album if event.album.nil?
-    event.create_logo if event.logo.nil?
+  after_create do |venue|
+    venue.create_album if venue.album.nil?
+    venue.create_logo if venue.logo.nil?
   end
 
   make_flaggable :like
@@ -25,6 +25,14 @@ class Venue < ActiveRecord::Base
   has_many :offering_administrations, as: :offering, :dependent => :destroy
   accepts_nested_attributes_for :offering_administrations
 
+
+  has_many :invitations, as: :subject, dependent: :destroy
+  accepts_nested_attributes_for :invitations
+
+  has_many :join_requests_received, as: :receiver, class_name: "join_request"
+  accepts_nested_attributes_for :join_requests_received
+
+
   def creator
     User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
   end
@@ -35,6 +43,25 @@ class Venue < ActiveRecord::Base
       @admins << admin.administrator_id
     end
     User.find(@admins)
+  end
+
+  def inviteds
+      @invited = []
+      self.invitations.each do |invitation|
+          @invited << invitation.invited
+      end
+      @invited
+  end
+
+  def joineds
+      @joineds = []
+      self.individual_participators.each do |joined|
+          @joineds << joined
+      end
+      self.team_participators.each do |joined|
+          @joineds << joined
+      end
+      @joineds
   end
 
 end
