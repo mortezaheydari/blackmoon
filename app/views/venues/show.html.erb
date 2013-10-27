@@ -1,0 +1,76 @@
+  <div class="userInfo">
+    <div class="venueProfileCard">
+      <div class="large"><%= logo_for(@venue, size: :user_profile) %></div>
+      <div class="<%= @venue.category %> left"></div>
+      <h1><%= @venue.title %></h1>
+      <p>Sports: <%= @venue.sport %></p>
+      <% unless @venue.happening_case.duration_type == "All Day" %>
+            <p>Time: <%= @venue.happening_case.time_from.strftime("%I:%M %p") %> - <%= @venue.happening_case.time_to.strftime("%I:%M %p")  %></p>
+      <% end -%>
+      <p>Date: <%= @venue.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></p>
+      <p>Location: <%= @venue.custom_address %></p>
+      <footer>
+        <span>Fee:</span>
+        <% if @venue.fee_type == "Free" %>
+            <a href="#">Free</a>
+        <% else %>
+            <a href="#"><%= @venue.fee %> KD</a>
+        <% end %>
+        <span class="right">players: <%= @venue.number_of_attendings %></span>
+      </footer>
+    </div>
+
+    <div class="locationPartial">
+      <div class="locationTitle">Location</div>
+      <div class="map"></div>
+    </div>
+
+    <div class="activityOrigin">
+        <div class="OriginTitle">Activity Originator</div>
+        <div class="UserimgName">
+            <div class="img"><%= logo_for(@venue.creator, size: :small, css_class: "userCardImage left") %></div>
+            <%= link_to @venue.creator.name , user_path(@venue.creator) %>
+        </div>
+      <!-- <a href="#" class="originTitle"><%= @venue.creator.name %></a> -->
+        <p>Level 2: Game Originator</p>
+    </div>
+
+    <%= render 'shared/like_button', offering: @venue if signed_in? %>
+    <% if @venue.team_participation == true %>
+            <%= render 'shared/join_link', this: @venue, participating_actor: "team" if signed_in? %>
+    <% else %>
+            <%= render 'shared/join_link', this: @venue, participating_actor: "user" if signed_in? %>
+    <% end %>
+
+
+    <a href="#"><div class="shareButton"></div></a>
+    <%= link_to "Edit", edit_venue_path(@venue), class: "button blue left" if signed_in? && user_is_admin?(@venue) %>
+
+  </div>
+
+  <div class="secondMenu">
+    <nav id="secondary">
+      <ul>
+        <li id="joined"><a href="#">Joined (<span id="joinCount"><%= @participator.count %></span>)</a></li>
+        <li id="Description"><a href="#">Description</a></li>
+        <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @venue.flaggings.with_flag(:like).count %></span>)</a></li>
+        <li id="gallery"><a href="#">gallery</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="venue">
+    <div class="body">
+        <%= render 'shared/cardsection', individuals: @participator, this: @venue, class_name: "joined", makeadmin: true%>
+    <div class="Description">
+        <div class="<%= @venue.category %> left"></div> <br> <br> <br>
+        <p><%= @venue.descreption %></p>
+
+        <%= render "shared/activity_table", recent_activities: @recent_activities %>
+
+    </div>
+        <%= render 'shared/cardsection', individuals: @likes, this: @venue, class_name: "likes", makeadmin: true %>
+
+        <%= render 'shared/gallery' %>
+    </div>
+  </div>
+</div>
