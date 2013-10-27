@@ -1,7 +1,7 @@
 Blackmoon::Application.routes.draw do
 
   root :to => 'pages#home'
-  
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -12,6 +12,13 @@ Blackmoon::Application.routes.draw do
     end
 
     resources :events do
+      member do
+        get 'like'
+        get 'like_cards'
+      end
+    end
+
+    resources :venues do
       member do
         get 'like'
         get 'like_cards'

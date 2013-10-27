@@ -3,4 +3,12 @@ class Location < ActiveRecord::Base
 
   belongs_to :owner, polymorphic: true
 
+  def gmaps4rails_address
+    custom_address
+  end
+
+  def gmaps4rails_infowindow
+    "<h1>#{title}</h1>"
+  end
+
 end

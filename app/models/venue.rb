@@ -1,5 +1,5 @@
 class Venue < ActiveRecord::Base
-  attr_accessible :descreption, :title
+  attr_accessible :descreption, :title, :location
 
   include PublicActivity::Model
 

@@ -1,10 +1,8 @@
-class VenueController < ApplicationController
+class VenuesController < ApplicationController
 
   include SessionsHelper
   before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
   before_filter :user_must_be_admin?, only: [:edit, :destroy]
-
-  include PublicActivity::Model
 
   def like
     @venue = Venue.find(params[:id])
@@ -35,27 +33,25 @@ class VenueController < ApplicationController
   def index
     @venues = Venue.all
     @recent_activities = PublicActivity::Activity.where(trackable_type: "Venue")
-    @recent_activities = @recent_activities.order("created_at desc")    
+    @recent_activities = @recent_activities.order("created_at desc")
   end
 
   def new
     @venue = Venue.new
-    @venue.happening_case = HappeningCase.new
-    @venue.location = Location.new
+    @location = Location.new
   end
 
 
   def create
     @current_user_id = current_user.id
-    @venue = Venue.new(params[:venue])
+    @venue = Venue.new(title: params[:venue][:title], descreption: params[:venue][:descreption])
     @venue.album = Album.new
-    @venue.location = Location.new(params[:location])
+    @venue.build_location(params[:location])
 
     # here, location assignment operation should take place.
 
     if @venue.save
       # @venue.happening_case.save
-      params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
       @venue.create_activity :create, owner: current_user
       @venue.create_offering_creation(creator_id: @current_user_id)
       @venue.offering_administrations.create(administrator_id: @current_user_id)
@@ -63,7 +59,7 @@ class VenueController < ApplicationController
     else
       redirect_to new_venue_path, notice: "There has been a problem with data entry."
     end
-  end  
+  end
 
   def destroy
     @user = current_user
@@ -81,11 +77,12 @@ class VenueController < ApplicationController
 
   def show
     @venue = Venue.find(params[:id])
+    @json       = @venue.to_gmaps4rails
     @likes = @venue.flaggings.with_flag(:like)
     @photo = Photo.new
     @album = @venue.album
     @owner = @venue
-    @location = @venue.location    
+    @location = @venue.location
     @recent_activities =  PublicActivity::Activity.where(trackable_type: "Venue", trackable_id: @venue.id)
     @recent_activities = @recent_activities.order("created_at desc")
     # flaggings.each do |flagging|
