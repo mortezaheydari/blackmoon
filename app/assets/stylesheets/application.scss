@@ -131,6 +131,7 @@ div.small {
 }
 
 div#Sign {
+    margin-top: 27px;
     a {
       color: #666666;
     }
@@ -263,7 +264,7 @@ div.signPage {
 .event, .game, .team, .userBottom {
   display:table;
   height:100%;
-  background:$objBg;
+  background:$white;
   width:100%;
 }
 
@@ -858,8 +859,6 @@ article.activityBox {
   margin: 20px 10px 20px 10px;
   @include border-radius(5%);
   img.activityImage {
-    width: 200px;
-    height: 160px;
     @include border-top-left-radius(5%);
     @include border-top-right-radius(5%);
   }
@@ -1061,16 +1060,20 @@ header#main {
     height: 75px;
     margin-top: 12px;
     float: left;
-    a img, input {
-      vertical-align: middle;
+    a img {
       margin: 0 10px 0 10px;
+      float: left;
+    }
+    input {
+        margin: 15px 10px 0 10px;
+        float: left;
     }
   }
   div#headerMenu {
     float: left;
     height: 75px;
     vertical-align: middle;
-    margin: 40px 20px 40px 20px;
+    margin: 27px 20px 40px 20px;
     a {
       color: $TextColor;
       text-decoration: none;
@@ -1216,10 +1219,11 @@ header#main {
 
 article.userCard {
   width: 200px;
-  height: 200px;
+  height: 228px;
   background: $objBg;
   float: left;
   margin: 20px 10px 20px 10px;
+  @include clearfix;
   @include border-radius(5%);
   header {
     margin: 15px 0 0 15px;

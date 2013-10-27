@@ -317,6 +317,13 @@ $(document).ready(function() {
             $("tr#AmountRow").show();
         }
     });
+    $("#game_fee_type").change( function() {
+        if ($(this).val() == 'Free') {
+            $("tr#AmountRow").hide();
+        } else if  ($(this).val() == 'Cash') {
+            $("tr#AmountRow").show();
+        }
+    });
 
     $("td#ptType").click(function(e) {
         e.preventDefault();
