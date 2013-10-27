@@ -16,6 +16,10 @@ class Event < ActiveRecord::Base
 
 	make_flaggable :like
 
+  # event can have a locatin of its own, recorded in "locations" table. 
+  has_one :direct_location, as: :owner, class_name: "location", :dependent => :destroy
+  accepts_nested_attributes_for :direct_location
+
   has_one :album, as: :owner, :dependent => :destroy
   accepts_nested_attributes_for :album
 
@@ -92,5 +96,9 @@ class Event < ActiveRecord::Base
 
   def default_values
     self.number_of_attendings ||= 0
+  end
+
+  def location
+    self.direct_location
   end
 end

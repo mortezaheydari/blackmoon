@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805103453) do
+ActiveRecord::Schema.define(:version => 20131027081126) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -205,6 +205,20 @@ ActiveRecord::Schema.define(:version => 20130805103453) do
     t.text     "message"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "title"
+    t.string   "city"
+    t.text     "custom_address"
+    t.boolean  "custom_address_use", :default => true
+    t.float    "latitude"
+    t.float    "longitude"
+    t.boolean  "gmap_use",           :default => true
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   create_table "logos", :force => true do |t|
