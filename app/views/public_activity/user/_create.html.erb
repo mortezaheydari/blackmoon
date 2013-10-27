@@ -1,0 +1,23 @@
+<%# user.create %>
+
+<%# 1. feed %>
+
+<%# 2. log %>
+	<% elsif @render_for == "log" %>
+		<% if activity.owner %>
+
+		<% else %>
+
+		<%- end %>
+
+<%# 3. notification %>
+	<% elsif @render_for == "notification" %>
+
+<%# 4. public %>
+	<% elsif @render_for == "public" %>
+
+<%# 5. else %>
+
+	<% else %>
+
+	<%- end %>

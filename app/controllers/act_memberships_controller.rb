@@ -55,6 +55,8 @@ class ActMembershipsController < ApplicationController
       end
   end
 
+  # checks if offering name is valid for team
+  # note: this function is controller specific
   def name_is_valid?(user, name)
     user.respond_to? "#{name}s_membership" and ["team", "sponsor", "organization"].include? name
   end

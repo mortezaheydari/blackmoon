@@ -122,9 +122,4 @@ class AlbumPhotosController < ApplicationController
     end
   end
 
-  private
-
-    def name_is_valid?(name)
-      ["event","class","game", "user", "team"].include? name.downcase
-    end
 end

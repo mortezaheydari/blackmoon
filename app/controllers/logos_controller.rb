@@ -20,7 +20,6 @@ class LogosController < ApplicationController
 
     @logo = @owner.logo
 
-
     if remove_logo == true
         if @photo.uses.count == 1
             if @photo.destroy
@@ -65,27 +64,5 @@ class LogosController < ApplicationController
 
   end
 
-  private
-
-    def name_is_valid?(name)
-      ["event","class","game", "user", "team"].include? name.downcase
-    end
-
-    def double_check(&b)
-        redirect_to @owner, notice: 'error' and return unless b.call == true
-    end
-
-    def double_check_name_is_valid(name)
-      redirect_to rooth_path and return unless name_is_valid?(name)
-
-    end
-
-    def unless_photo_exists(&b)
-        if @photo_exists
-            @photo = Photo.find_by_id(params[:photo_id])
-        else
-            b.call
-        end
-    end
 end
 
