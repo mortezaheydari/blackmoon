@@ -46,6 +46,9 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
     @event.team_participation ||= false
     @event.album = Album.new
+
+    # here, location assignment operation should take place.
+
     if @event.save
       # @event.happening_case.save
       params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
