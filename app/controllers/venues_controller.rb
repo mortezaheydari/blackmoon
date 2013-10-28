@@ -104,8 +104,13 @@ class VenuesController < ApplicationController
   def update
     @venue = Venue.find(params[:id])
     @location = @venue.location
+    if params[:venue][:location][:longitude].empty? || params[:venue][:location][:latitude].empty?
+        params[:venue][:location][:gmaps] = false
+    else
+        params[:venue][:location][:gmaps] = true
+    end
 
-    if @venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmaps: params[:venue][:location][:gmaps])
+    if @venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmap_use: params[:venue][:location][:gmap_use], custom_address: params[:venue][:location][:custom_address], gmaps: params[:venue][:location][:gmaps])
       @venue.create_activity :update, owner: current_user
       redirect_to @venue, notice: "Venue was updated"
     else

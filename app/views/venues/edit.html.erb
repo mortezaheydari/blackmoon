@@ -38,18 +38,18 @@
                                         <td><%= l.text_field :custom_address %></td>
                                     </tr>
                                     <tr>
+                                        <td width="135"><%= l.label :gmap_use, "Show map:" %></td>
+                                        <td><%= l.check_box :gmap_use %></td>
+                                    </tr>
+                                    <tr class="g_rows">
                                         <td width="135"><%= l.label :latitude, "latitude:" %></td>
                                         <td><%= l.text_field :latitude %></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="g_rows">
                                         <td width="135"><%= l.label :longitude, "longitude:" %></td>
                                         <td><%= l.text_field :longitude %></td>
                                     </tr>
-                                    <tr>
-                                        <td width="135"><%= l.label :gmaps, "Use Google maps tag:" %></td>
-                                        <td><%= l.check_box :gmaps %></td>
-                                    </tr>
-                                    <tr id="map_row">
+                                    <tr class="g_rows">
                                         <td><label for="div">Tag a place:</label></td>
                                         <td><%= gmaps(:markers => { :data => @location.to_gmaps4rails},
     :map_options => { :auto_adjust => true, # :auto_adjust map to center on location
@@ -125,5 +125,14 @@
           Gmaps.map.clearMarker(Gmaps.map.markers[i]);
         }
       }
+
+
+    $('input#venue_location_gmap_use').click(function(e) {
+      if ($(this).attr('checked')) {
+        if ($("#venue_location_latitude").val("") && $("#venue_location_longitude").val("")) {
+            clearOverlays();
+        }
+      }
+    });
     </script>
 <% end %>

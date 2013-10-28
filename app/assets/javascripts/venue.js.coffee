@@ -3,10 +3,11 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
   $(document).ready ->
-    if $("input#venue_location_gmaps").attr('checked')
-        $("#map_row").show()
+    gmarkers = []
+    if $("input#venue_location_gmap_use").attr('checked')
+        $(".g_rows").show()
     else
-        $("#map_row").hide()
+        $(".g_rows").hide()
     if $("input#venue_location_custom_address_use").attr('checked')
         $("#address_row").show()
     else
@@ -47,11 +48,18 @@ $ ->
     $('div.Description').fadeOut('fast')
     $('div.likes').fadeOut('fast')
     $('div.gallery').fadeIn('fast')
-  $('input#venue_location_gmaps').click (e) ->
+  $('input#venue_location_gmap_use').click (e) ->
     if $(@).attr('checked')
-        $("#map_row").show()
+        $(".g_rows").show()
+        $("#venue_location_latitude").show()
+        $("#venue_location_longitude").show()
+        google.maps.event.trigger(map, 'resize')
     else
-        $("#map_row").hide()
+        $(".g_rows").hide()
+        $("#venue_location_latitude").val("")
+        $("#venue_location_longitude").val("")
+        $("#venue_location_latitude").hide()
+        $("#venue_location_longitude").hide()
 
   $('input#venue_location_custom_address_use').click (e) ->
     if $(@).attr('checked')

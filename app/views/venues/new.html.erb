@@ -34,19 +34,19 @@
                                         <td width="135"><%= l.label :custom_address, "Address:" %></td>
                                         <td><%= l.text_field :custom_address %></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="g_rows">
                                         <td width="135"><%= l.label :latitude, "latitude:" %></td>
                                         <td><%= l.text_field :latitude %></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="g_rows">
                                         <td width="135"><%= l.label :longitude, "longitude:" %></td>
                                         <td><%= l.text_field :longitude %></td>
                                     </tr>
                                     <tr>
-                                        <td width="135"><%= l.label :gmaps, "Use Google maps tag:" %></td>
-                                        <td><%= l.check_box :gmaps %></td>
+                                        <td width="135"><%= l.label :gmap_use, "Show map:" %></td>
+                                        <td><%= l.check_box :gmap_use %></td>
                                     </tr>
-                                    <tr id="map_row">
+                                    <tr class="g_rows">
                                         <td width="135"><label for="div">Tag a place:</label></td>
                                         <td><%= gmaps( "markers" => { "data" => @location.to_gmaps4rails, "options" => { "draggable" => true,"center_latitude" => 40, "center_longitude" => 40, "zoom" => 14 }}) %></td>
                                     </tr>
