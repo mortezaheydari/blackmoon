@@ -1,104 +1,113 @@
 class Event < ActiveRecord::Base
 
-	include PublicActivity::Model
+  include PublicActivity::Model 
   # tracked except: :destroy, owner: ->(controller, model) {controller && controller.current_user}
+  include Offerable
+  include Joinable
+  include Albumable   
 
   attr_accessible :category, :custom_address, :date_and_time, :descreption,
   				 :location_type, :title, :tournament_id, :duration_type, :time_from,
   				 :time_to, :fee, :fee_type, :sport, :number_of_attendings, :team_participation, :open_join
-           
-  before_save :default_values
 
-	after_create do |event|
-		event.create_album if event.album.nil?
-		event.create_logo if event.logo.nil?
-	end
+## Joinable
+#  before_save :default_values
 
-	make_flaggable :like
+## Albumable
+#  after_create do |event|
+#      event.create_album if event.album.nil?
+#      event.create_logo if event.logo.nil?
+#  end
+#
+#  has_one :album, as: :owner, :dependent => :destroy
+#  accepts_nested_attributes_for :album
+#
+#  has_one :logo, as: :owner, :dependent => :destroy
+#  accepts_nested_attributes_for :logo
 
-  # event can have a locatin of its own, recorded in "locations" table. 
-  has_one :direct_location, as: :owner, class_name: "location", :dependent => :destroy
-  accepts_nested_attributes_for :direct_location
+## Offerable
+#  # event can have a locatin of its own, recorded in "locations" table. 
+#  has_one :direct_location, as: :owner, class_name: "location", :dependent => :destroy
+#  accepts_nested_attributes_for :direct_location
+#  make_flaggable :like
+#  has_one :offering_creation, as: :offering, :dependent => :destroy
+#  accepts_nested_attributes_for :offering_creation
+#
+#  has_many :offering_administrations, as: :offering, :dependent => :destroy
+#  accepts_nested_attributes_for :offering_administrations
 
-  has_one :album, as: :owner, :dependent => :destroy
-  accepts_nested_attributes_for :album
+## Joinable
+#  has_many :offering_individual_participations, as: :offering, :dependent => :destroy
+#  accepts_nested_attributes_for :offering_individual_participations
+#
+#  has_many :offering_team_participations, as: :offering, :dependent => :destroy
+#  accepts_nested_attributes_for :offering_team_participations
+#
+# has_many :invitations, as: :subject, dependent: :destroy
+# accepts_nested_attributes_for :invitations
+#
+# has_one :happening_case, as: :happening, :dependent => :destroy
+# accepts_nested_attributes_for :happening_case
+#
+#  has_many :join_requests_received, as: :receiver, class_name: "join_request"
+#  accepts_nested_attributes_for :join_requests_received
 
-  has_one :logo, as: :owner, :dependent => :destroy
-  accepts_nested_attributes_for :logo
+## Offerable
+# def creator
+#   User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
+# end
+#
+# def administrators
+#   @admins = []
+#   self.offering_administrations.each do |admin|
+#     @admins << admin.administrator_id
+#   end
+#   User.find(@admins)
+# end
+# 
+#  def location
+#    self.direct_location
+#  end
 
-  has_one :offering_creation, as: :offering, :dependent => :destroy
-  accepts_nested_attributes_for :offering_creation
 
-  has_many :offering_administrations, as: :offering, :dependent => :destroy
-  accepts_nested_attributes_for :offering_administrations
+## Joinable
+# def individual_participators
+#   @participators = []
+#   self.offering_individual_participations.each do |participation|
+#     @participators << participation.participator_id
+#   end
+#   User.find(@participators)
+# end
+#
+# def team_participators
+#   @participators = []
+#   self.offering_team_participations.each do |participation|
+#     @participators << participation.participator_id
+#   end
+#   Team.find(@participators)
+# end
+#
+#  def inviteds
+#      @invited = []
+#      self.invitations.each do |invitation|
+#          @invited << invitation.invited
+#      end
+#      @invited
+#  end
+#
+#  def joineds
+#      @joineds = []
+#      self.individual_participators.each do |joined|
+#          @joineds << joined
+#      end
+#      self.team_participators.each do |joined|
+#          @joineds << joined
+#      end
+#      @joineds
+#  end
+#
+#  def default_values
+#    self.number_of_attendings ||= 0
+#  end
 
-  has_many :offering_individual_participations, as: :offering, :dependent => :destroy
-  accepts_nested_attributes_for :offering_individual_participations
-
-  has_many :offering_team_participations, as: :offering, :dependent => :destroy
-  accepts_nested_attributes_for :offering_team_participations
-
-	has_one :happening_case, as: :happening, :dependent => :destroy
-	accepts_nested_attributes_for :happening_case
-
-	has_many :invitations, as: :subject, dependent: :destroy
-	accepts_nested_attributes_for :invitations
-
-  has_many :join_requests_received, as: :receiver, class_name: "join_request"
-  accepts_nested_attributes_for :join_requests_received
-
-	def creator
-		User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
-	end
-
-	def administrators
-		@admins = []
-		self.offering_administrations.each do |admin|
-			@admins << admin.administrator_id
-		end
-		User.find(@admins)
-	end
-
-	def individual_participators
-		@participators = []
-		self.offering_individual_participations.each do |participation|
-			@participators << participation.participator_id
-		end
-		User.find(@participators)
-	end
-
-	def team_participators
-		@participators = []
-		self.offering_team_participations.each do |participation|
-			@participators << participation.participator_id
-		end
-		Team.find(@participators)
-	end
-
-  def inviteds
-      @invited = []
-      self.invitations.each do |invitation|
-          @invited << invitation.invited
-      end
-      @invited
-  end
-
-  def joineds
-      @joineds = []
-      self.individual_participators.each do |joined|
-          @joineds << joined
-      end
-      self.team_participators.each do |joined|
-          @joineds << joined
-      end
-      @joineds
-  end
-
-  def default_values
-    self.number_of_attendings ||= 0
-  end
-
-  def location
-    self.direct_location
-  end
 end
