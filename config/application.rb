@@ -16,6 +16,11 @@ module Blackmoon
     config.assets.compile = true
     config.assets.initialize_on_precompile = true
 
+    config.autoload_paths += %W(
+      #{config.root}/app/controllers/concerns
+      #{config.root}/app/models/concerns
+    )
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
