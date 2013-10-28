@@ -19,32 +19,23 @@
 
                     <h2>2. Location:</h2>
 
-                    <%= f.fields_for @location do |l| %>
                             <div>
                                 <table width="100%">
                                     <tr>
-                                        <td><%= l.label :city, "Select the city:" %></td>
-                                        <td><%= l.select :city, ["Abdullah Al-Salem", "Adailiya", "Bnaid Al-Qar", "Daiya", "Dasma", "Dasman", "Doha", "Faiha", "Ghornata", "Jaber Al Ahmed", "Kaifan", "Khaldiya", "Kuwait City", "Mansouriya", "Mirqab", "Mubarakiya Camps", "Nuzha", "Qadsiya", "Qibla", "Qortuba", "Rawda", "Salhiya", "Shamiya", "Sharq", "Shuwaikh", "Sulaibikhat", "Surra", "Yarmouk", "Al-Bedae", "Bayan", "Hawally", "Hitteen", "Jabriya", "Maidan Hawally", "Mishrif", "Mubarak Al-Abdullah", "Rumaithiya", "Salam", "Salmiya", "Salwa", "Shaab", "Shuhada", "Siddiq", "Zahra", "Abbasiya", "Abdullah Al-Mubarak - West Jleeb", "Abraq Khaitan", "Airport", "Andalous", "Ardhiya", "Ardiya Small Industrial", "Ardiya Storage Zone", "Ashbeliah", "Dhajeej", "Exhibits - South Khaitan", "Farwaniya", "Ferdous", "Jleeb Al-Shiyoukh", "Khaitan", "Omariya", "Rabiya", "Rai", "Reggai", "Rehab", "Sabah Al-Nasser", "Sheikh Saad Al Abdullah Airport", "Abu Halifa", "Al Julayah - Az Zour Sulah", "Al-Ahmadi", "Dhaher", "East Al Ahmadi", "Egaila", "Fahad Al Ahmed", "Fahaheel", "Fintas", "Hadiya", "Jaber Al-Ali", "Magwa", "Mahboula", "Mangaf", "Mina Abdullah", "Mina Al Ahmadi", "Nuwaiseeb", "Riqqa", "Sabah Al Ahmad Marine City", "Sabah AL Ahmad residential", "Sabahiya", "Shuaiba Port", "Wafra farms", "Wafra residential", "Al Naeem", "Amgarah Industrial", "Jahra", "Kabd", "Nahda", "Nasseem", "Oyoun", "Qairawan - South Doha", "Qasr", "Saad Al Abdullah", "Sulaibiya Indutrial 1", "Sulaibiya Indutrial 2", "Sulaibiya Residential", "Sulaibiya", "Taima", "Waha", "Abu Ftaira", "Abu Hasaniya", "Adan", "Al Masayel", "Ali Sabah Al-Salem", "Al-Qurain", "Al-Qusour", "Coast Strip B", "Fnaitess", "Messila", "Mubarak Al-Kabir", "Sabah Al-Salem", "Sabhan Industrial", "South Wista", "West Abu Fetera Small Indust", "Wista"] %></td>
+                                        <td><%= f.label :address, "Address:" %></td>
+                                        <td><%= f.text_field :address %></td>
                                     </tr>
                                     <tr>
-                                        <td><%= l.label :custom_address_use, "Use custom address:" %></td>
-                                        <td><%= l.check_box :custom_address_use %></td>
+                                        <td><%= f.label :latitude, "latitude:" %></td>
+                                        <td><%= f.text_field :latitude %></td>
                                     </tr>
                                     <tr>
-                                        <td><%= l.label :custom_address, "Address:" %></td>
-                                        <td><%= l.text_field :custom_address %></td>
+                                        <td><%= f.label :longitude, "longitude:" %></td>
+                                        <td><%= f.text_field :longitude %></td>
                                     </tr>
                                     <tr>
-                                        <td><%= l.label :latitude, "latitude:" %></td>
-                                        <td><%= l.text_field :latitude %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= l.label :longitude, "longitude:" %></td>
-                                        <td><%= l.text_field :longitude %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= l.label :gmap_use, "Use Google maps tag:" %></td>
-                                        <td><%= l.check_box :gmap_use %></td>
+                                        <td><%= f.label :gmaps, "Use Google maps tag:" %></td>
+                                        <td><%= f.check_box :gmaps %></td>
                                     </tr>
                                     <tr>
                                         <td><label for="div">Tag a place:</label></td>
@@ -55,7 +46,6 @@
                                 </table>
 
                             </div>
-                        <% end %>
 
 
 	</div>
