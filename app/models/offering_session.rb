@@ -20,6 +20,9 @@ class OfferingSession < ActiveRecord::Base
   has_one :happening_case, as: :happening, :dependent => :destroy
   accepts_nested_attributes_for :happening_case
 
+  has_many :individual_participations, as: :offering, class_name: :offering_individual_participations, :dependent => :destroy
+  accepts_nested_attributes_for :individual_participations
+
   def individual_participators
     @participators = []
     self.offering_individual_participations.each do |participation|

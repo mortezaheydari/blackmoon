@@ -10,6 +10,9 @@ class Venue < ActiveRecord::Base
 
   make_flaggable :like
 
+  has_many :offering_sessions, as: :owner,:dependent => :destroy
+  accepts_nested_attributes_for :offering_sessions
+
   has_one :location, as: :owner, :dependent => :destroy
   accepts_nested_attributes_for :location
 
@@ -25,13 +28,19 @@ class Venue < ActiveRecord::Base
   has_many :offering_administrations, as: :offering, :dependent => :destroy
   accepts_nested_attributes_for :offering_administrations
 
-
   has_many :invitations, as: :subject, dependent: :destroy
   accepts_nested_attributes_for :invitations
 
   has_many :join_requests_received, as: :receiver, class_name: "join_request"
   accepts_nested_attributes_for :join_requests_received
 
+  def offering_individual_participation
+    @participations = []    
+    self.offering_sessions.all.each do |session|
+      @participations << session.individual_participation
+    end
+    @participations
+  end
 
   def creator
     User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
@@ -55,7 +64,7 @@ class Venue < ActiveRecord::Base
 
   def joineds
       @joineds = []
-      self.individual_participators.each do |joined|
+      self.sessions.each do |joined|
           @joineds << joined
       end
       self.team_participators.each do |joined|
