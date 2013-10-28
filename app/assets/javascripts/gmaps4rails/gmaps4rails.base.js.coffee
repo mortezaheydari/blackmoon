@@ -35,9 +35,9 @@ class @Gmaps4Rails
       draggable: true
       detect_location: false  # should the browser attempt to use geolocation detection features of HTML5?
       center_on_user: false   # centers map on the location detected through the browser
-      center_latitude: 0
-      center_longitude: 0
-      zoom: 7
+      center_latitude: 29.369
+      center_longitude: 47.978
+      zoom: 14
       maxZoom: null
       minZoom: null
       auto_adjust : true      # adjust the map to the markers if set to true
@@ -213,7 +213,7 @@ class @Gmaps4Rails
         fillColor     = point.fillColor     || @polygons_conf.fillColor
         fillOpacity   = point.fillOpacity   || @polygons_conf.fillOpacity
         clickable     = point.clickable     || @polygons_conf.clickable
-        
+
     #Construct the polygon
     new_poly = new google.maps.Polygon
       paths:          polygon_coordinates

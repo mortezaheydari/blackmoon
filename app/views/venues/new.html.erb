@@ -48,7 +48,7 @@
                                     </tr>
                                     <tr>
                                         <td><label for="div">Tag a place:</label></td>
-                                        <td><%= gmaps( "markers" => { "data" => @location.to_gmaps4rails, "options" => { "draggable" => true }}) %></td>
+                                        <td><%= gmaps( "markers" => { "data" => @location.to_gmaps4rails, "options" => { "draggable" => true,"center_latitude" => 40, "center_longitude" => 40, "zoom" => 14 }}) %></td>
                                     </tr>
                                 </table>
 
@@ -99,7 +99,7 @@
         markersArray.push(marker);
         // Set and open infowindow
         var infowindow = new google.maps.InfoWindow({
-          content: '<div class="popup"><h2>Awesome!</h2><p>Drag me and adjust the zoom level.</p>'
+          content: ''
         });
         infowindow.open(Gmaps.map.serviceObject, marker);
         // Listen to drag & drop

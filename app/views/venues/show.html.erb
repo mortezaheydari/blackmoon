@@ -1,1 +1,4 @@
-<%= gmaps4rails(@json) %>
+<%= gmaps(:markers => { :data => @json },
+    :map_options => { :auto_adjust => true, # :auto_adjust map to center on location
+              :auto_zoom => false,  # :auto_zoom defaults to full zoom in, set to false to utilize :zoom
+              :zoom => 16 } ) %>
