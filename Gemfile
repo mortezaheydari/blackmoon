@@ -17,7 +17,7 @@ gem 'thin'
 gem 'public_activity'
 gem "paperclip", "~> 3.0"
 gem 'activeadmin'
-gem 'gmaps4rails'
+gem 'gmaps4rails', "1.5"
 
 gem 'make_flaggable', :git => 'git://github.com/cavneb/make_flaggable.git'
 
