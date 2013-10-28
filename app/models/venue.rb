@@ -10,7 +10,7 @@ class Venue < ActiveRecord::Base
 
   make_flaggable :like
 
-  has_one :location, as: :owner, class_name: "location", :dependent => :destroy
+  has_one :location, as: :owner, :dependent => :destroy
   accepts_nested_attributes_for :location
 
   has_one :album, as: :owner, :dependent => :destroy
