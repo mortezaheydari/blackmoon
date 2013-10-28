@@ -1,26 +1,3 @@
-<script type="text/javascript">
-
-handler = Gmaps.build('Google');
-handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-  markers = handler.addMarkers([
-    {
-      "lat": 0,
-      "lng": 0,
-      "picture": {
-        "url": "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
-        "width":  36,
-        "height": 36
-      },
-      "infowindow": "hello!"
-    }
-  ]);
-  handler.bounds.extendWith(markers);
-  handler.fitMapToBounds();
-});
-
-</script>
-
-
 <div class="body">
 	<div class="offering">
                     <h1><%= image_tag "event-icon.png", width: 50 %> Create New Venue</h1>
@@ -55,7 +32,15 @@ handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
                                     </tr>
                                     <tr>
                                         <td><%= l.label :custom_address, "Address:" %></td>
-                                        <td><%= l.text_area :custom_address %></td>
+                                        <td><%= l.text_field :custom_address %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= l.label :latitude, "latitude:" %></td>
+                                        <td><%= l.text_field :latitude %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= l.label :longitude, "longitude:" %></td>
+                                        <td><%= l.text_field :longitude %></td>
                                     </tr>
                                     <tr>
                                         <td><%= l.label :gmap_use, "Use Google maps tag:" %></td>

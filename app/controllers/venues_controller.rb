@@ -77,7 +77,8 @@ class VenuesController < ApplicationController
 
   def show
     @venue = Venue.find(params[:id])
-    @json       = @venue.location.to_gmaps4rails
+    @json = @venue.location.to_gmaps4rails
+
     @likes = @venue.flaggings.with_flag(:like)
     @photo = Photo.new
     @album = @venue.album

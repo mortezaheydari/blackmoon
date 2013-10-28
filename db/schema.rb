@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131028053216) do
+ActiveRecord::Schema.define(:version => 20131028073038) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(:version => 20131028053216) do
   create_table "locations", :force => true do |t|
     t.string   "title"
     t.string   "city"
-    t.text     "custom_address"
+    t.string   "custom_address"
     t.boolean  "custom_address_use", :default => true
     t.float    "latitude"
     t.float    "longitude"
