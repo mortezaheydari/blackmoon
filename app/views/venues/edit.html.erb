@@ -2,129 +2,128 @@
 <div class="body">
     <div class="offering">
 
-                    <h1><%= image_tag "event-icon.png", width: 50 %> Update Event Information</h1>
-
-            <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "Venue", owner_id: @venue.id), :html => { :method => "post" }) do |p| %>
-                    <h2>Image</h2>
-
-                <table>
-                    <tr>
-                        <td colspan="2">
-                            <div class="gravatarContainer">
-                                <%= logo_for @venue, size: :medium %>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label class="cabinet left">
-                                <%= p.file_field :image, class: "file" %>
-                            </label>
-                            <br>
-                            <p id="fileName"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn left" %>
-                        </td>
-                    </tr>
-
-                </table>
-            <% end %>
-
+                    <h1><%= image_tag "event-icon.png", width: 50 %> Update Venue Information</h1>
 
         <%= form_for(@venue) do |f| %>
 
-                            <p>Category</p>
-                            <div class="<%= @venue.category %> left"></div> <br>
-
                             <div>
-
                                 <table  width="100%">
                                     <tr>
-                                        <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
-                                        <td><label><%= @venue.sport %></label></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :title, "Event Title: " %></td>
+                                        <td><%= f.label :title, "Venue Title: " %></td>
                                         <td><%= f.text_field :title %></td>
                                     </tr>
                                     <tr>
                                         <td><%= f.label :descreption, "Description" %></td>
                                         <td><%= f.text_area :descreption %></td>
                                     </tr>
-                                    <tr>
-                                        <td><label>Add Image</label></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label>Special Requirements</label></td>
-                                        <td></td>
-                                    </tr>
                                 </table>
-
-                                <%= f.radio_button :category, "BallSports", value: "BallSports", checked: true %>
-                                <%= f.radio_button :category, "Fitness", value: "Fitness" %>
-                                <%= f.radio_button :category, "WaterSports", value: "WaterSports" %>
                             </div>
 <hr>
 
-                    <h2>2. <%= image_tag "location-icon.png", width: 50 %> Location</h2>
+                    <h2>2. Location:</h2>
 
+                    <%= f.fields_for @location do |l| %>
                             <div>
                                 <table width="100%">
                                     <tr>
-                                        <td width="130"><%= f.label :custom_address, "Select the city:" %></td>
-                                        <td><%= f.select :custom_address, ["Al-Salmiyah", "Kuwait City"] %></td>
+                                        <td><%= l.label :city, "Select the city:" %></td>
+                                        <td><%= l.select :city, ["Abdullah Al-Salem", "Adailiya", "Bnaid Al-Qar", "Daiya", "Dasma", "Dasman", "Doha", "Faiha", "Ghornata", "Jaber Al Ahmed", "Kaifan", "Khaldiya", "Kuwait City", "Mansouriya", "Mirqab", "Mubarakiya Camps", "Nuzha", "Qadsiya", "Qibla", "Qortuba", "Rawda", "Salhiya", "Shamiya", "Sharq", "Shuwaikh", "Sulaibikhat", "Surra", "Yarmouk", "Al-Bedae", "Bayan", "Hawally", "Hitteen", "Jabriya", "Maidan Hawally", "Mishrif", "Mubarak Al-Abdullah", "Rumaithiya", "Salam", "Salmiya", "Salwa", "Shaab", "Shuhada", "Siddiq", "Zahra", "Abbasiya", "Abdullah Al-Mubarak - West Jleeb", "Abraq Khaitan", "Airport", "Andalous", "Ardhiya", "Ardiya Small Industrial", "Ardiya Storage Zone", "Ashbeliah", "Dhajeej", "Exhibits - South Khaitan", "Farwaniya", "Ferdous", "Jleeb Al-Shiyoukh", "Khaitan", "Omariya", "Rabiya", "Rai", "Reggai", "Rehab", "Sabah Al-Nasser", "Sheikh Saad Al Abdullah Airport", "Abu Halifa", "Al Julayah - Az Zour Sulah", "Al-Ahmadi", "Dhaher", "East Al Ahmadi", "Egaila", "Fahad Al Ahmed", "Fahaheel", "Fintas", "Hadiya", "Jaber Al-Ali", "Magwa", "Mahboula", "Mangaf", "Mina Abdullah", "Mina Al Ahmadi", "Nuwaiseeb", "Riqqa", "Sabah Al Ahmad Marine City", "Sabah AL Ahmad residential", "Sabahiya", "Shuaiba Port", "Wafra farms", "Wafra residential", "Al Naeem", "Amgarah Industrial", "Jahra", "Kabd", "Nahda", "Nasseem", "Oyoun", "Qairawan - South Doha", "Qasr", "Saad Al Abdullah", "Sulaibiya Indutrial 1", "Sulaibiya Indutrial 2", "Sulaibiya Residential", "Sulaibiya", "Taima", "Waha", "Abu Ftaira", "Abu Hasaniya", "Adan", "Al Masayel", "Ali Sabah Al-Salem", "Al-Qurain", "Al-Qusour", "Coast Strip B", "Fnaitess", "Messila", "Mubarak Al-Kabir", "Sabah Al-Salem", "Sabhan Industrial", "South Wista", "West Abu Fetera Small Indust", "Wista"] %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= l.label :custom_address_use, "Use custom address:" %></td>
+                                        <td><%= l.check_box :custom_address_use %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= l.label :custom_address, "Address:" %></td>
+                                        <td><%= l.text_field :custom_address %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= l.label :latitude, "latitude:" %></td>
+                                        <td><%= l.text_field :latitude %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= l.label :longitude, "longitude:" %></td>
+                                        <td><%= l.text_field :longitude %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= l.label :gmaps, "Use Google maps tag:" %></td>
+                                        <td><%= l.check_box :gmaps %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="div">Tag a place:</label></td>
+                                        <td><%= gmaps(:markers => { :data => @location.to_gmaps4rails},
+    :map_options => { :auto_adjust => true, # :auto_adjust map to center on location
+              :auto_zoom => false,  # :auto_zoom defaults to full zoom in, set to false to utilize :zoom
+              :zoom => 16 }) %></td>
                                     </tr>
                                 </table>
 
                             </div>
-
-<hr>
-                    <h2>3. <%= image_tag "payment-icon.png", width: 50 %> Payment</h2>
-                            <div>
-                                <table width="100%">
-                                    <tr>
-                                        <td width="130"><%= f.label :fee_type, "Payment Option" %></td>
-                                        <td><%= f.select :fee_type, ["Free", "Cash"] %></td>
-                                    </tr>
-                                    <tr id="AmountRow">
-                                        <td><%= f.label :fee, "Amount" %></td>
-                                        <td><%= f.number_field :fee %></td>
-                                    </tr>
-                                </table>
-                            </div>
-
-<hr>
-
-                    <h2>4. Time &amp; Limits</h2>
-
-                            <div>
-                                <table width="100%">
-                                    <tr>
-                                        <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
-                                        <td><%= f.number_field :number_of_attendings %></td>
-                                    </tr>
-
-                                    <%= render "shared/happening_case", date_and_time: @date_and_time %>
-                                    <tr>
-                                        <td><%= f.label :team_participation, "Team Participation" %></td>
-                                        <td><%= f.select :team_participation, ["No", "Yes"] %></td>
-                                    </tr>
-                                    <tr>
-                                        <td><%= f.label :open_join, "Open for all to join" %></td>
-                                        <td><%= f.select :open_join, {"Yes" => true, "No" => false} %></td>
-                                    </tr>
-                                </table>
-                            </div>
+                        <% end %>
 
 
-
-    </div>
-                <%= f.submit "Update the Event", class: "button grey submitBtn homeBtn left" %>
+                <%= f.submit "Update the Venue", class: "button grey submitBtn homeBtn left" %>
 
 
         <% end %>
+    </div>
 </div>
+
+
+
+<%= content_for :scripts do %>
+    <script type="text/javascript" charset="utf-8">
+      var markersArray = [];
+      Gmaps.map.callback = function() {
+        var marker = Gmaps.map.markers[0];
+        if (marker) {
+          // Move existing marker when editing a previously stored location
+          google.maps.event.addListener(marker.serviceObject, 'dragend', function() {
+            updateFormLocation(this.getPosition());
+          });
+        }
+
+        // On click, clear markers, place a new one, update coordinates in the form
+        google.maps.event.addListener(Gmaps.map.serviceObject, 'click', function(event) {
+          clearOverlays();
+          placeMarker(event.latLng);
+          updateFormLocation(event.latLng);
+        });
+      };
+      // Update form attributes with given coordinates
+      function updateFormLocation(latLng) {
+        $('#venue_location_latitude').val(latLng.lat());
+        $('#venue_location_longitude').val(latLng.lng());
+        $('#centre_gmaps_zoom').val(Gmaps.map.serviceObject.getZoom());
+      }
+      // Add a marker with an open infowindow
+      function placeMarker(latLng) {
+        var marker = new google.maps.Marker({
+          position: latLng,
+          map: Gmaps.map.serviceObject,
+          draggable: true
+        });
+        markersArray.push(marker);
+        // Set and open infowindow
+        var infowindow = new google.maps.InfoWindow({
+          content: ''
+        });
+        infowindow.open(Gmaps.map.serviceObject, marker);
+        // Listen to drag & drop
+        google.maps.event.addListener(marker, 'dragend', function() {
+          updateFormLocation(this.getPosition());
+        });
+      }
+      // Removes the overlays from the map, including the ones loaded with the map itself
+      function clearOverlays() {
+        for (var i = 0; i < markersArray.length; i++ ) {
+          markersArray[i].setMap(null);
+        }
+        markersArray.length = 0;
+
+        for (var i = 0; i < Gmaps.map.markers.length; i++ ) {
+          Gmaps.map.clearMarker(Gmaps.map.markers[i]);
+        }
+      }
+    </script>
+<% end %>
