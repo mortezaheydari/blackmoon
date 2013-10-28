@@ -2,7 +2,7 @@ class OfferingSession < ActiveRecord::Base
   attr_accessible :descreption, :number_of_attendings, :title, :owner_id, :owner_type
 
   include PublicActivity::Model
-  include SessionOfferable
+  include Offerable
   include Joinable
   include Albumable     
 
@@ -51,7 +51,7 @@ class OfferingSession < ActiveRecord::Base
 #    self.number_of_attendings ||= 1
 #  end
 
-## SessionOfferable
+## Offerable
 #  belongs_to :owner, polymorphic: true
 #  accepts_nested_attributes_for :owner
 #
