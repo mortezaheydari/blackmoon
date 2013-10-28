@@ -25,9 +25,8 @@ class ApplicationController < ActionController::Base
 	        redirect_to(a, notice: 'error') and return unless b.call == true
 	    end
 
-	    def double_check_name_is_valid(name)
-	      redirect_to rooth_path and return unless name_is_valid?(name)
-
+	    def double_check_name_is_valid(user, name)
+	      redirect_to rooth_path and return unless name_is_valid?(user, name)
 	    end
 
 	    def unless_photo_exists(&b)
