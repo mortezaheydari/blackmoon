@@ -3,6 +3,14 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
   $(document).ready ->
+    if $("input#venue_location_gmaps").attr('checked')
+        $("#map_row").show()
+    else
+        $("#map_row").hide()
+    if $("input#venue_location_custom_address_use").attr('checked')
+        $("#address_row").show()
+    else
+        $("#address_row").hide()
     $('div.Description').hide()
     $('div.gallery').hide('fast')
     $('div.likes').hide()
@@ -39,3 +47,14 @@ $ ->
     $('div.Description').fadeOut('fast')
     $('div.likes').fadeOut('fast')
     $('div.gallery').fadeIn('fast')
+  $('input#venue_location_gmaps').click (e) ->
+    if $(@).attr('checked')
+        $("#map_row").show()
+    else
+        $("#map_row").hide()
+
+  $('input#venue_location_custom_address_use').click (e) ->
+    if $(@).attr('checked')
+        $("#address_row").show()
+    else
+        $("#address_row").hide()
