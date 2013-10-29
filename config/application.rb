@@ -19,6 +19,7 @@ module Blackmoon
     config.autoload_paths += %W(
       #{config.root}/app/controllers/concerns
       #{config.root}/app/models/concerns
+      #{config.root}/app/models/butterfly_models
     )
 
     # Settings in config/environments/* take precedence over those specified here.

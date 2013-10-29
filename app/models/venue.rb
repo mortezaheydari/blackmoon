@@ -4,6 +4,12 @@ class Venue < ActiveRecord::Base
   include PublicActivity::Model
   include Offerable
   include Albumable
+  include Joinable
+  include MultiSession
+
+## MultiSession
+#  has_many :offering_sessions, as: :owner,:dependent => :destroy
+#  accepts_nested_attributes_for :offering_sessions
 
 ## Albumable
 #  has_one :album, as: :owner, :dependent => :destroy
@@ -17,8 +23,6 @@ class Venue < ActiveRecord::Base
 #    venue.create_logo if venue.logo.nil?
 #  end
 
-  has_many :offering_sessions, as: :owner,:dependent => :destroy
-  accepts_nested_attributes_for :offering_sessions
 
 ## Offerable
 #  has_one :location, as: :owner, :dependent => :destroy
@@ -43,12 +47,15 @@ class Venue < ActiveRecord::Base
 #    User.find(@admins)
 #  end
 
-  def offering_individual_participation
-    @participations = []
-    self.offering_sessions.all.each do |session|
-      @participations << session.individual_participation
-    end
-    @participations
-  end
+
+
+## joinable
+#  def offering_individual_participation
+#    @participations = []
+#    self.offering_sessions.all.each do |session|
+#      @participations << session.individual_participation
+#    end
+#    @participations
+#  end
 
 end
