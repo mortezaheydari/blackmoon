@@ -4,6 +4,4 @@ class ActivitiesController < ApplicationController
 		@activities = PublicActivity::Activity.order("created_at desc").where(recipient_type: 'public')
 	end
 
-
-
 end

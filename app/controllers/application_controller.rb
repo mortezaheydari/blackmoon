@@ -15,19 +15,27 @@ class ApplicationController < ActionController::Base
 	# starting:
 
 	    def name_is_valid?(name)
-	      ["event","class","game", "user", "team"].include? name.downcase
+	      ["event","class","game", "user", "team", "venue"].include? name.downcase
 	    end
 
-	    def double_check(&b)
-	        #redirect_to @owner, notice: 'error' and return unless b.call == true
-	        a = root_path
-	        a = @redirect_object unless @redirect_object.nil?
-	        redirect_to(a, notice: 'error') and return unless b.call == true
-	    end
+	    # def double_check(&b)
+	    #     #redirect_to @owner, notice: 'error' and return unless b.call == true
+	    #     a = root_path
+	    #     a = @redirect_object unless @redirect_object.nil?
+	    #     redirect_to(a, notice: 'error') and return unless b.call == true
+	    # end
 
-	    def double_check_name_is_valid(user, name)
-	      redirect_to rooth_path and return unless name_is_valid?(user, name)
-	    end
+		# My Bloodthirsty double_check method, version-20131023
+		def double_check(link=root_path, msg='there was an error with your request', (&b))
+			link == @redirect_object unless @redirect_object.nil?
+			redirect_to(link, alert: msg) and return unless b.call
+		end
+
+		def double_check_name_is_valid(user, name)
+			double_check (rooth_path, 'permission error: name is not valid!') {
+				name_is_valid?(user, name) }
+		end
+
 
 	    def unless_photo_exists(&b)
 	        if @photo_exists

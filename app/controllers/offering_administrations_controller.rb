@@ -59,7 +59,7 @@ end
     # checks if offerign name is valid for user
     # note: this function is controller specific
     def name_is_valid?(user, name)
-      user.respond_to? "#{name}s_administrating" and ["event","class","game"].include? name
+      user.respond_to? "#{name}s_administrating" and ["event","class","game", "venue"].include? name
     end
 
 		# def current_user_can_delete_admin?(admin, offering)

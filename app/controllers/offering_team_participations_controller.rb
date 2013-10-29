@@ -56,7 +56,7 @@ class OfferingTeamParticipationsController < ApplicationController
     # checks if offering name is valid for team
     # note: this function is controller specific
     def name_is_valid?(team, name)
-      team.respond_to? "#{name}s_participating" and ["event","class","game"].include? name
+      team.respond_to? "#{name}s_participating" and ["event","class","game", "venue"].include? name
     end
 
 end

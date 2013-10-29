@@ -5,11 +5,11 @@ module SessionsHelper
 	end
 
 	def current_user
-                          if account_signed_in?
-		@current_user ||= current_account.user
-                          else
-                              @current_user ||= User.new
-                          end
+		if account_signed_in?
+			@current_user ||= current_account.user
+		else
+			@current_user ||= User.new
+		end
 	end
 
 	def current_user?(user)
@@ -32,7 +32,6 @@ module SessionsHelper
 		this.members.include?(user)
 	end
 
-
 	def team_is_participating?(this, team)
 		this.team_participators.include?(team)
 	end
@@ -53,8 +52,8 @@ module SessionsHelper
 			else
 				size = options[:size]
 
-                size = :small if size == 50
-		    css_class = options[:css_class]
+				size = :small if size == 50
+			css_class = options[:css_class]
 				image_tag(this.logo.photo.image.url(size), als: this.name, class: "gravatar #{css_class}")
 			end
 		else
@@ -63,7 +62,7 @@ module SessionsHelper
 
 			else
 				size = options[:size]
-		    css_class = options[:css_class]
+				css_class = options[:css_class]
 				image_tag(this.logo.photo.image.url(size), als: this.title, class: "#{css_class}")
 			end
 		end
