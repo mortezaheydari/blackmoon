@@ -8,8 +8,8 @@
               </h5>
               <p class="text-left"><%= k_lower(offering).capitalize %></p>
               <% unless this_is_act?(offering) %>
-                  <p class="text-left"><strong>Originator:</strong> <%= offering.creator.name %><br><%= offering.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></p>
-                  <div class="<%= offering.category %>"></div>
+                  <p class="text-left"><strong>Originator:</strong> <%= offering.creator.name %><br><%= offering.happening_case.date_and_time.strftime("%A, %B %d, %Y") unless offering.class.to_s == "Venue" %></p>
+                  <div class="<%= offering.category unless offering.class.to_s == "Venue" %>"></div>
 
               <% end -%>
               <% if this_is_act?(offering) %>

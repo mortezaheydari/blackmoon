@@ -3,7 +3,7 @@ module Joinable
 
     included do
 
-        before_save :default_values
+
 
         has_many :invitations, as: :subject, dependent: :destroy; accepts_nested_attributes_for :invitations
         has_many :join_requests_received, as: :receiver, class_name: "join_request"; accepts_nested_attributes_for :join_requests_received
@@ -16,13 +16,6 @@ module Joinable
             User.find(@participators)
         end
 
-        def default_values
-            if self.name == "OfferingSession"
-                self.number_of_attendings ||= 1
-            else
-                self.number_of_attendings ||= 0
-            end
-        end
 
         def inviteds
             @invited = []
@@ -48,6 +41,16 @@ module Joinable
 
 ### single session
         else
+
+        before_save :default_values
+
+        def default_values
+            if self.class.to_s == "OfferingSession"
+                self.number_of_attendings ||= 1
+            else
+                self.number_of_attendings ||= 0
+            end
+        end
 
             has_many :offering_individual_participations, as: :offering, :dependent => :destroy; accepts_nested_attributes_for :offering_individual_participations
         end

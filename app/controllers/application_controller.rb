@@ -26,13 +26,13 @@ class ApplicationController < ActionController::Base
 	    # end
 
 		# My Bloodthirsty double_check method, version-20131023
-		def double_check(link=root_path, msg='there was an error with your request', (&b))
+		def double_check(link=root_path, msg='there was an error with your request', &b)
 			link == @redirect_object unless @redirect_object.nil?
 			redirect_to(link, alert: msg) and return unless b.call
 		end
 
 		def double_check_name_is_valid(user, name)
-			double_check (rooth_path, 'permission error: name is not valid!') {
+			double_check(root_path, 'permission error: name is not valid!') {
 				name_is_valid?(user, name) }
 		end
 
@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
 
 	    def find_and_assign this_type, this_id
 
-	        if ["user", "team", "event", "game"].include? this_type.downcase and this_id
+	        if ["user", "team", "event", "game", "venue"].include? this_type.downcase and this_id
 	            a = root_path
 	            a = @redirect_object unless @redirect_object.nil?
 	            redirect_to(a, notice: 'error') and return unless this = this_type.camelize.constantize.find_by_id(this_id)

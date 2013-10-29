@@ -8,7 +8,7 @@ class LogosController < ApplicationController
     photo_exists = false
     photo_exists = true unless params[:photo_exists].nil?
 
-    double_check_name_is_valid owner_type
+    double_check {name_is_valid?(owner_type)}
 
     @owner = owner_type.camelize.constantize.find_by_id(owner_id)
     # checking photo upload premission

@@ -46,9 +46,14 @@ class VenuesController < ApplicationController
     @current_user_id = current_user.id
     @venue = Venue.new(title: params[:venue][:title], descreption: params[:venue][:descreption])
     @venue.album = Album.new
-    @venue.build_location(params[:venue][:location])
 
     # here, location assignment operation should take place.
+    if params[:venue][:location][:longitude].empty? || params[:venue][:location][:latitude].empty?
+        params[:venue][:location][:gmaps] = false
+    else
+        params[:venue][:location][:gmaps] = true
+    end
+    @venue.build_location(params[:venue][:location])
 
     if @venue.save
       # @venue.happening_case.save
