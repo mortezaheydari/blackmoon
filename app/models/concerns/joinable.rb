@@ -22,7 +22,7 @@ module Joinable
             else
                 self.number_of_attendings ||= 0
             end
-        end 
+        end
 
         def inviteds
             @invited = []
@@ -38,8 +38,8 @@ module Joinable
         if ["Venue", "OtherMultiSessionOfferings"].include? self.name
             has_many :offering_sessions, as: :owner,:dependent => :destroy; accepts_nested_attributes_for :offering_sessions
 
-            def offering_individual_participation
-                @participations = []    
+            def offering_individual_participations
+                @participations = []
                 self.offering_sessions.all.each do |session|
                     @participations << session.individual_participation
                 end
@@ -85,7 +85,7 @@ module Joinable
                             @joineds << joined
                     end
                     @joineds
-                end        
+                end
             end
 ###
 
