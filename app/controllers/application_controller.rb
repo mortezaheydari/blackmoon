@@ -14,6 +14,18 @@ class ApplicationController < ActionController::Base
 	# - performing doublecheck, redirecting to redirect_object upon failure
 	# starting:
 
+	def set_this_variable(name=@model_name, value=@this)
+		instance_variable_set("@#{name.downcase}", @this)
+	end
+
+	def set_these_variable(name=@model_name, value=@these)
+		instance_variable_set("@#{name.downcase}", @these)
+	end
+
+	def set_this_class(name=@model_name)
+		name.constantize
+	end
+
 	    def name_is_valid?(name)
 	      ["event","class","game", "user", "team", "venue"].include? name.downcase
 	    end
