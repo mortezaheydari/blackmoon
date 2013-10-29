@@ -3,14 +3,14 @@ class Venue < ActiveRecord::Base
 
   include PublicActivity::Model
   include Offerable
-  include Albumable   
+  include Albumable
 
 ## Albumable
 #  has_one :album, as: :owner, :dependent => :destroy
 #  accepts_nested_attributes_for :album
 #
 #  has_one :logo, as: :owner, :dependent => :destroy
-#  accepts_nested_attributes_for :logo 
+#  accepts_nested_attributes_for :logo
 #
 #  after_create do |venue|
 #    venue.create_album if venue.album.nil?
@@ -44,7 +44,7 @@ class Venue < ActiveRecord::Base
 #  end
 
   def offering_individual_participation
-    @participations = []    
+    @participations = []
     self.offering_sessions.all.each do |session|
       @participations << session.individual_participation
     end

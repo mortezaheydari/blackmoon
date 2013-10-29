@@ -1,4 +1,61 @@
-<%= gmaps(:markers => { :data => @json },
-    :map_options => { :auto_adjust => true, # :auto_adjust map to center on location
-              :auto_zoom => false,  # :auto_zoom defaults to full zoom in, set to false to utilize :zoom
-              :zoom => 16 } ) %>
+  <div class="userInfo">
+    <div class="eventProfileCard">
+      <div class="large"><%= logo_for(@venue, size: :user_profile) %></div>
+      <h1><%= @venue.title %></h1>
+    </div>
+
+    <div class="locationPartial">
+      <div class="locationTitle">Location</div>
+      <div class="map"></div>
+    </div>
+
+    <div class="activityOrigin">
+        <div class="OriginTitle">Venue Originator</div>
+        <div class="UserimgName">
+            <div class="img"><%= logo_for(@venue.creator, size: :small, css_class: "userCardImage left") %></div>
+            <%= link_to @venue.creator.name , user_path(@venue.creator) %>
+        </div>
+      <!-- <a href="#" class="originTitle"><%= @venue.creator.name %></a> -->
+        <p>Level 2: Game Originator</p>
+    </div>
+
+    <%= render 'shared/like_button', offering: @venue if signed_in? %>
+
+
+    <a href="#"><div class="shareButton"></div></a>
+    <%= link_to "Edit", edit_venue_path(@venue), class: "button blue left" if signed_in? && user_is_admin?(@venue) %>
+
+  </div>
+
+  <div class="secondMenu">
+    <nav id="secondary">
+      <ul>
+        <li id="Map"><a href="#">Location</a></li>
+        <li id="Description"><a href="#">Description</a></li>
+        <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @venue.flaggings.with_flag(:like).count %></span>)</a></li>
+        <li id="gallery"><a href="#">gallery</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="event">
+    <div class="body">
+        <div class="Map">
+
+            <%= gmaps(:markers => { :data => @json },
+                :map_options => { :auto_adjust => true, # :auto_adjust map to center on location
+                          :auto_zoom => false,  # :auto_zoom defaults to full zoom in, set to false to utilize :zoom
+                          :zoom => 16 } ) %>
+         </div>
+        <div class="Description">
+            <p><%= @venue.descreption %></p>
+
+            <%= render "shared/activity_table", recent_activities: @recent_activities %>
+
+        </div>
+
+            <%= render 'shared/cardsection', individuals: @likes, this: @venue, class_name: "likes", makeadmin: true %>
+
+            <%= render 'shared/gallery' %>
+    </div>
+  </div>
+</div>
