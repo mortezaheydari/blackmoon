@@ -3,6 +3,8 @@ module Joinable
 
     included do
 
+        before_save :default_values
+
         has_many :invitations, as: :subject, dependent: :destroy; accepts_nested_attributes_for :invitations
         has_many :join_requests_received, as: :receiver, class_name: "join_request"; accepts_nested_attributes_for :join_requests_received
 
@@ -122,4 +124,4 @@ module Joinable
 
     end
 
- end
+end

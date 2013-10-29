@@ -5,4 +5,4 @@ module MultiSession
 	# details to be added
   end
 
- end
+end

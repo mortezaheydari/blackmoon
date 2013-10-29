@@ -16,4 +16,4 @@ module Albumable
 
   end
 
- end
+end

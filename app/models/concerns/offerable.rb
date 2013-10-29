@@ -22,7 +22,7 @@ module Offerable
             end
 ##
 
-## offerins
+## offerings
         else
             has_one :offering_creation, as: :offering, :dependent => :destroy; accepts_nested_attributes_for :offering_creation
             has_many :offering_administrations, as: :offering, :dependent => :destroy; accepts_nested_attributes_for :offering_administrations
@@ -69,4 +69,4 @@ module Offerable
 #
     end
 
- end
+end
