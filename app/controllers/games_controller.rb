@@ -19,7 +19,7 @@ class GamesController < ApplicationController
 #    # update
 
   def like
-    
+
     @game = Game.find(params[:id])
 
     if current_user.flagged?(@game, :like)
@@ -60,8 +60,8 @@ class GamesController < ApplicationController
     @game = Game.new
     @game.happening_case = HappeningCase.new
     @date_and_time = Time.now
-      
-    
+
+
   end
 
   def create
@@ -70,7 +70,7 @@ class GamesController < ApplicationController
     @game.team_participation ||= false
     @game.album = Album.new
 
-    
+
       double_check(new_game_path, "there has been a problem with data entry.") {
     @game.save }
 
@@ -81,14 +81,14 @@ class GamesController < ApplicationController
     @game.create_offering_creation(creator_id: @current_user_id)
     @game.offering_administrations.create(administrator_id: @current_user_id)
 
-    
+
     redirect_to @game
   end
 
   def destroy
     @user = current_user
     @game = Game.find(params[:id])
-    
+
 
       double_check(games_path) {
     user_is_admin?(@game) && user_created_this?(@game) }
@@ -118,7 +118,7 @@ class GamesController < ApplicationController
     else
       @participator = @game.team_participators
     end
-    
+
   end
 
   def edit
@@ -127,7 +127,7 @@ class GamesController < ApplicationController
     @game.album ||= Album.new
     @photo = Photo.new
     @photo.title = "Logo"
-    
+
   end
 
   def update
@@ -136,14 +136,14 @@ class GamesController < ApplicationController
     # @game.date_and_time = date_helper_to_str(params[:date_and_time])
     params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
 
-    
+
 
       double_check(edit_game_path(@game)) {
     @game.update_attributes(params[:game]) }
 
     @game.create_activity :update, owner: current_user
 
-    
+
     redirect_to @game, notice: "Game was updated"
   end
 
@@ -233,10 +233,10 @@ class GamesController < ApplicationController
 #    end
 #  end
 #
-#  def user_must_be_admin?
-#    @game = Game.find(params[:id])
-#    @user = current_user
-#    redirect_to(@game) unless @game.administrators.include?(@user)
-#  end
+ def user_must_be_admin?
+   @game = Game.find(params[:id])
+   @user = current_user
+   redirect_to(@game) unless @game.administrators.include?(@user)
+ end
 
 end
