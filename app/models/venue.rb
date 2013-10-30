@@ -9,13 +9,12 @@ class Venue < ActiveRecord::Base
   	# offering_sessions
   	# inviteds
   	# individual_participators
-  include MultiSession
-  	#
   include Albumable
   	# album
   	# logo
   	
   attr_accessible :descreption, :title, :location
 
-
+  has_many :offering_sessions, as: :owner, :dependent => :destroy; accepts_nested_attributes_for :offering_sessions
+  
 end

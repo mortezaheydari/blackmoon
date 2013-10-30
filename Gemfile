@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.18'
+gem 'rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -16,6 +16,7 @@ gem 'public_activity'
 gem "paperclip", "~> 3.0"
 gem 'activeadmin'
 gem 'gmaps4rails', "1.5"
+gem 'chronic'
 
 gem 'make_flaggable', :git => 'git://github.com/cavneb/make_flaggable.git'
 

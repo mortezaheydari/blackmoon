@@ -2,7 +2,9 @@ module MultiSession
   extend ActiveSupport::Concern
 
   included do
-	# details to be added
+	has_many :offering_sessions, as: :owner, :dependent => :destroy; accepts_nested_attributes_for :offering_sessions
+
+		
   end
 
 end
