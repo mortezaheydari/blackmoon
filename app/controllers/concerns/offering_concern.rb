@@ -1,3 +1,4 @@
+=begin
 module OfferingConcern
 	extend ActiveSupport::Concern
 
@@ -110,4 +111,4 @@ module OfferingConcern
 	#  end
 
   end
-end
+end=end
