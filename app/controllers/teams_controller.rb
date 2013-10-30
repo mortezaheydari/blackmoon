@@ -3,37 +3,42 @@ class TeamsController < ApplicationController
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
-	@model_name = "Team"
+#	@model_name = "Team"
+#
+#	include Liking
+#		# like
+#		# like_card
 
-	include Liking
-		# like
-		# like_card
+	def like
+		
+		@team = Team.find(params[:id])
 
-#  def like
-#    @team = Team.find(params[:id])
-#
-#    if current_user.flagged?(@team, :like)
-#      current_user.unflag(@team, :like)
-#      msg = "you now don't like this team."
-#    else
-#      current_user.flag(@team, :like)
-#      msg = "you now like this team."
-#    end
-#    respond_to do |format|
-#        format.html { redirect_to @team, notice: msg }
-#        format.js
-#    end
-#  end
-#
-#  def like_cards
-#    @team = Team.find(params[:id])
-#
-#    # current_user.unflag(@team, :like)
-#    current_user.toggle_flag(@team, :like)
-#    respond_to do |format|
-#        format.js
-#    end
-#  end
+		if current_user.flagged?(@team, :like)
+			current_user.unflag(@team, :like)
+			msg = "you now don't like this team."
+		else
+			current_user.flag(@team, :like)
+			msg = "you now like this team."
+		end
+
+		respond_to do |format|
+				format.html { redirect_to @team}
+				format.js
+		end
+	end
+
+	def like_cards
+
+		@team = Team.find(params[:id])
+
+		# current_user.unflag(@team, :like)
+		current_user.toggle_flag(@team, :like)
+
+		respond_to do |format|
+				format.js { render 'shared/offering/like_cards', :locals => { offering: @team, style_id: params[:style_id], class_name: params[:class_name] } }
+		end
+	end
+
 
 	def index
 		@teams = Team.all

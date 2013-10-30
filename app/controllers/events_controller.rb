@@ -3,11 +3,11 @@ class EventsController < ApplicationController
  	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
-  @model_name = "Event"
-
-  include Liking
-    # like
-    # like_card
+#  @model_name = "Event"
+#
+#  include Liking
+#    # like
+#    # like_card
 
   include OfferingConcern
     # index
@@ -18,33 +18,36 @@ class EventsController < ApplicationController
     # edit
     # update
 
-##Liking
-#  def like
-#    @event = Event.find(params[:id])
-#
-#    if current_user.flagged?(@event, :like)
-#      current_user.unflag(@event, :like)
-#      msg = "you now don't like this event."
-#    else
-#      current_user.flag(@event, :like)
-#      msg = "you now like this event."
-#    end
-#    respond_to do |format|
-#        format.html { redirect_to @event}
-#        format.js
-#    end
-#  end
-#
-#  def like_cards
-#    @event = Event.find(params[:id])
-#
-#    # current_user.unflag(@event, :like)
-#    current_user.toggle_flag(@event, :like)
-#    respond_to do |format|
-#        format.js { render 'shared/offering/like_cards', :locals => { offering: @event, style_id: params[:style_id], class_name: params[:class_name] } }
-#    end
-#  end
-#
+  def like
+    
+    @event = Event.find(params[:id])
+
+    if current_user.flagged?(@event, :like)
+      current_user.unflag(@event, :like)
+      msg = "you now don't like this event."
+    else
+      current_user.flag(@event, :like)
+      msg = "you now like this event."
+    end
+
+    respond_to do |format|
+        format.html { redirect_to @event}
+        format.js
+    end
+  end
+
+  def like_cards
+
+    @event = Event.find(params[:id])
+
+    # current_user.unflag(@event, :like)
+    current_user.toggle_flag(@event, :like)
+
+    respond_to do |format|
+        format.js { render 'shared/offering/like_cards', :locals => { offering: @event, style_id: params[:style_id], class_name: params[:class_name] } }
+    end
+  end
+
 
 ## OfferingConcern
 #  def index

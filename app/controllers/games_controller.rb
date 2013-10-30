@@ -3,11 +3,11 @@ class GamesController < ApplicationController
  	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
-  @model_name = "Game"
-
-  include Liking
-    # like
-    # like_card
+#  @model_name = "Game"
+#
+#  include Liking
+#    # like
+#    # like_card
 
   include OfferingConcern
     # index
@@ -18,33 +18,36 @@ class GamesController < ApplicationController
     # edit
     # update
 
-## Liking
-#  def like
-#    @game = Game.find(params[:id])
-#
-#    if current_user.flagged?(@game, :like)
-#      current_user.unflag(@game, :like)
-#      msg = "you now don't like this game."
-#    else
-#      current_user.flag(@game, :like)
-#      msg = "you now like this game."
-#    end
-#    respond_to do |format|
-#        format.html { redirect_to @game}
-#        format.js
-#    end
-#  end
-#
-#  def like_cards
-#    @game = Game.find(params[:id])
-#
-#    # current_user.unflag(@game, :like)
-#    current_user.toggle_flag(@game, :like)
-#    respond_to do |format|
-#        format.js { render 'shared/offering/like_cards', :locals => { offering: @game, style_id: params[:style_id], class_name: params[:class_name] } }
-#    end
-#  end
-#
+  def like
+    
+    @game = Game.find(params[:id])
+
+    if current_user.flagged?(@game, :like)
+      current_user.unflag(@game, :like)
+      msg = "you now don't like this game."
+    else
+      current_user.flag(@game, :like)
+      msg = "you now like this game."
+    end
+
+    respond_to do |format|
+        format.html { redirect_to @game}
+        format.js
+    end
+  end
+
+  def like_cards
+
+    @game = Game.find(params[:id])
+
+    # current_user.unflag(@game, :like)
+    current_user.toggle_flag(@game, :like)
+
+    respond_to do |format|
+        format.js { render 'shared/offering/like_cards', :locals => { offering: @game, style_id: params[:style_id], class_name: params[:class_name] } }
+    end
+  end
+
 
 ## OfferingConcern
 #  def index
@@ -73,7 +76,7 @@ class GamesController < ApplicationController
 #      @game.offering_administrations.create(administrator_id: @current_user_id)
 #      redirect_to @game
 #    else
-#      redirect_to new_event_path, notice: "there has been a problem with data entry."
+#      redirect_to new_game_path, notice: "there has been a problem with data entry."
 #    end
 #  end
 #
