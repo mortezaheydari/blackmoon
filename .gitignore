@@ -31,3 +31,5 @@ app/assets/images/.DS_Store
 *.jpeg
 
 db/schema.rb
+
+db/schema.rb
