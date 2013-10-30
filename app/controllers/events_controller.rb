@@ -45,6 +45,8 @@ class EventsController < ApplicationController
 #    end
 #  end
 #
+
+## OfferingConcern
 #  def index
 #    @events = Event.all
 #    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Event")

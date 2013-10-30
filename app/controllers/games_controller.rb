@@ -4,6 +4,7 @@ class GamesController < ApplicationController
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
   @model_name = "Game"
+
   include Liking
     # like
     # like_card
@@ -17,6 +18,7 @@ class GamesController < ApplicationController
     # edit
     # update
 
+## Liking
 #  def like
 #    @game = Game.find(params[:id])
 #
@@ -43,6 +45,8 @@ class GamesController < ApplicationController
 #    end
 #  end
 #
+
+## OfferingConcern
 #  def index
 #    @games = Game.all
 #    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game")

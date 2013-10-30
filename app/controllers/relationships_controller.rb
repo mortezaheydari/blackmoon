@@ -1,5 +1,5 @@
 class RelationshipsController < ApplicationController
-  include SessionsHelper
+	include SessionsHelper
 
 	def create
 		@user = User.find(params[:relationship][:followed_id])
