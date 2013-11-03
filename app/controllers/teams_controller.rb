@@ -98,7 +98,7 @@ class TeamsController < ApplicationController
 
 	def update
 		@team = Team.find(params[:id])
-		if @team.update_attributes(params[:team])
+		if @team.update_attributes(params[:team]) # should become more secure in future.
 		@team.create_activity :update, owner: current_user
 			redirect_to @team
 		else

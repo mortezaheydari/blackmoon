@@ -138,7 +138,7 @@ class EventsController < ApplicationController
 
 
       double_check(edit_event_path(@event)) {
-    @event.update_attributes(params[:event]) }
+    @event.update_attributes(params[:event]) } # should become more secure in future.
 
     @event.create_activity :update, owner: current_user
 

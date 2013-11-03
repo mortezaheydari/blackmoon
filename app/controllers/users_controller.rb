@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		double_check { current_user == @user }
 		@user.profile.date_of_birth = date_helper_to_str(params[:date_of_birth])
-		if @user.update_attributes(params[:user])
+		if @user.update_attributes(params[:user]) # should become more secure in future.
 			flash[:success] = "Profile updated"
 			redirect_to @user, notice: "i don't know"
 		else

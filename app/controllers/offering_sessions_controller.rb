@@ -104,13 +104,38 @@ class OfferingSessionsController < ApplicationController
 
 	end
 
-	def update # session
-		# find owner and session
-		# check permissions
+	def update # offering_session
+		# find owner and offering_session		
+		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
+		@offering_session.find(params[:offering_session_id])
+			double_check(@owner) { 
+		@owner.offering_sessions.include? @offering_session	}
 
+		# check validity of attributes (TBD)
+
+			double_check(@owner, "This session has participators and can not be updated.") { 
+		@offering_session.individual_participators.count == 0 }
+
+		params[:offering_session][:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
+
+		@collective = Collective.find params[:offering_session][:collective_id]
+			double_check {
+		@owner.collectives.include? @collective
+		}
+			double_check {
+    	@offering_session.update_attributes(params[:offering_session]) } # should become more secure in future. 
+
+		# return message.
+		msg = "Session has been updated."
+		msg = "Sessions have been updated."params[:collective_flag] == "true"
+
+	    respond_to do |format|
+	        format.html { redirect_to @owner, notice: msg }
+	        format.js
+	    end
 	end
 
-	def destroy # session
+	def destroy # offering_session
 		
 	end
 
@@ -132,7 +157,7 @@ class OfferingSessionsController < ApplicationController
 			redirect_to(@event) unless @event.administrators.include?(@user)
 		end
 
-		def new_collective(title, owner_type, owner_id, owner_safe=false)
+		def create_collective(title, owner_type, owner_id, owner_safe=false)
 			name_is_valid?(owner_type)
 			collective = Collective.new(title: title, owner_type: owner_type, owner_id: owner_id)		
 			if owner_safe
