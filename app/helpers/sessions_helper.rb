@@ -69,7 +69,7 @@ module SessionsHelper
 	end
 
 	def toggle_like_button(this, user)
-		class_name = this.class.to_s.downcase
+		class_name = this.class.to_s.underscore
 		if user.flagged?(this, :like)
 			link_to content_tag("div", "", class: "UnlikeButton"), send("like_#{class_name}_path", this), remote: true
 		else
@@ -78,7 +78,7 @@ module SessionsHelper
 	end
 
 	def toggle_like_card_button(this, user, options = {})
-		class_name = this.class.to_s.downcase
+		class_name = this.class.to_s.underscore
                       style_id = ""
                       style_id = options[:style_id] unless options[:style_id].nil?
 
@@ -92,11 +92,11 @@ module SessionsHelper
                       link_to content_tag("div", "", class: thumbs, id: "thumbs#{style_id + "like"}"), send("like_cards_#{class_name}_path", this, id: this.id, style_id: style_id, class_name: options[:class_name]), remote: true
 	end
             def k_lower(this)
-                this.class.to_s.downcase
+                this.class.to_s.underscore
             end
 
             def k_lower_p(this)
-                this.class.to_s.downcase.pluralize
+                this.class.to_s.underscore.pluralize
             end
 
             def this_is_offering?(this)
@@ -115,7 +115,7 @@ module SessionsHelper
                 end
             end
         # def class_name(this)
-        #     this.class.to_s.downcase
+        #     this.class.to_s.underscore
         # end
 
 

@@ -16,11 +16,11 @@ class ApplicationController < ActionController::Base
 
 =begin
 	def set_this_variable(name=@model_name, value=@this)
-		instance_variable_set("@#{name.downcase}", @this)
+		instance_variable_set("@#{name.underscore}", @this)
 	end
 
 	def set_these_variable(name=@model_name, value=@these)
-		instance_variable_set("@#{name.downcase}", @these)
+		instance_variable_set("@#{name.underscore}", @these)
 	end
 
 	def set_this_class(name=@model_name)
@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 =end
 
 	def name_is_valid?(name)
-	  ["event","class","game", "user", "team", "venue"].include? name.downcase
+	  ["event","class","game", "user", "team", "venue"].include? name.underscore
 	end
 
 	def this_if_reachable(this_type, this_id)
@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
 
 	def find_and_assign this_type, this_id
 
-		if ["user", "team", "event", "game", "venue"].include? this_type.downcase and this_id
+		if ["user", "team", "event", "game", "venue", "offering_session"].include? this_type.underscore and this_id
 			a = root_path
 			a = @redirect_object unless @redirect_object.nil?
 		redirect_to(a, notice: 'error') and return unless this = this_type.camelize.constantize.find_by_id(this_id)

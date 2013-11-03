@@ -61,7 +61,7 @@ class OfferingIndividualParticipationsController < ApplicationController
 		# checks if offering name is valid for user
 		# note: this function is controller specific
 		def name_is_valid?(user, name)
-			user.respond_to? "#{name}s_participating" and ["event","class","game", "offering_session"].include? name
+			user.respond_to? "#{name}s_participating" and ["event","class","game", "offering_session"].include? name.underscore
 		end
 
 end

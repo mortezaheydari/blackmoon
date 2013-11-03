@@ -23,12 +23,12 @@ module OfferingConcern
 
 	def create
 		@current_user_id = current_user.id
-		@this = ThisClass.new(params[@model_class.downcase.to_sym])
+		@this = ThisClass.new(params[@model_class.underscore.to_sym])
 		@this.team_participation ||= false
 		@this.album = Album.new
 
 		set_this_variable
-			double_check(send("new_#{@model_class.downcase}_path"), "there has been a problem with data entry.") {
+			double_check(send("new_#{@model_class.underscore}_path"), "there has been a problem with data entry.") {
 		@this.save }
 
 		params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
@@ -47,7 +47,7 @@ module OfferingConcern
 		@this = ThisClass.find(params[:id])
 		set_this_variable
 
-			double_check(send("#{@model_class.downcase}s_path")) {
+			double_check(send("#{@model_class.underscore}s_path")) {
 		user_is_admin?(@this) && user_created_this?(@this) }
 
 		@this.create_activity :destroy, owner: current_user
@@ -55,7 +55,7 @@ module OfferingConcern
 			double_check(@this) {
 		@this.destroy }
 
-		redirect_to(send("#{@model_class.downcase}s_path"))
+		redirect_to(send("#{@model_class.underscore}s_path"))
 	end
 
 	def show
@@ -95,8 +95,8 @@ module OfferingConcern
 
 		set_this_variable
 
-			double_check(send("#{edit_@model_class.downcase}_path", @this)) {
-		@this.update_attributes(params[@model_class.downcase.to_sym]) }
+			double_check(send("#{edit_@model_class.underscore}_path", @this)) {
+		@this.update_attributes(params[@model_class.underscore.to_sym]) }
 
 		@this.create_activity :update, owner: current_user
 
