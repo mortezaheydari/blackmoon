@@ -21,7 +21,7 @@ class OfferingSessionsController < ApplicationController
 
 		when "", nil, " "
 			# if creating mmultiple sessions, must automaticly create a collective to contain them. This allows user to delete those sessions easily in case of any mistakes by deleting the collectives.
-			case params[:collective_flag]
+			case params[:collection_flag]
 			when "true"
 				@collective = create_collective(params[:offering_session][:title], @owner.class.to_s, @owner.id)
 				@offering_session.owner = @collective.owner
@@ -47,7 +47,7 @@ class OfferingSessionsController < ApplicationController
 		end
 
 		# single or multiple?
-		if params[:collective_flag] == "true"
+		if params[:collection_flag] == "true"
 			
 			# create them (redirect if not)
 
@@ -95,7 +95,7 @@ class OfferingSessionsController < ApplicationController
 
 		# return message.
 		msg = "Session has been created."
-		msg = "Sessions have been created."params[:collective_flag] == "true"
+		msg = "Sessions have been created."params[:collection_flag] == "true"
 
 	    respond_to do |format|
 	        format.html { redirect_to @owner, notice: msg }
@@ -125,28 +125,78 @@ class OfferingSessionsController < ApplicationController
 			double_check {
     	@offering_session.update_attributes(params[:offering_session]) } # should become more secure in future. 
 
-		# return message.
-		msg = "Session has been updated."
-		msg = "Sessions have been updated."params[:collective_flag] == "true"
-
 	    respond_to do |format|
-	        format.html { redirect_to @owner, notice: msg }
+	        format.html { redirect_to @owner, notice: "Session has been updated." }
 	        format.js
 	    end
 	end
 
 	def destroy # offering_session
-		
+		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
+		@offering_session.find(params[:offering_session_id])
+			double_check(@owner) { 
+		@owner.offering_sessions.include? @offering_session	}
+
+			double_check(@owner, "This session has participators and can not be deleted.") { 
+		@offering_session.individual_participators.count == 0 }		
+
+			double_check(@owner) { 
+		@offering_session.destroy }
+
+	    respond_to do |format|
+	        format.html { redirect_to @owner, notice: "Session has been deleted." }
+	        format.js
+	    end
 	end
 
 	# secondary methods
 
 	def release
+		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
+		@offering_session.find(params[:offering_session_id])
+			double_check(@owner) { 
+		@owner.offering_sessions.include? @offering_session	}
+
+		@offering_session.collection_flag = false
+		@offering_session.collective_id = nil
+
+			double_check(@owner) { 
+		@offering_session.save	}
 		
+	    respond_to do |format|
+	        format.html { redirect_to @owner, notice: "Session has been released from collective." }
+	        format.js
+	    end		
 	end
 
 	def destroy_collective
+		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
+		@collective = Collective.find(params[:owner_id])
+			double_check {
+		@owner.collectives.include? @collective }
 		
+		# explode or destroy
+		if params[:explode] == true
+			@collective.offering_sessions.each do |offering_session|
+				offering_session.collection_flag = false
+				offering_session.collective_id = nil
+				double_check(@owner) {
+				offering_session.save }
+			end
+				double_check(@owner) {
+			@collective.destroy }
+			@msg = "Collective has been destroyed while keeping its sessions."
+		else
+				double_check(@owner) {
+			@collective.destroy }
+			@msg = "Collective has been destroyed alongside its sessions."			
+		end
+
+	    respond_to do |format|
+	        format.html { redirect_to @owner, notice: "Collective has been destroyed." }
+	        format.js
+	    end		
+
 	end
 
 	private
