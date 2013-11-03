@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
     # offerings_participating   
     # games_participating
     # events_participating
+    # offering_sessions_participating
 
     # offerings_administrating
     # games_administrating

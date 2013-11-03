@@ -105,17 +105,25 @@ class OfferingSessionsController < ApplicationController
 	end
 
 	def update # session
-		 
+		# find owner and session
+		# check permissions
+
 	end
 
-	def destroy
+	def destroy # session
 		
 	end
 
-	def assign_collection
+	# secondary methods
+
+	def release
 		
 	end
-	
+
+	def destroy_collective
+		
+	end
+
 	private
 	
 		def user_must_be_admin?

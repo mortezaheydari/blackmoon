@@ -37,6 +37,7 @@ module MoonActor
             # through: :offering_individual_participations
             has_many :events_participating, through: :offering_individual_participations, source: :offering, source_type: "Event"; accepts_nested_attributes_for :events_participating
             has_many :games_participating, through: :offering_individual_participations, source: :offering, source_type: "Game"; accepts_nested_attributes_for :games_participating
+            has_many :offering_sessions_participating, through: :offering_individual_participations, source: :offering, source_type: "OfferingSession"; accepts_nested_attributes_for :offering_sessions_participating
                 #
 
                 # Acts
