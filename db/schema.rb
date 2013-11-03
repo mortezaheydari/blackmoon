@@ -344,6 +344,10 @@ ActiveRecord::Schema.define(:version => 20131031081129) do
     t.text     "descreption"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "address"
+    t.boolean  "gmaps"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
 end
