@@ -32,14 +32,18 @@ class ApplicationController < ActionController::Base
 	  ["event","class","game", "user", "team", "venue"].include? name.downcase
 	end
 
-	def owner_if_reachable?(owner_type, owner_id)
-		name_is_valid?(owner_type) unless owner_type == "Collective"
-		owner = owner_type.constantize.find(owner_id)
-		double_check { owner }
+	def this_if_reachable(this_type, this_id)
+		name_is_valid?(this_type) unless this_type == "Collective"
+		this = this_type.constantize.find(this_id)
+		double_check { this }
+	end
+
+	def owner_if_reachable(owner_type, owner_id)
+		owner = this_if_reachable(owner_type, owner_id)
 		if owner_type == "Collective"
-			double_check { owner.owner.administrations.include? current_user } 
+			double_check { owner.owner.administrators.include? current_user } 
 		else
-			double_check { owner.administrations.include? current_user } 
+			double_check { owner.administrators.include? current_user } 
 		end
 		owner
 	end
