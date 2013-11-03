@@ -17,6 +17,7 @@ class OfferingSession < ActiveRecord::Base
   	# album
   	# logo
 
-  attr_accessible :descreption, :number_of_attendings, :title, :owner_id, :owner_type
+  attr_accessible :descreption, :number_of_attendings, :title, :owner_id, :owner_type, :collective_id, :collection
+  belongs_to :collective; accepts_nested_attributes_for :collective
 
 end

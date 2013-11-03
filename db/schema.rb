@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131028074208) do
+ActiveRecord::Schema.define(:version => 20131031081129) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -117,6 +117,14 @@ ActiveRecord::Schema.define(:version => 20131028074208) do
     t.string   "title"
     t.integer  "owner_id"
     t.string   "owner_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "collectives", :force => true do |t|
+    t.string   "title",      :null => false
+    t.string   "owner_type", :null => false
+    t.integer  "owner_id",   :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -260,8 +268,10 @@ ActiveRecord::Schema.define(:version => 20131028074208) do
     t.integer  "number_of_attendings"
     t.string   "owner_type"
     t.integer  "owner_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.integer  "collective_id"
+    t.boolean  "collection_flag",      :default => false
   end
 
   create_table "offering_team_participations", :force => true do |t|
@@ -334,10 +344,6 @@ ActiveRecord::Schema.define(:version => 20131028074208) do
     t.text     "descreption"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "address"
-    t.boolean  "gmaps"
-    t.float    "latitude"
-    t.float    "longitude"
   end
 
 end

@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
 	# - performing doublecheck, redirecting to redirect_object upon failure
 	# starting:
 
+=begin
 	def set_this_variable(name=@model_name, value=@this)
 		instance_variable_set("@#{name.downcase}", @this)
 	end
@@ -25,9 +26,26 @@ class ApplicationController < ActionController::Base
 	def set_this_class(name=@model_name)
 		name.constantize
 	end
+=end
 
 	def name_is_valid?(name)
 	  ["event","class","game", "user", "team", "venue"].include? name.downcase
+	end
+
+	def owner_if_reachable?(owner_type, owner_id)
+		name_is_valid?(owner_type) unless owner_type == "Collective"
+		owner = owner_type.constantize.find(owner_id)
+		double_check { owner }
+		if owner_type == "Collective"
+			double_check { owner.owner.administrations.include? current_user } 
+		else
+			double_check { owner.administrations.include? current_user } 
+		end
+		owner
+	end
+
+	def build_owner
+		
 	end
 
 	# def double_check(&b)
