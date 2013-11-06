@@ -12,7 +12,7 @@ $ ->
         $("#address_row").show()
     else
         $("#address_row").hide()
-    $('div.Map').hide()
+    $('div.Schedule').hide()
     $('div.Description').hide()
     $('div.gallery').hide('fast')
     $('div.likes').hide()
@@ -37,8 +37,8 @@ $ ->
     $('div.Description').fadeOut('fast')
     $('div.likes').fadeOut('fast')
     $('div.gallery').fadeOut('fast')
-    $('div.Map').fadeIn('fast')
     $('div.Schedule').fadeOut('fast')
+    $('div.Map').fadeIn('fast')
     google.maps.event.trigger(map, 'resize')
 
 

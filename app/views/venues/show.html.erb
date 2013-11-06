@@ -30,8 +30,8 @@
   <div class="secondMenu">
     <nav id="secondary">
       <ul>
-        <li id="Schedule"><a href="#">Schedule</a></li>
         <li id="Map"><a href="#">Location</a></li>
+        <li id="Schedule"><a href="#">Schedule</a></li>
         <li id="Description"><a href="#">Description</a></li>
         <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @venue.flaggings.with_flag(:like).count %></span>)</a></li>
         <li id="gallery"><a href="#">gallery</a></li>
@@ -40,9 +40,6 @@
   </div>
   <div class="event">
     <div class="body">
-        <div class="Schedule">
-            here is where schedule goes.
-        </div>
         <div class="Map">
             <h2>Location:</h2>
             <%= gmaps(:markers => { :data => @json },
@@ -50,6 +47,9 @@
                           :auto_zoom => false,  # :auto_zoom defaults to full zoom in, set to false to utilize :zoom
                           :zoom => 16 } ) %>
          </div>
+        <div class="Schedule">
+            <%= render "schedule/new_session" %>
+        </div>
         <div class="Description">
             <p><%= @venue.descreption %></p>
 

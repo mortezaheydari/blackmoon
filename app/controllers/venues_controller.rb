@@ -11,7 +11,7 @@ class VenuesController < ApplicationController
 #		# like_card
 
 	def like
-		
+
 		@venue = Venue.find(params[:id])
 
 		if current_user.flagged?(@venue, :like)
@@ -116,7 +116,7 @@ class VenuesController < ApplicationController
 			params[:venue][:location][:gmaps] = true
 		end
 
-			double_check(venue_edit_path(@venue), "There has been a problem with data entry.") {
+			double_check(edit_venue_path(@venue), "There has been a problem with data entry.") {
 		@venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmap_use: params[:venue][:location][:gmap_use], custom_address: params[:venue][:location][:custom_address], gmaps: params[:venue][:location][:gmaps]) }
 
 		@venue.create_activity :update, owner: current_user
@@ -124,7 +124,7 @@ class VenuesController < ApplicationController
 	end
 
 	private
-	
+
 		def user_must_be_admin?
 			@venue = Venue.find(params[:id])
 			@user = current_user
