@@ -12,10 +12,24 @@ $ ->
         $("#address_row").show()
     else
         $("#address_row").hide()
+    $('div.Map').hide()
     $('div.Description').hide()
     $('div.gallery').hide('fast')
     $('div.likes').hide()
     $('nav#secondary ul li:first').addClass('navActive')
+
+
+  $('nav#secondary ul li#Schedule').click (e) ->
+    e.preventDefault()
+    $('nav#secondary ul li.navActive').removeClass()
+    $(@).addClass('navActive')
+    $('div.Description').fadeOut('fast')
+    $('div.likes').fadeOut('fast')
+    $('div.gallery').fadeOut('fast')
+    $('div.Schedule').fadeIn('fast')
+    $('div.Map').fadeOut('fast')
+
+
   $('nav#secondary ul li#Map').click (e) ->
     e.preventDefault()
     $('nav#secondary ul li.navActive').removeClass()
@@ -24,6 +38,10 @@ $ ->
     $('div.likes').fadeOut('fast')
     $('div.gallery').fadeOut('fast')
     $('div.Map').fadeIn('fast')
+    $('div.Schedule').fadeOut('fast')
+    google.maps.event.trigger(map, 'resize')
+
+
   $('nav#secondary ul li#Description').click (e) ->
     e.preventDefault()
     $('nav#secondary ul li.navActive').removeClass()
@@ -32,6 +50,9 @@ $ ->
     $('div.likes').fadeOut('fast')
     $('div.gallery').fadeOut('fast')
     $('div.Description').fadeIn('fast')
+    $('div.Schedule').fadeOut('fast')
+
+
   $('nav#secondary ul li#likes').click (e) ->
     e.preventDefault()
     $('nav#secondary ul li.navActive').removeClass()
@@ -40,6 +61,9 @@ $ ->
     $('div.Description').fadeOut('fast')
     $('div.gallery').fadeOut('fast')
     $('div.likes').fadeIn('fast')
+    $('div.Schedule').fadeOut('fast')
+
+
   $('nav#secondary ul li#gallery').click (e) ->
     e.preventDefault()
     $('nav#secondary ul li.navActive').removeClass()
@@ -48,6 +72,9 @@ $ ->
     $('div.Description').fadeOut('fast')
     $('div.likes').fadeOut('fast')
     $('div.gallery').fadeIn('fast')
+    $('div.Schedule').fadeOut('fast')
+
+
   $('input#venue_location_gmap_use').click (e) ->
     if $(@).attr('checked')
         $(".g_rows").show()
