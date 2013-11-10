@@ -40,15 +40,15 @@ module Joinable
 ### single session
         else
 
-        # before_save :default_values
+        before_save :default_values
 
-        # def default_values
-        #     if self.class.to_s == "OfferingSession"
-        #         self.number_of_attendings ||= 1
-        #     else
-        #         self.number_of_attendings ||= 0
-        #     end
-        # end
+        def default_values
+            if self.class.to_s == "OfferingSession"
+                self.number_of_attendings ||= 1
+            else
+                self.number_of_attendings ||= 0
+            end
+        end
 
             has_many :offering_individual_participations, as: :offering, :dependent => :destroy; accepts_nested_attributes_for :offering_individual_participations
         end

@@ -14,7 +14,7 @@ class OfferingSessionsController < ApplicationController
 			double_check {
 		name_is_valid?(owner_type) }
 
-		@offering_session = OfferingSession.new
+		@offering_session = OfferingSession.new(descreption: params[:offering_session][:descreption], number_of_attendings: params[:offering_session][:number_of_attendings], title: params[:offering_session][:title])
 
 		# need collective or not?
 		case params[:offering_session][:collective_type]
@@ -23,7 +23,7 @@ class OfferingSessionsController < ApplicationController
 			# if creating mmultiple sessions, must automaticly create a collective to contain them. This allows user to delete those sessions easily in case of any mistakes by deleting the collectives.
 			case params[:offering_session][:collection_flag]
 			when "true"
-				@collective = create_collective(params[:offering_session][:offering_session][:title], @owner.class.to_s, @owner.id)
+				@collective = create_collective(params[:offering_session][:title], @owner.class.to_s, @owner.id)
 				@offering_session.owner = @collective.owner
 				@offering_session.collective = @collective
 			else

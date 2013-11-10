@@ -92,6 +92,8 @@ class VenuesController < ApplicationController
                         @offering_session =  OfferingSession.new
                         @offering_session.happening_case = HappeningCase.new
 
+                        @sessions = @venue.offering_sessions
+
 		@json = @venue.location.to_gmaps4rails
 
 		@likes = @venue.flaggings.with_flag(:like)

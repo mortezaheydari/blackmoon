@@ -1397,6 +1397,12 @@ form {
 
 ////////// Offering create/edit/management  //////////
 
+h2.header_text {
+    color: $TextColor;
+    font-weight: bold;
+}
+
+
 .offering {
       @include column(20);
       @include divReset;
@@ -1427,10 +1433,13 @@ form {
         }
       }
       form {
-        label {
+        label, span {
             font-size: 0.8em;
             line-height: 30px;
             color: $TextColor;
+        }
+        span {
+            line-height: 20px;
         }
         input {
             @include TextFields;
@@ -1759,7 +1768,6 @@ div#SignUp {
 
 
 /* End of declarations */
-
 
 
 

@@ -1,0 +1,10 @@
+<table>
+    <% @sessions.each do |session| %>
+        <tr>
+            <td><%= session.title %></td>
+            <td><%= session.descreption %></td>
+            <td> <a href="#">Edit</a> </td>
+        </tr>
+    <% end -%>
+</table>
+
