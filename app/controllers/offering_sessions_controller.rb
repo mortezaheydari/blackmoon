@@ -9,7 +9,7 @@ class OfferingSessionsController < ApplicationController
 		# initial assignments
 		owner_type = params[:offering_session][:owner_type]
 		owner_id = params[:offering_session][:owner_id]
-		# params[:offering_session][:happening_case][:date_and_time] = date_helper_to_str(params[:offering_session][:happening_case][:date_and_time])
+		params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
 
 			double_check {
 		name_is_valid?(owner_type) }
@@ -65,18 +65,18 @@ class OfferingSessionsController < ApplicationController
 				 }
 
 			# build multiple sessions, if "All Day" or "Range"
-			if params[:offering_session][:happening_case][:duration_type] == "All Day"
+			if params[:happening_case][:duration_type] == "All Day"
 				double_check(@owner) { !(params[:offering_session][:repeat_duration] == "hour") }
 				@repeat_number.times do |i|
-				happening_case = @offering_session.build_happening_case(params[:offering_session][:happening_case])
-				happening_case.date_and_time = (params[:offering_session][:happening_case][:date_and_time] + (@repeat_every.send(@repeat_duration))*i)
+				happening_case = @offering_session.build_happening_case(params[:happening_case])
+				happening_case.date_and_time = (params[:happening_case][:date_and_time] + (@repeat_every.send(@repeat_duration))*i)
 				end
 
-			elsif params[:offering_session][:happening_case][:duration_type] == "Range"
+			elsif params[:happening_case][:duration_type] == "Range"
 				@repeat_number.times do |i|
-				happening_case = @offering_session.build_happening_case(params[:offering_session][:happening_case])
-				happening_case.time_from = (params[:offering_session][:happening_case][:time_from] + (@repeat_every.send(@repeat_duration))*i)
-				happening_case.time_to = (params[:offering_session][:happening_case][:time_to] + (@repeat_every.send(@repeat_duration))*i)
+				happening_case = @offering_session.build_happening_case(params[:happening_case])
+				happening_case.time_from = (params[:happening_case][:time_from] + (@repeat_every.send(@repeat_duration))*i)
+				happening_case.time_to = (params[:happening_case][:time_to] + (@repeat_every.send(@repeat_duration))*i)
 				end
 
 			else
@@ -85,25 +85,19 @@ class OfferingSessionsController < ApplicationController
 
 
 		else
-			@offering_session.build_happening_case(params[:offering_session][:happening_case])
+			@offering_session.build_happening_case(params[:happening_case])
 
-				# double_check { @offering_session.save }
+				double_check { @offering_session.save }
 		end
 
-                        if @offering_session.save
+                        # return message.
+                        msg = "Session has been created."
+                        msg = "Sessions have been created." if params[:offering_session][:collection_flag] == "true"
 
-            		# return message.
-            		msg = "Session has been created."
-            		msg = "Sessions have been created." if params[:offering_session][:collection_flag] == "true"
-
-            	    respond_to do |format|
-            	        format.html { redirect_to @owner, notice: msg }
-            	        format.js
-            	    end
-
-                    else
-                        redirect_to root_path
-                    end
+                        respond_to do |format|
+                            format.html { redirect_to @owner, notice: msg }
+                            format.js
+                        end
 
 	end
 

@@ -89,7 +89,9 @@ class VenuesController < ApplicationController
 	def show
 		@venue = Venue.find(params[:id])
                         @date_and_time = Time.now
-                        @OfferingSession =  OfferingSession.new
+                        @offering_session =  OfferingSession.new
+                        @offering_session.happening_case = HappeningCase.new
+
 		@json = @venue.location.to_gmaps4rails
 
 		@likes = @venue.flaggings.with_flag(:like)
