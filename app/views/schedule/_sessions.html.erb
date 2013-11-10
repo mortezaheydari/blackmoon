@@ -1,10 +1,17 @@
-<table>
-    <% @sessions.each do |session| %>
-        <tr>
-            <td><%= session.title %></td>
-            <td><%= session.descreption %></td>
-            <td> <a href="#">Edit</a> </td>
-        </tr>
-    <% end -%>
-</table>
-
+<div id="articles">
+  <h2 id="month">
+    <%= link_to "<", date: @date.prev_month %>
+    <%= @date.strftime("%B %Y") %>
+    <%= link_to ">", date: @date.next_month %>
+  </h2>
+  <%= calendar @date do |date| %>
+    <%= date.day %>
+    <% if @sessions_by_date[date] %>
+      <ul>
+        <% @sessions_by_date[date].each do |session| %>
+          <li>fdsa<%= link_to session.title, session %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>

@@ -94,6 +94,9 @@ class VenuesController < ApplicationController
 
                         @sessions = @venue.offering_sessions
 
+                        @sessions_by_date = @sessions.happening_case.group_by(&:date_and_time)
+                        @date = params[:date] ? Date.parse(params[:date]) : Date.today
+
 		@json = @venue.location.to_gmaps4rails
 
 		@likes = @venue.flaggings.with_flag(:like)

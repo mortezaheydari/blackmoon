@@ -38,7 +38,7 @@ group :assets do
 	gem 'uglifier', '1.2.3'
   gem 'compass-rails'
 
-
+  gem 'jquery-ui-rails'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 end

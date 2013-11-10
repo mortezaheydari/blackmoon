@@ -9,7 +9,7 @@ class OfferingSessionsController < ApplicationController
 		# initial assignments
 		owner_type = params[:offering_session][:owner_type]
 		owner_id = params[:offering_session][:owner_id]
-		params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
+		params[:happening_case][:date_and_time] = params[:happening_case][:date_and_time]
 
 			double_check {
 		name_is_valid?(owner_type) }

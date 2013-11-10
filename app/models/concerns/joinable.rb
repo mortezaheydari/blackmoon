@@ -118,7 +118,17 @@ module Joinable
 #
 
 # Happenable
-        unless ["Team", "Venue"].include? self.name
+        if "Venue" == self.name
+            def happening_cases
+                @happening_cases = []
+                self.offering_sessions.each do |offering_session|
+                    @happening_cases << offering_session.happening_case
+                end
+                @happening_cases
+            end
+        elsif "Team" == self.name
+
+        else
             has_one :happening_case, as: :happening, :dependent => :destroy; accepts_nested_attributes_for :happening_case
         end
 #

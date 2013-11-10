@@ -2,6 +2,9 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
+  $('#happening_case_date_and_time').datepicker
+    dateFormat: 'yy-mm-dd'
+
   $(document).ready ->
     gmarkers = []
     if $("input#venue_location_gmap_use").attr('checked')
