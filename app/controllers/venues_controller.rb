@@ -106,6 +106,8 @@ class VenuesController < ApplicationController
 		@location = @venue.location
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Venue", trackable_id: @venue.id)
 		@recent_activities = @recent_activities.order("created_at desc")
+
+		@sorted_sessions = sorted_offering_sessions(@venue)
 	end
 
 	def edit
@@ -138,6 +140,21 @@ class VenuesController < ApplicationController
 			@venue = Venue.find(params[:id])
 			@user = current_user
 			redirect_to(@venue) unless @venue.administrators.include?(@user)
+		end
+
+		def sorted_offering_sessions(venue)
+			session_id_list = []
+			venue.offering_sessions.each do |offerin_session|
+				session_id_list << offering_session.id
+			end
+
+			sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).group_by &:date_and_time
+
+			sorted_sessions = []
+			sorted_happening_cases.each do |happening_case|
+				sorted_sessions << happening_case.id
+			end
+			sorted_sessions
 		end
 
 end
