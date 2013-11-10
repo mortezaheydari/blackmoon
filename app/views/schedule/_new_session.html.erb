@@ -1,3 +1,64 @@
 <div>
     <h2>New Session</h2>
+        <%= form_for(@OfferingSession) do |f| %>
+        <table width="100%">
+            <tr>
+                <td>
+                    <%= f.label :collective_type %>
+                </td>
+                <td>
+                    <%= f.select :collective_type, ["none", "existing", "new"] %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.label :descreption, "Description" %>
+                </td>
+                <td>
+                    <%= f.text_field :descreption %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.label :number_of_attendings %>
+                </td>
+                <td>
+                    <%= f.text_field :number_of_attendings %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.label :title %>
+                </td>
+                <td>
+                    <%= f.text_field :title %>
+                </td>
+            </tr>
+                    <%= render "shared/happening_case", date_and_time: @date_and_time %>
+            <tr>
+                <td>
+                    <%= f.label :collection_flag %>
+                </td>
+                <td>
+                    <%= f.check_box :collection_flag %>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Repeat every <%= f.select :repeat_every, ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"] %> <%= f.select :repeat_duration, ["hour", "day", "week", 'month'] %> for <%= f.select :repeat_number, ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"] %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.hidden_field :owner_type, value: "Venue" %>
+                    <%= f.hidden_field :owner_id, value: @venue.id %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.submit "Create the Session", class: "button grey submitBtn homeBtn left" %>
+                </td>
+            </tr>
+        </table>
+        <% end -%>
 </div>

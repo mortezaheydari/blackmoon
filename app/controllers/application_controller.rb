@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
 	end
 
 
-	# find and assign, dose it without administration check, 
+	# find and assign, dose it without administration check,
 	# whereas this_if_reachable might also consider (this.administrators.include? current_user).
 
 	def find_and_assign this_type, this_id
@@ -50,20 +50,21 @@ class ApplicationController < ActionController::Base
 		name_is_valid?(this_type) unless this_type == "Collective"
 		this = this_type.constantize.find(this_id)
 		double_check { this }
+                        this
 	end
-	
+
 	def owner_if_reachable(owner_type, owner_id)
-		owner = this_if_reachable(owner_type, owner_id)
+		@owner = this_if_reachable(owner_type, owner_id)
 		if owner_type == "Collective"
-			double_check { owner.owner.administrators.include? current_user } 
+			double_check { @owner.owner.administrators.include? current_user }
 		else
-			double_check { owner.administrators.include? current_user } 
+			double_check { @owner.administrators.include? current_user }
 		end
-		owner
+		@owner
 	end
 
 	def build_owner
-		
+
 	end
 
 	# def double_check(&b)

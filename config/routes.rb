@@ -41,6 +41,14 @@ Blackmoon::Application.routes.draw do
 
     resources :relationships, only: [ :create, :destroy ]
 
+
+    resources :offering_sessions do
+        member do
+            get 'release'
+            get 'destroy_collective'
+        end
+    end
+
     # resources :offering_individual_participations
     post 'offering_individual_participations/create'
     post 'offering_individual_participations/destroy'
