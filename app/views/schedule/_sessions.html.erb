@@ -6,10 +6,15 @@
   </h2>
   <%= calendar @date do |date| %>
     <%= date.day %>
-    <% if @sessions_by_date[date] %>
+    <% if @grouped_sessions[date] %>
       <ul>
-        <% @sessions_by_date[date].each do |session| %>
-          <li>fdsa<%= link_to session.title, session %></li>
+        <% @grouped_sessions[date].each do |session| %>
+          <li><%= link_to session.title, session %>
+            <% unless session.happening_case.duration_type == "All Day" %>
+                <br>
+                ( <%= session.happening_case.time_from.strftime('%H:%M') %> to <%= session.happening_case.time_to.strftime('%H:%M') %> )
+            <%- end %>
+          </li>
         <% end %>
       </ul>
     <% end %>

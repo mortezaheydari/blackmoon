@@ -1,6 +1,7 @@
 class VenuesController < ApplicationController
 
 	include SessionsHelper
+            include VenueHelper
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
@@ -92,9 +93,9 @@ class VenuesController < ApplicationController
                         @offering_session =  OfferingSession.new
                         @offering_session.happening_case = HappeningCase.new
 
-                        @sessions = @venue.offering_sessions
+                        # @sessions = @venue.offering_sessions
 
-                        @sessions_by_date = @sessions.happening_case.group_by(&:date_and_time)
+                        # @sessions_by_date = @sessions.happening_case.group_by(&:date_and_time)
                         @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
 		@json = @venue.location.to_gmaps4rails
@@ -106,8 +107,14 @@ class VenuesController < ApplicationController
 		@location = @venue.location
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Venue", trackable_id: @venue.id)
 		@recent_activities = @recent_activities.order("created_at desc")
+                        #@grouped_happening_cases = HappeningCase.all.group_by(&:date_and_time)
+                        @grouped_happening_cases = grouped_happening_cases(@venue)
+                        @grouped_sessions = replace_with_happening(@grouped_happening_cases)
 
-		@sorted_sessions = sorted_offering_sessions(@venue)
+
+		# @grouped_happening_cases = grouped_happening_cases(@venue)
+
+                        @date = params[:date] ? Date.parse(params[:date]) : Date.today
 	end
 
 	def edit
@@ -144,17 +151,37 @@ class VenuesController < ApplicationController
 
 		def sorted_offering_sessions(venue)
 			session_id_list = []
-			venue.offering_sessions.each do |offerin_session|
-				session_id_list << offering_session.id
+			venue.offering_sessions.each do |os|
+				session_id_list << os.id
 			end
 
-			sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).group_by &:date_and_time
+			sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).order(:date_and_time)
 
 			sorted_sessions = []
-			sorted_happening_cases.each do |happening_case|
-				sorted_sessions << happening_case.id
+			sorted_happening_cases.each do |hc|
+				sorted_sessions << hc.id
 			end
 			sorted_sessions
 		end
 
+                        def grouped_happening_cases(venue)
+                            session_id_list = []
+                            venue.offering_sessions.each do |os|
+                                session_id_list << os.id
+                            end
+
+                            sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).group_by(&:date_and_time)
+                        end
+
+
+                        def replace_with_happening(grouped_happening_cases)
+                            grouped_sessions = Hash.new
+                            grouped_happening_cases.each do |key, value|
+                                grouped_sessions[key.to_date] = []
+                                value.each do |happening_case|
+                                    grouped_sessions[key.to_date] << happening_case.happening
+                                end
+                            end
+                            grouped_sessions
+                        end
 end
