@@ -17,6 +17,7 @@ gem "paperclip", "~> 3.0"
 gem 'activeadmin'
 gem 'gmaps4rails', "1.5"
 gem 'chronic'
+gem 'metric_fu'
 
 gem 'make_flaggable', :git => 'git://github.com/cavneb/make_flaggable.git'
 

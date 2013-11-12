@@ -83,21 +83,20 @@ class OfferingSessionsController < ApplicationController
 				double_check(@owner) { false }
 			end
 
-
 		else
 			@offering_session.build_happening_case(params[:happening_case])
 
 				double_check { @offering_session.save }
 		end
 
-                        # return message.
-                        msg = "Session has been created."
-                        msg = "Sessions have been created." if params[:offering_session][:collection_flag] == "true"
+	    # return message.
+	    msg = "Session has been created."
+	    msg = "Sessions have been created." if params[:offering_session][:collection_flag] == "true"
 
-                        respond_to do |format|
-                            format.html { redirect_to @owner, notice: msg }
-                            format.js
-                        end
+	    respond_to do |format|
+	        format.html { redirect_to @owner, notice: msg }
+	        format.js
+	    end
 
 	end
 
@@ -113,14 +112,13 @@ class OfferingSessionsController < ApplicationController
 			double_check(@owner, "This session has participators and can not be updated.") {
 		@offering_session.individual_participators.count == 0 }
 
-		params[:offering_session][:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
-
 		@collective = Collective.find params[:offering_session][:collective_id]
 			double_check {
-		@owner.collectives.include? @collective
-		}
+		@owner.collectives.include? @collective }
 			double_check {
     	@offering_session.update_attributes(params[:offering_session]) } # should become more secure in future.
+			double_check {
+    	@offering_session.happening_case.update_attributes(params[:happening_case]) } # should become more secure in future.
 
 	    respond_to do |format|
 	        format.html { redirect_to @owner, notice: "Session has been updated." }

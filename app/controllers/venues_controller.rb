@@ -89,22 +89,22 @@ class VenuesController < ApplicationController
 
 	def show
 		@venue = Venue.find(params[:id])
-                        @date_and_time = Time.now
-                        @offering_session =  OfferingSession.new
+        @offering_session =  OfferingSession.new
 
-                        if params[:session_id]
-                            @offering_session_edit = OfferingSession.find(params[:session_id])
-                            @date_and_time = @offering_session_edit.happening_case.date_and_time
-                        else
-                            @offering_session_edit = OfferingSession.find(1)
-                        end
+        if params[:session_id]
+            @offering_session_edit = OfferingSession.find(params[:session_id])
+            @edit_happening_case = @offering_session_edit.happening_case
+        else
+            @offering_session_edit = OfferingSession.find(1)
+            @edit_happening_case = @offering_session_edit.happening_case            
+        end
 
-                        @offering_session.happening_case = HappeningCase.new
+        @offering_session.happening_case = HappeningCase.new
 
-                        # @sessions = @venue.offering_sessions
+        # @sessions = @venue.offering_sessions
 
-                        # @sessions_by_date = @sessions.happening_case.group_by(&:date_and_time)
-                        @date = params[:date] ? Date.parse(params[:date]) : Date.today
+        # @sessions_by_date = @sessions.happening_case.group_by(&:date_and_time)
+        @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
 		@json = @venue.location.to_gmaps4rails
 
@@ -115,14 +115,14 @@ class VenuesController < ApplicationController
 		@location = @venue.location
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Venue", trackable_id: @venue.id)
 		@recent_activities = @recent_activities.order("created_at desc")
-                        #@grouped_happening_cases = HappeningCase.all.group_by(&:date_and_time)
-                        @grouped_happening_cases = grouped_happening_cases(@venue)
-                        @grouped_sessions = replace_with_happening(@grouped_happening_cases)
+        #@grouped_happening_cases = HappeningCase.all.group_by(&:date_and_time)
+        @grouped_happening_cases = grouped_happening_cases(@venue)
+        @grouped_sessions = replace_with_happening(@grouped_happening_cases)
 
 
 		# @grouped_happening_cases = grouped_happening_cases(@venue)
 
-                        @date = params[:date] ? Date.parse(params[:date]) : Date.today
+        @date = params[:date] ? Date.parse(params[:date]) : Date.today
 	end
 
 	def edit

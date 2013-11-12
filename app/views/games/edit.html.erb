@@ -102,7 +102,7 @@
                                         <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
                                         <td><%= f.number_field :number_of_attendings %></td>
                                     </tr>
-                                        <%= render "shared/happening_case", date_and_time: @date_and_time %>
+                                        <%= render "shared/happening_case", happening_case: @happening_case %>
                                     <tr>
                                         <td><%= f.label :team_participation, "Team Participation" %></td>
                                         <td><%= f.select :team_participation, {"Yes" => true, "No" => false} %></td>
