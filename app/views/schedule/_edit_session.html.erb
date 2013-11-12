@@ -1,0 +1,63 @@
+<%= @offering_session_edit.happening_case.date_and_time %>
+
+<div class="body">
+    <h2 class="header_text">Edit Session</h2>
+    <div class="offering">
+        <%= form_for(@offering_session_edit) do |f| %>
+        <table width="100%">
+            <tr>
+                <td width="130">
+                    <%= f.label :collective_type %>
+                </td>
+                <td>
+                    <%= f.select :collective_type, ["none", "existing", "new"] %>
+                </td>
+            </tr>
+            <tr>
+                <td width="130">
+                    <%= f.label :descreption, "Description" %>
+                </td>
+                <td>
+                    <%= f.text_field :descreption %>
+                </td>
+            </tr>
+            <tr>
+                <td width="130">
+                    <%= f.label :number_of_attendings %>
+                </td>
+                <td>
+                    <%= f.text_field :number_of_attendings %>
+                </td>
+            </tr>
+            <tr>
+                <td width="130">
+                    <%= f.label :title %>
+                </td>
+                <td>
+                    <%= f.text_field :title %>
+                </td>
+            </tr>
+                    <%= render "shared/happening_case", date_and_time: @date_and_time %>
+            <tr>
+                <td width="130">
+                    <%= f.label :collection_flag %>
+                </td>
+                <td>
+                    <%= f.check_box :collection_flag %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.hidden_field :owner_type, value: "Venue" %>
+                    <%= f.hidden_field :owner_id, value: @venue.id %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%= f.submit "Create the Session", class: "button grey submitBtn homeBtn left" %>
+                </td>
+            </tr>
+        </table>
+        <% end -%>
+    </div>
+</div>

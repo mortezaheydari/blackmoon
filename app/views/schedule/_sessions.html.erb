@@ -9,7 +9,7 @@
     <% if @grouped_sessions[date] %>
       <ul>
         <% @grouped_sessions[date].each do |session| %>
-          <li><%= link_to session.title, session %>
+          <li><%= link_to session.title, venue_path(venue, session_id: session.id) %>
             <% unless session.happening_case.duration_type == "All Day" %>
                 <br>
                 ( <%= session.happening_case.time_from.strftime('%H:%M') %> to <%= session.happening_case.time_to.strftime('%H:%M') %> )

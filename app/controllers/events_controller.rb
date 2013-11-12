@@ -73,7 +73,7 @@ class EventsController < ApplicationController
       double_check(new_event_path, "there has been a problem with data entry.") {
     @event.save }
 
-    params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
+    params[:happening_case][:date_and_time] = params[:date_and_time]
 
     @event.create_happening_case(params[:happening_case])
     @event.create_activity :create, owner: current_user
@@ -122,7 +122,7 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
-    @date_and_time = @event.happening_case.date_and_time
+    @happening_case = @event.happening_case
     @event.album ||= Album.new
     @photo = Photo.new
     @photo.title = "Logo"
@@ -133,13 +133,12 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
 
     # @event.date_and_time = date_helper_to_str(params[:date_and_time])
-    params[:happening_case][:date_and_time] = date_helper_to_str(params[:date_and_time])
-
+    # params[:happening_case][:date_and_time] = params[:date_and_time]
 
 
       double_check(edit_event_path(@event)) {
     @event.update_attributes(params[:event]) } # should become more secure in future.
-
+    @event.happening_case.update_attributes! params[:happening_case]
     @event.create_activity :update, owner: current_user
 
 

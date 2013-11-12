@@ -91,6 +91,14 @@ class VenuesController < ApplicationController
 		@venue = Venue.find(params[:id])
                         @date_and_time = Time.now
                         @offering_session =  OfferingSession.new
+
+                        if params[:session_id]
+                            @offering_session_edit = OfferingSession.find(params[:session_id])
+                            @date_and_time = @offering_session_edit.happening_case.date_and_time
+                        else
+                            @offering_session_edit = OfferingSession.find(1)
+                        end
+
                         @offering_session.happening_case = HappeningCase.new
 
                         # @sessions = @venue.offering_sessions
