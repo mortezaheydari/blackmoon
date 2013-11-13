@@ -4,6 +4,8 @@
 $ ->
   $('#happening_case_date_and_time').datepicker
     dateFormat: 'yy-mm-dd'
+  $('#edit_happening_case_date_and_time').datepicker
+    dateFormat: 'yy-mm-dd'
 
   $(document).ready ->
     gmarkers = []

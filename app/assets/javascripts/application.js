@@ -159,6 +159,8 @@ $(document).ready(function() {
     $("tr.evdata").hide();
     $("tr.gmdata").hide();
     $("tr.tmdata").hide();
+
+    alert($("#edit_happening_case_duration_type").val());
     $("tr.allday").show();
     $("tr.range").hide();
 

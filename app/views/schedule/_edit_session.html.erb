@@ -37,7 +37,7 @@
                     <%= f.text_field :title %>
                 </td>
             </tr>
-                    <%= render "shared/happening_case", happening_case: @happening_case %>
+                    <%= render "shared/happening_case", happening_case: @edit_happening_case, date_id: "edit_happening_case_date_and_time", duration_id: "edit_happening_case_duration_type" %>
             <tr>
                 <td width="130">
                     <%= f.label :collection_flag %>

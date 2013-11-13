@@ -96,11 +96,10 @@ class VenuesController < ApplicationController
             @edit_happening_case = @offering_session_edit.happening_case
         else
             @offering_session_edit = OfferingSession.find(1)
-            @edit_happening_case = @offering_session_edit.happening_case            
+            @edit_happening_case = @offering_session_edit.happening_case
         end
 
-        @offering_session.happening_case = HappeningCase.new
-
+        @happening_case = HappeningCase.new
         # @sessions = @venue.offering_sessions
 
         # @sessions_by_date = @sessions.happening_case.group_by(&:date_and_time)
