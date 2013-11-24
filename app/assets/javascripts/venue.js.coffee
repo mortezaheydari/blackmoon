@@ -2,12 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
-  $('#happening_case_date_and_time').datepicker
-    dateFormat: 'yy-mm-dd'
-  $('#edit_happening_case_date_and_time').datepicker
-    dateFormat: 'yy-mm-dd'
-
   $(document).ready ->
+    $('#happening_case_date_and_time').datepicker
+        dateFormat: 'yy-mm-dd'
+    $('#edit_happening_case_date_and_time').datepicker
+        dateFormat: 'yy-mm-dd'
+    if $(".edit_offering_session select#happening_case_duration_type").val() == "Range"
+        $(".edit_offering_session tr.range").show()
+    else
+        $(".edit_offering_session tr.range").hide()
     gmarkers = []
     if $("input#venue_location_gmap_use").attr('checked')
         $(".g_rows").show()

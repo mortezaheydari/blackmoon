@@ -160,7 +160,6 @@ $(document).ready(function() {
     $("tr.gmdata").hide();
     $("tr.tmdata").hide();
 
-    alert($("#edit_happening_case_duration_type").val());
     $("tr.allday").show();
     $("tr.range").hide();
 
@@ -280,6 +279,15 @@ $(document).ready(function() {
             $("tr.range").hide();
         } else if ($(this).val() == 'Range') {
             $("tr.range").show();
+        }
+    });
+
+    $(".edit_offering_session select#happening_case_duration_type").change( function() {
+        if ($(this).val() == 'All Day') {
+            $(".edit_offering_session tr.allday").show();
+            $(".edit_offering_session tr.range").hide();
+        } else if ($(this).val() == 'Range') {
+            $(".edit_offering_session tr.range").show();
         }
     });
 
