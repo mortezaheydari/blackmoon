@@ -37,8 +37,9 @@ class OfferingSessionsController < ApplicationController
 			@offering_session.collection_id = @collctive.id
 
 		when "new"
+                                    assign_offering_session_owner
 			@collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id)
-			@offering_session.owner = @collective.owner
+			# @offering_session.owner = @collective.owner
 			@offering_session.collective = @collective
 
 		else
@@ -102,8 +103,8 @@ class OfferingSessionsController < ApplicationController
 
 	def update # offering_session
 		# find owner and offering_session
-		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
-		@offering_session.find(params[:offering_session_id])
+		@owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])
+		@offering_session = OfferingSession.find(params[:id])
 			double_check(@owner) {
 		@owner.offering_sessions.include? @offering_session	}
 
@@ -111,10 +112,14 @@ class OfferingSessionsController < ApplicationController
 
 			double_check(@owner, "This session has participators and can not be updated.") {
 		@offering_session.individual_participators.count == 0 }
+                        unless params[:offering_session][:collective_type] == "none" || @offering_session.collective_id == params[:offering_session][:collective_id]
+            		@collective = Collective.find params[:offering_session][:collective_id]
+            			double_check {
+                		@owner.collectives.include? @collective }
+                        end
 
-		@collective = Collective.find params[:offering_session][:collective_id]
-			double_check {
-		@owner.collectives.include? @collective }
+                        params[:offering_session].delete :collective_type
+
 			double_check {
     	@offering_session.update_attributes(params[:offering_session]) } # should become more secure in future.
 			double_check {
@@ -205,13 +210,13 @@ class OfferingSessionsController < ApplicationController
 		def create_collective(title, owner_type, owner_id, owner_safe=false)
 			name_is_valid?(owner_type)
 			collective = Collective.new(title: title, owner_type: owner_type, owner_id: owner_id)
-			if owner_safe
-				collective.owner_type = owner_type
-				collective.owner_id = owner_id
-			else
-				owner = owner_if_reachable(owner_type, owner_id)
-				collective.owner = owner
-			end
+			# if owner_safe
+			# 	collective.owner_type = owner_type
+			# 	collective.owner_id = owner_id
+			# else
+			# 	owner = owner_if_reachable(owner_type, owner_id)
+			# 	collective.owner = owner
+			# end
 				double_check {
 			collective.save }
 			collective
