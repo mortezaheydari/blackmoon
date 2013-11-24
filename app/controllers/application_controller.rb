@@ -54,13 +54,13 @@ class ApplicationController < ActionController::Base
 	end
 
 	def owner_if_reachable(owner_type, owner_id)
-		@owner = this_if_reachable(owner_type, owner_id)
+		owner = this_if_reachable(owner_type, owner_id)
 		if owner_type == "Collective"
-			double_check { @owner.owner.administrators.include? current_user }
+			double_check { owner.owner.administrators.include? current_user }
 		else
-			double_check { @owner.administrators.include? current_user }
+			double_check { owner.administrators.include? current_user }
 		end
-		@owner
+		owner
 	end
 
 	def build_owner

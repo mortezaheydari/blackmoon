@@ -22,9 +22,10 @@ class OfferingSessionsController < ApplicationController
 		when "", nil, " ", "none"
 			# if creating mmultiple sessions, must automaticly create a collective to contain them. This allows user to delete those sessions easily in case of any mistakes by deleting the collectives.
 			case params[:offering_session][:collection_flag]
-			when "true"
+			when "1"
+                                                assign_offering_session_owner
 				@collective = create_collective(params[:offering_session][:title], @owner.class.to_s, @owner.id)
-				@offering_session.owner = @collective.owner
+				# @offering_session.owner = @collective.owner
 				@offering_session.collective = @collective
 			else
 				assign_offering_session_owner
@@ -34,7 +35,7 @@ class OfferingSessionsController < ApplicationController
 		when "existing"
 			assign_offering_session_owner
 			@collective = owner_if_reachable("Collective", params[:offering_session][:collective_id])
-			@offering_session.collection_id = @collctive.id
+			@offering_session.collective_id = @collective.id
 
 		when "new"
                                     assign_offering_session_owner
@@ -48,7 +49,7 @@ class OfferingSessionsController < ApplicationController
 		end
 
 		# single or multiple?
-		if params[:offering_session][:collection_flag] == "true"
+		if params[:offering_session][:collection_flag] == "1"
 
 			# create them (redirect if not)
 
@@ -58,27 +59,39 @@ class OfferingSessionsController < ApplicationController
 
 			# repeat request is proper?
 			double_check(@owner) {
-				(["hour", "day", "month"].include? @repeat_duration) &&
-				@repeat_number<26 &&
-				@repeat_number>0 &&
-				@repeat_every< 26 &&
-				@repeat_every> 0
+				(["hour", "day", "month"].include? @repeat_duration) #&&
+				# @repeat_number < 26 &&
+				# @repeat_number > 0 &&
+				# @repeat_every < 26 &&
+				# @repeat_every > 0
 				 }
-
+                                    @attributes = @offering_session.attributes
+                                    ["id", "created_at", "updated_at"].each do |key|
+                                        @attributes.delete key
+                                    end
 			# build multiple sessions, if "All Day" or "Range"
 			if params[:happening_case][:duration_type] == "All Day"
 				double_check(@owner) { !(params[:offering_session][:repeat_duration] == "hour") }
 				@repeat_number.times do |i|
-				happening_case = @offering_session.build_happening_case(params[:happening_case])
-				happening_case.date_and_time = (params[:happening_case][:date_and_time] + (@repeat_every.send(@repeat_duration))*i)
+                                                            @the_offering_session = OfferingSession.new(@attributes)
+            				happening_case = @the_offering_session.build_happening_case(params[:happening_case])
+            				happening_case.date_and_time = (happening_case.date_and_time + (@repeat_every.send(@repeat_duration))*i)
+                                                            @the_offering_session.save
 				end
 
 			elsif params[:happening_case][:duration_type] == "Range"
-				@repeat_number.times do |i|
-				happening_case = @offering_session.build_happening_case(params[:happening_case])
-				happening_case.time_from = (params[:happening_case][:time_from] + (@repeat_every.send(@repeat_duration))*i)
-				happening_case.time_to = (params[:happening_case][:time_to] + (@repeat_every.send(@repeat_duration))*i)
-				end
+
+                                            # @offering_sessions_list = Hash.new
+
+                                            @repeat_number.times do |i|
+                                                @the_offering_session = OfferingSession.new(@attributes)
+
+				happening_case = @the_offering_session.build_happening_case(params[:happening_case])
+				happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
+				happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
+                                                @the_offering_session.save
+
+			         end
 
 			else
 				double_check(@owner) { false }

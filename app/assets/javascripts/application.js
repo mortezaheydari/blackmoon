@@ -163,6 +163,9 @@ $(document).ready(function() {
     $("tr.allday").show();
     $("tr.range").hide();
 
+    $("tr.existing_collective").hide();
+    $("tr.new_collective").hide();
+
     $('input.file').change(function() {
         $("p#fileName").text(this.value);
     });
@@ -279,6 +282,19 @@ $(document).ready(function() {
             $("tr.range").hide();
         } else if ($(this).val() == 'Range') {
             $("tr.range").show();
+        }
+    });
+
+    $("#offering_session_collective_type").change( function() {
+        if ($(this).val() == 'new') {
+            $("tr.new_collective").show();
+            $("tr.existing_collective").hide();
+        } else if ($(this).val() == 'existing') {
+            $("tr.existing_collective").show();
+            $("tr.new_collective").hide();
+        }  else if ($(this).val() == 'none') {
+            $("tr.existing_collective").hide();
+            $("tr.new_collective").hide();
         }
     });
 
