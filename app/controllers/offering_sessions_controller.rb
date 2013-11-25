@@ -133,6 +133,9 @@ class OfferingSessionsController < ApplicationController
 
                         params[:offering_session].delete :collective_type
 
+                        # to be used in case of changing collective_title
+                        collective_title = params[:offering_session].delete :collective_title
+
 			double_check {
     	@offering_session.update_attributes(params[:offering_session]) } # should become more secure in future.
 			double_check {

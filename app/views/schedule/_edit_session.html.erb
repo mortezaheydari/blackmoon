@@ -1,5 +1,3 @@
-<%= @offering_session_edit.happening_case.date_and_time %>
-
 <div class="body">
     <h2 class="header_text">Edit Session</h2>
     <div class="offering">
@@ -11,6 +9,22 @@
                 </td>
                 <td>
                     <%= f.select :collective_type, ["none", "existing", "new"] %>
+                </td>
+            </tr>
+            <tr class="new_collective">
+                <td width="130">
+                    <%= f.label :collective_title %>
+                </td>
+                <td>
+                    <%= f.text_field :collective_title %>
+                </td>
+            </tr>
+            <tr class="existing_collective">
+                <td width="130">
+                    <%= f.label :collective_id %>
+                </td>
+                <td>
+                    <%= f.select :collective_id, Collective.find(:all).collect {|c| [c.title, c.id]} %>
                 </td>
             </tr>
             <tr>

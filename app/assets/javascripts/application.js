@@ -298,6 +298,19 @@ $(document).ready(function() {
         }
     });
 
+    $(".edit_offering_session #offering_session_collective_type").change( function() {
+        if ($(this).val() == 'new') {
+            $(".edit_offering_session tr.new_collective").show();
+            $(".edit_offering_session tr.existing_collective").hide();
+        } else if ($(this).val() == 'existing') {
+            $(".edit_offering_session tr.existing_collective").show();
+            $(".edit_offering_session tr.new_collective").hide();
+        }  else if ($(this).val() == 'none') {
+            $(".edit_offering_session tr.existing_collective").hide();
+            $(".edit_offering_session tr.new_collective").hide();
+        }
+    });
+
     $(".edit_offering_session select#happening_case_duration_type").change( function() {
         if ($(this).val() == 'All Day') {
             $(".edit_offering_session tr.allday").show();

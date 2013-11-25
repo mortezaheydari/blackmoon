@@ -20,6 +20,17 @@ $ ->
         $("#address_row").show()
     else
         $("#address_row").hide()
+
+    if ($(".edit_offering_session #offering_session_collective_type").val() == 'new')
+        $(".edit_offering_session tr.new_collective").show()
+        $(".edit_offering_session tr.existing_collective").hide()
+    else if ($(".edit_offering_session #offering_session_collective_type").val() == 'existing')
+        $(".edit_offering_session tr.existing_collective").show()
+        $(".edit_offering_session tr.new_collective").hide()
+    else if ($(".edit_offering_session #offering_session_collective_type").val() == 'none')
+        $(".edit_offering_session tr.existing_collective").hide()
+        $(".edit_offering_session tr.new_collective").hide()
+
     $('div.Schedule').hide()
     $('div.Description').hide()
     $('div.gallery').hide('fast')
