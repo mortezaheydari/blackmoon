@@ -31,11 +31,14 @@ $ ->
         $(".edit_offering_session tr.existing_collective").hide()
         $(".edit_offering_session tr.new_collective").hide()
 
-    $('div.Schedule').hide()
+    $('div.Schedule').show()
     $('div.Description').hide()
     $('div.gallery').hide('fast')
     $('div.likes').hide()
-    $('nav#secondary ul li:first').addClass('navActive')
+    $('div.Map').show()
+    $('div.Map').hide()
+    $('nav#secondary ul li.navActive').removeClass()
+    $('nav#secondary ul li#Schedule').addClass('navActive')
 
 
   $('nav#secondary ul li#Schedule').click (e) ->
@@ -59,7 +62,6 @@ $ ->
     $('div.Schedule').fadeOut('fast')
     $('div.Map').fadeIn('fast')
     google.maps.event.trigger(map, 'resize')
-
 
   $('nav#secondary ul li#Description').click (e) ->
     e.preventDefault()
