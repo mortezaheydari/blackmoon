@@ -40,6 +40,17 @@ $ ->
     $('nav#secondary ul li.navActive').removeClass()
     $('nav#secondary ul li#Schedule').addClass('navActive')
 
+    $("div.new_offering_session").hide()
+    $("div.edit_offering_session").hide()
+
+
+  $('a#new_offering_session').click (e) ->
+    e.preventDefault()
+    $("div.new_offering_session").slideDown('fast')
+
+  $('a.session').click (e) ->
+    e.preventDefault()
+    $("div.edit_offering_session").slideDown('fast')
 
   $('nav#secondary ul li#Schedule').click (e) ->
     e.preventDefault()
@@ -50,6 +61,7 @@ $ ->
     $('div.gallery').fadeOut('fast')
     $('div.Schedule').fadeIn('fast')
     $('div.Map').fadeOut('fast')
+
 
 
   $('nav#secondary ul li#Map').click (e) ->

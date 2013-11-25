@@ -1,4 +1,4 @@
-<div class="body">
+<div class="body new_offering_session">
     <h2 class="header_text">New Session</h2>
     <div class="offering">
         <%= form_for(@offering_session) do |f| %>
@@ -72,8 +72,8 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <%= f.submit "Create the Session", class: "button grey submitBtn homeBtn left" %>
+                <td colspan="2">
+                    <%= f.submit "Create the Session", class: "btn btn-primary left submitBtn" %>
                 </td>
             </tr>
         </table>

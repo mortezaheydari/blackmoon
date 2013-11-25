@@ -1,22 +1,26 @@
-<div id="articles">
-  <h2 id="month">
-    <%= link_to "<", date: @date.prev_month %>
-    <%= @date.strftime("%B %Y") %>
-    <%= link_to ">", date: @date.next_month %>
-  </h2>
-  <%= calendar @date do |date| %>
-    <%= date.day %>
-    <% if @grouped_sessions[date] %>
-      <ul>
-        <% @grouped_sessions[date].each do |session| %>
-          <li><%= link_to session.title, venue_path(venue, session_id: session.id) %>
-            <% unless session.happening_case.duration_type == "All Day" %>
-                <br>
-                ( <%= session.happening_case.time_from.strftime('%H:%M') %> to <%= session.happening_case.time_to.strftime('%H:%M') %> )
-            <%- end %>
-          </li>
+<div class="calendar">
+    <br>
+    <a href="#" id="new_offering_session" class="btn">New session</a>
+    <div id="articles">
+      <h2 id="month">
+        <%= link_to "<", date: @date.prev_month %>
+        <%= @date.strftime("%B %Y") %>
+        <%= link_to ">", date: @date.next_month %>
+      </h2>
+      <%= calendar @date do |date| %>
+        <%= date.day %>
+        <% if @grouped_sessions[date] %>
+          <ul>
+            <% @grouped_sessions[date].each do |session| %>
+              <li><%= link_to session.title, venue_path(venue, session_id: session.id), class: "session", :remote => true %>
+                <% unless session.happening_case.duration_type == "All Day" %>
+                    <br>
+                    ( <%= session.happening_case.time_from.strftime('%H:%M') %> to <%= session.happening_case.time_to.strftime('%H:%M') %> )
+                <%- end %>
+              </li>
+            <% end %>
+          </ul>
         <% end %>
-      </ul>
-    <% end %>
-  <% end %>
+      <% end %>
+    </div>
 </div>

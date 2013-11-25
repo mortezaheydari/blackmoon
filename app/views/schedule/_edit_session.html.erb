@@ -1,7 +1,7 @@
-<div class="body">
+<div class="body edit_offering_session">
     <h2 class="header_text">Edit Session</h2>
     <div class="offering">
-        <%= form_for(@offering_session_edit) do |f| %>
+        <%= form_for(@offering_session_edit, :remote => true) do |f| %>
         <table width="100%">
             <tr>
                 <td width="130">
@@ -67,8 +67,8 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    <%= f.submit "Create the Session", class: "button grey submitBtn homeBtn left" %>
+                <td  colspan="2">
+                    <%= f.submit "Create the Session", class: "btn btn-primary left submitBtn" %>
                 </td>
             </tr>
         </table>

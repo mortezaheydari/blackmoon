@@ -1,0 +1,6 @@
+$("#edit_form").html("<%= escape_javascript(render(:partial => 'schedule/edit_session'))%>");
+if ($(".edit_offering_session select#happening_case_duration_type").val() == "Range") {
+    $(".edit_offering_session tr.range").show();
+} else {
+    $(".edit_offering_session tr.range").hide();
+}

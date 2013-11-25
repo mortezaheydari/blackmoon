@@ -3,7 +3,7 @@
 *= require fancybox
 *= require jquery.ui.datepicker
 */
-// @import "bootstrap";
+@import "bootstrap";
 // @import "bootstrap-responsive";
 @import "compass";
 @import "blueprint";
@@ -69,9 +69,6 @@ $buttonBgHover: #ffffff;
 }
 
 @mixin TextFields {
-    height: 20px;
-    @include border-radius(15px);
-    @include box-shadow(none);
     border: 1px solid $FormBorder;
     margin: 5px 0;
 }
@@ -198,7 +195,7 @@ div.signPage {
         }
         select {
             @include appearance(none);
-            background: url("drop-icon.png") no-repeat scroll right center;
+            // background: url("drop-icon.png") no-repeat scroll right center;
             background-size: 20px 20px;
             border-radius: 10px 10px 10px 10px;
             width: 31.5%;
@@ -1378,15 +1375,16 @@ form {
   select {
     width: 50%;
     @include TextFields;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: url("drop-icon.png") no-repeat right center;
+    // -webkit-appearance: none;
+    // -moz-appearance: none;
+    // appearance: none;
+    // background: url("drop-icon.png") no-repeat right center;
     background-size: 30px 30px;
-    overflow:hidden;
+    // overflow:hidden;
   }
   .submitBtn {
-    border: none;
+    // border: none;
+    height:40px !important;
   }
 
   textarea {
