@@ -5,12 +5,6 @@ $ ->
   $(document).ready ->
     $('#happening_case_date_and_time').datepicker
         dateFormat: 'yy-mm-dd'
-    $('#edit_happening_case_date_and_time').datepicker
-        dateFormat: 'yy-mm-dd'
-    if $(".edit_offering_session select#happening_case_duration_type").val() == "Range"
-        $(".edit_offering_session tr.range").show()
-    else
-        $(".edit_offering_session tr.range").hide()
     gmarkers = []
     if $("input#venue_location_gmap_use").attr('checked')
         $(".g_rows").show()
@@ -47,10 +41,14 @@ $ ->
   $('a#new_offering_session').click (e) ->
     e.preventDefault()
     $("div.new_offering_session").slideDown('fast')
+    $("form.edit_offering_session")[0].reset()
+    $("div.edit_offering_session").slideUp('fast')
 
   $('a.session').click (e) ->
     e.preventDefault()
     $("div.edit_offering_session").slideDown('fast')
+    $("form.new_offering_session")[0].reset()
+    $("div.new_offering_session").slideUp('fast')
 
   $('nav#secondary ul li#Schedule').click (e) ->
     e.preventDefault()

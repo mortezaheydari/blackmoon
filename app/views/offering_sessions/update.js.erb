@@ -1,0 +1,21 @@
+$("#calendar_reload").html("<%= escape_javascript(render('schedule/sessions', grouped_sessions: @grouped_sessions, owner: @owner))%>");
+
+$("form.new_offering_session")[0].reset();
+$("div.new_offering_session").hide();
+
+$("form.edit_offering_session")[0].reset();
+$("div.edit_offering_session").hide();
+
+$('a#new_offering_session').click(function(e) {
+    e.preventDefault();
+    $("div.new_offering_session").slideDown('fast');
+    $("form.edit_offering_session")[0].reset();
+    $("div.edit_offering_session").slideUp('fast');
+});
+
+$('a.session').click(function(e) {
+  e.preventDefault();
+  $("div.edit_offering_session").slideDown('fast');
+  $("form.new_offering_session")[0].reset();
+  $("div.new_offering_session").slideUp('fast');
+});

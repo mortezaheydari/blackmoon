@@ -107,16 +107,25 @@ class OfferingSessionsController < ApplicationController
 	    msg = "Session has been created."
 	    msg = "Sessions have been created." if params[:offering_session][:collection_flag] == "true"
 
+                @grouped_happening_cases = grouped_happening_cases(@owner)
+                @grouped_sessions = replace_with_happening(@grouped_happening_cases)
+                @date = params[:date] ? Date.parse(params[:date]) : Date.today
+
 	    respond_to do |format|
 	        format.html { redirect_to @owner, notice: msg }
-	        format.js
+                    format.js { render 'offering_sessions/update', :locals => { grouped_sessions: @grouped_sessions, owner: @owner } }
 	    end
 
 	end
 
 	def update # offering_session
 		# find owner and offering_session
-		@owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])
+
+                        # to be refactored
+                        # @owner = params[:offering_session][:owner_type].constantize.find(params[:offering_session][:owner_id])
+                        @owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])
+
+
 		@offering_session = OfferingSession.find(params[:id])
 			double_check(@owner) {
 		@owner.offering_sessions.include? @offering_session	}
@@ -141,9 +150,15 @@ class OfferingSessionsController < ApplicationController
 			double_check {
     	@offering_session.happening_case.update_attributes(params[:happening_case]) } # should become more secure in future.
 
+
+
+        @grouped_happening_cases = grouped_happening_cases(@owner)
+        @grouped_sessions = replace_with_happening(@grouped_happening_cases)
+        @date = params[:date] ? Date.parse(params[:date]) : Date.today
+
 	    respond_to do |format|
 	        format.html { redirect_to @owner, notice: "Session has been updated." }
-	        format.js
+	        format.js { render 'offering_sessions/update', :locals => { grouped_sessions: @grouped_sessions, owner: @owner } }
 	    end
 	end
 
@@ -217,6 +232,14 @@ class OfferingSessionsController < ApplicationController
 
 	private
 
+                        def grouped_happening_cases(this)
+                            session_id_list = []
+                            this.offering_sessions.each do |os|
+                                session_id_list << os.id
+                            end
+                            sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).group_by(&:date_and_time)
+                        end
+
 		def user_must_be_admin?
 			@event = Event.find(params[:id])
 			@user = current_user
@@ -242,4 +265,15 @@ class OfferingSessionsController < ApplicationController
 			@owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])
 			@offering_session.owner = @owner
 		end
+
+                        def replace_with_happening(grouped_happening_cases)
+                            grouped_sessions = Hash.new
+                            grouped_happening_cases.each do |key, value|
+                                grouped_sessions[key.to_date] = []
+                                value.each do |happening_case|
+                                    grouped_sessions[key.to_date] << happening_case.happening
+                                end
+                            end
+                            grouped_sessions
+                        end
 end

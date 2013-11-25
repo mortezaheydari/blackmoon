@@ -50,7 +50,7 @@
         <div class="Schedule">
             <%= render "schedule/new_session" %>
             <div id="edit_form"><%= render "schedule/edit_session" %></div>
-            <%= render "schedule/sessions", sessions: @sessions, venue: @venue %>
+            <div id="calendar_reload"><%= render "schedule/sessions", grouped_sessions: @grouped_sessions, owner: @venue %></div>
         </div>
         <div class="Description">
             <p><%= @venue.descreption %></p>

@@ -1,7 +1,7 @@
 <div class="body new_offering_session">
     <h2 class="header_text">New Session</h2>
     <div class="offering">
-        <%= form_for(@offering_session) do |f| %>
+        <%= form_for(@offering_session, remote: true) do |f| %>
         <table width="100%">
             <tr>
                 <td width="130">

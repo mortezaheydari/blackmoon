@@ -100,9 +100,8 @@ class VenuesController < ApplicationController
         end
 
         @happening_case = HappeningCase.new
-        # @sessions = @venue.offering_sessions
 
-        # @sessions_by_date = @sessions.happening_case.group_by(&:date_and_time)
+
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
 		@json = @venue.location.to_gmaps4rails
@@ -114,12 +113,11 @@ class VenuesController < ApplicationController
 		@location = @venue.location
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Venue", trackable_id: @venue.id)
 		@recent_activities = @recent_activities.order("created_at desc")
-        #@grouped_happening_cases = HappeningCase.all.group_by(&:date_and_time)
+
         @grouped_happening_cases = grouped_happening_cases(@venue)
         @grouped_sessions = replace_with_happening(@grouped_happening_cases)
 
 
-		# @grouped_happening_cases = grouped_happening_cases(@venue)
 
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
 	end
@@ -171,9 +169,9 @@ class VenuesController < ApplicationController
 			sorted_sessions
 		end
 
-                        def grouped_happening_cases(venue)
+                        def grouped_happening_cases(this)
                             session_id_list = []
-                            venue.offering_sessions.each do |os|
+                            this.offering_sessions.each do |os|
                                 session_id_list << os.id
                             end
 
