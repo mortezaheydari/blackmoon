@@ -202,7 +202,7 @@ class OfferingSessionsController < ApplicationController
 
 	def destroy_collective
 		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
-		@collective = Collective.find(params[:owner_id])
+		@collective = Collective.find(params[:collective_id])
 			double_check {
 		@owner.collectives.include? @collective }
 

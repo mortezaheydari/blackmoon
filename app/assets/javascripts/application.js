@@ -294,6 +294,13 @@ $(document).ready(function() {
         $("li a." + this.id).addClass('badge badge-info');
     });
 
+    $("li a#explode_collective").click(function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href') + "&collective_id=" + $("span.label-info").attr('data-id');
+        alert(url);
+        window.open(url);
+    });
+
     $("#offering_session_collective_type").change( function() {
         if ($(this).val() == 'new') {
             $("tr.new_collective").show();
