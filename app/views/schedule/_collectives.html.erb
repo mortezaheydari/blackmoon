@@ -1,6 +1,6 @@
 <div>
     <% collectives.each do |collective| %>
-        <a href="#" id="<%= collective.title.tr(' ', '_') %>" class="collective_label">
+        <a href="#" id="<%= collective.title.tr(' ', '_') %>" class="collective_label" data-id="<%= collective.id %>">
             <span class="label"><%= collective.title %></span>
         </a>
     <% end %>

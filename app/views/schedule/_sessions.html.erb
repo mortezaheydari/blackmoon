@@ -1,6 +1,16 @@
 <div class="calendar">
     <br>
-    <a href="#" id="new_offering_session" class="btn">New session</a>
+    <a href="#" id="new_offering_session" class="btn left">New session</a>
+    <div class="btn-group left pad_left">
+        <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
+        Delete Collectives
+        <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="#">Regular link</a></li>
+            <li><a href="#">Another link</a></li>
+        </ul>
+    </div>
     <br>
     <br>
     <div><%= render "schedule/collectives", collectives: @collectives %></div>

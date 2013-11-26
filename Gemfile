@@ -44,7 +44,7 @@ gem 'fancybox2-rails', '~> 0.2.4'
 group :test do
 	gem 'capybara', '1.1.2'
 	gem 'factory_girl_rails', '4.1.0'
-    gem 'cucumber-rails'  
+    gem 'cucumber-rails'
 end
 
 group :production do
@@ -52,7 +52,7 @@ group :production do
 end
 
 group :development, :test do
-  gem 'sqlite3', '1.3.5'	
+  gem 'sqlite3', '1.3.5'
   gem 'factory_girl'
   gem 'cucumber'
   gem 'database_cleaner'

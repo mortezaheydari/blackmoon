@@ -16,6 +16,7 @@
 //= require fancybox
 //= require underscore
 //= require gmaps/google
+//= require bootstrap
 //= require_tree .
 
 /******************************************
