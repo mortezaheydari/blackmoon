@@ -67,5 +67,15 @@ class LogosController < ApplicationController
 
   end
 
+	private
+	
+	def unless_photo_exists(&b)
+		if @photo_exists
+			@photo = Photo.find_by_id(params[:photo_id])
+		else
+			b.call
+		end
+	end
+
 end
 
