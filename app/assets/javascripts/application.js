@@ -285,6 +285,14 @@ $(document).ready(function() {
         }
     });
 
+    $("a.collective_label").click(function(e) {
+        e.preventDefault();
+        $('li a.badge').removeClass('badge badge-info');
+        $('span.label-info').removeClass('label-info');
+        $("a#" + this.id + " span").addClass('label-info');
+        $("li a." + this.id).addClass('badge badge-info');
+    });
+
     $("#offering_session_collective_type").change( function() {
         if ($(this).val() == 'new') {
             $("tr.new_collective").show();

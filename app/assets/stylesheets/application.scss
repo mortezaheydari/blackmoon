@@ -51,6 +51,12 @@ $buttonBgHover: #ffffff;
 
 // mixin declaration
 
+a.collective_label {
+    &:hover {
+        text-decoration: none !important;
+    }
+}
+
 @mixin SideText {
   a {
     color: $linkColor;
