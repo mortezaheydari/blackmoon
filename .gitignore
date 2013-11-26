@@ -31,6 +31,7 @@ app/assets/images/.DS_Store
 *.jpeg
 
 db/schema.rb
+Gemfile.lock
 
 db/schema.rb
 

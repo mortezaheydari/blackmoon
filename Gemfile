@@ -21,15 +21,9 @@ gem 'metric_fu'
 
 gem 'make_flaggable', :git => 'git://github.com/cavneb/make_flaggable.git'
 
-group :development, :test do
-	gem 'sqlite3', '1.3.5'
-	gem 'rspec-rails', '2.11.0'
-end
-
 group :development do
 	gem 'annotate', '2.5.0'
 end
-
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -50,12 +44,21 @@ gem 'fancybox2-rails', '~> 0.2.4'
 group :test do
 	gem 'capybara', '1.1.2'
 	gem 'factory_girl_rails', '4.1.0'
+    gem 'cucumber-rails'  
 end
 
 group :production do
 	gem 'pg', '0.12.2'
 end
 
+group :development, :test do
+  gem 'sqlite3', '1.3.5'	
+  gem 'factory_girl'
+  gem 'cucumber'
+  gem 'database_cleaner'
+  gem 'rspec-rails', '2.11.0'
+  gem 'simplecov'
+end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
