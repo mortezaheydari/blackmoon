@@ -121,6 +121,8 @@ class VenuesController < ApplicationController
 
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
+        @collectives = Collective.all
+
 	end
 
 	def edit
