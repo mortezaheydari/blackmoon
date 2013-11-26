@@ -184,7 +184,7 @@ class OfferingSessionsController < ApplicationController
 
 	def release
 		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
-		@offering_session.find(params[:offering_session_id])
+		@offering_session= OfferingSession.find(params[:offering_session_id])
 			double_check(@owner) {
 		@owner.offering_sessions.include? @offering_session	}
 

@@ -1,5 +1,8 @@
 <div class="body edit_offering_session">
     <h2 class="header_text">Edit Session</h2>
+    <p>
+        <%= link_to "release the session", release_offering_session_path(owner_type: owner.class.to_s, owner_id: owner.id, offering_session_id: @offering_session_edit.id), class: "btn btn-danger" %>
+    </p>
     <div class="offering">
         <%= form_for(@offering_session_edit, :remote => true) do |f| %>
         <table width="100%">
@@ -63,7 +66,7 @@
             <tr>
                 <td>
                     <%= f.hidden_field :owner_type, value: "Venue" %>
-                    <%= f.hidden_field :owner_id, value: @venue.id %>
+                    <%= f.hidden_field :owner_id, value: owner.id %>
                 </td>
             </tr>
             <tr>

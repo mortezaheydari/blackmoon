@@ -1,4 +1,4 @@
-$("#edit_form").html("<%= escape_javascript(render(:partial => 'schedule/edit_session'))%>");
+$("#edit_form").html("<%= escape_javascript(render('schedule/edit_session', owner: @venue))%>");
 
 $('#edit_happening_case_date_and_time').datepicker({
         dateFormat: 'yy-mm-dd'
