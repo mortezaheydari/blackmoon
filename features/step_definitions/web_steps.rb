@@ -55,6 +55,19 @@ When /^(?:|I )fill in "(.*?)" within "(.*?)" with "(.*?)"$/ do |arg1, arg2, arg3
     end
 end
 
+When /^(?:|I )press "(.*?)" within "(.*?)"$/ do |arg1, arg2|
+    within(:css, arg2) do
+      click_button arg1
+    end
+end
+
+When /^(?:|I )follow "([^"]*)" within "(.*?)$/ do |arg1, arg2|
+    within(:css, arg2) do	
+  		click_link(link)
+    end  		
+end
+
+
 And /^(?:|I )inspect page$/ do
 	puts page.body
 end

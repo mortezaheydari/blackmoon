@@ -67,7 +67,7 @@
 
             <div class="signin">
                 <h3>SIGN IN</h3>
-                <%= form_for("account", :url => account_session_path) do |f| %>
+                <%= form_for("account", :html => { :id => "new_session"}, :url => account_session_path) do |f| %>
                   <%= f.text_field :email, placeholder: "Email", class: "textField" %>
                   <%= f.password_field :password, placeholder: "Password", class: "textField" %>
                   <%= f.submit 'Sign In', class: "button grey submitBtn homeBtn" %>
