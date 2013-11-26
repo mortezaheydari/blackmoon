@@ -110,10 +110,11 @@ class OfferingSessionsController < ApplicationController
                 @grouped_happening_cases = grouped_happening_cases(@owner)
                 @grouped_sessions = replace_with_happening(@grouped_happening_cases)
                 @date = params[:date] ? Date.parse(params[:date]) : Date.today
+                @collectives = Collective.all
 
 	    respond_to do |format|
 	        format.html { redirect_to @owner, notice: msg }
-                    format.js { render 'offering_sessions/update', :locals => { grouped_sessions: @grouped_sessions, owner: @owner } }
+                    format.js
 	    end
 
 	end
@@ -154,6 +155,7 @@ class OfferingSessionsController < ApplicationController
 
         @grouped_happening_cases = grouped_happening_cases(@owner)
         @grouped_sessions = replace_with_happening(@grouped_happening_cases)
+                @collectives = Collective.all
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
 	    respond_to do |format|
@@ -207,7 +209,7 @@ class OfferingSessionsController < ApplicationController
 		@owner.collectives.include? @collective }
 
 		# explode or destroy
-		if params[:explode] == true
+		if params[:explode]
 			# release sessions one by one
 			@collective.offering_sessions.each do |offering_session|
 				offering_session.collection_flag = false
@@ -215,6 +217,7 @@ class OfferingSessionsController < ApplicationController
 				double_check(@owner) {
 				offering_session.save }
 			end
+                                    @collective = Collective.find @collective.id
 				double_check(@owner) {
 			@collective.destroy }
 			@msg = "Collective has been destroyed while keeping its sessions."
@@ -228,6 +231,7 @@ class OfferingSessionsController < ApplicationController
 				end
 			end
 
+                                    @collective = Collective.find @collective.id
 				double_check(@owner) {
 			@collective.destroy }
 			@msg = "Collective has been destroyed alongside its sessions."

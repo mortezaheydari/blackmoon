@@ -48,9 +48,9 @@
                           :zoom => 16 } ) %>
          </div>
         <div class="Schedule">
-            <%= render "schedule/new_session", owner: @venue %>
+            <div id="new_form"><%= render "schedule/new_session", owner: @venue %></div>
             <div id="edit_form"><%= render "schedule/edit_session", owner: @venue %></div>
-            <div id="calendar_reload"><%= render "schedule/sessions", grouped_sessions: @grouped_sessions, owner: @venue %></div>
+            <div id="calendar_reload"><%= render "schedule/sessions", grouped_sessions: @grouped_sessions, owner: @venue, collectives: @collectives %></div>
         </div>
         <div class="Description">
             <p><%= @venue.descreption %></p>

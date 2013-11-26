@@ -1,4 +1,27 @@
-$("#calendar_reload").html("<%= escape_javascript(render('schedule/sessions', grouped_sessions: @grouped_sessions, owner: @owner))%>");
+$("#calendar_reload").html("<%= escape_javascript(render('schedule/sessions', grouped_sessions: @grouped_sessions, owner: @owner, collectives: @collectives))%>");
+
+    $("a.collective_label").click(function(e) {
+        e.preventDefault();
+        $(".btn-group").show();
+        $('li a.badge').removeClass('badge badge-info');
+        $('span.label-info').removeClass('label-info');
+        $("a#" + this.id + " span").addClass('label-info');
+        $("li a." + this.id).addClass('badge badge-info');
+        $("li a#explode_collective").attr('href', $("li a#explode_collective").attr('href') + "&collective_id=" + $("span.label-info").attr('data-id'));
+    });
+
+    $("#offering_session_collective_type").change( function() {
+        if ($(this).val() == 'new') {
+            $("tr.new_collective").show();
+            $("tr.existing_collective").hide();
+        } else if ($(this).val() == 'existing') {
+            $("tr.existing_collective").show();
+            $("tr.new_collective").hide();
+        }  else if ($(this).val() == 'none') {
+            $("tr.existing_collective").hide();
+            $("tr.new_collective").hide();
+        }
+    });
 
 $("form.new_offering_session")[0].reset();
 $("div.new_offering_session").hide();

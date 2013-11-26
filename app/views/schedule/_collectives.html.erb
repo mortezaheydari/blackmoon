@@ -1,7 +1,9 @@
-<div>
-    <% collectives.each do |collective| %>
-        <a href="#" id="<%= collective.title.tr(' ', '_') %>" class="collective_label">
-            <span class="label" data-id="<%= collective.id %>"><%= collective.title %></span>
-        </a>
-    <% end %>
-</div>
+<% unless collectives.nil? %>
+    <div>
+        <% collectives.each do |collective| %>
+            <a href="#" id="<%= collective.title.tr(' ', '_') %>" class="collective_label">
+                <span class="label" data-id="<%= collective.id %>"><%= collective.title %></span>
+            </a>
+        <% end %>
+    </div>
+<% end %>

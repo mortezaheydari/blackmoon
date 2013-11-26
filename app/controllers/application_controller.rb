@@ -32,9 +32,9 @@ class ApplicationController < ActionController::Base
 		if ["user", "team", "event", "game", "venue", "offering_session"].include? this_type.underscore and this_id
 			a = root_path
 			a = @redirect_object unless @redirect_object.nil?
-			double_check {
+
 		redirect_to(a, notice: 'error') and return unless this = this_type.camelize.constantize.find_by_id(this_id)
-			}
+
 			this
 		end
 	end
@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
 	# My Bloodthirsty double_check method, version-20131023
 	def double_check(link=root_path, msg='there was an error with your request', &b)
 		link == @redirect_object unless @redirect_object.nil?
-		unless b.call do
+		unless b.call
 			return redirect_to(link, alert: msg)
 		end
 	end
