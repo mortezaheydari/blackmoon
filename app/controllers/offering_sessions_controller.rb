@@ -208,6 +208,7 @@ class OfferingSessionsController < ApplicationController
 
 		# explode or destroy
 		if params[:explode] == true
+			# release sessions one by one
 			@collective.offering_sessions.each do |offering_session|
 				offering_session.collection_flag = false
 				offering_session.collective_id = nil
@@ -218,6 +219,15 @@ class OfferingSessionsController < ApplicationController
 			@collective.destroy }
 			@msg = "Collective has been destroyed while keeping its sessions."
 		else
+			# release sessions that have participants
+			@collective.offering_sessions.each do |offering_session|
+				unless offering_session.individual_participators.count == 0
+					offering_session.collection_flag = false
+					offering_session.collective_id = nil
+					offering_session.save
+				end
+			end
+
 				double_check(@owner) {
 			@collective.destroy }
 			@msg = "Collective has been destroyed alongside its sessions."

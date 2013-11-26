@@ -91,4 +91,16 @@ class InvitationsController < ApplicationController
 
 			redirect_object
 		end
+
+
+		def redirect_object
+			if params[:redirect_object]
+				@redirect_object = params[:redirect_object]
+			else
+				return_object_id   = params[:return_object_id]
+				return_object_type = params[:return_object_type]
+				@redirect_object   = find_and_assign return_object_type, return_object_id
+			end
+			@redirect_object = root_path if @redirect_object.nil?
+		end		
 end
