@@ -31,9 +31,9 @@
 </div>
 <%= yield %>
 
-<%= render 'shared/modal' %>
-<%= render 'shared/signin_modal' %>
-<%= render 'shared/signup_modal' %>
+<%= render 'shared/modal' if account_signed_in?  %>
+<%= render 'shared/signin_modal' unless account_signed_in? %>
+<%= render 'shared/signup_modal' unless account_signed_in?  %>
 
 <%= yield :scripts %>
 

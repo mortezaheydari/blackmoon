@@ -1,4 +1,4 @@
-Feature: Basic and public
+Feature: Public pages
 	As a public user 
 	I want to surfe public pages
 

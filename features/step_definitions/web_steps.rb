@@ -8,6 +8,10 @@ Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)
 end
 
+Given /^(?:|I )visit "([^"]*)"$/ do |link|
+	visit link
+end
+
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
   if current_path.respond_to? :should
@@ -41,3 +45,16 @@ When /^(?:|I )follow "([^"]*)"$/ do |link|
   click_link(link)
 end
 
+When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
+  fill_in(field, :with => value)
+end
+
+When /^(?:|I )fill in "(.*?)" within "(.*?)" with "(.*?)"$/ do |arg1, arg2, arg3|
+    within(:css, arg2) do
+      fill_in arg1, :with => arg3
+    end
+end
+
+And /^(?:|I )inspect page$/ do
+	puts page.body
+end

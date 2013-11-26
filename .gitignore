@@ -15,6 +15,7 @@
 /tmp
 
 /.idea
+/coverage
 
 .DS_Store
 
