@@ -132,9 +132,17 @@ class OfferingSessionsController < ApplicationController
 		@offering_session.individual_participators.count == 0 }
 
 		unless params[:offering_session][:collective_type] == "none" || @offering_session.collective_id == params[:offering_session][:collective_id]
-			@collective = Collective.find params[:offering_session][:collective_id]
-			double_check {
-			@owner.collectives.include? @collective }
+			case params[:offering_session][:collective_type]
+
+			when "existing"
+				@collective = Collective.find params[:offering_session][:collective_id]
+				double_check {
+				@owner.collectives.include? @collective }
+
+			when "new"
+					double_check {
+				@collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id) }
+			end
 		end
 
 		params[:offering_session].delete :collective_type
