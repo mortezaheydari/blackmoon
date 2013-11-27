@@ -15,6 +15,8 @@ class OfferingSessionsController < ApplicationController
 		name_is_valid?(owner_type) }
 
 		@offering_session = OfferingSession.new(descreption: params[:offering_session][:descreption], number_of_attendings: params[:offering_session][:number_of_attendings], title: params[:offering_session][:title])
+		
+		assign_offering_session_owner
 
 		# need collective or not?
 		case params[:offering_session][:collective_type]
@@ -23,22 +25,21 @@ class OfferingSessionsController < ApplicationController
 			# if creating mmultiple sessions, must automaticly create a collective to contain them. This allows user to delete those sessions easily in case of any mistakes by deleting the collectives.
 			case params[:offering_session][:collection_flag]
 			when "1"
-												assign_offering_session_owner
+								
 				@collective = create_collective(params[:offering_session][:title], @owner.class.to_s, @owner.id)
 				# @offering_session.owner = @collective.owner
 				@offering_session.collective = @collective
 			else
-				assign_offering_session_owner
+
 				@offering_session.collection_flag = false
 			end
 
 		when "existing"
-			assign_offering_session_owner
 			@collective = owner_if_reachable("Collective", params[:offering_session][:collective_id])
 			@offering_session.collective_id = @collective.id
 
 		when "new"
-									assign_offering_session_owner
+					
 			@collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id)
 			# @offering_session.owner = @collective.owner
 			@offering_session.collective = @collective
@@ -131,17 +132,26 @@ class OfferingSessionsController < ApplicationController
 			double_check(@owner, "This session has participators and can not be updated.") {
 		@offering_session.individual_participators.count == 0 }
 
-		unless params[:offering_session][:collective_type] == "none" || @offering_session.collective_id == params[:offering_session][:collective_id]
+		unless @offering_session.collective_id == params[:offering_session][:collective_id] || (params[:offering_session][:collective_type] == "none" && @offering_session.collective_id.nil?)
+
 			case params[:offering_session][:collective_type]
 
+			when "", nil, " ", "none"
+
+				@offering_session.collection_flag = false
+				@offering_session.collective_id = nil
+
 			when "existing"
-				@collective = Collective.find params[:offering_session][:collective_id]
+				collective_id = params[:offering_session].delete :collective_id
+				@collective = Collective.find collective_id
 				double_check {
 				@owner.collectives.include? @collective }
+				@offering_session.collective_id = collective_id
 
 			when "new"
 					double_check {
 				@collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id) }
+				@offering_session = @collective.id
 			end
 		end
 
