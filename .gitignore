@@ -33,3 +33,9 @@ app/assets/images/.DS_Store
 
 db/schema.rb
 Gemfile.lock
+
+coverage/index.html
+
+coverage/.resultset.json
+
+coverage/.resultset.json
