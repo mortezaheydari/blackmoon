@@ -13,9 +13,7 @@ describe Event do
 
 		# attr_accessible
 			respond_array += [:category, 
-				:custom_address, 
 				:descreption, 
-  				:location_type, 
   				:title, 
   				:tournament_id, 
   				:fee, 

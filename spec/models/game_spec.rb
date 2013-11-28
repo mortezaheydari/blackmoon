@@ -13,9 +13,7 @@ describe Game do
 
 		# attr_accessible
 			respond_array += [:category, 
-				:custom_address, 
 				:description, 
-  				:location_type, 
   				:title, 
   				:tournament_id, 
   				:fee, 

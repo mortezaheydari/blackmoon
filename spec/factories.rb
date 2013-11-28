@@ -1,8 +1,24 @@
 
 FactoryGirl.define do
-
+  	
 
 	fake_title = Faker::Lorem.sentence(1)
+
+	factory :offering_session do
+		title fake_title
+		descreption Faker::Lorem.paragraph(3)
+		happening_case
+		number_of_attendings 0
+	end
+
+	factory :photo do
+		title fake_title
+		image { fixture_file_upload(Rails.root.join('spec', 'photos', 'test.png'), 'image/png') }
+	end
+
+	factory :logo do
+		photo
+	end
 
 	factory :collective do
 		sequence(:title) { |n| "collective title #{n}"}
@@ -18,6 +34,7 @@ FactoryGirl.define do
 		name Faker::Name.name
 		profile
 		album
+		logo
 	end
 
 	factory :account do
@@ -29,28 +46,48 @@ FactoryGirl.define do
 		end
 	end
 
-	factory :event do
-		category Faker::Lorem.words.first
-		custom_address (Faker::Address.city+", "+Faker::Address.street_address)
-		sequence(:location_type) {|n| n%2}
-		descreption Faker::Lorem.paragraph(3)
+	factory :location do
+
 		title fake_title
 
+		factory :location_with_gmap do
+
+			latitude Faker::Address.latitude
+			longitude Faker::Address.longitude
+			gmap_use true			
+			custom_address_use false	
+		end
+
+		factory :location_with_custom_address do
+			city Faker::Address.city
+			custom_address (Faker::Address.city+", "+Faker::Address.street_address)
+			custom_address_use true
+			gmap_use false
+		end		
+
+	end
+
+	factory :event do
+		category Faker::Lorem.words.first
+		descreption Faker::Lorem.paragraph(3)
+		title fake_title
+		number_of_attendings 0		
 		happening_case
 		album 
-
+		logo
+		location
 	end
 
 	factory :game do
 		category Faker::Lorem.words.first
-		custom_address (Faker::Address.city+", "+Faker::Address.street_address)
 		sequence(:location_type) {|n| n%2}
 		description Faker::Lorem.paragraph(3)
 		title fake_title
-
+		number_of_attendings 0		
 		happening_case
-		album 
-
+		album
+		logo
+		location
 	end	
 
 	factory :album do
