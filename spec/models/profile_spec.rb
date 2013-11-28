@@ -3,12 +3,30 @@ require 'spec_helper'
 describe Profile do
 	
 	let(:user) { FactoryGirl.create(:user) }
-	before { @profile = user.build_profile(first_name: "Mr a") }
-
+	before { @profile = user.profile }
 
 	subject { @profile }
 
-	it { should respond_to(:first_name) }
-	it { should respond_to(:user) }
-	its(:user) { should == user }
+
+# --- respond_to
+	respond_array = []
+
+		# attr_accessible
+			respond_array += [:first_name,
+				:last_name,
+				:date_of_birth,
+				:phone,
+				:gender,
+				:about,
+				:user_id]
+
+		# associations
+			respond_array += [:user]
+
+	respond_array.each do |respond_object|
+		it { should respond_to(respond_object)}
+	end
+# ---
+
+		
 end

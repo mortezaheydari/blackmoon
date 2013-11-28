@@ -3,14 +3,28 @@ require 'spec_helper'
 describe Account do
 	before { @account = FactoryGirl.create(:account_with_user) }
 
-  subject { @account }
+	subject { @account }
 
-  it { should respond_to(:email) }
-  it { should respond_to(:password_digest) }  
-  it { should respond_to(:password) }
-  it { should respond_to(:password_confirmation) }  
-#  it { should respond_to(:remember_token) }  
-	it { should respond_to(:user) }
+# --- respond_to
+	respond_array = []
+
+		# attr_accessible
+			respond_array += [:email,
+				:password_digest,
+				:password,
+				:password_confirmation]
+
+		# associations
+			respond_array += [:user]
+			
+		# methods
+			respond_array += [:has_password?]
+
+	respond_array.each do |message|
+		it { should respond_to(message)}
+	end
+# ---
+
 
 #	describe "when password don't match" do
 #		before { @account = }

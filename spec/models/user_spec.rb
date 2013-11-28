@@ -7,17 +7,49 @@ describe User do
 
 	subject { @user }
 
-	it { should respond_to(:name) }
-	it { should respond_to(:profile) }	
-	it { should respond_to(:account) }
 
-	it { should respond_to(:offering_creations)}			
-	it { should respond_to(:events_created)}
+# --- respond_to
+	respond_array = []
 
-	it { should respond_to(:offering_administrations)}		
-	it { should respond_to(:events_administrating)}	
+		# attr_accessible
+			respond_array += [:name]
 
-	its(:account) { should == account }
+		# associations
+			respond_array += [:profile,	:account]
+			
+		# methods
+			respond_array += [:following?,
+				:follow!,
+				:unfollow!,
+				:title]
+
+		# Albumable aspect
+			respond_array += [:album, :logo]
+    
+		# MoonActor aspect
+			respond_array += [:invitations_sent,
+				:invitations_received,
+				:join_requests_sent,
+				:offerings_participating,
+				:games_participating,
+				:events_participating,
+				:offering_sessions_participating,
+				:offerings_administrating,
+				:games_administrating,
+				:events_administrating,
+				:offerings_created,
+				:games_created,
+				:events_created,
+				:teams_created,
+				:teams_administrating,
+				:teams_membership]
+
+	respond_array.each do |respond_object|
+		it { should respond_to(respond_object)}
+	end
+# ---
+
+
 
   describe "when name is not present" do
     before {@user.name = " "}

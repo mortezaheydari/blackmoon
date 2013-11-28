@@ -8,18 +8,40 @@ describe Event do
 
 	subject { event }
 
-	it { should be_valid }
+# --- respond_to
+	respond_array = []
 
-	it { should respond_to(:category) }
-	it { should respond_to(:custom_address) }
-	it { should respond_to(:date_and_time) }
-	it { should respond_to(:descreption) }
-	it { should respond_to(:location_type) }
-	it { should respond_to(:title) }
-	it { should respond_to(:tournament_id) }
-	it { should respond_to(:creator)}
-	it { should respond_to(:offering_creation)}		
-	it { should respond_to(:administrators)}	
-	it { should respond_to(:offering_administrations)}	
+		# attr_accessible
+			respond_array += [:category, 
+				:custom_address, 
+				:descreption, 
+  				:location_type, 
+  				:title, 
+  				:tournament_id, 
+  				:fee, 
+  				:fee_type, 
+  				:sport, 
+  				:number_of_attendings, 
+  				:team_participation, 
+  				:open_join]
+
+		# Joinable aspect
+			respond_array += [:inviteds,
+				:join_requests_received, 
+				:individual_participators, 
+				:team_participators, 
+				:joineds,
+				:happening_case]
+
+		# Offerable aspect
+			respond_array += [:location, :creator, :administrators]
+
+		# Albumable aspect
+			respond_array += [:album, :logo]				
+
+	respond_array.each do |message|
+		it { should respond_to(message)}
+	end
+# ---
 
 end

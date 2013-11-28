@@ -1,5 +1,47 @@
 require 'spec_helper'
 
 describe Game do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+	let(:account) { FactoryGirl.create(:account_with_user) }	
+	let(:user) {account.user}
+	let(:game) { FactoryGirl.create(:game) }
+
+	subject { game }
+
+# --- respond_to
+	respond_array = []
+
+		# attr_accessible
+			respond_array += [:category, 
+				:custom_address, 
+				:description, 
+  				:location_type, 
+  				:title, 
+  				:tournament_id, 
+  				:fee, 
+  				:fee_type, 
+  				:sport, 
+  				:number_of_attendings, 
+  				:team_participation, 
+  				:open_join]
+
+		# Joinable aspect
+			respond_array += [:inviteds,
+				:join_requests_received, 
+				:individual_participators, 
+				:team_participators, 
+				:joineds,
+				:happening_case]
+
+		# Offerable aspect
+			respond_array += [:location, :creator, :administrators]
+
+		# Albumable aspect
+			respond_array += [:album, :logo]				
+
+	respond_array.each do |message|
+		it { should respond_to(message)}
+	end
+# ---
+
 end

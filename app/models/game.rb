@@ -17,9 +17,8 @@ class Game < ActiveRecord::Base
   	# album
   	# logo
 
-  attr_accessible :category, :custom_address, :date_and_time, :description, :duration_type,
+  attr_accessible :category, :custom_address, :description,
   	:fee, :fee_type, :location_type, :number_of_attendings, :sport,
-  	:team_participation, :time_from, :time_to, :title, :tournament_id, :open_join
-
+  	:team_participation, :title, :tournament_id, :open_join
 
 end
