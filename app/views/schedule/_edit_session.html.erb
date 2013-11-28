@@ -2,6 +2,7 @@
     <h2 class="header_text">Edit Session</h2>
     <p>
         <%= link_to "release the session", release_offering_session_path(owner_type: owner.class.to_s, owner_id: owner.id, offering_session_id: @offering_session_edit.id), class: "btn btn-danger" %>
+        <%= link_to "Delete Session", offering_session_path(owner_type: owner.class.to_s, owner_id: owner.id, offering_session_id: @offering_session_edit.id), method: :delete, class: "btn btn-danger" %>
     </p>
     <div class="offering">
         <%= form_for(@offering_session_edit, :remote => true) do |f| %>
@@ -55,14 +56,6 @@
                 </td>
             </tr>
                     <%= render "shared/happening_case", happening_case: @edit_happening_case, date_id: "edit_happening_case_date_and_time", duration_id: "edit_happening_case_duration_type" %>
-            <tr>
-                <td width="130">
-                    <%= f.label :collection_flag %>
-                </td>
-                <td>
-                    <%= f.check_box :collection_flag %>
-                </td>
-            </tr>
             <tr>
                 <td>
                     <%= f.hidden_field :owner_type, value: "Venue" %>

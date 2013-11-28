@@ -15,7 +15,7 @@ class OfferingSessionsController < ApplicationController
 		name_is_valid?(owner_type) }
 
 		@offering_session = OfferingSession.new(descreption: params[:offering_session][:descreption], number_of_attendings: params[:offering_session][:number_of_attendings], title: params[:offering_session][:title])
-		
+
 		assign_offering_session_owner
 
 		# need collective or not?
@@ -25,7 +25,7 @@ class OfferingSessionsController < ApplicationController
 			# if creating mmultiple sessions, must automaticly create a collective to contain them. This allows user to delete those sessions easily in case of any mistakes by deleting the collectives.
 			case params[:offering_session][:collection_flag]
 			when "1"
-								
+
 				@collective = create_collective(params[:offering_session][:title], @owner.class.to_s, @owner.id)
 				# @offering_session.owner = @collective.owner
 				@offering_session.collective = @collective
@@ -39,7 +39,7 @@ class OfferingSessionsController < ApplicationController
 			@offering_session.collective_id = @collective.id
 
 		when "new"
-					
+
 			@collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id)
 			# @offering_session.owner = @collective.owner
 			@offering_session.collective = @collective
@@ -60,7 +60,7 @@ class OfferingSessionsController < ApplicationController
 
 			# repeat request is proper?
 				double_check(@owner) {
-			(["hour", "day", "month"].include? @repeat_duration) #&&
+			(["hour", "day", "week", "month"].include? @repeat_duration) #&&
 			# @repeat_number < 26 &&
 			# @repeat_number > 0 &&
 			# @repeat_every < 26 &&
@@ -120,10 +120,11 @@ class OfferingSessionsController < ApplicationController
 
 		# to be refactored
 		# @owner = params[:offering_session][:owner_type].constantize.find(params[:offering_session][:owner_id])
-		@owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])
+		# @owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])
 
 
 		@offering_session = OfferingSession.find(params[:id])
+                        find_offering_session_owner
 			double_check(@owner) {
 		@owner.offering_sessions.include? @offering_session	}
 
@@ -132,30 +133,32 @@ class OfferingSessionsController < ApplicationController
 			double_check(@owner, "This session has participators and can not be updated.") {
 		@offering_session.individual_participators.count == 0 }
 
-		unless @offering_session.collective_id == params[:offering_session][:collective_id] || (params[:offering_session][:collective_type] == "none" && @offering_session.collective_id.nil?)
 
-			case params[:offering_session][:collective_type]
+            	case params[:offering_session][:collective_type]
 
-			when "", nil, " ", "none"
+            	when "", nil, " ", "none"
+                                    params[:offering_session].delete :collective_id
+            		@offering_session.collection_flag = false
+            		@offering_session.collective_id = nil
 
-				@offering_session.collection_flag = false
-				@offering_session.collective_id = nil
+            	when "existing"
+            		collective_id = params[:offering_session].delete :collective_id
+            		@collective = Collective.find collective_id
+            		double_check {
+            		@owner.collectives.include? @collective }
+            		@offering_session.collective_id = collective_id
+                                    @offering_session.collection_flag = true
 
-			when "existing"
-				collective_id = params[:offering_session].delete :collective_id
-				@collective = Collective.find collective_id
-				double_check {
-				@owner.collectives.include? @collective }
-				@offering_session.collective_id = collective_id
-
-			when "new"
-					double_check {
-				@collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id) }
-				@offering_session = @collective.id
-			end
-		end
+            	when "new"
+                                                    params[:offering_session].delete :collective_id
+            			double_check {
+            		@collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id) }
+            		@offering_session.collective_id = @collective.id
+                                    @offering_session.collection_flag = true
+            	end
 
 		params[:offering_session].delete :collective_type
+                        params[:offering_session].delete :collective_flag
 
 		# to be used in case of changing collective_title
 		collective_title = params[:offering_session].delete :collective_title
@@ -178,7 +181,7 @@ class OfferingSessionsController < ApplicationController
 
 	def destroy # offering_session
 		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
-		@offering_session.find(params[:offering_session_id])
+		@offering_session = OfferingSession.find(params[:offering_session_id])
 			double_check(@owner) {
 		@owner.offering_sessions.include? @offering_session	}
 
@@ -267,9 +270,9 @@ class OfferingSessionsController < ApplicationController
 		end
 
 		def user_must_be_admin?
-			@event = Event.find(params[:id])
-			@user = current_user
-			redirect_to(@event) unless @event.administrators.include?(@user)
+			offering_session = OfferingSession.find(params[:id])
+			user = current_user
+			redirect_to(offering_session) unless offering_session.owner.administrators.include?(user)
 		end
 
 		def create_collective(title, owner_type, owner_id, owner_safe=false)
@@ -287,9 +290,14 @@ class OfferingSessionsController < ApplicationController
 			collective
 		end
 
+                        def find_offering_session_owner
+                            @owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])
+                        end
+
 		def assign_offering_session_owner
-			@owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])
-			@offering_session.owner = @owner
+                            find_offering_session_owner
+                            @offering_session.owner = @owner
+
 		end
 
 		def replace_with_happening(grouped_happening_cases)

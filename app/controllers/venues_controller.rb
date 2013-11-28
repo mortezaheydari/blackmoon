@@ -95,8 +95,8 @@ class VenuesController < ApplicationController
             @offering_session_edit = OfferingSession.find(params[:session_id])
             @edit_happening_case = @offering_session_edit.happening_case
         else
-            @offering_session_edit = OfferingSession.find(1)
-            @edit_happening_case = @offering_session_edit.happening_case
+            @offering_session_edit = OfferingSession.new
+            @edit_happening_case = HappeningCase.new
         end
 
         @happening_case = HappeningCase.new
