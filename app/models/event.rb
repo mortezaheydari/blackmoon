@@ -12,7 +12,7 @@ class Event < ActiveRecord::Base
   	# individual_participators
   	# team_participators
   	# joineds
-  	# happening_case  
+  	# happening_case
   include Albumable 
   	# album
   	# logo

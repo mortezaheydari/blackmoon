@@ -8,8 +8,8 @@ class Team < ActiveRecord::Base
 	# inviteds
 	# join_requests_received
 	# individual_participators
+	# members
 	# joineds
-	# happening_case
   include Albumable
 	# album
 	# logo
@@ -23,6 +23,6 @@ class Team < ActiveRecord::Base
 	# events_participating
 
 
-  attr_accessible :descreption, :name, :sport, :number_of_attendings, :title, :category, :open_join
+  attr_accessible :descreption, :sport, :number_of_attendings, :title, :category, :open_join
 
 end
