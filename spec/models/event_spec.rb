@@ -12,15 +12,24 @@ describe Event do
 	respond_array = []
 
 		# attr_accessible
-			respond_array += [:descreption, :title, :location]
+			respond_array += [:category, 
+				:descreption, 
+  				:title, 
+  				:tournament_id, 
+  				:fee, 
+  				:fee_type, 
+  				:sport, 
+  				:number_of_attendings, 
+  				:team_participation, 
+  				:open_join]
 
-		# MultiSessionJoinable aspect
-			respond_array += [:happening_case, 
-				:joineds, 
+		# Joinable aspect
+			respond_array += [:inviteds,
 				:join_requests_received, 
 				:individual_participators, 
 				:team_participators, 
-				:invitations]
+				:joineds,
+				:happening_case]
 
 		# Offerable aspect
 			respond_array += [:location, :creator, :administrators]
