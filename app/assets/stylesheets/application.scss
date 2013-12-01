@@ -1443,9 +1443,9 @@ h2.header_text {
         }
       }
       form {
-        label, span {
-            font-size: 0.8em;
-            line-height: 30px;
+        label, span, p {
+            font-size: 0.9em;
+            line-height: 40px;
             color: $TextColor;
         }
         span {
