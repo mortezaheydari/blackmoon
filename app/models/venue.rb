@@ -12,13 +12,12 @@ class Venue < ActiveRecord::Base
     # join_requests_received    
     # individual_participators
     # invitations
+    # collectives
 
   include Albumable
   	# album
   	# logo
 
   attr_accessible :descreption, :title, :location
-
-  has_many :collectives, as: :owner, :dependent => :destroy; accepts_nested_attributes_for :collectives
 
 end
