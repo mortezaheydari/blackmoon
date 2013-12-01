@@ -169,6 +169,16 @@ $(document).ready(function() {
 
     $(".btn-group").hide();
 
+    $("a#SignInTop").click(function(e) {
+        e.preventDefault();
+        $("#SignIn").modal();
+    });
+
+    $("a#SignUpTop").click(function(e) {
+        e.preventDefault();
+        $("#SignUp").modal();
+    });
+
     $('input.file').change(function() {
         $("p#fileName").text(this.value);
     });
@@ -196,17 +206,17 @@ $(document).ready(function() {
             margin: 0
     });
 
-    $("div#Sign a#SignInTop").fancybox({
-        padding: 0,
-        margin: 0,
-        minWidth: 600
-    });
+    // $("div#Sign a#SignInTop").fancybox({
+    //     padding: 0,
+    //     margin: 0,
+    //     minWidth: 600
+    // });
 
-    $("div#Sign a#SignUpTop").fancybox({
-        padding: 0,
-        margin: 0,
-        minWidth: 600
-    });
+    // $("div#Sign a#SignUpTop").fancybox({
+    //     padding: 0,
+    //     margin: 0,
+    //     minWidth: 600
+    // });
 
     $("div.gallery a.imageModal").fancybox({
         padding: 0,

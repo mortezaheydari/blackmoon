@@ -50,9 +50,10 @@ div.homeImgContainer {
         color: $white;
         @include text-shadow(1px 1px #000);
         position: relative;
-        top: -240px;
+        top: -195px;
         font-size: 1.7em;
         left: 20px;
+        line-height: 30px;
     }
 }
 
@@ -109,27 +110,35 @@ div.HomeForm {
         padding: 10px 0 0 10px;
         width: 100%;
         height: 180px;
+        form {
+            width: 255px;
+        }
         h3 {
             padding: 0;
-            margin: 0 0 5px 0;
+            margin: 0;
             color: $white;
             font-size: 1.1em;
-            font-weight: normal;
+            // font-weight: normal;
         }
         input.textField  {
-            width: 93%;
+            width: 100%;
             margin: 2px 0;
             @include border-radius(6px);
               border: none;
-              height: 20px;
+              height: 14px;
         }
         input.homeBtn {
             float: right;
-            margin-right: 19px;
+            margin-right: -12px;
             width: auto;
+            height: 30px !important;
+            margin-top: 2px;
             &:hover {
                 border:none;
             }
+        }
+        label {
+            display: inline;
         }
         div.facebookLogin {
             width: 57%;

@@ -83,6 +83,7 @@ a.collective_label {
 
 // start of shared styles
 
+
 div.teamMembers {
     clear: both;
     height: 95px;
@@ -1639,9 +1640,10 @@ div.upload {
     @include box-shadow(#666666 0px 5px 15px inset);
     .header {
         position: relative;
-        width: 47%;
-        left: 53%;
-        top:20%;
+        width: 37%;
+        left: 51%;
+        top: 4%;
+        border-bottom: none;
        .icon {
             background:url("sign-in-modal.png") no-repeat;
             background-size: 70px 56px;
@@ -1728,7 +1730,7 @@ div#Create {
 div#SignUp {
     height:400px;
     .header {
-        top: 17%;
+        // top: 17%;
     }
     form {
         width:70%;

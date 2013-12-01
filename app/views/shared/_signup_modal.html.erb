@@ -1,7 +1,10 @@
-<div style="display:none">
-<div id="SignUp" class="modal">
-    <div class="header"><div class="icon left"></div><h3>SIGN UP</h3></div>
-        <%= form_for(@account,:as => resource_name, :url => account_registration_path) do |f| %>
+<!-- Modal -->
+<div id="SignUp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header header">
+    <h3 id="myModalLabel"><div class="icon left"></div>SIGN UP</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_for(@account,:as => resource_name, :url => account_registration_path) do |f| %>
         <table colspan="5">
             <tr>
                 <%= f.fields_for :user do |user_form| %>
@@ -31,5 +34,5 @@
             </tr>
         </table>
     <% end %>
-</div>
+  </div>
 </div>
