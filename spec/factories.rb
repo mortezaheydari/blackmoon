@@ -3,6 +3,8 @@ FactoryGirl.define do
   	
 
 	fake_title = Faker::Lorem.sentence(1)
+	fake_text = Faker::Lorem.paragraph(3)
+	fake_address = Faker::Address.city+", "+Faker::Address.street_address
 
 	factory :offering_session do
 		title fake_title
@@ -22,6 +24,10 @@ FactoryGirl.define do
 
 	factory :collective do
 		sequence(:title) { |n| "collective title #{n}"}
+		factory :collective_for_venue do
+			# find a solution for it
+			# owner { venue }
+		end
 	end
 
 	factory :profile do
@@ -34,7 +40,9 @@ FactoryGirl.define do
 		name Faker::Name.name
 		profile
 		album
-		logo
+		factory :user_with_logo do
+			logo			
+		end
 	end
 
 	factory :account do
@@ -60,11 +68,10 @@ FactoryGirl.define do
 
 		factory :location_with_custom_address do
 			city Faker::Address.city
-			custom_address (Faker::Address.city+", "+Faker::Address.street_address)
+			custom_address fake_address
 			custom_address_use true
 			gmap_use false
 		end		
-
 	end
 
 	factory :event do
@@ -73,8 +80,10 @@ FactoryGirl.define do
 		title fake_title
 		number_of_attendings 0		
 		happening_case
-		album 
-		logo
+		album
+		factory :event_with_logo do
+			logo
+		end
 		location
 	end
 
@@ -86,9 +95,17 @@ FactoryGirl.define do
 		number_of_attendings 0		
 		happening_case
 		album
-		logo
+		factory :game_with_logo do
+			logo
+		end
 		location
 	end	
+
+	factory :venue do
+		title fake_title
+		descreption fake_text
+		location 
+	end
 
 	factory :album do
 		title fake_title

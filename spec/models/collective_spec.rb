@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe Collective do
 	
-	let(:event) { FactoryGirl.create(:collective) }
-	subject { event }
+	let(:owner) { FactoryGirl.create(:venue) }
+	let(:collective) { FactoryGirl.create(:collective, owner: owner) }
+	subject { collective }
 
 # --- respond_to
 	respond_array = []

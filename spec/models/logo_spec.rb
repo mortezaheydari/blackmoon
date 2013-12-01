@@ -16,9 +16,6 @@ describe Logo do
 		# associations
 			respond_array += [:photo, :owner]	
 
-		# methods
-			respond_array += [:uses]
-
 	respond_array.each do |message|
 		it { should respond_to(message)}
 	end
