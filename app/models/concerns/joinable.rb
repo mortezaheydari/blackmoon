@@ -5,7 +5,8 @@ module Joinable
 
         has_many :invitations, as: :subject, dependent: :destroy; accepts_nested_attributes_for :invitations
         has_many :join_requests_received, as: :receiver, class_name: "join_request"; accepts_nested_attributes_for :join_requests_received
-
+        has_many :offering_individual_participations, as: :offering, :dependent => :destroy; accepts_nested_attributes_for :offering_individual_participations
+        
         def individual_participators
             @participators = []
             self.offering_individual_participations.each do |participation|
@@ -22,23 +23,6 @@ module Joinable
             end
             @invited
         end
-# categorized features
-
-## number of sessions
-### multi_session
-        if ["Venue", "OtherMultiSessionOfferings"].include? self.name
-            has_many :offering_sessions, as: :owner,:dependent => :destroy; accepts_nested_attributes_for :offering_sessions
-
-            def offering_individual_participations
-                @participations = []
-                self.offering_sessions.all.each do |session|
-                    @participations << session.individual_participation
-                end
-                @participations
-            end
-
-### single session
-        else
 
         before_save :default_values
 
@@ -50,49 +34,10 @@ module Joinable
             end
         end
 
-            has_many :offering_individual_participations, as: :offering, :dependent => :destroy; accepts_nested_attributes_for :offering_individual_participations
-        end
-###
-
-
-## Team and Venues
-        if ["Team", "Venue"].include? self.name
-
-### Team - no_session
-            if self.name == "Team"
-                has_many :act_memberships, as: :act, :dependent => :destroy
-                accepts_nested_attributes_for :act_memberships
-                def members
-                    @members = []
-                    self.act_memberships.each do |member|
-                        @members << member.member_id
-                    end
-                    User.find(@members)
-                end
-
-                def joineds
-                    @joineds = []
-                    self.members.each do |joined|
-                            @joineds << joined
-                    end
-                    @joineds
-                end
-
-### Venue - multi_session
-            else # self.name == "Venue"
-                def joineds
-                    @joineds = []
-                    self.individual_participators.each do |joined|
-                            @joineds << joined
-                    end
-                    @joineds
-                end
-            end
-###
-
-## other offerings - single_session
-        else
+        unless "Team" == self.name
+            
             has_many :offering_team_participations, as: :offering, :dependent => :destroy; accepts_nested_attributes_for :offering_team_participations
+            has_one :happening_case, as: :happening, :dependent => :destroy; accepts_nested_attributes_for :happening_case
 
             def team_participators
                 @participators = []
@@ -113,26 +58,25 @@ module Joinable
                 @joineds
             end
 
-        end
-##
-#
-
-# Happenable
-        if "Venue" == self.name
-            def happening_cases
-                @happening_cases = []
-                self.offering_sessions.each do |offering_session|
-                    @happening_cases << offering_session.happening_case
-                end
-                @happening_cases
-            end
-        elsif "Team" == self.name
-
+## Team:
         else
-            has_one :happening_case, as: :happening, :dependent => :destroy; accepts_nested_attributes_for :happening_case
+            has_many :act_memberships, as: :act, :dependent => :destroy
+            accepts_nested_attributes_for :act_memberships
+            def members
+                @members = []
+                self.act_memberships.each do |member|
+                    @members << member.member_id
+                end
+                User.find(@members)
+            end
+
+            def joineds
+                @joineds = []
+                self.members.each do |joined|
+                        @joineds << joined
+                end
+                @joineds
+            end
         end
-#
-
     end
-
 end

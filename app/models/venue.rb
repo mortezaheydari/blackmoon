@@ -5,17 +5,20 @@ class Venue < ActiveRecord::Base
   	# location
   	# creator
   	# administrators
-  include Joinable
+  include MultiSessionJoinable
   	# offering_sessions
-  	# inviteds
-  	# individual_participators
+  	# happening_cases
+    # joineds
+    # join_requests_received    
+    # individual_participators
+    # invitations
+
   include Albumable
   	# album
   	# logo
 
   attr_accessible :descreption, :title, :location
 
-  has_many :offering_sessions, as: :owner, :dependent => :destroy; accepts_nested_attributes_for :offering_sessions
   has_many :collectives, as: :owner, :dependent => :destroy; accepts_nested_attributes_for :collectives
 
 end
