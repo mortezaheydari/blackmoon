@@ -1808,7 +1808,7 @@ div#SignUp {
     color: #000;
     text-align: center;
     width: 14.2857142857143%;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: bold;
     border: none;
   }
@@ -1874,6 +1874,12 @@ div#SignUp {
         }
 }
 
+a.collective_label {
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 // Calendar End
 
 
@@ -1881,3 +1887,15 @@ div#SignUp {
 @import "registrations";
 
 @import "pages";
+
+/* Flatten das boostrap */
+.well, .navbar-inner, .popover, .btn, .tooltip, input, select, textarea, pre, .progress, .modal, .add-on, .alert, .table-bordered, .nav>.active>a, .dropdown-menu, .tooltip-inner, .badge, .label, .img-polaroid {
+  -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+    border-collapse: collapse !important;
+    background-image: none !important;
+}
