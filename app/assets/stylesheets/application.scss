@@ -14,7 +14,6 @@
 @import "compass/layout/sticky-footer";
 @import "compass/layout/stretching";
 @import "compass/css3/appearance";
-@import "bootstrap-select";
 
 $blueprint_grid_columns: 20;
 $blueprint_grid_width: 40px;
@@ -60,11 +59,6 @@ img{
   max-width: none;
 }
 
-a.collective_label {
-    &:hover {
-        text-decoration: none !important;
-    }
-}
 
 @mixin SideText {
   a {
@@ -1806,26 +1800,32 @@ div#SignUp {
     font-family: "Lucida Grande", arial, helvetica, sans-serif;
     font-size: 10px;
     padding: 6px;
-    border: 1px solid #999;
+    border: 1px solid #e1e1e1;
   }
 
   th {
-    background: #DDD;
-    color: #666;
+    background: #fff;
+    color: #000;
     text-align: center;
     width: 14.2857142857143%;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: none;
   }
 
   td {
     background: #FFF;
-    color: #777;
+    color: #888;
     height: 80px;
     vertical-align: top;
     font-size: 16px;
+    &:hover {
+        background: #ededed;
+    }
   }
 
-  .notmonth, .notmonth a { color: #CCC; }
-  .today { background-color: #D7F2FF; }
+  .notmonth { opacity: 0.5; }
+  .today { background-color: rgba(97, 183, 207, 0.1) }
 }
 
 #articles #month {
@@ -1836,13 +1836,42 @@ div#SignUp {
   a {
     text-decoration: none;
     padding: 0 10px;
+    font-size: 22px;
     color: #999;
   }
 }
 
 #articles ul {
-  font-size: 11px;
-  padding-left: 20px;
+  font-size: 9px;
+  li {
+    list-style: none;
+    i {
+        position: relative;
+        top: 7px;
+        left: -14px;
+        margin: -7px;
+    }
+    a {
+        font-size: 12px;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+  }
+}
+
+.active_collective {
+    background: #65a5d1;
+    border: solid 1px #65a5d1;
+    font-weight: bold;
+    padding: 3px;
+    font-size: 12px;
+    color: #ffffff;
+    display: inline-block;
+        &:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
 }
 
 // Calendar End

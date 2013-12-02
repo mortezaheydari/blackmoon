@@ -3,10 +3,10 @@ $("#calendar_reload").html("<%= escape_javascript(render('schedule/sessions', gr
     $("a.collective_label").click(function(e) {
         e.preventDefault();
         $(".btn-group").show();
-        $('li a.badge').removeClass('badge badge-info');
+        $('li a.active_collective').removeClass('active_collective');
         $('span.label-info').removeClass('label-info');
         $("a#" + this.id + " span").addClass('label-info');
-        $("li a." + this.id).addClass('badge badge-info');
+        $("li a." + this.id).addClass('active_collective');
         $("li a#explode_collective").attr('href', $("li a#explode_collective").attr('href') + "&collective_id=" + $("span.label-info").attr('data-id'));
         $("li a#delete_collective").attr('href', $("li a#delete_collective").attr('href') + "&collective_id=" + $("span.label-info").attr('data-id'));
     });

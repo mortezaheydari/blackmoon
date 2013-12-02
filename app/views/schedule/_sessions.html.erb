@@ -29,7 +29,7 @@
         <% if grouped_sessions[date] %>
           <ul>
             <% grouped_sessions[date].each do |session| %>
-              <li><%= link_to session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "session #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>
+              <li><%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "session #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>
                 <% unless session.happening_case.duration_type == "All Day" %>
                     <br>
                     ( <%= session.happening_case.time_from.strftime('%H:%M') %> to <%= session.happening_case.time_to.strftime('%H:%M') %> )
