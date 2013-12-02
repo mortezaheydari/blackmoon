@@ -14,6 +14,7 @@
 @import "compass/layout/sticky-footer";
 @import "compass/layout/stretching";
 @import "compass/css3/appearance";
+@import "bootstrap-select";
 
 $blueprint_grid_columns: 20;
 $blueprint_grid_width: 40px;
@@ -55,8 +56,8 @@ img{
     max-width: 100%;
 }
 
-.Map img{
-    max-width: none;
+#map img {
+  max-width: none;
 }
 
 a.collective_label {
