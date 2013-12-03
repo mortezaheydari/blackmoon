@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Team do
 
+	it "has a valid factory" do
+		FactoryGirl.create(:team).should be_valid
+	end
+
 	let(:account) { FactoryGirl.create(:account_with_user) }	
 	let(:user) {account.user}
 	let(:team) { FactoryGirl.create(:team) }

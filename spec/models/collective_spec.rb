@@ -1,7 +1,12 @@
 require 'spec_helper'
 
 describe Collective do
-	
+
+	it "has a valid factory" do
+		owner = FactoryGirl.create(:venue)
+		FactoryGirl.create(:collective, owner: owner).should be_valid
+	end
+
 	let(:owner) { FactoryGirl.create(:venue) }
 	let(:collective) { FactoryGirl.create(:collective, owner: owner) }
 	subject { collective }

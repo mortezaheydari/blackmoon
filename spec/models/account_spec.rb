@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Account do
+
+	it "has a valid factory" do
+		FactoryGirl.create(:account).should be_valid
+	end
+
 	before { @account = FactoryGirl.create(:account_with_user) }
 
 	subject { @account }

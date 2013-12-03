@@ -2,6 +2,13 @@ require 'spec_helper'
 
 describe Logo do
 
+	it "has a valid factory" do
+		event = FactoryGirl.create(:event)
+		FactoryGirl.create(:event).should be_valid
+		event.logo.should be_valid
+		FactoryGirl.create(:logo).should be_valid
+	end
+
 	let(:event) { FactoryGirl.create(:event) }	
 	let(:logo) { event.logo }
 	

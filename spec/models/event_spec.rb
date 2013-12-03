@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Event do
 
+	it "has a valid factory" do
+		FactoryGirl.create(:event).should be_valid
+	end
+
 	let(:account) { FactoryGirl.create(:account_with_user) }	
 	let(:user) {account.user}
 	let(:event) { FactoryGirl.create(:event) }

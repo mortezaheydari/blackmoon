@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe OfferingSession do
+
+	it "has a valid factory" do
+		FactoryGirl.create(:offering_session).should be_valid
+	end
+
 	let(:offering_session) { FactoryGirl.create(:offering_session) }
 
 	subject { offering_session }

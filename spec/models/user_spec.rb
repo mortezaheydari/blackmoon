@@ -1,11 +1,17 @@
 require 'spec_helper'
 
 describe User do
-	let(:account) { FactoryGirl.create(:account) }
 
-	before { @user = account.build_user(name:	"username") }
+	it "has a valid factory" do
+		account = FactoryGirl.create(:account_with_user)
+		account.user.should be_valid
+		FactoryGirl.create(:user).should be_valid
+	end
 
-	subject { @user }
+	let(:account) { FactoryGirl.create(:account_with_user) }
+	let(:user) { account.user }
+
+	subject { user }
 
 
 # --- respond_to
@@ -52,21 +58,21 @@ describe User do
 
 
   describe "when name is not present" do
-    before {@user.name = " "}
+    before {user.name = " "}
     it { should_not be_valid}
   end
 
   describe "when name is too long" do
-    before {@user.name = "a" * 51}
+    before {user.name = "a" * 51}
     it { should_not be_valid }
   end
 
 	describe "with username already taken" do
 		before do
-			user_with_same_name = @user.dup
-			user_with_same_name.save		  
+			user_with_same_name = user.dup
+			user_with_same_name.save.should_not be_valid		  
 		end
-		it { should_not be_valid }
+
 	end
 
 end

@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe HappeningCase do
 
+	it "has a valid factory" do
+		FactoryGirl.create(:happening_case).should be_valid
+	end
+
 	let(:account) { FactoryGirl.create(:account_with_user) }	
 	let(:user) {account.user}
 	let(:event) { FactoryGirl.create(:event) }
@@ -28,5 +32,15 @@ describe HappeningCase do
 		it { should respond_to(message)}
 	end
 # ---
+
+	describe "when date_and_time is empty" do
+		before { happening_case.date_and_time = nil }
+	    it { should_not be_valid }
+	end
+
+	describe "when duration_type is empty" do
+		before { happening_case.duration_type = nil }
+	    it { should_not be_valid }
+	end
 
 end

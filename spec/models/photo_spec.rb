@@ -2,6 +2,13 @@ require 'spec_helper'
 
 describe Photo do
 
+	it "has a valid factory" do
+		FactoryGirl.create(:logo).should be_valid
+		logo = FactoryGirl.create(:logo)
+		logo.photo.should be_valid
+		FactoryGirl.create(:photo).should be_valid
+	end
+
 	let(:logo) { FactoryGirl.create(:logo) }		
 	let(:photo) { logo.photo }	
 	

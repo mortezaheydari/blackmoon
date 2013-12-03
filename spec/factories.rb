@@ -3,6 +3,8 @@
 	def fake_text(); Faker::Lorem.paragraph(3); end
 	def fake_address(); Faker::Address.city+", "+Faker::Address.street_address; end
 	def fake_word(); Faker::Lorem.words.first; end
+	def fake_name(); Faker::Name.name; end
+	def fake_email(); Faker::Internet.email; end	
 
 FactoryGirl.define do
 
@@ -38,7 +40,7 @@ FactoryGirl.define do
 	end
 
 	factory :user do
-		name Faker::Name.name
+		name { fake_name }
 		profile
 		album
 		factory :user_with_logo do
@@ -47,7 +49,7 @@ FactoryGirl.define do
 	end
 
 	factory :account do
-		email Faker::Internet.email
+		email { fake_email }
 		password "foobar"
 		password_confirmation "foobar"
 		factory :account_with_user do

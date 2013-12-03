@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe Album do
 
+	it "has a valid factory" do
+		FactoryGirl.create(:album).should be_valid
+	end
+
+
 	let(:account) { FactoryGirl.create(:account) }
 	before { 
 		@user = account.build_user(name:	"username")

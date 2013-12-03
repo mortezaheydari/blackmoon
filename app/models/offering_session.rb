@@ -17,6 +17,10 @@ class OfferingSession < ActiveRecord::Base
   attr_accessible :descreption, :number_of_attendings, :title, :owner_id, :owner_type, :collective_id, :collection_flag, :collective_type, :repeat_duration, :repeat_number, :repeat_every
   belongs_to :collective; accepts_nested_attributes_for :collective
 
+
+# false variables needed for form submition.
+# scheduled for refactoring
+
   def collective_type
     if self.collective_id.nil?
         return "none"

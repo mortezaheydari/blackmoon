@@ -1,12 +1,18 @@
 require 'spec_helper'
 
 describe Profile do
+
+	it "has a valid factory" do
+		FactoryGirl.create(:user).should be_valid
+		user = FactoryGirl.create(:user)
+		user.profile.should be_valid
+		FactoryGirl.create(:profile).should be_valid
+	end
 	
 	let(:user) { FactoryGirl.create(:user) }
-	before { @profile = user.profile }
+	let(:profile) { user.profile }	
 
-	subject { @profile }
-
+	subject { profile }
 
 # --- respond_to
 	respond_array = []

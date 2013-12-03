@@ -2,6 +2,12 @@ require 'spec_helper'
 
 describe Location do
 
+	it "has a valid factory" do
+		event = FactoryGirl.create(:event)
+		event.location.should be_valid
+		FactoryGirl.create(:location).should be_valid
+	end
+
 	let(:account) { FactoryGirl.create(:account_with_user) }	
 	let(:user) {account.user}
 	let(:event) { FactoryGirl.create(:event) }
