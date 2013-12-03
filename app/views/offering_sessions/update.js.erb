@@ -1,4 +1,5 @@
 $("#calendar_reload").html("<%= escape_javascript(render('schedule/sessions', grouped_sessions: @grouped_sessions, owner: @owner, collectives: @collectives))%>");
+    $("#session_reload").html("<%= escape_javascript(render('offering_sessions/session_modal', session: @offering_session_edit, session_happening_case: @edit_happening_case))%>");
 
     $("a.collective_label").click(function(e) {
         e.preventDefault();
