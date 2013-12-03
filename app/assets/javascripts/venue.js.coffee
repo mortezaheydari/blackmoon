@@ -4,7 +4,7 @@
 $ ->
   $(document).ready ->
     $('#happening_case_date_and_time').datepicker
-        dateFormat: 'yy-mm-dd'
+        format: 'yyyy-mm-dd'
     gmarkers = []
     if $("input#venue_location_gmap_use").attr('checked')
         $(".g_rows").show()
@@ -31,6 +31,7 @@ $ ->
     $('div.likes').hide()
     $('div.Map').show()
     $('div.Map').hide()
+    $("#repeat_row").hide()
     $('nav#secondary ul li.navActive').removeClass()
     $('nav#secondary ul li#Schedule').addClass('navActive')
 
@@ -49,6 +50,17 @@ $ ->
     $("div.edit_offering_session").slideDown('fast')
     $("form.new_offering_session")[0].reset()
     $("div.new_offering_session").slideUp('fast')
+
+  $('a#edit_cancel').click (e) ->
+    e.preventDefault()
+    $("form.edit_offering_session")[0].reset()
+    $("div.edit_offering_session").hide()
+
+  $('a#cancel_new').click (e) ->
+    e.preventDefault()
+    $("form.new_offering_session")[0].reset()
+    $("div.new_offering_session").hide()
+
 
   $('nav#secondary ul li#Schedule').click (e) ->
     e.preventDefault()
@@ -104,6 +116,12 @@ $ ->
     $('div.likes').fadeOut('fast')
     $('div.gallery').fadeIn('fast')
     $('div.Schedule').fadeOut('fast')
+
+  $('input#offering_session_collection_flag').click (e) ->
+    if $(@).attr('checked')
+        $("#repeat_row").show()
+    else
+        $("#repeat_row").hide()
 
 
   $('input#venue_location_gmap_use').click (e) ->

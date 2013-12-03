@@ -1,5 +1,6 @@
 <div class="body new_offering_session">
     <h2 class="header_text">New Session</h2>
+    <a href="#" id="cancel_new" class="btn btn-danger">Cancel New</a>
     <div class="offering">
         <%= form_for(@offering_session) do |f| %>
         <table width="100%">
@@ -60,7 +61,7 @@
                     <%= f.check_box :collection_flag %>
                 </td>
             </tr>
-            <tr>
+            <tr id="repeat_row">
                 <td colspan="2">
                     <span>Repeat every</span> <%= f.select :repeat_every, ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"] %> <%= f.select :repeat_duration, ["hour", "day", "week", 'month'] %> <span>for</span> <%= f.select :repeat_number, ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"] %>
                 </td>

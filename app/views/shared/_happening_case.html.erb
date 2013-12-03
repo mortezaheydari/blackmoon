@@ -9,7 +9,7 @@
     <tr class="allday">
         <td><%= h.label :date_and_time %></td>
         <!-- <td><%# select_date date_and_time, :prefix => :date_and_time, :start_year => Time.now.year, :end_year => Time.now.year + 5  %></td> -->
-        <td><%= h.text_field :date_and_time, id: date_id %></td>
+        <td><%= h.text_field :date_and_time, id: date_id, value: happening_case.date_and_time.strftime("%Y-%m-%d") if happening_case.date_and_time %></td>
     </tr>
     <tr class="range">
         <td><%= h.label :time_from, "Time From" %></td>

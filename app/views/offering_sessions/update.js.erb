@@ -43,3 +43,8 @@ $('a.session').click(function(e) {
   $("form.new_offering_session")[0].reset();
   $("div.new_offering_session").slideUp('fast');
 });
+
+  $('a.sessionshow').click(function(e) {
+    e.preventDefault();
+    $("#session_modal").modal();
+});

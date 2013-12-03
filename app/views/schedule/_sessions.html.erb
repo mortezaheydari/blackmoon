@@ -1,11 +1,15 @@
 <div class="calendar">
-    <br>
-    <a href="#" id="new_offering_session" class="btn left">New session</a>
+    <% if user_is_admin?(owner) %>
+        <br>
+        <a href="#" id="new_offering_session" class="btn left">New session</a>
+    <% end -%>
     <div class="btn-group left pad_left">
-        <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
-        Delete Collectives
-        <span class="caret"></span>
-        </a>
+        <% if user_is_admin?(owner) %>
+            <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
+            Delete Collectives
+            <span class="caret"></span>
+            </a>
+        <% end -%>
         <% if @collectives %>
             <ul class="dropdown-menu">
                 <li>
@@ -29,7 +33,12 @@
         <% if grouped_sessions[date] %>
           <ul>
             <% grouped_sessions[date].each do |session| %>
-              <li><%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "session #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>
+              <li>
+                <% if user_is_admin?(owner) %>
+                    <%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "session #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>
+                <% else %>
+                    <%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "sessionshow #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>
+                <% end -%>
                 <% unless session.happening_case.duration_type == "All Day" %>
                     <br>
                     ( <%= session.happening_case.time_from.strftime('%H:%M') %> to <%= session.happening_case.time_to.strftime('%H:%M') %> )
@@ -41,3 +50,5 @@
       <% end %>
     </div>
 </div>
+
+<div id="session_reload"><%= render "offering_sessions/session_modal", session: @offering_session_edit, session_happening_case: @edit_happening_case %></div>

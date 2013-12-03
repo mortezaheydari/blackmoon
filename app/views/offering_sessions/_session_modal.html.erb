@@ -1,0 +1,20 @@
+    <!-- Modal -->
+    <div id="session_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h1 id="myModalLabel"><%= session.title %></h1>
+      </div>
+      <div class="modal-body">
+            <% if session.collective %>
+                <h4><%= session.collective.title %></h4>
+            <% end %>
+            <p><%= session.descreption %></p>
+            <p><%= session_happening_case.date_and_time.strftime('%A, %d-%b-%Y') if session_happening_case.date_and_time %>
+            <% unless session_happening_case.duration_type == "All Day" %>
+                <span>( <%= session_happening_case.time_from.strftime('%H:%M') if session_happening_case.time_from %> to <%= session_happening_case.time_to.strftime('%H:%M') if session_happening_case.time_from %> )</span>
+            <% else %>
+                <span><%= session_happening_case.duration_type %> session</span>
+            <%- end %>
+            </p>
+      </div>
+    </div>

@@ -1,13 +1,25 @@
-$("#edit_form").html("<%= escape_javascript(render('schedule/edit_session', owner: @venue))%>");
+<% if user_is_admin?(@venue) %>
+    $("#edit_form").html("<%= escape_javascript(render('schedule/edit_session', owner: @venue))%>");
+<% else %>
+    $("#session_reload").html("<%= escape_javascript(render('offering_sessions/session_modal', session: @offering_session_edit, session_happening_case: @edit_happening_case))%>");
+    $("#session_modal").modal();
+<% end %>
+
+
+$('a#edit_cancel').click( function(e) {
+    e.preventDefault();
+    $("div.edit_offering_session").hide();
+});
 
 $('#edit_happening_case_date_and_time').datepicker({
-        dateFormat: 'yy-mm-dd'
+        format: 'yyyy-mm-dd'
       });
 if ($(".edit_offering_session select#happening_case_duration_type").val() == "Range") {
     $(".edit_offering_session tr.range").show();
 } else {
     $(".edit_offering_session tr.range").hide();
 }
+
 
 if ($(".edit_offering_session #offering_session_collective_type").val() == 'new') {
     $(".edit_offering_session tr.new_collective").show()
