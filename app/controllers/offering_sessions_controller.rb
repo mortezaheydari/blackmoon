@@ -86,8 +86,14 @@ class OfferingSessionsController < ApplicationController
 				@repeat_number.times do |i|
 					@the_offering_session = OfferingSession.new(@attributes)
 					happening_case = @the_offering_session.build_happening_case(params[:happening_case])
-					happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
-					happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
+                                                            if (["hour"].include? @repeat_duration)
+                                                                happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
+                                                                happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
+                                                            else
+                                                                happening_case.date_and_time = (happening_case.date_and_time + (@repeat_every.send(@repeat_duration))*i)
+                                                                happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
+                                                                happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
+                                                            end
 					@the_offering_session.save
 				end
 			else
