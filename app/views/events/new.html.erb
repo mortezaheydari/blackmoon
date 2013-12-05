@@ -27,7 +27,7 @@
                                     <tr>
                                         <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
                                         <td>
-                                            <div id="BallList"><%= f.select :sport, [
+                                            <div id="BallList"><%= f.select :sport, ([
                                                 "Basketball",
                                                 "Volleyball",
                                                 "Football (Soccer)",
@@ -41,7 +41,7 @@
                                                 "Foosball",
                                                 "Squash",
                                                 "Bowling",
-                                                "Golf"]%></div>
+                                                "Golf"]),{}, { :data => { :live_search => "true" } } %></div>
                                             <div id="FitList"><%= f.select :sport, [
                                                 "Cycling",
                                                 "Karate",
@@ -59,13 +59,13 @@
                                                 "Yoga",
                                                 "Aikido",
                                                 "Aerobics",
-                                                "Gymnastics"]%></div></div>
+                                                "Gymnastics"],{}, { :data => { :live_search => "true" } } %></div></div>
                                             <div id="WaterList"><%= f.select :sport, [
                                                 "Swimming",
                                                 "Water Polo",
                                                 "Sailing",
                                                 "Diving",
-                                                "Fishing"]%></div>
+                                                "Fishing"],{}, { :data => { :live_search => "true" } } %></div>
                                         </td>
                                     </tr>
                                     <tr>
