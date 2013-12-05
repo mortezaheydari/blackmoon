@@ -18,8 +18,9 @@ gem 'activeadmin'
 gem 'gmaps4rails', "1.5"
 gem 'chronic'
 gem 'metric_fu'
+gem "jquery-fileupload-rails"
 
-gem 'make_flaggable', :git => 'git://github.com/cavneb/make_flaggable.git'
+gem 'make_flaggable', :git => 'git@github.com:Charchoob/make_flaggable.git'
 
 group :development do
 	gem 'annotate', '2.5.0'

@@ -6,7 +6,7 @@ module Offerable
 
 # categorized features
 ## Acts
-        if ["Team"].include? self.name 
+        if ["Team"].include? self.name
             has_many :act_administrations, as: :act, :dependent => :destroy; accepts_nested_attributes_for :act_administrations
             has_one :act_creation, as: :act, :dependent => :destroy; accepts_nested_attributes_for :act_creation
 
@@ -28,8 +28,8 @@ module Offerable
             has_many :offering_administrations, as: :offering, :dependent => :destroy; accepts_nested_attributes_for :offering_administrations
 
 ### offering session:
-            if  ["OfferingSession"].include? self.name 
-                belongs_to :owner, polymorphic: true; accepts_nested_attributes_for :owner            
+            if  ["OfferingSession"].include? self.name
+                belongs_to :owner, polymorphic: true; accepts_nested_attributes_for :owner
                 def creator
                   User.find_by_id(owner.offering_creation.creator_id) unless owner.offering_creation.nil?
                 end
@@ -47,7 +47,7 @@ module Offerable
                 end
 ###
 
-### normal offering:         
+### normal offering:
             else
                 has_one :location, as: :owner, :dependent => :destroy; accepts_nested_attributes_for :location
                 def creator
