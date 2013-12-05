@@ -224,7 +224,12 @@ div.signPage {
                 text-align: center;
                 td {
                     padding: 5px 5px;
-
+                    input.textField {
+                        width: 295px;
+                    }
+                    div.bootstrap-select {
+                        width: 100px !important;
+                    }
                 }
             }
         }
@@ -1605,35 +1610,35 @@ h2.header_text {
     }
 }
 
-.SI-FILES-STYLIZED label.cabinet
-{
-    width: 79px;
-    height: 22px;
-    background: url('upload.png') 0 0 no-repeat;
+// .SI-FILES-STYLIZED label.cabinet
+// {
+//     width: 79px;
+//     height: 22px;
+//     background: url('upload.png') 0 0 no-repeat;
 
-    display: block;
-    overflow: hidden;
-    cursor: pointer;
-    input.file
-    {
-        position: relative;
-        height: 100%;
-        width: auto;
-        opacity: 0;
-        -moz-opacity: 0;
-        filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
-    }
-}
-div.upload {
-    &:active {
-        @include box-shadow(0 10px 0 0 $grey);
-        position: relative;
-        top:0;
-    }
-    p {
-        color: $white;
-    }
-}
+//     display: block;
+//     overflow: hidden;
+//     cursor: pointer;
+//     input.file
+//     {
+//         position: relative;
+//         height: 100%;
+//         width: auto;
+//         opacity: 0;
+//         -moz-opacity: 0;
+//         filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+//     }
+// }
+// div.upload {
+//     &:active {
+//         @include box-shadow(0 10px 0 0 $grey);
+//         position: relative;
+//         top:0;
+//     }
+//     p {
+//         color: $white;
+//     }
+// }
 
 
 
@@ -1894,6 +1899,39 @@ a.collective_label {
 
 // Calendar End
 
+
+// file upload
+.cabinet {
+    span, i {
+        color: #fff !important;
+    }
+}
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  font-size: 200px;
+  direction: ltr;
+  cursor: pointer;
+}
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+  .fileinput-button input {
+    filter: alpha(opacity=0);
+    font-size: 100%;
+    height: 100%;
+  }
+}
+
+// end file upload
 
 
 #userDrop > hr {

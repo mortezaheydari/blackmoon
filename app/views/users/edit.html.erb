@@ -15,17 +15,25 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="2" width="200">
                             <label class="cabinet center">
-                                <%= p.file_field :image, class: "file" %>
+                            <span class="btn btn-success fileinput-button">
+                                <i class="icon-plus"></i>
+                                <span>Select file...</span>
+                                <!-- The file input field used as target for the file upload widget -->
+                                <%= p.file_field :image, class: "file", id: "fileupload" %>
+                            </span>
                             </label>
                             <br>
-                            <p id="fileName"></p>
+                            <p id="files"></p>
+                            <div id="progress" class="progress">
+                                <div class="progress-bar progress-bar-success"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <%= p.submit 'Save Photo', class: "button grey submitBtn homeBtn center" %>
+                            <%= p.submit 'Save Photo', class: "btn center" %>
                         </td>
                     </tr>
 
@@ -60,7 +68,7 @@
                     <% end %>
                     <tr>
                         <td></td>
-                        <td><%= f.submit 'Save Changes', class: "button grey submitBtn homeBtn right" %></td>
+                        <td><%= f.submit 'Save Changes', class: "btn btn-info right" %></td>
                     </tr>
                 </table>
 
