@@ -17,6 +17,7 @@
 //= require underscore
 //= require gmaps/google
 //= require bootstrap
+//= require jquery-fileupload
 //= require_tree .
 
 /******************************************
