@@ -43,7 +43,7 @@ module ApplicationHelper
 	end
 
 	def fitness_list
-		SportCategory.where(name: "Ball Sport").first.sports
+		SportCategory.where(name: "Fitness").first.sports
 	end
 	def fitness_names_list
 		list = []
@@ -54,7 +54,7 @@ module ApplicationHelper
 	end
 
 	def water_sport_list
-		SportCategory.where(name: "Ball Sport").first.sports
+		SportCategory.where(name: "Water Sport").first.sports
 	end
 	def water_sport_names_list
 		list = []
