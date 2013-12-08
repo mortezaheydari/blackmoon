@@ -63,6 +63,9 @@ class ApplicationController < ActionController::Base
 			return redirect_to(link, alert: msg)
 		end
 	end
-
 	# -ended
+
+
+
+
 end

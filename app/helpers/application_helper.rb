@@ -29,4 +29,40 @@ module ApplicationHelper
 	  Time.at(rand_in_range(from.to_f, to.to_f))
 	end
 
+
+	# methods regarding offered sports, (refer to seed)
+	def ball_sport_list
+		SportCategory.where(name: "Ball Sport").first.sports
+	end
+	def ball_sport_names_list
+		list = []
+		ball_sport_list.each do |sport|
+			list << sport.name
+		end
+		list
+	end
+
+	def fitness_list
+		SportCategory.where(name: "Ball Sport").first.sports
+	end
+	def fitness_names_list
+		list = []
+		fitness_list.each do |sport|
+			list << sport.name
+		end
+		list		
+	end
+
+	def water_sport_list
+		SportCategory.where(name: "Ball Sport").first.sports
+	end
+	def water_sport_names_list
+		list = []
+		water_sport_list.each do |sport|
+			list << sport.name
+		end
+		list		
+	end
+
+
 end
