@@ -9,7 +9,7 @@ gem "bcrypt-ruby", "~> 3.0.1"
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
-gem 'devise'
+gem 'devise', "~> 3.1"
 gem "heroku"
 gem 'thin'
 gem 'public_activity'
