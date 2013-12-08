@@ -27,45 +27,9 @@
                                     <tr>
                                         <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
                                         <td>
-                                            <div id="BallList"><%= f.select :sport, [
-                                                "Basketball",
-                                                "Volleyball",
-                                                "Football (Soccer)",
-                                                "American Football",
-                                                "Cricket",
-                                                "Badminton",
-                                                "Baseball",
-                                                "Tennis",
-                                                "Handball",
-                                                "Table Tennis",
-                                                "Foosball",
-                                                "Squash",
-                                                "Bowling",
-                                                "Golf"],{}, { :data => { :live_search => "true" } } %></div>
-                                            <div id="FitList"><%= f.select :sport, [
-                                                "Cycling",
-                                                "Karate",
-                                                "Judo",
-                                                "Boxing",
-                                                "Kick Boxing",
-                                                "Skating",
-                                                "Running",
-                                                "Power Walking",
-                                                "Skateboarding",
-                                                "Roller Skating",
-                                                "Taekwondo",
-                                                "Fencing",
-                                                "Paint ball",
-                                                "Yoga",
-                                                "Aikido",
-                                                "Aerobics",
-                                                "Gymnastics"],{}, { :data => { :live_search => "true" } } %></div></div>
-                                            <div id="WaterList"><%= f.select :sport, [
-                                                "Swimming",
-                                                "Water Polo",
-                                                "Sailing",
-                                                "Diving",
-                                                "Fishing"],{}, { :data => { :live_search => "true" } } %></div>
+                                            <div id="BallList"><%= f.select :sport, ball_sport_names_list, {}, { :data => { :live_search => "true" } } %></div>
+                                            <div id="FitList"><%= f.select :sport, fitness_names_list, {}, { :data => { :live_search => "true" } } %></div></div>
+                                            <div id="WaterList"><%= f.select :sport, water_sport_names_list, {}, { :data => { :live_search => "true" } } %></div>
                                         </td>
                                     </tr>
                                     <tr>
