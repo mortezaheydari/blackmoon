@@ -5,6 +5,7 @@ $ ->
   $(document).ready ->
     $('div.intrestCat').hide()
     $('div.likeSection').hide()
+    $('#progress').hide()
     $('div.FollowingSection').hide()
     $('div.FollowerSection').hide()
     $('div.teamCards').hide()
@@ -63,3 +64,8 @@ $ ->
     $('div.FollowingSection').fadeOut('fast')
     $('div.FollowerSection').fadeOut('fast')
     $('div.teamCards').fadeIn('fast')
+
+  $('#uploadPic').click (e) ->
+    $('#progress').show()
+    $('#progress .bar').css
+        width: '100%'

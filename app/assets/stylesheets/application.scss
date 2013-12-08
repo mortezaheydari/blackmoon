@@ -1903,8 +1903,10 @@ a.collective_label {
 
 // file upload
 .cabinet {
+    height: 35px;
     span, i {
         color: #fff !important;
+        float: none;
     }
 }
 .fileinput-button {

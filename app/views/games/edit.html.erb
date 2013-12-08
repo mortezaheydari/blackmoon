@@ -17,11 +17,20 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <label class="cabinet left">
-                                <%= p.file_field :image, class: "file" %>
+                            <label class="cabinet center">
+                            <span class="btn btn-success fileinput-button">
+                                <i class="icon-plus"></i>
+                                <span>Select file...</span>
+                                <!-- The file input field used as target for the file upload widget -->
+                                <%= p.file_field :image, class: "file", id: "fileupload" %>
+                            </span>
                             </label>
                             <br>
-                            <p id="fileName"></p>
+                                <img id="previewImg" src="#" alt="your image" />
+                            <p id="files"></p>
+                            <div id="progress" class="progress progress-striped active">
+                                <div class="bar bar-success"></div>
+                            </div>
                         </td>
                     </tr>
                     <tr>

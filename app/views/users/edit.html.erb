@@ -25,6 +25,7 @@
                             </span>
                             </label>
                             <br>
+                                <img id="previewImg" src="#" alt="your image" />
                             <p id="files"></p>
                             <div id="progress" class="progress progress-striped active">
                                 <div class="bar bar-success"></div>
@@ -33,7 +34,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <%= p.submit 'Save Photo', class: "btn center" %>
+                            <%= p.submit 'Upload', class: "btn center", id: 'uploadPic' %>
                         </td>
                     </tr>
 

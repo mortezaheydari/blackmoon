@@ -161,6 +161,7 @@ $(document).ready(function() {
     $("tr.evdata").hide();
     $("tr.gmdata").hide();
     $("tr.tmdata").hide();
+    $('#previewImg').hide();
 
     $("tr.allday").show();
     $("tr.range").hide();
@@ -223,6 +224,31 @@ $(document).ready(function() {
     //     margin: 0,
     //     minWidth: 600
     // });
+
+
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#previewImg').attr('src', e.target.result);
+            $('#previewImg').css({
+                width: 50,
+                height: 50
+            });
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#fileupload").change(function(){
+    $('#previewImg').show();
+    readURL(this);
+});
+
+
 
     $("div.gallery a.imageModal").fancybox({
         padding: 0,
