@@ -31,7 +31,7 @@ $ ->
     $('div.likes').hide()
     $('div.Map').show()
     $('div.Map').hide()
-    $("#repeat_row").hide()
+    $("tr#repeat_row").hide()
     $('nav#secondary ul li.navActive').removeClass()
     $('nav#secondary ul li#Schedule').addClass('navActive')
 
@@ -42,14 +42,13 @@ $ ->
   $('a#new_offering_session').click (e) ->
     e.preventDefault()
     $("div.new_offering_session").slideDown('fast')
-    $("form.edit_offering_session")[0].reset()
     $("div.edit_offering_session").slideUp('fast')
 
   $('a.session').click (e) ->
     e.preventDefault()
-    $("div.edit_offering_session").slideDown('fast')
     $("form.new_offering_session")[0].reset()
     $("div.new_offering_session").slideUp('fast')
+    $("div.edit_offering_session").slideDown('fast')
 
   $('a#edit_cancel').click (e) ->
     e.preventDefault()
@@ -117,15 +116,15 @@ $ ->
     $('div.gallery').fadeIn('fast')
     $('div.Schedule').fadeOut('fast')
 
-  $('input#offering_session_collection_flag').click (e) ->
-    if $(@).attr('checked')
-        $("#repeat_row").show()
+  $('input#offering_session_collection_flag').change (e) ->
+    if ($(@).is(':checked'))
+        $("tr#repeat_row").show()
     else
-        $("#repeat_row").hide()
+        $("tr#repeat_row").hide()
 
 
   $('input#venue_location_gmap_use').click (e) ->
-    if $(@).attr('checked')
+    if ($(@).is(':checked'))
         $(".g_rows").show()
         $("#venue_location_latitude").show()
         $("#venue_location_longitude").show()
@@ -138,7 +137,7 @@ $ ->
         $("#venue_location_longitude").hide()
 
   $('input#venue_location_custom_address_use').click (e) ->
-    if $(@).attr('checked')
+    if ($(@).is(':checked'))
         $("#address_row").show()
     else
         $("#address_row").hide()
