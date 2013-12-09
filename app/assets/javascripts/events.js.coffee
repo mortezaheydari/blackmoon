@@ -6,7 +6,6 @@ $ ->
     $('div.Description').hide()
     $('div#gallery_container').hide('fast')
     $('div.likes').hide()
-    $('nav#secondary ul li:first').addClass('navActive')
   $('nav#secondary ul li#joined').click (e) ->
     e.preventDefault()
     $('nav#secondary ul li.navActive').removeClass()
