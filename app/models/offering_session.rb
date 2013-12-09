@@ -29,6 +29,10 @@ class OfferingSession < ActiveRecord::Base
     end
   end
 
+  def open_join
+    true
+  end
+
   def collective_title
     if self.collective_id.nil?
         return ""

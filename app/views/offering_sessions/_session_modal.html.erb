@@ -17,6 +17,7 @@
                 <span><%= session_happening_case.duration_type %> session</span>
             <%- end %>
             </p>
+            <%= render 'shared/join_link', this: session, participating_actor: "user" if signed_in? %>
       </div>
     </div>
 <% end %>

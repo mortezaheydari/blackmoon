@@ -101,9 +101,9 @@ module SessionsHelper
 
             def this_is_offering?(this)
                 if this.class.to_s == "String"
-                    ["event", "game", "class"].include?(this)
+                    ["event", "game", "offering_session"].include?(this)
                 else
-                    ["event", "game", "class"].include?(k_lower(this))
+                    ["event", "game", "offering_session"].include?(k_lower(this))
                 end
             end
 
@@ -112,6 +112,14 @@ module SessionsHelper
                     ["team", "sponsor", "organization"].include?(this)
                 else
                     ["team", "sponsor", "organization"].include?(k_lower(this))
+                end
+            end
+
+            def this_is_multisession?(this)
+                if this.class.to_s == "String"
+                    ["venue", "class", "personal_trainer"].include?(this)
+                else
+                    ["venue", "class", "personal_trainer"].include?(k_lower(this))
                 end
             end
         # def class_name(this)
