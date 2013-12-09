@@ -13,12 +13,7 @@
               <a href="#">Classes</a>
             </div>
           </li>
-          <li>
-            <div class="left exploresub">
-              <div class="left"></div>
-              <a href="#">Tournament</a>
-            </div>
-          </li>
+          <li><%= link_to content_tag("div", "Venues", class: "left exploresub"), venues_path %></li>
           <li><%= link_to content_tag("div", "Teams", class: "left exploresub"), teams_path %></li>
         </ul>
   </div>
