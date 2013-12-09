@@ -1,12 +1,26 @@
-<div class="gallery upload">
+<div class="upload">
+    <h2 class="header_text">Add Photo</h2>
     <%= form_for(@photo, :url => album_photos_path(@photo, owner_type: @album.owner_type, owner_id: @album.owner_id), :html => { :method => "post" }) do |p| %>
 
-        <%= p.label :title %><br />
+        <%= p.label :title %>
         <%= p.text_field :title %>
-        <label class="cabinet">
-        <%= p.file_field :image, class: "file" %></label>
-        <p id="fileName"></p>
+        <label class="cabinet center">
+        <span class="btn btn-success fileinput-button">
+            <i class="icon-plus"></i>
+            <span>Select file...</span>
+            <!-- The file input field used as target for the file upload widget -->
+            <%= p.file_field :image, class: "file", id: "fileupload" %>
+        </span>
+        </label>
+        <br>
+            <img id="previewImg" src="#" alt="your image" />
+        <p id="files"></p>
+        <div id="progress" class="progress progress-striped active">
+            <div class="bar bar-success"></div>
+        </div>
 
-        <%= p.submit 'Add Photo', class: "button grey submitBtn homeBtn right" %>
+        <%= p.submit 'Upload', class: "btn left" %>
     <% end %>
 </div>
+
+<hr>

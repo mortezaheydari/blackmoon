@@ -208,10 +208,11 @@ $(document).ready(function() {
         $("ul#ExploreDrop").hide();
     });
 
-    $("div#createNewMenu a").fancybox({
-            padding: 0,
-            margin: 0
+    $("div#createNewMenu a").click(function(e) {
+        e.preventDefault();
+        $("#Create").modal();
     });
+
 
     // $("div#Sign a#SignInTop").fancybox({
     //     padding: 0,
