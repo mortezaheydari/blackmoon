@@ -30,14 +30,14 @@ class ApplicationController < ActionController::Base
 	def find_and_assign this_type, this_id
 
 		if ["user", "team", "event", "game", "venue", "offering_session"].include? this_type.underscore and this_id
-			this_type.camelize.constantize.find_by_id(this_id)}
+			this_type.camelize.constantize.find_by_id(this_id)
 		else
 			nil
 		end
 	end
 
 	def this_if_reachable(this_type, this_id)
-		unless this_type == "Collective" do 
+		unless this_type == "Collective"
 			return false unless double_check_name_is_valid?(this_type)
 		end
 		this = this_type.constantize.find(this_id)
