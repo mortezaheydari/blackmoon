@@ -1,6 +1,8 @@
 <%= content_tag("div", "", class: "cardsection") do %>
-    <%= render  "album_photos/form" if signed_in? && user_is_admin?(@owner) %>
-    <% @owner.album.album_photos.each do |album_photo| %>
-        <%= render album_photo %>
+    <%= content_tag('div', "", id: "gallery_container") do %>
+        <%= render  "album_photos/form" if signed_in? && user_is_admin?(@owner) %>
+        <% @owner.album.album_photos.each do |album_photo| %>
+            <%= render album_photo %>
+        <% end -%>
     <% end -%>
 <% end -%>

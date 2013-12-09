@@ -4,7 +4,7 @@
 $ ->
   $(document).ready ->
     $('div.Description').hide()
-    $('div.gallery').hide('fast')
+    $('div#gallery_container').hide('fast')
     $('div.likes').hide()
     $('nav#secondary ul li:first').addClass('navActive')
   $('nav#secondary ul li#joined').click (e) ->
@@ -13,7 +13,7 @@ $ ->
     $(@).addClass('navActive')
     $('div.Description').fadeOut('fast')
     $('div.likes').fadeOut('fast')
-    $('div.gallery').fadeOut('fast')
+    $('div#gallery_container').fadeOut('fast')
     $('div.joined').fadeIn('fast')
   $('nav#secondary ul li#Description').click (e) ->
     e.preventDefault()
@@ -21,7 +21,7 @@ $ ->
     $(@).addClass('navActive')
     $('div.joined').fadeOut('fast')
     $('div.likes').fadeOut('fast')
-    $('div.gallery').fadeOut('fast')
+    $('div#gallery_container').fadeOut('fast')
     $('div.Description').fadeIn('fast')
   $('nav#secondary ul li#likes').click (e) ->
     e.preventDefault()
@@ -29,7 +29,7 @@ $ ->
     $(@).addClass('navActive')
     $('div.joined').fadeOut('fast')
     $('div.Description').fadeOut('fast')
-    $('div.gallery').fadeOut('fast')
+    $('div#gallery_container').fadeOut('fast')
     $('div.likes').fadeIn('fast')
   $('nav#secondary ul li#gallery').click (e) ->
     e.preventDefault()
@@ -38,4 +38,4 @@ $ ->
     $('div.joined').fadeOut('fast')
     $('div.Description').fadeOut('fast')
     $('div.likes').fadeOut('fast')
-    $('div.gallery').fadeIn('fast')
+    $('div#gallery_container').fadeIn('fast')

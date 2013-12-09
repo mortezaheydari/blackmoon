@@ -27,7 +27,7 @@ $ ->
 
     $('div.Schedule').show()
     $('div.Description').hide()
-    $('div.gallery').hide('fast')
+    $('div#gallery_container').hide('fast')
     $('div.likes').hide()
     $('div.Map').show()
     $('div.Map').hide()
@@ -67,7 +67,7 @@ $ ->
     $(@).addClass('navActive')
     $('div.Description').fadeOut('fast')
     $('div.likes').fadeOut('fast')
-    $('div.gallery').fadeOut('fast')
+    $('div#gallery_container').fadeOut('fast')
     $('div.Schedule').fadeIn('fast')
     $('div.Map').fadeOut('fast')
 
@@ -79,7 +79,7 @@ $ ->
     $(@).addClass('navActive')
     $('div.Description').fadeOut('fast')
     $('div.likes').fadeOut('fast')
-    $('div.gallery').fadeOut('fast')
+    $('div#gallery_container').fadeOut('fast')
     $('div.Schedule').fadeOut('fast')
     $('div.Map').fadeIn('fast')
     google.maps.event.trigger(map, 'resize')
@@ -90,7 +90,7 @@ $ ->
     $(@).addClass('navActive')
     $('div.Map').fadeOut('fast')
     $('div.likes').fadeOut('fast')
-    $('div.gallery').fadeOut('fast')
+    $('div#gallery_container').fadeOut('fast')
     $('div.Description').fadeIn('fast')
     $('div.Schedule').fadeOut('fast')
 
@@ -101,7 +101,7 @@ $ ->
     $(@).addClass('navActive')
     $('div.Map').fadeOut('fast')
     $('div.Description').fadeOut('fast')
-    $('div.gallery').fadeOut('fast')
+    $('div#gallery_container').fadeOut('fast')
     $('div.likes').fadeIn('fast')
     $('div.Schedule').fadeOut('fast')
 
@@ -113,7 +113,7 @@ $ ->
     $('div.Map').fadeOut('fast')
     $('div.Description').fadeOut('fast')
     $('div.likes').fadeOut('fast')
-    $('div.gallery').fadeIn('fast')
+    $('div#gallery_container').fadeIn('fast')
     $('div.Schedule').fadeOut('fast')
 
   $('input#offering_session_collection_flag').change (e) ->
