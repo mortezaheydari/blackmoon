@@ -33,7 +33,6 @@ class GamesController < ApplicationController
     end
   end
 
-
   def index
     @games = Game.all
     @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game")
@@ -90,10 +89,7 @@ class GamesController < ApplicationController
     @owner = @game
     @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game", trackable_id: @game.id)
     @recent_activities = @recent_activities.order("created_at desc")
-    # flaggings.each do |flagging|
-    #      @likes = []
-    #      @likes << flagging.flagger
-    # end
+
     if @game.team_participation == false
       @participator = @game.individual_participators
     else

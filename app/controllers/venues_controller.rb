@@ -18,8 +18,8 @@ class VenuesController < ApplicationController
 		end
 
 		respond_to do |format|
-				format.html { redirect_to @venue}
-				format.js
+			format.html { redirect_to @venue}
+			format.js
 		end
 	end
 
@@ -95,7 +95,6 @@ class VenuesController < ApplicationController
 
         @happening_case = HappeningCase.new
 
-
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
 		@json = @venue.location.to_gmaps4rails
@@ -110,8 +109,6 @@ class VenuesController < ApplicationController
 
         @grouped_happening_cases = grouped_happening_cases(@venue)
         @grouped_sessions = replace_with_happening(@grouped_happening_cases)
-
-
 
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
@@ -151,39 +148,40 @@ class VenuesController < ApplicationController
 			redirect_to(@venue) unless @venue.administrators.include?(@user)
 		end
 
-		def sorted_offering_sessions(venue)
-			session_id_list = []
-			venue.offering_sessions.each do |os|
-				session_id_list << os.id
-			end
+		## currently out of use 
+		#
+		# def sorted_offering_sessions(venue)
+		# 	session_id_list = []
+		# 	venue.offering_sessions.each do |os|
+		# 		session_id_list << os.id
+		# 	end
 
-			sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).order(:date_and_time)
+		# 	sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).order(:date_and_time)
 
-			sorted_sessions = []
-			sorted_happening_cases.each do |hc|
-				sorted_sessions << hc.id
-			end
-			sorted_sessions
-		end
+		# 	sorted_sessions = []
+		# 	sorted_happening_cases.each do |hc|
+		# 		sorted_sessions << hc.id
+		# 	end
+		# 	sorted_sessions
+		# end
 
-                        def grouped_happening_cases(this)
-                            session_id_list = []
-                            this.offering_sessions.each do |os|
-                                session_id_list << os.id
-                            end
+        def grouped_happening_cases(this)
+            session_id_list = []
+            this.offering_sessions.each do |os|
+                session_id_list << os.id
+            end
 
-                            sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).group_by(&:date_and_time)
-                        end
+            sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).group_by(&:date_and_time)
+        end
 
-
-                        def replace_with_happening(grouped_happening_cases)
-                            grouped_sessions = Hash.new
-                            grouped_happening_cases.each do |key, value|
-                                grouped_sessions[key.to_date] = []
-                                value.each do |happening_case|
-                                    grouped_sessions[key.to_date] << happening_case.happening
-                                end
-                            end
-                            grouped_sessions
-                        end
+        def replace_with_happening(grouped_happening_cases)
+            grouped_sessions = Hash.new
+            grouped_happening_cases.each do |key, value|
+                grouped_sessions[key.to_date] = []
+                value.each do |happening_case|
+                    grouped_sessions[key.to_date] << happening_case.happening
+                end
+            end
+            grouped_sessions
+        end
 end
