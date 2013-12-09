@@ -3,21 +3,6 @@ class EventsController < ApplicationController
  	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
-#  @model_name = "Event"
-#
-#  include Liking
-#    # like
-#    # like_card
-
-#  include OfferingConcern
-#    # index
-#    # new
-#    # create
-#    # destroy
-#    # show
-#    # edit
-#    # update
-
   def like
 
     @event = Event.find(params[:id])

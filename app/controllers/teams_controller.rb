@@ -3,12 +3,6 @@ class TeamsController < ApplicationController
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
-#	@model_name = "Team"
-#
-#	include Liking
-#		# like
-#		# like_card
-
 	def like
 		
 		@team = Team.find(params[:id])
