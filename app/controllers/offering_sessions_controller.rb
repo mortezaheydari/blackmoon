@@ -86,14 +86,14 @@ class OfferingSessionsController < ApplicationController
 				@repeat_number.times do |i|
 					@the_offering_session = OfferingSession.new(@attributes)
 					happening_case = @the_offering_session.build_happening_case(params[:happening_case])
-                                                            if (["hour"].include? @repeat_duration)
-                                                                happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
-                                                                happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
-                                                            else
-                                                                happening_case.date_and_time = (happening_case.date_and_time + (@repeat_every.send(@repeat_duration))*i)
-                                                                happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
-                                                                happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
-                                                            end
+                    if (["hour"].include? @repeat_duration)
+                        happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
+                        happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
+                    else
+                        happening_case.date_and_time = (happening_case.date_and_time + (@repeat_every.send(@repeat_duration))*i)
+                        happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
+                        happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
+                    end
 					@the_offering_session.save
 				end
 			else
@@ -296,13 +296,13 @@ class OfferingSessionsController < ApplicationController
 			collective
 		end
 
-                        def find_offering_session_owner
-                            @owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])
-                        end
+            def find_offering_session_owner
+                @owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])
+            end
 
 		def assign_offering_session_owner
-                            find_offering_session_owner
-                            @offering_session.owner = @owner
+            find_offering_session_owner
+            @offering_session.owner = @owner
 
 		end
 

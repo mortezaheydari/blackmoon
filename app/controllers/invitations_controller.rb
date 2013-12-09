@@ -76,7 +76,8 @@ class InvitationsController < ApplicationController
 	end
 
 	private
-
+	#REFACTOR: bad use of helper methods, too many variables.
+	
 		def create_params_initializer
 			inviter_id         = params[:inviter_id]
 			inviter_type       = params[:inviter_type]

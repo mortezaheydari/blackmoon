@@ -6,6 +6,7 @@ class OfferingSession < ActiveRecord::Base
   	# location
   	# creator
   	# administrators
+    # owner
   include Joinable
   	# inviteds
   	# join_requests_received
@@ -50,6 +51,6 @@ class OfferingSession < ActiveRecord::Base
   end
 
   def repeat_every
-      1
+    1
   end
 end
