@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  private
+
 
 	# double check methodology that monitors an action and terminates the application upon failure.
 	# including
@@ -59,9 +59,7 @@ class ApplicationController < ActionController::Base
 	# My Bloodthirsty double_check method, version-20131023
 	def double_check(link=root_path, msg='there was an error with your request', &b)
 		link == @redirect_object unless @redirect_object.nil?
-		unless b.call
-			return redirect_to(link, alert: msg)
-		end
+                        redirect_to(link, alert: msg) and return false unless b.call
 	end
 	# -ended
 

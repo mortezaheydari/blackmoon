@@ -32,8 +32,6 @@ $ ->
     $('div.Map').show()
     $('div.Map').hide()
     $("tr#repeat_row").hide()
-    $('nav#secondary ul li.navActive').removeClass()
-    $('nav#secondary ul li#Schedule').addClass('navActive')
 
     $("div.new_offering_session").hide()
     $("div.edit_offering_session").hide()
