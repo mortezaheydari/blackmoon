@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
 		name_is_valid?(this_type) unless this_type == "Collective"
 		this = this_type.constantize.find(this_id)
 		double_check { this }
-                        this
+        this
 	end
 
 	def owner_if_reachable(owner_type, owner_id)

@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 		@user.profile.date_of_birth = date_helper_to_str(params[:date_of_birth])
 		if @user.update_attributes(params[:user]) # should become more secure in future.
 			flash[:success] = "Profile updated"
-			redirect_to @user, notice: "i don't know"
+			redirect_to @user, notice: "i don't know" #TODO: write a better notice.
 		else
 			render 'edit'
 		end
@@ -42,6 +42,7 @@ class UsersController < ApplicationController
 		@events = @user.events_administrating
 		@games = @user.games_administrating
 		@teams = @user.teams_administrating
+		#TODO: add venues_administrating
 	end
 
 end
