@@ -4,7 +4,7 @@ class InvitationsController < ApplicationController
 		create_params_initializer
 
 			double_check {
-		@inviter.nil? || @invited.nil? || @subject.nil? }
+		!@inviter.nil? && !@invited.nil? && !@subject.nil? }
 
 			double_check(@redirect_object, 'you don\'t have premission') {
 		@subject.administrators.include? @inviter }
@@ -16,7 +16,7 @@ class InvitationsController < ApplicationController
 		@invitation.state               = "sent"
 		@invitation.submission_datetime = Time.now
 
-			double_check { 
+			double_check {
 		@invitation.save }
 
 		@invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
@@ -102,5 +102,5 @@ class InvitationsController < ApplicationController
 				@redirect_object   = find_and_assign return_object_type, return_object_id
 			end
 			@redirect_object = root_path if @redirect_object.nil?
-		end		
+		end
 end
