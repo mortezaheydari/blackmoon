@@ -276,7 +276,7 @@ class OfferingSessionsController < ApplicationController
 		end
 
 		def user_must_be_admin?
-			offering_session = OfferingSession.find(params[:id])
+			offering_session = OfferingSession.find(params[:offering_session_id])
 			user = current_user
 			redirect_to(offering_session) unless offering_session.owner.administrators.include?(user)
 		end
