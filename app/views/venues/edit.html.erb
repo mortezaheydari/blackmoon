@@ -4,6 +4,46 @@
 
                     <h1><%= image_tag "event-icon.png", width: 50 %> Update Venue Information</h1>
 
+
+
+            <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "Venue", owner_id: @venue.id), :html => { :method => "post" }) do |p| %>
+                    <h2>Image</h2>
+
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <div class="gravatarContainer">
+                                <%= logo_for @venue, size: :medium %>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="cabinet center">
+                            <span class="btn btn-success fileinput-button">
+                                <i class="icon-plus"></i>
+                                <span>Select file...</span>
+                                <!-- The file input field used as target for the file upload widget -->
+                                <%= p.file_field :image, class: "file", id: "fileupload" %>
+                            </span>
+                            </label>
+                            <br>
+                                <img id="previewImg" src="#" alt="your image" />
+                            <p id="files"></p>
+                            <div id="progress" class="progress progress-striped active">
+                                <div class="bar bar-success"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <%= p.submit 'Upload', class: "btn center", id: 'uploadPic' %>
+                        </td>
+                    </tr>
+
+                </table>
+            <% end %>
+
         <%= form_for(@venue) do |f| %>
 
                             <div>

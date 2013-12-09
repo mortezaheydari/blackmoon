@@ -171,6 +171,41 @@ $(document).ready(function() {
 
     $(".btn-group").hide();
 
+
+// check select cat radiobutton
+
+    if ($("#team_category_ballsports").is(':checked')) {
+            $("div#BallList").show();
+            $("div#FitList").hide();
+            $("div#WaterList").hide();
+    } else if ($("#team_category_fitness").is(':checked')) {
+            $("div#FitList").show();
+            $("div#WaterList").hide();
+            $("div#BallList").hide();
+    } else if ($("#team_category_watersports").is(':checked')) {
+            $("div#WaterList").show();
+            $("div#BallList").hide();
+            $("div#FitList").hide();
+    }
+
+
+    if ($("#game_category_ballsports").is(':checked')) {
+            $("div#BallList").show();
+            $("div#FitList").hide();
+            $("div#WaterList").hide();
+    } else if ($("#game_category_fitness").is(':checked')) {
+            $("div#FitList").show();
+            $("div#WaterList").hide();
+            $("div#BallList").hide();
+    } else if ($("#game_category_watersports").is(':checked')) {
+            $("div#WaterList").show();
+            $("div#BallList").hide();
+            $("div#FitList").hide();
+    }
+// check select cat radiobutton
+
+
+
     $("a#SignInTop").click(function(e) {
         e.preventDefault();
         $("#SignIn").modal();

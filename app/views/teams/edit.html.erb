@@ -49,7 +49,7 @@
                             <div>
                                 <table id="categoryChoice">
                                     <tr>
-                                        <td><%= f.radio_button :category, "BallSports", value: "BallSports", checked: true %></td>
+                                        <td><%= f.radio_button :category, "BallSports", value: "BallSports" %></td>
                                         <td><%= f.radio_button :category, "Fitness", value: "Fitness" %></td>
                                         <td><%= f.radio_button :category, "WaterSports", value: "WaterSports" %></td>
                                     </tr>
@@ -66,9 +66,9 @@
                                     <tr>
                                         <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
                                         <td>
-                                            <div id="BallList"><%= f.select :sport, ball_sport_names_list %></div>
-                                            <div id="FitList"><%= f.select :sport, fitness_names_list %></div></div>
-                                            <div id="WaterList"><%= f.select :sport, water_sport_names_list %></div>
+                                            <div id="BallList"><%= f.select :sport, ball_sport_names_list,{}, { :data => { :live_search => "true" } } %></div>
+                                            <div id="FitList"><%= f.select :sport, fitness_names_list,{}, { :data => { :live_search => "true" } } %></div></div>
+                                            <div id="WaterList"><%= f.select :sport, water_sport_names_list,{}, { :data => { :live_search => "true" } } %></div>
                                         </td>
                                     </tr>
                                     <tr>
