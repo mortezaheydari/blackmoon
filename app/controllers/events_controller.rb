@@ -54,7 +54,7 @@ class EventsController < ApplicationController
     @event.album = Album.new
 
 
-      double_check(new_event_path, "there has been a problem with data entry.") {
+      return unless double_check(new_event_path, "there has been a problem with data entry.") {
     @event.save }
 
     @event.create_happening_case(params[:happening_case])
@@ -71,12 +71,12 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
 
 
-      double_check(events_path) {
+      return unless double_check(events_path) {
     user_is_admin?(@event) && user_created_this?(@event) }
 
     @event.create_activity :destroy, owner: current_user
 
-      double_check(@event) {
+      return unless double_check(@event) {
     @event.destroy }
 
     redirect_to(events_path)
@@ -111,11 +111,11 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
 
-      double_check(edit_event_path(@event)) {
+      return unless double_check(edit_event_path(@event)) {
     @event.update_attributes(params[:event]) }
-      double_check(edit_event_path(@event)) {
+      return unless double_check(edit_event_path(@event)) {
     @event.happening_case.update_attributes params[:happening_case] }
-      double_check(edit_event_path(@event)) {
+      return unless double_check(edit_event_path(@event)) {
     @event.create_activity :update, owner: current_user }
 
 

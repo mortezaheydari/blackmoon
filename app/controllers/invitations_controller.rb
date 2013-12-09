@@ -1,12 +1,23 @@
 class InvitationsController < ApplicationController
 
 	def create
-		create_params_initializer
+		inviter_id         = params[:inviter_id]
+		inviter_type       = params[:inviter_type]
+		invited_id         = params[:invited_id]
+		invited_type       = params[:invited_type]
+		subject_id         = params[:subject_id]
+		subject_type       = params[:subject_type]
 
-			double_check {
+		@inviter           = find_and_assign inviter_type, inviter_id
+		@invited           = find_and_assign invited_type, invited_id
+		@subject           = find_and_assign subject_type, subject_id
+
+		redirect_object
+
+			return unless double_check {
 		!@inviter.nil? && !@invited.nil? && !@subject.nil? }
 
-			double_check(@redirect_object, 'you don\'t have premission') {
+			return unless double_check(@redirect_object, 'you don\'t have premission') {
 		@subject.administrators.include? @inviter }
 
 		@invitation                     = Invitation.new
@@ -16,7 +27,7 @@ class InvitationsController < ApplicationController
 		@invitation.state               = "sent"
 		@invitation.submission_datetime = Time.now
 
-			double_check {
+			return unless double_check {
 		@invitation.save }
 
 		@invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
@@ -32,10 +43,10 @@ class InvitationsController < ApplicationController
 		invitation_respond = params[:respond]
 		redirect_object
 
-			double_check {
+			return unless double_check {
 		@invitation.invited == current_user }
 
-			double_check {
+			return unless double_check {
 		["reject", "accept"].include? invitation_respond }
 
 		if invitation_respond == "reject"
@@ -64,7 +75,7 @@ class InvitationsController < ApplicationController
 
 		@invitation.response_datetime = Time.now
 
-			double_check {
+			return unless double_check {
 		@invitation.save }
 
 		@invitation.create_activity :update, owner: @invitation.invited, recipient: @invitation.inviter
@@ -77,20 +88,9 @@ class InvitationsController < ApplicationController
 
 	private
 	#REFACTOR: bad use of helper methods, too many variables.
-	
+
 		def create_params_initializer
-			inviter_id         = params[:inviter_id]
-			inviter_type       = params[:inviter_type]
-			invited_id         = params[:invited_id]
-			invited_type       = params[:invited_type]
-			subject_id         = params[:subject_id]
-			subject_type       = params[:subject_type]
 
-			@inviter           = find_and_assign inviter_type, inviter_id
-			@invited           = find_and_assign invited_type, invited_id
-			@subject           = find_and_assign subject_type, subject_id
-
-			redirect_object
 		end
 
 
@@ -102,6 +102,6 @@ class InvitationsController < ApplicationController
 				return_object_type = params[:return_object_type]
 				@redirect_object   = find_and_assign return_object_type, return_object_id
 			end
-			@redirect_object = root_path if @redirect_object.nil?
+			@redirect_object = root_path if (@redirect_object.nil? || @redirect_object == false)
 		end
 end

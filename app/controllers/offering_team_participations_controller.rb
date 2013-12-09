@@ -12,7 +12,7 @@ class OfferingTeamParticipationsController < ApplicationController
 		team = Team.find_by_id(params[:joining_team])
 		offering_id = params[:offering_id]
 
-		double_check_name_is_valid(user, offering_type)
+		return unless double_check_name_is_valid(user, offering_type)
 
 		offerings_participating = team.send("#{offering_type}s_participating")
 		joining_offering = offering_type.camelize.constantize.find_by_id(offering_id)
@@ -35,7 +35,7 @@ class OfferingTeamParticipationsController < ApplicationController
 		team = Team.find_by_id(params[:leaving_team])
 		offering_id = params[:offering_id]
 
-		double_check_name_is_valid(user, offering_type) 
+		return unless double_check_name_is_valid(user, offering_type) 
 		 
 		participations = team.offering_team_participations.where(offering_type: offering_type, offering_id: offering_id)
 		# todo: check participation deadline is not pass

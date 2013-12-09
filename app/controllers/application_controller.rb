@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 	end
 
 	def double_check_name_is_valid(user, name)
-		double_check(root_path, 'permission error: name is not valid!') {
+		return false unless double_check(root_path, 'permission error: name is not valid!') {
 			name_is_valid?(user, name) }
 	end
 
@@ -30,36 +30,36 @@ class ApplicationController < ActionController::Base
 	def find_and_assign this_type, this_id
 
 		if ["user", "team", "event", "game", "venue", "offering_session"].include? this_type.underscore and this_id
-			a = root_path
-			a = @redirect_object unless @redirect_object.nil?
-
-		redirect_to(a, notice: 'error') and return unless this = this_type.camelize.constantize.find_by_id(this_id)
-
-			this
+			this_type.camelize.constantize.find_by_id(this_id)}
+		else
+			nil
 		end
 	end
 
 	def this_if_reachable(this_type, this_id)
-		name_is_valid?(this_type) unless this_type == "Collective"
+		unless this_type == "Collective" do 
+			return false unless double_check_name_is_valid?(this_type)
+		end
 		this = this_type.constantize.find(this_id)
-		double_check { this }
+		return false unless double_check { this }
         this
 	end
 
-	def owner_if_reachable(owner_type, owner_id)
-		owner = this_if_reachable(owner_type, owner_id)
-		if owner_type == "Collective"
-			double_check { owner.owner.administrators.include? current_user }
+	def owner_if_reachable(this_type, this_id)
+		this = this_if_reachable(this_type, this_id)
+		return false unless double_check { this }
+		if this_type == "Collective"
+			return false unless double_check { this.owner.administrators.include? current_user }
 		else
-			double_check { owner.administrators.include? current_user }
+			return false unless double_check { this.administrators.include? current_user }
 		end
-		owner
+		this
 	end
 
 	# My Bloodthirsty double_check method, version-20131023
 	def double_check(link=root_path, msg='there was an error with your request', &b)
 		link == @redirect_object unless @redirect_object.nil?
-                        redirect_to(link, alert: msg) and return false unless b.call
+		redirect_to(link, alert: msg) and return false unless b.call
 	end
 	# -ended
 

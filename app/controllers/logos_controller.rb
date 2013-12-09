@@ -8,17 +8,17 @@ class LogosController < ApplicationController
 	photo_exists = false
 	photo_exists = true unless params[:photo_exists].nil?
 
-		double_check {
+		return unless double_check {
 	name_is_valid?(owner_type) }
 
 	@owner = owner_type.camelize.constantize.find_by_id(owner_id)
 
 	# checking photo upload premission
 	if owner_type == "User"
-			double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
+			return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
 		@owner == current_user }
 	else
-			double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
+			return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
 		@owner.administrators.include? current_user }
 	end
 
@@ -41,23 +41,23 @@ class LogosController < ApplicationController
 		if @logo.photo.nil?
 			unless_photo_exists{
 				@photo = Photo.new(params[:photo])
-				double_check {@photo.save} }
+				return unless double_check {@photo.save} }
 
 		elsif @logo.photo.uses.count == 1
-			double_check {@logo.photo.destroy}
+			return unless double_check {@logo.photo.destroy}
 			unless_photo_exists{
 				@photo = Photo.new(params[:photo])
-				double_check {@photo.save} }
+				return unless double_check {@photo.save} }
 
 		else
 			unless_photo_exists{
 				@photo = Photo.new(params[:photo])
-				double_check {@photo.save} }
+				return unless double_check {@photo.save} }
 		end
 
 		@logo.photo_id = @photo.id
 
-			double_check(@owner, 'error while updating the photo.') {
+			return unless double_check(@owner, 'error while updating the photo.') {
 		@logo.save }
 		respond_to do |format|
 			format.html { redirect_to @owner, notice: 'Photo was successfully added.' }

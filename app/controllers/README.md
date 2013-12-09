@@ -100,15 +100,12 @@ current version of method (version-20131023) is as follows:
 ```ruby
 def double_check(link=root_path, msg='there was an error with your request', &b)
 	link == @redirect_object unless @redirect_object.nil?
-	unless b.call
-		return redirect_to(link, alert: msg)
-	end
+	redirect_to(link, alert: msg) and return false unless b.call
 end
 ```
 Following helper methods are influenced with double_check and name_is_valid:
 
 1. **double_check_name_is_valid**: mix of name_is_valid? and double_check functionality.
-2. **find_and_assign**: finds and assign an object, while performing a custom version of name_is_valid and double_check.
 3. **this_if_reachable**: validates received name, performs a double_check on process of finding the requested object.
 4. **owner_if_reachable**: similar to this_if_reachable, used to find owner and return of the requested object.
 

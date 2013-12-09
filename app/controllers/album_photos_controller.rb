@@ -5,17 +5,17 @@ class AlbumPhotosController < ApplicationController
 		owner_id = params[:owner_id]
 		photo_title = params[:photo_title]
 
-			double_check {
+			return unless double_check {
 		name_is_valid?(owner_type) }
 
 		@owner = owner_type.camelize.constantize.find_by_id(owner_id)
 
 		# checking photo upload premission
 		if owner_type == "user"
-				double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
+				return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
 			@owner == current_user }
 		else
-				double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
+				return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
 			@owner.administrators.include?(current_user) }      
 		end
 
@@ -29,10 +29,10 @@ class AlbumPhotosController < ApplicationController
 			@album_photo.title = photo_title
 		end
 
-			double_check(@owner, 'error while uploading the photo.') {
+			return unless double_check(@owner, 'error while uploading the photo.') {
 		@photo.save}
 
-			double_check(@owner, 'error while uploading the photo.') {
+			return unless double_check(@owner, 'error while uploading the photo.') {
 		@album.save}
 
 		respond_to do |format|
@@ -45,7 +45,7 @@ class AlbumPhotosController < ApplicationController
 		owner_type = params[:owner_type]
 		owner_id = params[:owner_id]
 
-			double_check {
+			return unless double_check {
 		name_is_valid?(owner_type) }
 
 		@owner = owner_type.camelize.constantize.find_by_id(owner_id)
@@ -62,10 +62,10 @@ class AlbumPhotosController < ApplicationController
 		@photo = @album_photo.photo
 
 		if @photo.uses.count == 1
-				double_check(@owner, 'error while removing the photo.') {
+				return unless double_check(@owner, 'error while removing the photo.') {
 			@photo.destroy }
 		else
-				double_check(@owner, 'error while removing the photo.') {
+				return unless double_check(@owner, 'error while removing the photo.') {
 			@album_photo.destory }      
 		end
 		respond_to do |format|
@@ -79,17 +79,17 @@ class AlbumPhotosController < ApplicationController
 		owner_id = params[:owner_id]
 		photo_title = params[:photo_title]
 
-			double_check {
+			return unless double_check {
 		name_is_valid?(owner_type) }
 
 		@owner = owner_type.camelize.constantize.find_by_id(owner_id)
 
 		# checking photo upload premission
 		if owner_type == "user"
-				double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
+				return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
 			@owner == current_user }
 		else
-				double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
+				return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
 			@owner.administrators.include? current_user }      
 		end
 
@@ -102,7 +102,7 @@ class AlbumPhotosController < ApplicationController
 			@album_photo.title = photo_title
 		end
 
-			double_check(@owner, 'error while uploading the photo.') {
+			return unless double_check(@owner, 'error while uploading the photo.') {
 		@album_photo.save }
 
 		respond_to do |format|

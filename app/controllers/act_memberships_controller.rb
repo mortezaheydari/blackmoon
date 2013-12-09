@@ -10,7 +10,7 @@ class ActMembershipsController < ApplicationController
 		user = User.find_by_id(params[:joining_user])
 		act_id = params[:offering_id]
 
-			double_check {
+			return unless double_check {
 		name_is_valid?(user, act_type) }
 
 		acts_membership = user.send("#{act_type}s_membership")
@@ -33,7 +33,7 @@ class ActMembershipsController < ApplicationController
 		user = User.find_by_id(params[:leaving_user])
 		act_id = params[:offering_id]
 
-			double_check {
+			return unless double_check {
 		name_is_valid?(user, act_type) }
 
 		acts_memberships = user.act_memberships.where(act_type: act_type, act_id: act_id)

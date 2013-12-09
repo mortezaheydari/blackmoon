@@ -9,7 +9,7 @@ class ActAdministrationsController < ApplicationController
 		act = act_type.camelize.constantize
 		this = act.find_by_id(params[:this_id])
 
-			double_check(send("#{act_type}_path", act_id)) {
+			return unless double_check(send("#{act_type}_path", act_id)) {
 		name_is_valid?(user, act_type) }
 
 		acts_administrating = user.send("#{act_type.pluralize}_administrating")
@@ -38,7 +38,7 @@ class ActAdministrationsController < ApplicationController
 		act = act_type.camelize.constantize
 		this = act.find_by_id(params[:this_id])
 
-			double_check(send("#{act_type}_path", act_id)) {
+			return unless double_check(send("#{act_type}_path", act_id)) {
 		name_is_valid?(user, act_type) }
 
 		act_to_remove_admin_from = act_type.camelize.constantize.find_by_id(act_id)

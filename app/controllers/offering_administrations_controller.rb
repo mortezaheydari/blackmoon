@@ -9,7 +9,7 @@ class OfferingAdministrationsController < ApplicationController
 		offering = offering_type.camelize.constantize
 		this = offering.find_by_id(params[:this_id])
 
-		double_check_name_is_valid(user, offering_type)
+		return unless double_check_name_is_valid(user, offering_type)
 
 		offerings_administrating = user.send("#{offering_type.pluralize}_administrating")
 		offering_to_administrate = offering_type.camelize.constantize.find_by_id(offering_id)
@@ -33,7 +33,7 @@ class OfferingAdministrationsController < ApplicationController
 		offering = offering_type.camelize.constantize
 		this = offering.find_by_id(params[:this_id])
 
-		double_check_name_is_valid(user, offering_type)
+		return unless double_check_name_is_valid(user, offering_type)
 
 		offering_to_remove_admin_from = offering_type.camelize.constantize.find_by_id(offering_id)
 
