@@ -69,7 +69,7 @@ Handles static pages.
 
 ## Helpers guide
 
-This section explains thoes code behaviors that are project specific and in cases might seem (and be) alien or unconventional.
+This section explains those code behaviors that are project specific and in cases might seem (and be) alien or unconventional.
 Scope of this section is limited to controllers behavior.
 
 ### name_is_valid?

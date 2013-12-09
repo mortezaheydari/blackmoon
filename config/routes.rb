@@ -80,7 +80,7 @@ Blackmoon::Application.routes.draw do
 
     resources :activities
 
-    resources :notifications
+    resources :notifications # TODO: line might not be required 
 
     resources :album_photos
 

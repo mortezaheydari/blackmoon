@@ -1,4 +1,7 @@
 module VenueHelper
+
+## regardig calendar system.
+
   def calendar(date = Date.today, &block)
     Calendar.new(self, date.to_date, block).table
   end
@@ -46,4 +49,7 @@ module VenueHelper
       (first..last).to_a.in_groups_of(7)
     end
   end
+
+## 
+
 end
