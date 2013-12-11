@@ -4,7 +4,7 @@ class TeamsController < ApplicationController
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
 	def like
-		
+
 		@team = Team.find(params[:id])
 
 		if current_user.flagged?(@team, :like)
@@ -29,7 +29,7 @@ class TeamsController < ApplicationController
 		current_user.toggle_flag(@team, :like)
 
 		respond_to do |format|
-				format.js { render 'shared/offering/like_cards', :locals => { offering: @team, style_id: params[:style_id], class_name: params[:class_name] } }
+				format.js { render 'shared/offering/like_team_cards', :locals => { offering: @team, style_id: params[:style_id], class_name: params[:class_name] } }
 		end
 	end
 

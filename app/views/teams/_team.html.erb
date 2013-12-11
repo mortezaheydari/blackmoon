@@ -4,7 +4,7 @@
 
 <%= "<article class=\"activityBox\" id=\"#{style_id} \">".html_safe unless reload == true %>
   <header class="activityHeader">
-    <%= link_to logo_for(team, size: :user_profile, css_class: "activityImage"), team_path(team) %>
+    <%= link_to logo_for(team, size: :offering_card, css_class: "activityImage"), team_path(team) %>
 <!--               <a href="#">
       <%= image_tag "bg.png", class: "activityImage" %>
     </a> -->
@@ -27,7 +27,7 @@
   <div class="activityBody text-center">
     <ul class="block-grid three-up">
       <li><%= image_tag "1.png" %></li>
-      <li><%= toggle_like_card_button(team, current_user) if signed_in? %> <span id="likecount<%= team.id %>" class="small-text"><%= team.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
+      <li><%= toggle_like_card_button(team, current_user, {style_id: style_id}) if signed_in? %> <span id="likecount<%= team.id %>" class="small-text"><%= team.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
       <li><div class="featureStar"></div> </li>
     </ul>
 
