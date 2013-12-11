@@ -21,6 +21,7 @@ gem 'metric_fu'
 gem "jquery-fileupload-rails"
 
 gem 'make_flaggable', :git => 'git@github.com:Charchoob/make_flaggable.git'
+gem "breadcrumbs_on_rails"
 
 group :development do
 	gem 'annotate', '2.5.0'

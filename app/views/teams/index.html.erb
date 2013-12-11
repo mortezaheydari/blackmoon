@@ -1,4 +1,5 @@
   <div class="body">
+<%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
     <div class="cardsection">
         <% @teams.each do |t| %>
             <%= render 'teams/team', team: t %>

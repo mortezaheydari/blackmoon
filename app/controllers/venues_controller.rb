@@ -4,6 +4,7 @@ class VenuesController < ApplicationController
             include VenueHelper
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
+            add_breadcrumb "home", :root_path
 
 	def like
 
@@ -36,6 +37,7 @@ class VenuesController < ApplicationController
 	end
 
 	def index
+                        add_breadcrumb "venues", venues_path, :title => "Back to the Index"
 		@venues = Venue.all
 		@recent_activities = PublicActivity::Activity.where(trackable_type: "Venue")
 		@recent_activities = @recent_activities.order("created_at desc")
@@ -83,6 +85,8 @@ class VenuesController < ApplicationController
 
 	def show
 		@venue = Venue.find(params[:id])
+                add_breadcrumb "venues", venues_path, :title => "Back to the Index"
+                add_breadcrumb @venue.title, venue_path(@venue)
         @offering_session =  OfferingSession.new
 
         if params[:session_id]
@@ -148,7 +152,7 @@ class VenuesController < ApplicationController
 			redirect_to(@venue) unless @venue.administrators.include?(@user)
 		end
 
-		## currently out of use 
+		## currently out of use
 		#
 		# def sorted_offering_sessions(venue)
 		# 	session_id_list = []

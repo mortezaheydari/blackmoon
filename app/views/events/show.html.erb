@@ -1,4 +1,5 @@
   <div class="userInfo">
+<%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
     <div class="eventProfileCard">
       <div class="large"><%= logo_for(@event, size: :user_profile, css_style: "margin:15px auto;") %></div>
       <div class="<%= @event.category %> left"></div>

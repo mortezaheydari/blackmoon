@@ -3,6 +3,7 @@ class GamesController < ApplicationController
  	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
+            add_breadcrumb "home", :root_path
   def like
 
     @game = Game.find(params[:id])
@@ -34,6 +35,7 @@ class GamesController < ApplicationController
   end
 
   def index
+    add_breadcrumb "games", games_path, :title => "Back to the Index"
     @games = Game.all
     @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game")
     @recent_activities = @recent_activities.order("created_at desc")
@@ -83,6 +85,8 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
+    add_breadcrumb "games", games_path, :title => "Back to the Index"
+    add_breadcrumb @game.title, game_path(@game)
     @likes = @game.flaggings.with_flag(:like)
     @photo = Photo.new
     @album = @game.album
@@ -119,7 +123,7 @@ class GamesController < ApplicationController
 
     redirect_to @game, notice: "Game was updated"
   end
-  
+
   private
 
     def user_must_be_admin?

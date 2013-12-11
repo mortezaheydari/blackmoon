@@ -2,12 +2,14 @@ class UsersController < ApplicationController
 	before_filter :authenticate_account!, only: [:edit, :update]
 	include SessionsHelper
 
+            add_breadcrumb "home", :root_path
 	def index
 		@users = User.all
 	end
 
 	def show
 		@user = User.find(params[:id])
+                        add_breadcrumb @user.title, user_path(@user)
 		@likes = @user.flaggings.with_flag(:like)
 		@photo = Photo.new
 		@album = @user.album
@@ -15,7 +17,7 @@ class UsersController < ApplicationController
 
 	def edit
 		@user = User.find(params[:id])
-		return unless double_check { current_user == @user }		
+		return unless double_check { current_user == @user }
 
 		@user.profile ||= Profile.new
 		@user.album ||= Album.new

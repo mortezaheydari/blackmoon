@@ -3,6 +3,7 @@ class EventsController < ApplicationController
  	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
+            add_breadcrumb "home", :root_path
   def like
 
     @event = Event.find(params[:id])
@@ -34,6 +35,7 @@ class EventsController < ApplicationController
   end
 
   def index
+    add_breadcrumb "events", events_path, :title => "Back to the Index"
     @events = Event.all
     @recent_activities =  PublicActivity::Activity.where(trackable_type: "Event")
     @recent_activities = @recent_activities.order("created_at desc")
@@ -84,6 +86,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    add_breadcrumb "events", events_path, :title => "Back to the Index"
+    add_breadcrumb @event.title, event_path(@event)
     @likes = @event.flaggings.with_flag(:like)
     @photo = Photo.new
     @album = @event.album

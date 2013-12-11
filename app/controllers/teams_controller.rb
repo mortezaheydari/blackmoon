@@ -3,6 +3,7 @@ class TeamsController < ApplicationController
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
+            add_breadcrumb "home", :root_path
 	def like
 
 		@team = Team.find(params[:id])
@@ -35,6 +36,7 @@ class TeamsController < ApplicationController
 
 
 	def index
+                        add_breadcrumb "teams", teams_path, :title => "Back to the Index"
 		@teams = Team.all
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Team")
 		@recent_activities = @recent_activities.order("created_at desc")
@@ -73,6 +75,8 @@ class TeamsController < ApplicationController
 
 	def show
 		@team = Team.find(params[:id])
+                        add_breadcrumb "teams", teams_path, :title => "Back to the Index"
+                        add_breadcrumb @team.title, team_path(@team)
 		@likes = @team.flaggings.with_flag(:like)
 		@members = @team.members
 		@photo = Photo.new
