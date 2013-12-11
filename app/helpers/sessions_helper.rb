@@ -45,7 +45,7 @@ module SessionsHelper
 		user_is_admin?(this) && (user_created_this?(this) or current_user?(admin)) && this.administrators.count > 1
 	end
 
-	def logo_for(this, options = {size: 100, css_class: ""})
+	def logo_for(this, options = { size: 100, css_class: "", css_style: "" })
 		if this.class.to_s == "User"
 			if this.logo.photo.nil?
 				gravatar_for(this, options)
@@ -58,7 +58,8 @@ module SessionsHelper
 			end
 		else
 			if this.logo.photo.nil?
-				image_tag("/assets/bg.png", width: 50, als: this.title, class: "activityImage #{css_class}")
+                                                css_style = options[:css_style]
+				image_tag("/assets/bg.png", width: 200, als: this.title, class: "activityImage #{css_class}", style: "#{css_style}")
 
 			else
 				size = options[:size]

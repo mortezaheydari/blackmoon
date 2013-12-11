@@ -27,6 +27,7 @@ $boxPadding: 10px;
 $linkColor: #159fa4;
 $white: #ffffff;
 $FormBorder: #B8B8B8;
+$bgColor: #dadada;
 
 $grey: #E6E6E6;
 $timePassedGrey: #B3B3B3;
@@ -92,7 +93,7 @@ div.teamMembers {
     clear: both;
     height: 95px;
     div.smallImg {
-        background: #add8e6;
+        background: $bgColor;
         float: left;
         margin: 5px;
         height: 32px;
@@ -141,7 +142,7 @@ p {
 div.small {
     width: 18px;
     height: 18px;
-    background: #add8e6;
+    background: $bgColor;
     float: left;
     margin: 0 5px 0 5px;
     @include border-radius(5px);
@@ -684,7 +685,7 @@ div.sideBox {
     div {
       width: 32px;
       height: 32px;
-      background: #add8e6;
+      background: $bgColor;
       float: left;
       margin-left: 10px;
       margin-bottom: 10px;
@@ -697,7 +698,7 @@ div.sideBox {
     div {
       width: 32px;
       height: 32px;
-      background: #add8e6;
+      background: $bgColor;
       float: left;
       margin-left: 5px;
       margin-bottom: 10px;
@@ -750,7 +751,7 @@ div.eventProfileCard {
   div.large {
     width: 156px;
     height: 156px;
-    background: #add8e6;
+    background: #dadada;
     float: left;
     margin: 0 10px 0 0;
     @include border-radius(10px);
@@ -779,7 +780,7 @@ div.activityOrigin {
         font-size: 12px;
     }
     div.img {
-        background: #add8e6;
+        background: $bgColor;
         float: left;
         width: 50px;
         height: 50px;
@@ -823,7 +824,7 @@ div.locationPartial {
     margin-bottom: 10px;
   }
   div.map {
-    background: #add8e6;
+    background: $bgColor;
     width: 123px;
     height: 117px;
     margin: 0 auto;
@@ -845,7 +846,7 @@ div.UserProfileCard {
   div.small {
     width: 18px;
     height: 18px;
-    background: #add8e6;
+    background: $bgColor;
     float: left;
     margin: 0 5px 0 5px;
     @include border-radius(5px);
@@ -856,7 +857,7 @@ div.UserProfileCard {
   div.large {
     width: 156px;
     height: 156px;
-    background: #add8e6;
+    background: #dadada;
     float: left;
     margin: 0 10px 0 0;
     @include border-radius(10px);
@@ -987,7 +988,7 @@ div.Notification {
     div.notiImg {
       width: 60px;
       height: 60px;
-      background: #add8e6;
+      background: $bgColor;
       float: left;
       margin: 0 10px 0 10px;
       @include border-radius(10px);
@@ -1053,7 +1054,7 @@ div.activity_table {
     div.notiImg {
       width: 60px;
       height: 60px;
-      background: #add8e6;
+      background: $bgColor;
       float: left;
       margin: 0 10px 0 10px;
       @include border-radius(10px);
@@ -1295,7 +1296,7 @@ article.userCard {
       font-size: 10px;
     }
     div {
-      background: #add8e6;
+      background: $bgColor;
       float: left;
       margin: 5px;
       height: 32px;
