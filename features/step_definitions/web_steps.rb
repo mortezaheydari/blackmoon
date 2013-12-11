@@ -41,6 +41,10 @@ When /^(?:|I )press "([^"]*)"$/ do |button|
   click_button(button)
 end
 
+When /^(?:|I )click on "([^"]*)"$/ do |button|
+  click_on(button)
+end
+
 When /^(?:|I )follow "([^"]*)"$/ do |link|
   click_link(link)
 end
@@ -61,6 +65,11 @@ When /^(?:|I )press "(.*?)" within "(.*?)"$/ do |arg1, arg2|
     end
 end
 
+When /^(?:|I )click on "(.*?)" within "(.*?)"$/ do |arg1, arg2|
+  within(:css, arg2) do
+    click_on arg1
+  end
+end
 When /^(?:|I )follow "([^"]*)" within "(.*?)$/ do |arg1, arg2|
     within(:css, arg2) do	
   		click_link(link)
