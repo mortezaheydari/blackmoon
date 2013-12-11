@@ -14,7 +14,8 @@ class OfferingIndividualParticipationsController < ApplicationController
 		user = User.find_by_id(params[:joining_user])
 		offering_id = params[:offering_id]
 
-		return unless double_check_name_is_valid(user, offering_type)
+                        # in order for join to work temporary
+		# return unless double_check_name_is_valid(user, offering_type)
 
 		offerings_participating = user.send("#{offering_type}s_participating")
 		joining_offering = offering_type.camelize.constantize.find_by_id(offering_id)
@@ -46,7 +47,7 @@ class OfferingIndividualParticipationsController < ApplicationController
 		participations.each.destroy unless participations == []
 
 		leaving_offering = offering.camelize.constantize.find_by_id(offering_id)
-		leaving_offering.create_activity key: "offering_individual_participation.destroy", owner: current_user, recipient: user   
+		leaving_offering.create_activity key: "offering_individual_participation.destroy", owner: current_user, recipient: user
 
 		@participator = leaving_offering.individual_participators
 		respond_to do |format|
