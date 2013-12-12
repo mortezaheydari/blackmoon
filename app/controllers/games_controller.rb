@@ -48,6 +48,7 @@ class GamesController < ApplicationController
     @happening_case = @game.happening_case
   end
 
+  # TODO: procedure order to be used in other controllers.
   def create
     @current_user_id = current_user.id
     @game = Game.new(params[:game])
