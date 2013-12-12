@@ -55,10 +55,9 @@ class GamesController < ApplicationController
     @game.album = Album.new
     @game.happening_case = HappeningCase.new(params[:happening_case])
     @game.create_happening_case(params[:happening_case])
-    @game.create_offering_creation(creator_id: @current_user_id)
 
-      return unless double_check(new_game_path, "there has been a problem with data entry.") {
-    @game.save }
+    # double_check(new_game_path, "there has been a problem with data entry.") {
+    if !@game.save ; raise Errors::FlowError.new(new_game_path, "there has been a problem with data entry."); end
 
     @game.create_activity :create, owner: current_user
     @game.offering_administrations.create(administrator_id: @current_user_id)
@@ -179,7 +178,7 @@ class GamesController < ApplicationController
   # My Bloodthirsty double_check method, version-20131023
   def double_check(link=root_path, msg='there was an error with your request', &b)
     link == @redirect_object unless @redirect_object.nil?
-    redirect_to(link, alert: msg) and return false unless b.call
+    redirect_to(link, alert: msg) and return unless b.call
   end
   # -ended
 

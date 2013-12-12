@@ -27,7 +27,8 @@ Background:
 
     	And I click on "Create the game"
     	Then I should see "Create New Game"
-
+        And I should see "there has been a problem with data entry." 
+        
     Scenario: Create a good game
 
         Given I visit "/games/new"

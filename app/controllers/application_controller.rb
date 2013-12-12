@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
-	include PublicActivity::StoreController
-
+  include PublicActivity::StoreController
+  require 'errors/errors'
   protect_from_forgery
 
-
+  	rescue_from Errors::FlowError, with: :flow_error_handler
 
 	# double check methodology that monitors an action and terminates the application upon failure.
 	# including
@@ -38,10 +38,10 @@ class ApplicationController < ActionController::Base
 
 	def this_if_reachable(this_type, this_id)
 		unless this_type == "Collective"
-			return false unless double_check_name_is_valid?(this_type)
+			return false unless name_is_valid?(this_type)
 		end
 		this = this_type.constantize.find(this_id)
-		return false unless double_check { this }
+		return false unless this
         this
 	end
 
@@ -49,21 +49,25 @@ class ApplicationController < ActionController::Base
 		this = this_if_reachable(this_type, this_id)
 		return false unless double_check { this }
 		if this_type == "Collective"
-			return false unless double_check { this.owner.administrators.include? current_user }
+			return false unless this.owner.administrators.include? current_user 
 		else
-			return false unless double_check { this.administrators.include? current_user }
+			return false unless this.administrators.include? current_user 
 		end
 		this
 	end
 
 	# My Bloodthirsty double_check method, version-20131023
-	def double_check(link=root_path, msg='there was an error with your request', &b)
-		link == @redirect_object unless @redirect_object.nil?
-		redirect_to(link, alert: msg) and return false unless b.call
+	def double_check(&b)
+		return false unless b.call
 	end
 	# -ended
 
+	def flow_error_handler(exeption)
+		redirect_to exeption.redirect_object, notice: exeption.message and return 
+	end
 
-
+	# def handle_record_not_saved
+	# 	redirect_to new_game_path, notice: "there has been a problem with data entry." and return 		
+	# end
 
 end

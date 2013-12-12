@@ -20,8 +20,8 @@ module Blackmoon
       #{config.root}/app/controllers/concerns
       #{config.root}/app/models/concerns
       #{config.root}/app/models/butterfly_models
+      #{config.root}/lib/
     )
-    config.autoload_paths += Dir["#{config.root}/lib/"]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
