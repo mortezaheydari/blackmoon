@@ -5,18 +5,15 @@ class AlbumPhotosController < ApplicationController
 		owner_id = params[:owner_id]
 		photo_title = params[:photo_title]
 
-			return unless double_check {
-		name_is_valid?(owner_type) }
+		if !name_is_valid?(owner_type); raise Errors::FlowError.new; end
 
 		@owner = owner_type.camelize.constantize.find_by_id(owner_id)
 
 		# checking photo upload premission
 		if owner_type == "user"
-				return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
-			@owner == current_user }
+			if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
 		else
-				return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
-			@owner.administrators.include?(current_user) }      
+			if !@owner.administrators.include?(current_user); raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
 		end
 
 		@album = @owner.album
@@ -29,11 +26,8 @@ class AlbumPhotosController < ApplicationController
 			@album_photo.title = photo_title
 		end
 
-			return unless double_check(@owner, 'error while uploading the photo.') {
-		@photo.save}
-
-			return unless double_check(@owner, 'error while uploading the photo.') {
-		@album.save}
+		if !@photo.save; raise Errors::FlowError.new(@owner, 'error while uploading the photo.'); end
+		if !@album.save; raise Errors::FlowError.new(@owner, 'error while uploading the photo.'); end
 
 		respond_to do |format|
 			format.html { redirect_to @owner, notice: 'Photo was successfully added.' }
@@ -45,16 +39,15 @@ class AlbumPhotosController < ApplicationController
 		owner_type = params[:owner_type]
 		owner_id = params[:owner_id]
 
-			return unless double_check {
-		name_is_valid?(owner_type) }
+		if !name_is_valid?(owner_type); raise Errors::FlowError.new; end
 
 		@owner = owner_type.camelize.constantize.find_by_id(owner_id)
 
 		# checking photo upload premission
 		if owner_type == "user"
-			redirect_to @owner, notice: 'you don\'t have premission edit this page.' unless @owner == current_user
+			if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission edit this page.'); end
 		else
-			redirect_to @owner, notice: 'you don\'t have premission edit this page.' unless @owner.administrators.include? current_user
+			if !@owner.administrators.include? current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission edit this page.'); end
 		end
 
 		@album = @owner.album
@@ -62,11 +55,9 @@ class AlbumPhotosController < ApplicationController
 		@photo = @album_photo.photo
 
 		if @photo.uses.count == 1
-				return unless double_check(@owner, 'error while removing the photo.') {
-			@photo.destroy }
+			if !@photo.destroy; raise Errors::FlowError.new(@owner, 'error while removing the photo.'); end
 		else
-				return unless double_check(@owner, 'error while removing the photo.') {
-			@album_photo.destory }      
+			if !@album_photo.destory; raise Errors::FlowError.new(@owner, 'error while removing the photo.'); end
 		end
 		respond_to do |format|
 			format.html { redirect_to @owner, notice: 'Photo was successfully removed.' }
@@ -79,18 +70,15 @@ class AlbumPhotosController < ApplicationController
 		owner_id = params[:owner_id]
 		photo_title = params[:photo_title]
 
-			return unless double_check {
-		name_is_valid?(owner_type) }
+		if !name_is_valid?(owner_type); raise Errors::FlowError.new; end
 
 		@owner = owner_type.camelize.constantize.find_by_id(owner_id)
 
 		# checking photo upload premission
 		if owner_type == "user"
-				return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
-			@owner == current_user }
+			if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
 		else
-				return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
-			@owner.administrators.include? current_user }      
+			if !@owner.administrators.include? current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
 		end
 
 		@album_photo = PhotoAlbum.find_by_id(params[:album_photo_id])
@@ -102,8 +90,7 @@ class AlbumPhotosController < ApplicationController
 			@album_photo.title = photo_title
 		end
 
-			return unless double_check(@owner, 'error while uploading the photo.') {
-		@album_photo.save }
+		if !@album_photo.save; raise Errors::FlowError.new(@owner, 'error while uploading the photo.'); end
 
 		respond_to do |format|
 			format.html { redirect_to @owner, notice: 'Photo was successfully added.' }

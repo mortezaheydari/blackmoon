@@ -6,22 +6,8 @@ class ApplicationController < ActionController::Base
 
   	rescue_from Errors::FlowError, with: :flow_error_handler
 
-	# double check methodology that monitors an action and terminates the application upon failure.
-	# including
-	#
-	# - validating passed name
-	# - finding and assigning object based on that name
-	# - creating redirect objecet if required
-	# - performing doublecheck, redirecting to redirect_object upon failure
-	# starting:
-
 	def name_is_valid?(name)
 	  ["event","class","game", "user", "team", "venue"].include? name.underscore
-	end
-
-	def double_check_name_is_valid(user, name)
-		return false unless double_check(root_path, 'permission error: name is not valid!') {
-			name_is_valid?(user, name) }
 	end
 
 	# find and assign, dose it without administration check,
@@ -47,7 +33,7 @@ class ApplicationController < ActionController::Base
 
 	def owner_if_reachable(this_type, this_id)
 		this = this_if_reachable(this_type, this_id)
-		return false unless double_check { this }
+		return false  this
 		if this_type == "Collective"
 			return false unless this.owner.administrators.include? current_user 
 		else
@@ -56,10 +42,6 @@ class ApplicationController < ActionController::Base
 		this
 	end
 
-	# My Bloodthirsty double_check method, version-20131023
-	def double_check(&b)
-		return false unless b.call
-	end
 	# -ended
 
 	def flow_error_handler(exeption)

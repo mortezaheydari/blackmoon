@@ -9,8 +9,7 @@ class ActAdministrationsController < ApplicationController
 		act = act_type.camelize.constantize
 		this = act.find_by_id(params[:this_id])
 
-			return unless double_check(send("#{act_type}_path", act_id)) {
-		name_is_valid?(user, act_type) }
+		if !name_is_valid?(user, act_type); raise Errors::FlowError.new(send("#{act_type}_path", act_id)); end
 
 		acts_administrating = user.send("#{act_type.pluralize}_administrating")
 		act_to_administrate = act_type.camelize.constantize.find_by_id(act_id)
@@ -38,8 +37,7 @@ class ActAdministrationsController < ApplicationController
 		act = act_type.camelize.constantize
 		this = act.find_by_id(params[:this_id])
 
-			return unless double_check(send("#{act_type}_path", act_id)) {
-		name_is_valid?(user, act_type) }
+		if !name_is_valid?(user, act_type); raise Errors::FlowError.new(send("#{act_type}_path", act_id)); end
 
 		act_to_remove_admin_from = act_type.camelize.constantize.find_by_id(act_id)
 

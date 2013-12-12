@@ -13,9 +13,8 @@ class OfferingIndividualParticipationsController < ApplicationController
 		offering_type = params[:offering_type]
 		user = User.find_by_id(params[:joining_user])
 		offering_id = params[:offering_id]
-
-                        # in order for join to work temporary
-		# return unless double_check_name_is_valid(user, offering_type)
+		
+		if !name_is_valid?(user, offering_type); raise Errors::FlowError.new; end
 
 		offerings_participating = user.send("#{offering_type}s_participating")
 		joining_offering = offering_type.camelize.constantize.find_by_id(offering_id)
@@ -40,7 +39,7 @@ class OfferingIndividualParticipationsController < ApplicationController
 		user = User.find_by_id(params[:leaving_user])
 		offering_id = params[:offering_id]
 
-		return unless double_check_name_is_valid(user, offering_type)
+		if !name_is_valid?(user, offering_type); raise Errors::FlowError.new; end
 		participations = user.offering_individual_participations.where(offering_type: offering_type, offering_id: offering_id)
 		# todo: check participation deadline is not pass
 

@@ -11,13 +11,12 @@ class OfferingSessionsController < ApplicationController
 		owner_id = params[:offering_session][:owner_id]
 		params[:happening_case][:date_and_time] = params[:happening_case][:date_and_time]
 
-			return unless double_check {
-		name_is_valid?(owner_type) }
+		if !name_is_valid?(owner_type); raise Errors::FlowError.new; end
 
 		@offering_session = OfferingSession.new(descreption: params[:offering_session][:descreption], number_of_attendings: params[:offering_session][:number_of_attendings], title: params[:offering_session][:title])
 
         find_offering_session_owner
-        return unless @owner
+        raise Errors::FlowError.new unless @owner
 
         @offering_session.owner = @owner
 
@@ -30,7 +29,7 @@ class OfferingSessionsController < ApplicationController
 			when "1"
 
 				@collective = create_collective(params[:offering_session][:title], @owner.class.to_s, @owner.id)
-				return unless @collective
+				raise Errors::FlowError.new unless @collective
 				# @offering_session.owner = @collective.owner
 				@offering_session.collective = @collective
 			else
@@ -40,18 +39,18 @@ class OfferingSessionsController < ApplicationController
 
 		when "existing"
 			@collective = owner_if_reachable("Collective", params[:offering_session][:collective_id])
-			return unless @collective
+			raise Errors::FlowError.new unless @collective
 			@offering_session.collective_id = @collective.id
 
 		when "new"
 
 			@collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id)
-			return unless @collective
+			raise Errors::FlowError.new unless @collective
 			# @offering_session.owner = @collective.owner
 			@offering_session.collective = @collective
 
 		else
-			return
+			raise Errors::FlowError.new
 
 		end
 
@@ -65,13 +64,11 @@ class OfferingSessionsController < ApplicationController
 			@repeat_every = params[:offering_session][:repeat_every].to_i
 
 			# repeat request is proper?
-				return unless double_check(@owner) {
-			(["hour", "day", "week", "month"].include? @repeat_duration) #&&
+			unless ["hour", "day", "week", "month"].include? @repeat_duration; raise Errors::FlowError.new(@owner); end #&&
 			# @repeat_number < 26 &&
 			# @repeat_number > 0 &&
 			# @repeat_every < 26 &&
 			# @repeat_every > 0
-			 }
 
 			@attributes = @offering_session.attributes
 			["id", "created_at", "updated_at"].each do |key|
@@ -80,7 +77,7 @@ class OfferingSessionsController < ApplicationController
 
 			# build multiple sessions, if "All Day" or "Range"
 			if params[:happening_case][:duration_type] == "All Day"
-				return unless double_check(@owner) { !(params[:offering_session][:repeat_duration] == "hour") }
+				unless !(params[:offering_session][:repeat_duration] == "hour"); raise Errors::FlowError.new(@owner); end
 				@repeat_number.times do |i|
 					@the_offering_session = OfferingSession.new(@attributes)
 					happening_case = @the_offering_session.build_happening_case(params[:happening_case])
@@ -103,12 +100,12 @@ class OfferingSessionsController < ApplicationController
 					@the_offering_session.save
 				end
 			else
-				return unless double_check(@owner) { false }
+				raise Errors::FlowError.new(@owner)
 			end
 
 		else
 			@offering_session.build_happening_case(params[:happening_case])
-			return unless double_check { @offering_session.save }
+			if !@offering_session.save; raise Errors::FlowError.new; end 
 		end
 
 		# return message.
@@ -137,15 +134,13 @@ class OfferingSessionsController < ApplicationController
 
 		@offering_session = OfferingSession.find(params[:id])
         find_offering_session_owner
-        	return unless @owner
-			return unless double_check(@owner) {
-		@owner.offering_sessions.include? @offering_session	}
+        raise Errors::FlowError.new @owner
+		
+		if !@owner.offering_sessions.include? @offering_session; raise Errors::FlowError.new(@owner); end
 
 		# check validity of attributes (TBD)
-
-			return unless double_check(@owner, "This session has participators and can not be updated.") {
-		@offering_session.individual_participators.count == 0 }
-
+	
+		if @offering_session.individual_participators.count != 0; raise Errors::FlowError.new(@owner, "This session has participators and can not be updated."); end
 
     	case params[:offering_session][:collective_type]
 
@@ -157,16 +152,14 @@ class OfferingSessionsController < ApplicationController
     	when "existing"
     		collective_id = params[:offering_session].delete :collective_id
     		@collective = Collective.find collective_id
-    		return unless double_check {
-    		@owner.collectives.include? @collective }
+    		if !@owner.collectives.include? @collective; raise Errors::FlowError.new; end
     		@offering_session.collective_id = collective_id
                             @offering_session.collection_flag = true
 
     	when "new"
             params[:offering_session].delete :collective_id
-    			return unless double_check {
-    		@collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id) }
-    		return unless @collective
+    		unless @collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id); raise Errors::FlowError.new; end
+    		raise Errors::FlowError.new unless @collective
     		@offering_session.collective_id = @collective.id
             @offering_session.collection_flag = true
     	end
@@ -177,10 +170,10 @@ class OfferingSessionsController < ApplicationController
 		# to be used in case of changing collective_title
 		collective_title = params[:offering_session].delete :collective_title
 
-			return unless double_check {
-		@offering_session.update_attributes(params[:offering_session]) } # should become more secure in future.
-			return unless double_check {
-		@offering_session.happening_case.update_attributes(params[:happening_case]) } # should become more secure in future.
+ 		# should become more secure in future.
+		if !@offering_session.update_attributes(params[:offering_session]); raise Errors::FlowError.new; end
+ 		# should become more secure in future.
+		if !@offering_session.happening_case.update_attributes(params[:happening_case]); raise Errors::FlowError.new; end
 
 		@grouped_happening_cases = grouped_happening_cases(@owner)
 		@grouped_sessions = replace_with_happening(@grouped_happening_cases)
@@ -195,16 +188,14 @@ class OfferingSessionsController < ApplicationController
 
 	def destroy # offering_session
 		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
-		return unless @owner
+		raise Errors::FlowError.new @owner
 		@offering_session = OfferingSession.find(params[:offering_session_id])
-			return unless double_check(@owner) {
-		@owner.offering_sessions.include? @offering_session	}
+			
+		if !@owner.offering_sessions.include? @offering_session; raise Errors::FlowError.new(@owner); end
 
-			return unless double_check(@owner, "This session has participators and can not be deleted.") {
-		@offering_session.individual_participators.count == 0 }
+		if @offering_session.individual_participators.count != 0; raise Errors::FlowError.new(@owner, "This session has participators and can not be deleted."); end
 
-			return unless double_check(@owner) {
-		@offering_session.destroy }
+		if !@offering_session.destroy; raise Errors::FlowError.new(@owner); end
 
 		respond_to do |format|
 			format.html { redirect_to @owner, notice: "Session has been deleted." }
@@ -216,16 +207,16 @@ class OfferingSessionsController < ApplicationController
 
 	def release
 		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
-		return unless @owner
+		raise Errors::FlowError.new @owner
 		@offering_session= OfferingSession.find(params[:offering_session_id])
-			return unless double_check(@owner) {
-		@owner.offering_sessions.include? @offering_session	}
+
+		if !@owner.offering_sessions.include? @offering_session; raise Errors::FlowError.new(@owner); end
 
 		@offering_session.collection_flag = false
 		@offering_session.collective_id = nil
 
-			return unless double_check(@owner) {
-		@offering_session.save	}
+
+		if !@offering_session.save; raise Errors::FlowError.new(@owner); end
 
 		respond_to do |format|
 			format.html { redirect_to @owner, notice: "Session has been released from collective." }
@@ -235,10 +226,10 @@ class OfferingSessionsController < ApplicationController
 
 	def destroy_collective
 		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
-		return unless @owner
+		raise Errors::FlowError.new @owner
 		@collective = Collective.find(params[:collective_id])
-			return unless double_check {
-		@owner.collectives.include? @collective }
+
+		if !@owner.collectives.include? @collective; raise Errors::FlowError.new; end
 
 		# explode or destroy
 		if params[:explode]
@@ -246,12 +237,12 @@ class OfferingSessionsController < ApplicationController
 			@collective.offering_sessions.each do |offering_session|
 				offering_session.collection_flag = false
 				offering_session.collective_id = nil
-				return unless double_check(@owner) {
-				offering_session.save }
+
+				if !offering_session.save; raise Errors::FlowError.new(@owner); end
 			end
 			@collective = Collective.find @collective.id
-				return unless double_check(@owner) {
-			@collective.destroy }
+
+			if !@collective.destroy; raise Errors::FlowError.new(@owner); end
 			@msg = "Collective has been destroyed while keeping its sessions."
 		else
 			# release sessions that have participants
@@ -264,8 +255,7 @@ class OfferingSessionsController < ApplicationController
 			end
 
 			@collective = Collective.find @collective.id
-				return unless double_check(@owner) {
-			@collective.destroy }
+			if !@collective.destroy; raise Errors::FlowError.new(@owner); end
 			@msg = "Collective has been destroyed alongside its sessions."
 		end
 
@@ -295,8 +285,7 @@ class OfferingSessionsController < ApplicationController
 		def create_collective(title, owner_type, owner_id, owner_safe=false)
 			name_is_valid?(owner_type)
 			collective = Collective.new(title: title, owner_type: owner_type, owner_id: owner_id)
-				return false unless double_check {
-			collective.save }
+			return false unless collective.save
 			collective
 		end
 		

@@ -61,8 +61,7 @@ class VenuesController < ApplicationController
 		end
 		@venue.build_location(params[:venue][:location])
 
-			return unless double_check(new_venue_path, "There has been a problem with data entry.") {
-		@venue.save }
+		if !@venue.save; raise Errors::FlowError.new(new_venue_path, "There has been a problem with data entry."); end
 
 		@venue.create_activity :create, owner: current_user
 		@venue.create_offering_creation(creator_id: @current_user_id)
@@ -74,8 +73,8 @@ class VenuesController < ApplicationController
 	def destroy
 		@user = current_user
 		@venue = Venue.find(params[:id])
-			return unless double_check(venues_path) {
-		user_is_admin?(@venue) && user_created_this?(@venue) }
+			
+		unless user_is_admin?(@venue) && user_created_this?(@venue); raise Errors::FlowError.new(venues_path); end
 
 		@venue.create_activity :destroy, owner: current_user
 		@venue.destroy
@@ -137,8 +136,9 @@ class VenuesController < ApplicationController
 			params[:venue][:location][:gmaps] = true
 		end
 
-			return unless double_check(edit_venue_path(@venue), "There has been a problem with data entry.") {
-		@venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmap_use: params[:venue][:location][:gmap_use], custom_address: params[:venue][:location][:custom_address], gmaps: params[:venue][:location][:gmaps]) }
+		unless @venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmap_use: params[:venue][:location][:gmap_use], custom_address: params[:venue][:location][:custom_address], gmaps: params[:venue][:location][:gmaps])
+			raise Errors::FlowError.new(edit_venue_path(@venue), "There has been a problem with data entry.")
+		end
 
 		@venue.create_activity :update, owner: current_user
 		redirect_to @venue, notice: "Venue was updated"

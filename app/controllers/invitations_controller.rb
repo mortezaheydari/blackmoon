@@ -14,11 +14,9 @@ class InvitationsController < ApplicationController
 
 		redirect_object
 
-			return unless double_check {
-		!@inviter.nil? && !@invited.nil? && !@subject.nil? }
+		unless !@inviter.nil? && !@invited.nil? && !@subject.nil?; raise Errors::FlowError.new; end
 
-			return unless double_check(@redirect_object, 'you don\'t have premission') {
-		@subject.administrators.include? @inviter }
+		if !@subject.administrators.include? @inviter; raise Errors::FlowError.new(@redirect_object, 'you don\'t have premission'); end
 
 		@invitation                     = Invitation.new
 		@invitation.inviter             = @inviter
@@ -27,8 +25,7 @@ class InvitationsController < ApplicationController
 		@invitation.state               = "sent"
 		@invitation.submission_datetime = Time.now
 
-			return unless double_check {
-		@invitation.save }
+		if !@invitation.save; raise Errors::FlowError.new; end
 
 		@invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
 
@@ -43,11 +40,9 @@ class InvitationsController < ApplicationController
 		invitation_respond = params[:respond]
 		redirect_object
 
-			return unless double_check {
-		@invitation.invited == current_user }
+		if @invitation.invited != current_user; raise Errors::FlowError.new; end
 
-			return unless double_check {
-		["reject", "accept"].include? invitation_respond }
+		unless ["reject", "accept"].include? invitation_respond; raise Errors::FlowError.new; end
 
 		if invitation_respond == "reject"
 			@invitation.state = "rejected"
@@ -75,8 +70,7 @@ class InvitationsController < ApplicationController
 
 		@invitation.response_datetime = Time.now
 
-			return unless double_check {
-		@invitation.save }
+		if @invitation.save; raise Errors::FlowError.new; end
 
 		@invitation.create_activity :update, owner: @invitation.invited, recipient: @invitation.inviter
 

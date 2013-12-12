@@ -8,18 +8,15 @@ class LogosController < ApplicationController
 	photo_exists = false
 	photo_exists = true unless params[:photo_exists].nil?
 
-		return unless double_check {
-	name_is_valid?(owner_type) }
+	if !name_is_valid?(owner_type); raise Errors::FlowError.new; end
 
 	@owner = owner_type.camelize.constantize.find_by_id(owner_id)
 
 	# checking photo upload premission
-	if owner_type == "User"
-			return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
-		@owner == current_user }
+	if owner_type == "User"	
+		if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
 	else
-			return unless double_check(@owner, 'you don\'t have premission to upload photos to this page.') {
-		@owner.administrators.include? current_user }
+		if !@owner.administrators.include? current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
 	end
 
 	@logo = @owner.logo
@@ -41,24 +38,24 @@ class LogosController < ApplicationController
 		if @logo.photo.nil?
 			unless_photo_exists{
 				@photo = Photo.new(params[:photo])
-				return unless double_check {@photo.save} }
+				if !@photo.save; raise Errors::FlowError.new; end }
 
 		elsif @logo.photo.uses.count == 1
-			return unless double_check {@logo.photo.destroy}
+			if !@logo.photo.destroy; raise Errors::FlowError.new; end
 			unless_photo_exists{
 				@photo = Photo.new(params[:photo])
-				return unless double_check {@photo.save} }
+				if !@photo.save; raise Errors::FlowError.new; end }
 
 		else
 			unless_photo_exists{
 				@photo = Photo.new(params[:photo])
-				return unless double_check {@photo.save} }
+				if !@photo.save; raise Errors::FlowError.new; end }
 		end
 
 		@logo.photo_id = @photo.id
 
-			return unless double_check(@owner, 'error while updating the photo.') {
-		@logo.save }
+		if !@logo.save; raise Errors::FlowError.new(@owner, 'error while updating the photo.'); end 
+		
 		respond_to do |format|
 			format.html { redirect_to @owner, notice: 'Photo was successfully added.' }
 			format.js

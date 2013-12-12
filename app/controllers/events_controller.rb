@@ -3,7 +3,7 @@ class EventsController < ApplicationController
  	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
-            add_breadcrumb "home", :root_path
+  add_breadcrumb "home", :root_path
   def like
 
     @event = Event.find(params[:id])
@@ -56,8 +56,7 @@ class EventsController < ApplicationController
     @event.album = Album.new
 
 
-      return unless double_check(new_event_path, "there has been a problem with data entry.") {
-    @event.save }
+    if !@event.save ; raise Errors::FlowError.new(new_event_path, "there has been a problem with data entry."); end
 
     @event.create_happening_case(params[:happening_case])
     @event.create_activity :create, owner: current_user
@@ -72,14 +71,11 @@ class EventsController < ApplicationController
     @user = current_user
     @event = Event.find(params[:id])
 
-
-      return unless double_check(events_path) {
-    user_is_admin?(@event) && user_created_this?(@event) }
+    unless user_is_admin?(@event) && user_created_this?(@event); raise Errors::FlowError.new(events_path); end
 
     @event.create_activity :destroy, owner: current_user
 
-      return unless double_check(@event) {
-    @event.destroy }
+    if !@event.destroy; raise Errors::FlowError.new(@event); end
 
     redirect_to(events_path)
   end
@@ -114,17 +110,15 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-
-      return unless double_check(edit_event_path(@event)) {
-    @event.update_attributes(params[:event]) }
-      return unless double_check(edit_event_path(@event)) {
-    @event.happening_case.update_attributes params[:happening_case] }
-      return unless double_check(edit_event_path(@event)) {
-    @event.create_activity :update, owner: current_user }
-
+      
+    if !@event.update_attributes(params[:event]); raise Errors::FlowError.new(edit_event_path(@event)); end
+    if !@event.happening_case.update_attributes params[:happening_case]; raise Errors::FlowError.new(edit_event_path(@event)); end
+    if !@event.create_activity :update, owner: current_user; raise Errors::FlowError.new(edit_event_path(@event)); end
 
     redirect_to @event, notice: "Event was updated"
   end
+
+  private
 
    def user_must_be_admin?
      @event = Event.find(params[:id])

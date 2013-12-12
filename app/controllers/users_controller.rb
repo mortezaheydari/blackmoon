@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
 	def edit
 		@user = User.find(params[:id])
-		return unless double_check { current_user == @user }
+		raise Errors::FlowError.new unless current_user == @user
 
 		@user.profile ||= Profile.new
 		@user.album ||= Album.new
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
 	def update
 		@user = User.find(params[:id])
-		return unless double_check { current_user == @user }
+		raise Errors::FlowError.new unless current_user == @user
 		@user.profile.date_of_birth = date_helper_to_str(params[:date_of_birth])
 		if @user.update_attributes(params[:user]) # should become more secure in future.
 			flash[:success] = "Profile updated"
