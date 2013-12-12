@@ -54,14 +54,13 @@ class GamesController < ApplicationController
     @game.team_participation ||= false
     @game.album = Album.new
     @game.happening_case = HappeningCase.new(params[:happening_case])
-    @game.create_happening_case(params[:happening_case])
 
     if !@game.save ; raise Errors::FlowError.new(new_game_path, "there has been a problem with data entry."); end
 
-    @game.create_activity :create, owner: current_user
+    @game.create_offering_creation(creator_id: @current_user_id)
     @game.offering_administrations.create(administrator_id: @current_user_id)
-
-
+    @game.create_activity :create, owner: current_user
+    
     redirect_to @game
   end
 

@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
 
 	def owner_if_reachable(this_type, this_id)
 		this = this_if_reachable(this_type, this_id)
-		return false  this
+		return false unless this
 		if this_type == "Collective"
 			return false unless this.owner.administrators.include? current_user 
 		else

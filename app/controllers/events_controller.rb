@@ -54,15 +54,13 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
     @event.team_participation ||= false
     @event.album = Album.new
-
+    @event.happening_case = HappeningCase.new(params[:happening_case])
 
     if !@event.save ; raise Errors::FlowError.new(new_event_path, "there has been a problem with data entry."); end
 
-    @event.create_happening_case(params[:happening_case])
-    @event.create_activity :create, owner: current_user
     @event.create_offering_creation(creator_id: @current_user_id)
     @event.offering_administrations.create(administrator_id: @current_user_id)
-
+    @event.create_activity :create, owner: current_user
 
     redirect_to @event
   end
