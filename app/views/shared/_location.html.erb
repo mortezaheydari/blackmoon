@@ -7,7 +7,7 @@
                                     </tr> -->
                                     <tr>
                                         <td width="135"><%= l.label :custom_address_use, "Use custom address:" %></td>
-                                        <td><%= l.check_box :custom_address_use, checked: false %></td>
+                                        <td><%= l.check_box :custom_address_use %></td>
                                     </tr>
                                     <tr id="address_row">
                                         <td width="135"><%= l.label :custom_address, "Address:" %></td>
@@ -15,7 +15,7 @@
                                     </tr>
                                     <tr>
                                         <td width="135"><%= l.label :gmap_use, "Show map:" %></td>
-                                        <td><%= l.check_box :gmap_use, checked: false %></td>
+                                        <td><%= l.check_box :gmap_use %></td>
                                     </tr>
                                     <tr class="g_rows">
                                         <td width="135"><%= l.label :latitude, "latitude:" %></td>
@@ -28,7 +28,16 @@
 
                                     <tr class="g_rows">
                                         <td width="135"><label for="div">Tag a place:</label></td>
-                                        <td><%= gmaps( "markers" => { "data" => location.to_gmaps4rails, "options" => { "draggable" => true,"center_latitude" => 40, "center_longitude" => 40, "zoom" => 14 }}) %></td>
+                                        <td>
+                                            <% if form_type == "edit" %>
+                                                <%= gmaps(:markers => { :data => @location.to_gmaps4rails},
+                                                    :map_options => { :auto_adjust => true, # :auto_adjust map to center on location
+                                                              :auto_zoom => false,  # :auto_zoom defaults to full zoom in, set to false to utilize :zoom
+                                                              :zoom => 16 }) %>
+                                            <% else %>
+                                                <%= gmaps( "markers" => { "data" => location.to_gmaps4rails, "options" => { "draggable" => true,"center_latitude" => 40, "center_longitude" => 40, "zoom" => 14 }}) %></td>
+
+                                            <% end %>
                                     </tr>
                                 </table>
 

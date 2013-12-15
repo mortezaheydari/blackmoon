@@ -62,45 +62,7 @@
 
                     <h2>2. Location:</h2>
 
-                    <%= f.fields_for @location do |l| %>
-                            <div>
-                                <table width="100%">
-                                    <tr>
-                                        <td width="135"><%= l.label :city, "Select the city:" %></td>
-                                        <td><%= l.select :city, ["Abdullah Al-Salem", "Adailiya", "Bnaid Al-Qar", "Daiya", "Dasma", "Dasman", "Doha", "Faiha", "Ghornata", "Jaber Al Ahmed", "Kaifan", "Khaldiya", "Kuwait City", "Mansouriya", "Mirqab", "Mubarakiya Camps", "Nuzha", "Qadsiya", "Qibla", "Qortuba", "Rawda", "Salhiya", "Shamiya", "Sharq", "Shuwaikh", "Sulaibikhat", "Surra", "Yarmouk", "Al-Bedae", "Bayan", "Hawally", "Hitteen", "Jabriya", "Maidan Hawally", "Mishrif", "Mubarak Al-Abdullah", "Rumaithiya", "Salam", "Salmiya", "Salwa", "Shaab", "Shuhada", "Siddiq", "Zahra", "Abbasiya", "Abdullah Al-Mubarak - West Jleeb", "Abraq Khaitan", "Airport", "Andalous", "Ardhiya", "Ardiya Small Industrial", "Ardiya Storage Zone", "Ashbeliah", "Dhajeej", "Exhibits - South Khaitan", "Farwaniya", "Ferdous", "Jleeb Al-Shiyoukh", "Khaitan", "Omariya", "Rabiya", "Rai", "Reggai", "Rehab", "Sabah Al-Nasser", "Sheikh Saad Al Abdullah Airport", "Abu Halifa", "Al Julayah - Az Zour Sulah", "Al-Ahmadi", "Dhaher", "East Al Ahmadi", "Egaila", "Fahad Al Ahmed", "Fahaheel", "Fintas", "Hadiya", "Jaber Al-Ali", "Magwa", "Mahboula", "Mangaf", "Mina Abdullah", "Mina Al Ahmadi", "Nuwaiseeb", "Riqqa", "Sabah Al Ahmad Marine City", "Sabah AL Ahmad residential", "Sabahiya", "Shuaiba Port", "Wafra farms", "Wafra residential", "Al Naeem", "Amgarah Industrial", "Jahra", "Kabd", "Nahda", "Nasseem", "Oyoun", "Qairawan - South Doha", "Qasr", "Saad Al Abdullah", "Sulaibiya Indutrial 1", "Sulaibiya Indutrial 2", "Sulaibiya Residential", "Sulaibiya", "Taima", "Waha", "Abu Ftaira", "Abu Hasaniya", "Adan", "Al Masayel", "Ali Sabah Al-Salem", "Al-Qurain", "Al-Qusour", "Coast Strip B", "Fnaitess", "Messila", "Mubarak Al-Kabir", "Sabah Al-Salem", "Sabhan Industrial", "South Wista", "West Abu Fetera Small Indust", "Wista"] %></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="135"><%= l.label :custom_address_use, "Use custom address:" %></td>
-                                        <td><%= l.check_box :custom_address_use %></td>
-                                    </tr>
-                                    <tr id="address_row">
-                                        <td width="135"><%= l.label :custom_address, "Address:" %></td>
-                                        <td><%= l.text_field :custom_address %></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="135"><%= l.label :gmap_use, "Show map:" %></td>
-                                        <td><%= l.check_box :gmap_use %></td>
-                                    </tr>
-                                    <tr class="g_rows">
-                                        <td width="135"><%= l.label :latitude, "latitude:" %></td>
-                                        <td><%= l.text_field :latitude %></td>
-                                    </tr>
-                                    <tr class="g_rows">
-                                        <td width="135"><%= l.label :longitude, "longitude:" %></td>
-                                        <td><%= l.text_field :longitude %></td>
-                                    </tr>
-                                    <tr class="g_rows">
-                                        <td><label for="div">Tag a place:</label></td>
-                                        <td><%= gmaps(:markers => { :data => @location.to_gmaps4rails},
-    :map_options => { :auto_adjust => true, # :auto_adjust map to center on location
-              :auto_zoom => false,  # :auto_zoom defaults to full zoom in, set to false to utilize :zoom
-              :zoom => 16 }) %></td>
-                                    </tr>
-                                </table>
-
-                            </div>
-                        <% end %>
-
+                        <%= render "shared/location", location: @location, f: f, form_type: "edit" %>
 
                 <%= f.submit "Update the Venue", class: "button grey submitBtn homeBtn left" %>
 
