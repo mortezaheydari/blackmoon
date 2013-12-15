@@ -94,7 +94,12 @@
                                 <table width="100%">
                                     <tr>
                                         <td width="130"><%= label_tag 'referenced_venue_id', 'Venue' %></td>
-                                        <td><%= select_tag "referenced_venue_id", options_from_collection_for_select(@venues, "id", "title", @game.location.parent.owner.id), { :data => { :live_search => "true" } } %></td>
+                                        <td>
+                                            <% unless @game.location.parent_venue.nil? %>
+                                                <%= select_tag "referenced_venue_id", options_from_collection_for_select(@venues, "id", "title", @game.location.parent_venue.id), { :data => { :live_search => "true" } } %></td>
+                                            <% else %>
+                                                <%= select_tag "referenced_venue_id", options_from_collection_for_select(@venues, "id", "title"), { :data => { :live_search => "true" } } %>
+                                            <% end %>
 
                                     </tr>
                                 </table>

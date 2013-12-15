@@ -145,7 +145,8 @@ class GamesController < ApplicationController
     elsif changing_location_to_custom?(@game) || changing_custom_location?(@game)
       set_params_gmaps_flag :game
       location = params[:game].delete :location
-      copy_locations(location, @game.location)
+      temp_location = Location.new(location)
+      copy_locations(temp_location, @game.location)
       if @game.location.invalid?
         errors = "Location invalid. "
         @game.location.errors.each { |m| errors +=  (m.first.to_s + ": " + m.last.first.to_s + "; ") }
