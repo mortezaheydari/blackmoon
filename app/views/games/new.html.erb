@@ -54,15 +54,8 @@
 
                     <h2>2. <%= image_tag "location-icon.png", width: 50 %> Location</h2>
 
-                            <div>
-                                <table width="100%">
-                                    <tr>
-                                        <td width="130"><%= f.label :custom_address, "Select the city:" %></td>
-                                        <td><%= f.select :custom_address, ["Al-Salmiyah", "Kuwait City"] %></td>
-                                    </tr>
-                                </table>
+                        <%= render "shared/location", location: @location, f: f, form_type: "new" %>
 
-                            </div>
 
 <hr>
                     <h2>3. <%= image_tag "payment-icon.png", width: 50 %> Payment</h2>
