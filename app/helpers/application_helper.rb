@@ -1,10 +1,10 @@
 module ApplicationHelper
 	include SessionsHelper
-	
+
 # http://stackoverflow.com/questions/2410639/best-way-to-create-random-datetime-in-rails
 
 	# generates random integer
-	# example:		
+	# example:
 	# rand_int(60, 75)
 	# => 61
 	def rand_int(from, to)
@@ -13,7 +13,7 @@ module ApplicationHelper
 
 	# generates random price
 	# defult 10 to 100
-	# example:	
+	# example:
 	# rand_price(10, 100)
 	# => 43.84
 	def rand_price(from=0, to=100)
@@ -50,7 +50,7 @@ module ApplicationHelper
 		fitness_list.each do |sport|
 			list << sport.name
 		end
-		list		
+		list
 	end
 
 	def water_sport_list
@@ -61,7 +61,7 @@ module ApplicationHelper
 		water_sport_list.each do |sport|
 			list << sport.name
 		end
-		list		
+		list
 	end
 
 

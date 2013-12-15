@@ -40,21 +40,30 @@
                                         <td><%= f.label :description, "Description" %></td>
                                         <td><%= f.text_area :description %></td>
                                     </tr>
-                                    <tr>
-                                        <td><label>Add Image</label></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label>Special Requirements</label></td>
-                                        <td></td>
-                                    </tr>
                                 </table>
                             </div>
 <hr>
 
                     <h2>2. <%= image_tag "location-icon.png", width: 50 %> Location</h2>
-
-                        <%= render "shared/location", location: @location, f: f, form_type: "new" %>
+                            <div>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="130"><%= label_tag 'location_type', 'Location Type' %></td>
+                                        <td><%= select_tag "location_type", options_for_select([["Custom Location", "custom_location"], ["Existing Venue", "referenced_location"] ]) %></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        <div class="venue_list">
+                                <table width="100%">
+                                    <tr>
+                                        <td width="130"><%= label_tag 'referenced_venue_id', 'Venue' %></td>
+                                        <td><%= select_tag "referenced_venue_id", options_from_collection_for_select(@venues, "id", "title"), { :data => { :live_search => "true" } } %></td>
+                                    </tr>
+                                </table>
+                        </div>
+                        <div class="location_partial_container">
+                            <%= render "shared/location", location: @location, f: f, form_type: "new" %>
+                        </div>
 
 
 <hr>

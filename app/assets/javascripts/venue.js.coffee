@@ -6,11 +6,11 @@ $ ->
     $('#happening_case_date_and_time').datepicker
         format: 'yyyy-mm-dd'
     gmarkers = []
-    if $("input#venue_location_gmap_use").attr('checked')
+    if $("input.location_gmap_check").attr('checked')
         $(".g_rows").show()
     else
         $(".g_rows").hide()
-    if $("input#venue_location_custom_address_use").attr('checked')
+    if $("input.location_custom_address_check").attr('checked')
         $("#address_row").show()
     else
         $("#address_row").hide()
@@ -122,7 +122,7 @@ $ ->
         $("tr#repeat_row").hide()
 
 
-  $('input#venue_location_gmap_use').click (e) ->
+  $('input.location_gmap_check').click (e) ->
     if ($(@).is(':checked'))
         $(".g_rows").show()
         $("#venue_location_latitude").show()
@@ -135,7 +135,7 @@ $ ->
         $("#venue_location_latitude").hide()
         $("#venue_location_longitude").hide()
 
-  $('input#venue_location_custom_address_use').click (e) ->
+  $('input.location_custom_address_check').click (e) ->
     if ($(@).is(':checked'))
         $("#address_row").show()
     else

@@ -7,7 +7,7 @@
                                     </tr> -->
                                     <tr>
                                         <td width="135"><%= l.label :custom_address_use, "Use custom address:" %></td>
-                                        <td><%= l.check_box :custom_address_use %></td>
+                                        <td><%= l.check_box :custom_address_use, class: "location_custom_address_check" %></td>
                                     </tr>
                                     <tr id="address_row">
                                         <td width="135"><%= l.label :custom_address, "Address:" %></td>
@@ -15,7 +15,7 @@
                                     </tr>
                                     <tr>
                                         <td width="135"><%= l.label :gmap_use, "Show map:" %></td>
-                                        <td><%= l.check_box :gmap_use %></td>
+                                        <td><%= l.check_box :gmap_use, class: "location_gmap_check" %></td>
                                     </tr>
                                     <tr class="g_rows">
                                         <td width="135"><%= l.label :latitude, "latitude:" %></td>

@@ -46,12 +46,14 @@ class GamesController < ApplicationController
     @game = Game.new
     @game.happening_case = HappeningCase.new
     @happening_case = @game.happening_case
+    @venues = Venue.all
     @location = Location.new
   end
 
   # TODO: procedure order to be used in other controllers.
   def create
     @current_user_id = current_user.id
+    location = params[:game].delete :location
     @game = Game.new(params[:game])
     @game.team_participation ||= false
     @game.album = Album.new
@@ -59,7 +61,7 @@ class GamesController < ApplicationController
 
     set_params_gmaps_flag :game
 
-    @game.build_location(params[:game][:location])
+    @game.build_location(location)
 
     # custom or referenced location.
     if params[:location_type] == "parent_location"
@@ -78,7 +80,7 @@ class GamesController < ApplicationController
     @game.create_offering_creation(creator_id: @current_user_id)
     @game.offering_administrations.create(administrator_id: @current_user_id)
     @game.create_activity :create, owner: current_user
-    
+
     redirect_to @game, notice: "Game was created"
   end
 
@@ -91,7 +93,7 @@ class GamesController < ApplicationController
     @game.create_activity :destroy, owner: current_user
 
     if !@game.destroy; raise Errors::FlowError.new(@game); end
-    
+
     redirect_to(games_path)
   end
 
@@ -135,7 +137,7 @@ class GamesController < ApplicationController
       @game.location.parent_id = parent_location.id
       # change location parent
     elsif changing_location_to_custom? || changing_custom_location?(@game)
-      set_params_gmaps_flag :game      
+      set_params_gmaps_flag :game
       location = params[:game].delete :location
       copy_locations(location, @game.location)
       if @game.location.invalid?
@@ -146,12 +148,12 @@ class GamesController < ApplicationController
       @game.location.parent_id = nil
       # change to custom
     else
-      params[:game].delete :location      
+      params[:game].delete :location
       # do nothing
     end
 
     if !@game.update_attributes(params[:game]); raise Errors::FlowError.new(edit_game_path(@game)); end
-    if !@game.happening_case.update_attributes params[:happening_case]; raise Errors::FlowError.new(edit_game_path(@game)); end  
+    if !@game.happening_case.update_attributes params[:happening_case]; raise Errors::FlowError.new(edit_game_path(@game)); end
     if !@game.create_activity :update, owner: current_user; raise Errors::FlowError.new(edit_game_path(@game)); end
 
     redirect_to @game, notice: "Game was updated"
