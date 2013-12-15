@@ -3,7 +3,8 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
   $(document).ready ->
-    $('div.Description').hide()
+    $('div.Description').show()
+    $('div.joined').hide()
     $('div#gallery_container').hide('fast')
     $('div.likes').hide()
   $('nav#secondary ul li#joined').click (e) ->

@@ -51,11 +51,11 @@ module LocationEvaluationHelper
 	    params[:location_type] == "parent_location" && !owner.location.parent_id.nil? && owner.location.parent_id != params[:referenced_venue_id]
 	  end
 
-	  def changing_location_to_custom?
+	  def changing_location_to_custom?(owner)
 	    params[:location_type] == "custom_location" && !owner.location.parent_id.nil?
 	  end
 
-	  def changing_location_to_parent?
+	  def changing_location_to_parent?(owner)
 	    params[:location_type] == "parent_location" && owner.location.parent_id.nil?
 	  end
 

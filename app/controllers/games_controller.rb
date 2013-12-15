@@ -105,6 +105,10 @@ class GamesController < ApplicationController
     @photo = Photo.new
     @album = @game.album
     @owner = @game
+    @location = @game.location if @game.location
+    if @location
+        @json = @game.location.to_gmaps4rails
+    end
     @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game", trackable_id: @game.id)
     @recent_activities = @recent_activities.order("created_at desc")
 
@@ -120,6 +124,8 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @happening_case = @game.happening_case
     @game.album ||= Album.new
+    @location = @game.location
+    @venues = Venue.all
     @photo = Photo.new
     @photo.title = "Logo"
 
@@ -129,14 +135,14 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
 
     # update location
-    if changing_location_parent?(@game) || changing_location_to_parent?
+    if changing_location_parent?(@game) || changing_location_to_parent?(@game)
       params[:game].delete :location
       referenced_location = venue_location(params[:referenced_venue_id])
       if !referenced_location; raise Errors::FlowError.new(new_game_path, "location not valid"); end
       copy_locations(referenced_location, @game.location)
       @game.location.parent_id = referenced_location.id
       # change location parent
-    elsif changing_location_to_custom? || changing_custom_location?(@game)
+    elsif changing_location_to_custom?(@game) || changing_custom_location?(@game)
       set_params_gmaps_flag :game
       location = params[:game].delete :location
       copy_locations(location, @game.location)

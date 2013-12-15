@@ -25,12 +25,11 @@ $ ->
         $(".edit_offering_session tr.existing_collective").hide()
         $(".edit_offering_session tr.new_collective").hide()
 
-    $('div.Schedule').show()
-    $('div.Description').hide()
+    $('div.Schedule').hide()
+    $('div.Description').show()
     $('div#gallery_container').hide('fast')
     $('div.likes').hide()
 
-    $('div.Map').show()
     $("tr#repeat_row").hide()
 
     $("div.new_offering_session").hide()
@@ -67,38 +66,22 @@ $ ->
     $('div.likes').fadeOut('fast')
     $('div#gallery_container').fadeOut('fast')
     $('div.Schedule').fadeIn('fast')
-    $('div.Map').fadeOut('fast')
-
-
-
-  $('nav#secondary ul li#Map').click (e) ->
-    e.preventDefault()
-    $('nav#secondary ul li.navActive').removeClass()
-    $(@).addClass('navActive')
-    $('div.Description').fadeOut('fast')
-    $('div.likes').fadeOut('fast')
-    $('div#gallery_container').fadeOut('fast')
-    $('div.Schedule').fadeOut('fast')
-    $('div.Map').fadeIn('fast')
-    google.maps.event.trigger(map, 'resize')
 
 
   $('nav#secondary ul li#Description').click (e) ->
     e.preventDefault()
     $('nav#secondary ul li.navActive').removeClass()
     $(@).addClass('navActive')
-    $('div.Map').fadeOut('fast')
     $('div.likes').fadeOut('fast')
     $('div#gallery_container').fadeOut('fast')
     $('div.Description').fadeIn('fast')
     $('div.Schedule').fadeOut('fast')
-
+    google.maps.event.trigger(map, 'resize')
 
   $('nav#secondary ul li#likes').click (e) ->
     e.preventDefault()
     $('nav#secondary ul li.navActive').removeClass()
     $(@).addClass('navActive')
-    $('div.Map').fadeOut('fast')
     $('div.Description').fadeOut('fast')
     $('div#gallery_container').fadeOut('fast')
     $('div.likes').fadeIn('fast')
@@ -109,7 +92,6 @@ $ ->
     e.preventDefault()
     $('nav#secondary ul li.navActive').removeClass()
     $(@).addClass('navActive')
-    $('div.Map').fadeOut('fast')
     $('div.Description').fadeOut('fast')
     $('div.likes').fadeOut('fast')
     $('div#gallery_container').fadeIn('fast')
