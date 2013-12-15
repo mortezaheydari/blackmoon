@@ -46,6 +46,7 @@ class GamesController < ApplicationController
     @game = Game.new
     @game.happening_case = HappeningCase.new
     @happening_case = @game.happening_case
+    @location = Location.new
   end
 
   # TODO: procedure order to be used in other controllers.
@@ -56,13 +57,29 @@ class GamesController < ApplicationController
     @game.album = Album.new
     @game.happening_case = HappeningCase.new(params[:happening_case])
 
+    set_params_gmaps_flag :game
+
+    @game.build_location(params[:game][:location])
+
+    # custom or referenced location.
+    if params[:location_type] == "parent_location"
+      referenced_location = venue_location(params[:referenced_venue_id])
+      if !referenced_location; raise Errors::FlowError.new(new_game_path, "location not valid"); end
+      copy_locations(venue_location, @game.location)
+      @game.location.parent_id = parent_location.id
+    else
+      @game.location.parent_id = nil
+    end
+
+    # here, location assignment operation should take place.
+
     if !@game.save ; raise Errors::FlowError.new(new_game_path, "there has been a problem with data entry."); end
 
     @game.create_offering_creation(creator_id: @current_user_id)
     @game.offering_administrations.create(administrator_id: @current_user_id)
     @game.create_activity :create, owner: current_user
     
-    redirect_to @game
+    redirect_to @game, notice: "Game was created"
   end
 
   def destroy
@@ -109,6 +126,30 @@ class GamesController < ApplicationController
   def update
     @game = Game.find(params[:id])
 
+    # update location
+    if changing_location_parent?(@game) || changing_location_to_parent?
+      params[:game].delete :location
+      referenced_location = venue_location(params[:referenced_venue_id])
+      if !referenced_location; raise Errors::FlowError.new(new_game_path, "location not valid"); end
+      copy_locations(venue_location, @game.location)
+      @game.location.parent_id = parent_location.id
+      # change location parent
+    elsif changing_location_to_custom? || changing_custom_location?(@game)
+      set_params_gmaps_flag :game      
+      location = params[:game].delete :location
+      copy_locations(location, @game.location)
+      if @game.location.invalid?
+        errors = "Location invalid. "
+        @game.location.errors.each { |m| errors +=  (m.first.to_s + ": " + m.last.first.to_s + "; ") }
+        raise Errors::FlowError.new(edit_game_path(@game), errors)
+      end
+      @game.location.parent_id = nil
+      # change to custom
+    else
+      params[:game].delete :location      
+      # do nothing
+    end
+
     if !@game.update_attributes(params[:game]); raise Errors::FlowError.new(edit_game_path(@game)); end
     if !@game.happening_case.update_attributes params[:happening_case]; raise Errors::FlowError.new(edit_game_path(@game)); end  
     if !@game.create_activity :update, owner: current_user; raise Errors::FlowError.new(edit_game_path(@game)); end
@@ -123,5 +164,6 @@ class GamesController < ApplicationController
      @user = current_user
      redirect_to(@game) unless @game.administrators.include?(@user)
     end
+
 
 end

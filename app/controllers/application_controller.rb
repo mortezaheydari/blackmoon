@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
+  include LocationEvaluationHelper
   include PublicActivity::StoreController
   require 'errors/errors'
   protect_from_forgery

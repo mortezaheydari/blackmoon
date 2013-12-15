@@ -54,11 +54,7 @@ class VenuesController < ApplicationController
 		@venue.album = Album.new
 
 		# here, location assignment operation should take place.
-		if params[:venue][:location][:longitude].empty? || params[:venue][:location][:latitude].empty?
-			params[:venue][:location][:gmaps] = false
-		else
-			params[:venue][:location][:gmaps] = true
-		end
+    set_params_gmaps_flag :venue
 		@venue.build_location(params[:venue][:location])
 
 		if !@venue.save; raise Errors::FlowError.new(new_venue_path, "There has been a problem with data entry."); end
@@ -70,7 +66,7 @@ class VenuesController < ApplicationController
 
 	end
 
-	def destroy
+  def destroy
 		@user = current_user
 		@venue = Venue.find(params[:id])
 			
@@ -130,11 +126,7 @@ class VenuesController < ApplicationController
 	def update
 		@venue = Venue.find(params[:id])
 		@location = @venue.location
-		if params[:venue][:location][:longitude].empty? || params[:venue][:location][:latitude].empty?
-			params[:venue][:location][:gmaps] = false
-		else
-			params[:venue][:location][:gmaps] = true
-		end
+    set_params_gmaps_flag :venue
 
 		unless @venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmap_use: params[:venue][:location][:gmap_use], custom_address: params[:venue][:location][:custom_address], gmaps: params[:venue][:location][:gmaps])
 			raise Errors::FlowError.new(edit_venue_path(@venue), "There has been a problem with data entry.")
@@ -152,40 +144,41 @@ class VenuesController < ApplicationController
 			redirect_to(@venue) unless @venue.administrators.include?(@user)
 		end
 
-		## currently out of use
-		#
-		# def sorted_offering_sessions(venue)
-		# 	session_id_list = []
-		# 	venue.offering_sessions.each do |os|
-		# 		session_id_list << os.id
-		# 	end
-
-		# 	sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).order(:date_and_time)
-
-		# 	sorted_sessions = []
-		# 	sorted_happening_cases.each do |hc|
-		# 		sorted_sessions << hc.id
-		# 	end
-		# 	sorted_sessions
-		# end
-
-        def grouped_happening_cases(this)
-            session_id_list = []
-            this.offering_sessions.each do |os|
-                session_id_list << os.id
-            end
-
-            sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).group_by(&:date_and_time)
+    def grouped_happening_cases(this)
+        session_id_list = []
+        this.offering_sessions.each do |os|
+            session_id_list << os.id
         end
 
-        def replace_with_happening(grouped_happening_cases)
-            grouped_sessions = Hash.new
-            grouped_happening_cases.each do |key, value|
-                grouped_sessions[key.to_date] = []
-                value.each do |happening_case|
-                    grouped_sessions[key.to_date] << happening_case.happening
-                end
+        sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).group_by(&:date_and_time)
+    end
+
+    def replace_with_happening(grouped_happening_cases)
+        grouped_sessions = Hash.new
+        grouped_happening_cases.each do |key, value|
+            grouped_sessions[key.to_date] = []
+            value.each do |happening_case|
+                grouped_sessions[key.to_date] << happening_case.happening
             end
-            grouped_sessions
         end
+        grouped_sessions
+    end
+
+  ## currently out of use
+  #
+  # def sorted_offering_sessions(venue)
+  # 	session_id_list = []
+  # 	venue.offering_sessions.each do |os|
+  # 		session_id_list << os.id
+  # 	end
+
+  # 	sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).order(:date_and_time)
+
+  # 	sorted_sessions = []
+  # 	sorted_happening_cases.each do |hc|
+  # 		sorted_sessions << hc.id
+  # 	end
+  # 	sorted_sessions
+  # end
+
 end
