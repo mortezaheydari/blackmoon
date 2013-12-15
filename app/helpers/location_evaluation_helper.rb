@@ -4,11 +4,11 @@ module LocationEvaluationHelper
 	# copy one location to the other
     def copy_locations(locatin_from, location_to)
 		location_to.custom_address = locatin_from.custom_address
-		location_to.custom_address_use = locatin_from.custom_address_use  		
+		location_to.custom_address_use = locatin_from.custom_address_use
 		location_to.gmap_use = locatin_from.gmap_use
 		location_to.gmaps = locatin_from.gmaps
-		location_to.latitude = locatin_from.latitude  	  		
-		location_to.longitude = locatin_from.longitude  	  		  		
+		location_to.latitude = locatin_from.latitude
+		location_to.longitude = locatin_from.longitude
 		location_to.title = locatin_from.title
     end
 
@@ -20,9 +20,9 @@ module LocationEvaluationHelper
 		location_to.gmap_use == locatin_from.gmap_use &&
 		location_to.gmaps == locatin_from.gmaps &&
 		location_to.latitude == locatin_from.latitude &&
-		location_to.longitude == locatin_from.longitude && 	  		  		
+		location_to.longitude == locatin_from.longitude &&
 		location_to.title == locatin_from.title
-    end    
+    end
 
 	def venue_location(venue_id)
 		venue = Venue.find(venue_id).location
@@ -44,7 +44,7 @@ module LocationEvaluationHelper
       else
         params[owner_type][:location][:gmaps] = true
       end
-    end	
+    end
 
 	# location evaluations for update method
 	  def changing_location_parent?(owner)
@@ -56,7 +56,7 @@ module LocationEvaluationHelper
 	  end
 
 	  def changing_location_to_parent?
-	    params[:location_type] == "parent_location" && owner.location.parent_id.nil?    
+	    params[:location_type] == "parent_location" && owner.location.parent_id.nil?
 	  end
 
 	  def changing_custom_location?(owner)

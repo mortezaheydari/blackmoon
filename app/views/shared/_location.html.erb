@@ -30,7 +30,7 @@
                                         <td width="135"><label for="div">Tag a place:</label></td>
                                         <td>
                                             <% if form_type == "edit" %>
-                                                <%= gmaps(:markers => { :data => @location.to_gmaps4rails},
+                                                <%= gmaps(:markers => { :data => location.to_gmaps4rails},
                                                     :map_options => { :auto_adjust => true, # :auto_adjust map to center on location
                                                               :auto_zoom => false,  # :auto_zoom defaults to full zoom in, set to false to utilize :zoom
                                                               :zoom => 16 }) %>

@@ -53,13 +53,13 @@ class GamesController < ApplicationController
   # TODO: procedure order to be used in other controllers.
   def create
     @current_user_id = current_user.id
+    set_params_gmaps_flag :game
     location = params[:game].delete :location
     @game = Game.new(params[:game])
     @game.team_participation ||= false
     @game.album = Album.new
     @game.happening_case = HappeningCase.new(params[:happening_case])
 
-    set_params_gmaps_flag :game
 
     @game.build_location(location)
 
@@ -67,8 +67,8 @@ class GamesController < ApplicationController
     if params[:location_type] == "parent_location"
       referenced_location = venue_location(params[:referenced_venue_id])
       if !referenced_location; raise Errors::FlowError.new(new_game_path, "location not valid"); end
-      copy_locations(venue_location, @game.location)
-      @game.location.parent_id = parent_location.id
+      copy_locations(referenced_location, @game.location)
+      @game.location.parent_id = referenced_location.id
     else
       @game.location.parent_id = nil
     end
@@ -133,8 +133,8 @@ class GamesController < ApplicationController
       params[:game].delete :location
       referenced_location = venue_location(params[:referenced_venue_id])
       if !referenced_location; raise Errors::FlowError.new(new_game_path, "location not valid"); end
-      copy_locations(venue_location, @game.location)
-      @game.location.parent_id = parent_location.id
+      copy_locations(referenced_location, @game.location)
+      @game.location.parent_id = referenced_location.id
       # change location parent
     elsif changing_location_to_custom? || changing_custom_location?(@game)
       set_params_gmaps_flag :game

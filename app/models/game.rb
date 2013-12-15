@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
 
   include PublicActivity::Model
-  
+
   include Offerable
   	# location
   	# creator
@@ -19,6 +19,6 @@ class Game < ActiveRecord::Base
 
   attr_accessible :category, :custom_address, :description,
   	:fee, :fee_type, :location_type, :number_of_attendings, :sport,
-  	:team_participation, :title, :tournament_id, :open_join
+  	:team_participation, :title, :tournament_id, :open_join, :location
 
 end

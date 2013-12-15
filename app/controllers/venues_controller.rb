@@ -54,7 +54,7 @@ class VenuesController < ApplicationController
 		@venue.album = Album.new
 
 		# here, location assignment operation should take place.
-    set_params_gmaps_flag :venue
+                        set_params_gmaps_flag :venue
 		@venue.build_location(params[:venue][:location])
 
 		if !@venue.save; raise Errors::FlowError.new(new_venue_path, "There has been a problem with data entry."); end
@@ -69,7 +69,7 @@ class VenuesController < ApplicationController
   def destroy
 		@user = current_user
 		@venue = Venue.find(params[:id])
-			
+
 		unless user_is_admin?(@venue) && user_created_this?(@venue); raise Errors::FlowError.new(venues_path); end
 
 		@venue.create_activity :destroy, owner: current_user
@@ -126,7 +126,7 @@ class VenuesController < ApplicationController
 	def update
 		@venue = Venue.find(params[:id])
 		@location = @venue.location
-    set_params_gmaps_flag :venue
+                        set_params_gmaps_flag :venue
 
 		unless @venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmap_use: params[:venue][:location][:gmap_use], custom_address: params[:venue][:location][:custom_address], gmaps: params[:venue][:location][:gmaps])
 			raise Errors::FlowError.new(edit_venue_path(@venue), "There has been a problem with data entry.")

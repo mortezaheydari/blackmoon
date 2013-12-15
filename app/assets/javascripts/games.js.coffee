@@ -8,7 +8,7 @@ $ ->
         $(".venue_list ").hide()
         $(".location_partial_container ").show()
         google.maps.event.trigger(map, 'resize')
-    else if $( "select#location_type option:selected").attr('value') == "referenced_location"
+    else if $( "select#location_type option:selected").attr('value') == "parent_location"
         $(".location_partial_container ").hide()
         $(".venue_list ").show()
 
@@ -18,6 +18,6 @@ $ ->
             $(".venue_list ").hide()
             $(".location_partial_container ").show()
             google.maps.event.trigger(map, 'resize')
-        else if $( "select#location_type option:selected").attr('value') == "referenced_location"
+        else if $( "select#location_type option:selected").attr('value') == "parent_location"
             $(".location_partial_container ").hide()
             $(".venue_list ").show()
