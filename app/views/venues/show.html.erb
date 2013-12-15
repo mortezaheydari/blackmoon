@@ -43,10 +43,7 @@
     <div class="body">
         <div class="Map">
             <h2 class="header_text">Location:</h2>
-            <%= gmaps(:markers => { :data => @json },
-                :map_options => { :auto_adjust => true, # :auto_adjust map to center on location
-                          :auto_zoom => false,  # :auto_zoom defaults to full zoom in, set to false to utilize :zoom
-                          :zoom => 16 } ) %>
+            <div id="MapContainer"><%= render "shared/map" %></div>
          </div>
         <div class="Schedule">
             <div id="new_form"><%= render "schedule/new_session", owner: @venue %></div>

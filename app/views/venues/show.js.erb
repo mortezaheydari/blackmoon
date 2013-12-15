@@ -1,5 +1,6 @@
 <% if user_is_admin?(@venue) %>
     $("#edit_form").html("<%= escape_javascript(render('schedule/edit_session', owner: @venue))%>");
+    $('div.edit_offering_session select').selectpicker()
 <% else %>
     $("#session_reload").html("<%= escape_javascript(render('offering_sessions/session_modal', session: @offering_session_edit, session_happening_case: @edit_happening_case))%>");
     $("#session_modal").modal();

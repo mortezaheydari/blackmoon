@@ -216,11 +216,6 @@ $(document).ready(function() {
         $("#SignUp").modal();
     });
 
-    $("a#SignUpTop").click(function(e) {
-        e.preventDefault();
-        $("#SignUp").modal();
-    });
-
     $('input.file').change(function() {
         $("p#fileName").text(this.value);
     });

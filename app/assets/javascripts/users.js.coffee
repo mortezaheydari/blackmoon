@@ -9,7 +9,7 @@ $ ->
     $('div.FollowingSection').hide()
     $('div.FollowerSection').hide()
     $('div.teamCards').hide()
-    $('nav#secondary ul li:first').addClass('navActive')
+    # $('nav#secondary ul li:first').addClass('navActive')
 
   $('div.dashboard a#editIntrest').click (e) ->
     e.preventDefault()

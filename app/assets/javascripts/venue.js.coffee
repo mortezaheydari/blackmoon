@@ -29,8 +29,8 @@ $ ->
     $('div.Description').hide()
     $('div#gallery_container').hide('fast')
     $('div.likes').hide()
+
     $('div.Map').show()
-    $('div.Map').hide()
     $("tr#repeat_row").hide()
 
     $("div.new_offering_session").hide()
@@ -81,6 +81,7 @@ $ ->
     $('div.Schedule').fadeOut('fast')
     $('div.Map').fadeIn('fast')
     google.maps.event.trigger(map, 'resize')
+
 
   $('nav#secondary ul li#Description').click (e) ->
     e.preventDefault()
