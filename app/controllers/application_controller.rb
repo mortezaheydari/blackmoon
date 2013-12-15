@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   	rescue_from Errors::FlowError, with: :flow_error_handler
 
 	def name_is_valid?(name)
-	  ["event","class","game", "user", "team", "venue"].include? name.underscore
+	  ["event","class","game", "user", "team", "venue", "personal_trainer", "group_training"].include? name.underscore
 	end
 
 	# find and assign, dose it without administration check,
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 
 	def find_and_assign this_type, this_id
 
-		if ["user", "team", "event", "game", "venue", "offering_session"].include? this_type.underscore and this_id
+		if ["user", "team", "event", "game", "venue", "personal_trainer", "group_training", "offering_session"].include? this_type.underscore and this_id
 			this_type.camelize.constantize.find_by_id(this_id)
 		else
 			nil

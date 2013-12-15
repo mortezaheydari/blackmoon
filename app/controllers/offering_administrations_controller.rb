@@ -59,7 +59,7 @@ class OfferingAdministrationsController < ApplicationController
 	# checks if offerign name is valid for user
 	# note: this function is controller specific
 	def name_is_valid?(user, name)
-	  user.respond_to? "#{name}s_administrating" and ["event","class","game", "venue"].include? name
+	  user.respond_to? "#{name}s_administrating" and ["event","class","game", "venue", "personal_trainer", "group_training"].include? name
 	end
 
 end

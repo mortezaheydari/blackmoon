@@ -118,9 +118,9 @@ module SessionsHelper
 
             def this_is_multisession?(this)
                 if this.class.to_s == "String"
-                    ["venue", "class", "personal_trainer"].include?(this)
+                    ["venue", "group_training", "personal_trainer"].include?(this)
                 else
-                    ["venue", "class", "personal_trainer"].include?(k_lower(this))
+                    ["venue", "group_training", "personal_trainer"].include?(k_lower(this))
                 end
             end
         # def class_name(this)
