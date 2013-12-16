@@ -31,8 +31,8 @@
   <div class="secondMenu">
     <nav id="secondary">
       <ul>
-        <li id="Description"><a href="#">Description</a></li>
-        <li id="Schedule" class="navActive"><a href="#">Schedule</a></li>
+        <li id="Description" class="navActive"><a href="#">Description</a></li>
+        <li id="Schedule"><a href="#">Schedule</a></li>
         <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @venue.flaggings.with_flag(:like).count %></span>)</a></li>
         <li id="gallery"><a href="#">gallery</a></li>
       </ul>
@@ -50,6 +50,7 @@
         <div class="Description">
             <h2 class="header_text">Location:</h2>
             <div id="MapContainer"><%= render "shared/map" %></div>
+            <h2 class="header_text">Description</h2>
             <p><%= @venue.descreption %></p>
 
             <%= render "shared/activity_table", recent_activities: @recent_activities %>
