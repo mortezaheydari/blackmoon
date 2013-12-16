@@ -36,7 +36,34 @@ class GamesController < ApplicationController
 
   def index
     add_breadcrumb "games", games_path, :title => "Back to the Index"
-    @games = Game.all
+
+    @games = Game.order("created_at desc")
+
+@search = Sunspot.search(Game) do
+      fulltext params[:search]
+
+      # with(:price, params[:min_price].to_i..params[:max_price].to_i) if params[:max_price].present? && params[:min_price].present?
+      # with(:price).greater_than(params[:min_price].to_i) if !params[:max_price].present? && params[:min_price].present?
+      # with(:price).less_than(params[:max_price].to_i) if params[:max_price].present? && !params[:min_price].present?
+
+      # with(:condition, params[:condition]) if params[:condition].present?
+      facet(:sport)
+      with(:sport, params[:sport]) if params[:sport].present?
+
+      # if params[:order_by] == "Price"
+      #   order_by(:price)
+      # elsif params[:order_by] == "Popular"
+      #   order_by(:favorite_count, :desc)
+      # end
+
+      if params[:team_participation]  == "checked"
+        with(:team_participation, true)
+      end
+
+    end
+    @games = @search.results
+
+
     @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game")
     @recent_activities = @recent_activities.order("created_at desc")
 

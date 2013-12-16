@@ -21,4 +21,12 @@ class Game < ActiveRecord::Base
   	:fee, :fee_type, :location_type, :number_of_attendings, :sport,
   	:team_participation, :title, :tournament_id, :open_join, :location
 
+    searchable do
+        text :title, :boost => 5
+        text :description
+        # string :fee_type
+        string :sport
+        boolean :team_participation
+    end
+
 end

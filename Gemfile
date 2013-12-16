@@ -19,12 +19,14 @@ gem 'gmaps4rails', "1.5"
 gem 'chronic'
 gem 'metric_fu'
 gem "jquery-fileupload-rails"
+gem 'sunspot_rails'
 
 gem 'make_flaggable', :git => 'git@github.com:Charchoob/make_flaggable.git'
 gem "breadcrumbs_on_rails"
 
 group :development do
-	gem 'annotate', '2.5.0'
+    gem 'annotate', '2.5.0'
+    gem 'sunspot_solr'
 end
 
 # Gems used only for assets and not required

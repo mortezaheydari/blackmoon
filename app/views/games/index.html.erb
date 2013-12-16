@@ -1,5 +1,41 @@
   <div class="body">
 <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
+
+
+
+<div class="row">
+    <div class="twelve columns">
+
+<%= form_tag games_path, :method => :get, class: "custom" do %>
+    <label for="search">Search</label>
+    <%= text_field_tag :search, params[:search] %>
+
+    <div class="row">
+
+
+<br class="show-for-small">
+
+
+        <div class="three columns" id="searchBtn">
+                <%= label_tag 'team_participation', id: "team_participation_label" do %>
+                    <%= check_box_tag :team_participation, :checked, (true if params[:team_participation] == "checked")  %> Available For Delivery
+                <% end -%> <br class="hide-for-small" style="line-height:42px;"> <br class="show-for-small">
+            <%= submit_tag "Search", :name => nil, class: "button twelve" %>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+<% end %>
+
+</div></div>
+
+
     <div class="cardsection">
         <% @games.each do |g| %>
             <%= render 'shared/offering/offering', offering: g, class_name: "gameList" %>
