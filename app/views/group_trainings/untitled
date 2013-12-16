@@ -1,0 +1,64 @@
+
+<div class="body">
+    <div class="offering">
+                    <h1><%= image_tag "class-icon.png", width: 50 %> Create New Event</h1>
+        <%= form_for(@event) do |f| %>
+                            <h2>1. Set up Activity</h2>
+
+                            <p>a. Select a Category</p>
+
+                            <div>
+                                <table id="categoryChoice">
+                                    <tr>
+                                        <td><%= f.radio_button :category, "BallSports", value: "BallSports", checked: true %></td>
+                                        <td><%= f.radio_button :category, "Fitness", value: "Fitness" %></td>
+                                        <td><%= f.radio_button :category, "WaterSports", value: "WaterSports" %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ball Sports</td>
+                                        <td>Fitness</td>
+                                        <td>Water Sports</td>
+                                    </tr>
+                                </table>
+                            </div> <br>
+
+                            <div>
+                                <table  width="100%">
+                                    <tr>
+                                        <td width="130"><%= f.label :sport, "b. Select an Activity:" %></td>
+                                        <td>
+                                            <div id="BallList"><%= f.select :sport, ["Football", "Handball"]%></div>
+                                            <div id="FitList"><%= f.select :sport, ["Marathon", "Sky diving"] %></div>
+                                            <div id="WaterList"><%= f.select :sport, ["Water Polo", "Swimming"]%></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :title, "Event Title: " %></td>
+                                        <td><%= f.text_field :title %></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
+                                        <td><%= f.number_field :number_of_attendings %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%= f.label :descreption, "Description" %></td>
+                                        <td><%= f.text_area :descreption %></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Add Image</label></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Special Requirements</label></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+    </div>
+                <%= f.submit "Create the Event", class: "button grey submitBtn homeBtn left" %>
+
+
+        <% end %>
+</div>

@@ -1,0 +1,88 @@
+<div class="body">
+	<div class="offering">
+                    <h1><%= image_tag "event-icon.png", width: 50 %> Create New Class</h1>
+		<%= form_for(@group_training) do |f| %>
+
+                            <div>
+                                <table  width="100%">
+                                    <tr>
+                                        <td width="135"><%= f.label :title, "Class Title: " %></td>
+                                        <td><%= f.text_field :title %></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="135"><%= f.label :descreption, "Description" %></td>
+                                        <td><%= f.text_area :descreption %></td>
+                                    </tr>
+                                </table>
+                            </div>
+<hr>
+
+                    <h2>2. Location:</h2>
+
+                        <%= render "shared/location", location: @location, f: f, form_type: "new" %>
+
+
+                <%= f.submit "Create the Class", class: "button grey submitBtn homeBtn left" %>
+
+
+        <% end %>
+    </div>
+</div>
+
+
+<%= content_for :scripts do %>
+    <script type="text/javascript" charset="utf-8">
+      var markersArray = [];
+      Gmaps.map.callback = function() {
+        var marker = Gmaps.map.markers[0];
+        if (marker) {
+          // Move existing marker when editing a previously stored location
+          google.maps.event.addListener(marker.serviceObject, 'dragend', function() {
+            updateFormLocation(this.getPosition());
+          });
+        }
+
+        // On click, clear markers, place a new one, update coordinates in the form
+        google.maps.event.addListener(Gmaps.map.serviceObject, 'click', function(event) {
+          clearOverlays();
+          placeMarker(event.latLng);
+          updateFormLocation(event.latLng);
+        });
+      };
+      // Update form attributes with given coordinates
+      function updateFormLocation(latLng) {
+        $('#group_training_location_latitude').val(latLng.lat());
+        $('#group_training_location_longitude').val(latLng.lng());
+        $('#centre_gmaps_zoom').val(Gmaps.map.serviceObject.getZoom());
+      }
+      // Add a marker with an open infowindow
+      function placeMarker(latLng) {
+        var marker = new google.maps.Marker({
+          position: latLng,
+          map: Gmaps.map.serviceObject,
+          draggable: true
+        });
+        markersArray.push(marker);
+        // Set and open infowindow
+        var infowindow = new google.maps.InfoWindow({
+          content: ''
+        });
+        infowindow.open(Gmaps.map.serviceObject, marker);
+        // Listen to drag & drop
+        google.maps.event.addListener(marker, 'dragend', function() {
+          updateFormLocation(this.getPosition());
+        });
+      }
+      // Removes the overlays from the map, including the ones loaded with the map itself
+      function clearOverlays() {
+        for (var i = 0; i < markersArray.length; i++ ) {
+          markersArray[i].setMap(null);
+        }
+        markersArray.length = 0;
+
+        for (var i = 0; i < Gmaps.map.markers.length; i++ ) {
+          Gmaps.map.clearMarker(Gmaps.map.markers[i]);
+        }
+      }
+    </script>
+<% end %>

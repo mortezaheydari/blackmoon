@@ -1,0 +1,56 @@
+<% if user_is_admin?(@personal_trainer) %>
+    $("#edit_form").html("<%= escape_javascript(render('schedule/edit_session', owner: @personal_trainer))%>");
+    $('div.edit_offering_session select').selectpicker()
+<% else %>
+    $("#session_reload").html("<%= escape_javascript(render('offering_sessions/session_modal', session: @offering_session_edit, session_happening_case: @edit_happening_case))%>");
+    $("#session_modal").modal();
+<% end %>
+
+
+$('a#edit_cancel').click( function(e) {
+    e.preventDefault();
+    $("div.edit_offering_session").hide();
+});
+
+$('#edit_happening_case_date_and_time').datepicker({
+        format: 'yyyy-mm-dd'
+      });
+if ($(".edit_offering_session select#happening_case_duration_type").val() == "Range") {
+    $(".edit_offering_session tr.range").show();
+} else {
+    $(".edit_offering_session tr.range").hide();
+}
+
+
+if ($(".edit_offering_session #offering_session_collective_type").val() == 'new') {
+    $(".edit_offering_session tr.new_collective").show()
+    $(".edit_offering_session tr.existing_collective").hide()
+} else if ($(".edit_offering_session #offering_session_collective_type").val() == 'existing') {
+    $(".edit_offering_session tr.existing_collective").show()
+    $(".edit_offering_session tr.new_collective").hide()
+} else if ($(".edit_offering_session #offering_session_collective_type").val() == 'none') {
+    $(".edit_offering_session tr.existing_collective").hide()
+    $(".edit_offering_session tr.new_collective").hide()
+}
+
+$(".edit_offering_session #offering_session_collective_type").change( function() {
+    if ($(this).val() == 'new') {
+        $(".edit_offering_session tr.new_collective").show();
+        $(".edit_offering_session tr.existing_collective").hide();
+    } else if ($(this).val() == 'existing') {
+        $(".edit_offering_session tr.existing_collective").show();
+        $(".edit_offering_session tr.new_collective").hide();
+    }  else if ($(this).val() == 'none') {
+        $(".edit_offering_session tr.existing_collective").hide();
+        $(".edit_offering_session tr.new_collective").hide();
+    }
+});
+
+$(".edit_offering_session select#happening_case_duration_type").change( function() {
+    if ($(this).val() == 'All Day') {
+        $(".edit_offering_session tr.allday").show();
+        $(".edit_offering_session tr.range").hide();
+    } else if ($(this).val() == 'Range') {
+        $(".edit_offering_session tr.range").show();
+    }
+});

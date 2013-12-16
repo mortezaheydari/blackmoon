@@ -1,0 +1,24 @@
+            <% reload ||= false %>
+          <% style_id = class_name + group_training.id.to_s %>
+          <%= "<article class=\"activityBox\" id=\"group_training #{style_id} \">".html_safe unless reload == true %>
+            <header class="activityHeader">
+              <%= link_to image_tag("bg.png", class: "activityImage"), group_training_path(group_training) %>
+<!--               <a href="#">
+                <%= image_tag "bg.png", class: "activityImage" %>
+              </a> -->
+              <h5 class="activityTitle text-left">
+                <%= link_to group_training.title, group_training_path(group_training) %>
+              </h5>
+              <p class="text-left"><strong>Originator:</strong> <%= group_training.creator.name %><br><%= group_training.date_and_time.strftime("%A, %B %d, %Y") %></p>
+              <div class="<%= group_training.category %>"></div>
+            </header>
+
+            <div class="activityBody text-center">
+              <ul class="block-grid three-up">
+                <li><%= image_tag "1.png" %></li>
+                <li><%= toggle_like_card_button(group_training, current_user, {style_id: style_id, class_name: class_name}) if signed_in? %> <span id="likecount<%= group_training.id %>" class="small-text"><%= group_training.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
+                <li><div class="featureStar"></div> </li>
+              </ul>
+
+            </div>
+          <%= "</article>".html_safe unless reload == true %>

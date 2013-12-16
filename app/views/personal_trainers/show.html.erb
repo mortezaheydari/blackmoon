@@ -1,0 +1,67 @@
+  <div class="userInfo">personal_trainer
+<%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
+    <div class="eventProfileCard">
+      <div class="large"><%= logo_for(@personal_trainer, size: :user_profile, css_style: "margin:15px auto;") %></div>
+      <h1><%= @personal_trainer.title %></h1>
+    </div>
+
+    <div class="locationPartial">
+      <div class="locationTitle">Location</div>
+      <div class="map"></div>
+    </div>
+
+    <div class="activityOrigin">
+        <div class="OriginTitle">Personal Trainer Originator</div>
+        <div class="UserimgName">
+            <div class="img"><%= logo_for(@personal_trainer.creator, size: :small, css_class: "userCardImage left") %></div>
+            <%= link_to @personal_trainer.creator.name , user_path(@personal_trainer.creator) %>
+        </div>
+      <!-- <a href="#" class="originTitle"><%= @personal_trainer.creator.name %></a> -->
+        <p>Level 2: Game Originator</p>
+    </div>
+
+    <%= render 'shared/like_button', offering: @personal_trainer if signed_in? %>
+
+
+    <a href="#"><div class="shareButton"></div></a>
+    <%= link_to "Edit", edit_personal_trainer_path(@personal_trainer), class: "button blue left" if signed_in? && user_is_admin?(@personal_trainer) %>
+
+  </div>
+
+  <div class="secondMenu">
+    <nav id="secondary">
+      <ul>
+        <li id="Map"><a href="#">Location</a></li>
+        <li id="Schedule" class="navActive"><a href="#">Schedule</a></li>
+        <li id="Description"><a href="#">Description</a></li>
+        <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @personal_trainer.flaggings.with_flag(:like).count %></span>)</a></li>
+        <li id="gallery"><a href="#">gallery</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="event">
+    <div class="body">
+        <div class="Map">
+            <h2 class="header_text">Location:</h2>
+            <div id="MapContainer"><%= render "shared/map" %></div>
+         </div>
+        <div class="Schedule">
+            <div id="new_form"><%= render "schedule/new_session", owner: @personal_trainer %></div>
+            <% unless @personal_trainer.offering_sessions.empty? %>
+                <div id="edit_form"><%= render "schedule/edit_session", owner: @personal_trainer %></div>
+            <% end %>
+            <div id="calendar_reload"><%= render "schedule/sessions", grouped_sessions: @grouped_sessions, owner: @personal_trainer, collectives: @collectives %></div>
+        </div>
+        <div class="Description">
+            <p><%= @personal_trainer.descreption %></p>
+
+            <%= render "shared/activity_table", recent_activities: @recent_activities %>
+
+        </div>
+
+            <%= render 'shared/cardsection', individuals: @likes, this: @personal_trainer, class_name: "likes", makeadmin: true %>
+
+            <%= render 'shared/gallery' %>
+    </div>
+  </div>
+</div>

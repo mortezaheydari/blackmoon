@@ -1,0 +1,4 @@
+// alert("#venue<%= @personal_trainer.id %>")
+// alert("<%= style_id.to_s %>")
+$("#personal_trainer<%= style_id %>").html("<%= escape_javascript(render('personal_trainers/personal_trainer', class_name: class_name, personal_trainer: @personal_trainer, reload: true)) %>")
+$('span#likecount<%= @personal_trainer.id %>').html("<%= @personal_trainer.flaggings.with_flag(:like).count %>")

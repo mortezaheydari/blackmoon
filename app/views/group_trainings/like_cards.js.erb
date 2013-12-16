@@ -1,0 +1,4 @@
+// alert("#venue<%= @venue.id %>")
+// alert("<%= style_id.to_s %>")
+$("#group_training<%= style_id %>").html("<%= escape_javascript(render('group_trainings/group_training', class_name: class_name, group_training: @group_training, reload: true)) %>")
+$('span#likecount<%= @group_training.id %>').html("<%= @group_training.flaggings.with_flag(:like).count %>")
