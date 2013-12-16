@@ -25,6 +25,20 @@ Blackmoon::Application.routes.draw do
       end
     end
 
+    resources :group_trainings do
+      member do
+        get 'like'
+        get 'like_cards'
+      end
+    end
+
+    resources :personal_trainers do
+      member do
+        get 'like'
+        get 'like_cards'
+      end
+    end
+
     resources :teams do
       member do
         get 'like'
