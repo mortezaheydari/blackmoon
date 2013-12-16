@@ -3,37 +3,20 @@
 
 
 
-<div class="row">
-    <div class="twelve columns">
-
-<%= form_tag games_path, :method => :get, class: "custom" do %>
-    <label for="search">Search</label>
-    <%= text_field_tag :search, params[:search] %>
-
-    <div class="row">
-
-
-<br class="show-for-small">
-
-
-        <div class="three columns" id="searchBtn">
+    <div class="row search_container">
+        <div class="span12">
+            <h2 class="header_text">Search</h2>
+            <%= form_tag games_path, :method => :get, class: "custom" do %>
+                <%= text_field_tag :search, params[:search] %>
                 <%= label_tag 'team_participation', id: "team_participation_label" do %>
-                    <%= check_box_tag :team_participation, :checked, (true if params[:team_participation] == "checked")  %> Available For Delivery
-                <% end -%> <br class="hide-for-small" style="line-height:42px;"> <br class="show-for-small">
-            <%= submit_tag "Search", :name => nil, class: "button twelve" %>
-
+                        <%= check_box_tag :team_participation, :checked, (true if params[:team_participation] == "checked")  %> Team participation
+                <% end -%>
+                <%= submit_tag "Search", :name => nil, class: "btn" %>
+            <% end %>
         </div>
     </div>
 
-
-
-
-
-
-
-<% end %>
-
-</div></div>
+    <hr>
 
 
     <div class="cardsection">
@@ -51,6 +34,29 @@
                 <%= render 'shared/upcoming_offering', offering: e, offering_name: "game" %>
             <% end %>
         </div> -->
+
+
+<div id="sideBox">
+     <div class="sideHeader">
+        <h2>NARROW DOWN</h2>
+    </div>
+    <div class="sideLinks">
+        <h3>Category</h3>
+        <ul class="twelve side-nav">
+        <% for row in @search.facet(:sport).rows %>
+
+          <li>
+            <% if params[:sport].blank? %>
+                <%= link_to row.value + " " + "(#{row.count})", :sport => row.value, search: params[:search], team_participation: params[:team_participation] %>
+            <% else %>
+                <strong><%= row.value %></strong> (<%= link_to "remove", :sport => nil, search: params[:search],  team_participation: params[:team_participation]  %>)
+            <% end %>
+        <% end %>
+          </li>
+        </ul>
+    </div>
+</div>
+
 
 
       <div class="sideBox">

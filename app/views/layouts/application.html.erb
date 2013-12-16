@@ -3,6 +3,7 @@
 <head>
   <title>Blackmoon</title>
   <%= stylesheet_link_tag 'bootstrap-select' %>
+  <%= stylesheet_link_tag 'bootstrap-checkbox' %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag 'gmaps4rails' %>
   <%= stylesheet_link_tag 'datepicker' %>
@@ -12,6 +13,11 @@
     <script type="text/javascript">
         $(window).on('load', function () {
             $('select').selectpicker();
+            $('input[type="checkbox"]').checkbox({
+                buttonStyle: 'btn-link btn-large',
+                checkedClass: 'fa fa-check-square',
+                uncheckedClass: 'fa fa-square-o'
+            });
             // $('.selectpicker').selectpicker('hide');
         });
     </script>

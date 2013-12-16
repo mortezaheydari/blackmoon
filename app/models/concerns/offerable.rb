@@ -3,6 +3,15 @@ module Offerable
 
     included do
         make_flaggable :like
+        attr_accessor  :offering_type
+
+        def offering_type
+            self.class.to_s
+        end
+
+        searchable do
+            string :offering_type
+        end
 
 # categorized features
 ## Acts

@@ -3,6 +3,7 @@
 *= require fancybox
 *= require jquery.ui.datepicker
 *= require jquery.fileupload-ui
+*= require font-awesome
 */
 @import "bootstrap";
 // @import "bootstrap-responsive";
@@ -1979,3 +1980,29 @@ div#SignUp {
     background: #fff !important;
 }
 // end modal
+
+
+
+// checkbox
+
+span.fa-square-o,
+span.fa-check-square {
+    font-size:20px !important;
+    color:$linkColor !important;
+}
+
+
+// search
+
+div.search_container {
+    input {
+        margin-bottom: 0;
+    }
+    label {
+        display: inline;
+        font-size: 11px;
+    }
+    input[type="submit"] {
+        display: block;
+    }
+}

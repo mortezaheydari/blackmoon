@@ -154,6 +154,8 @@ $(document).ready(function() {
     $('ul#ExploreDrop').hide();
     $("#BallList").show();
     $("#FitList").hide();
+    $("#FitList select").attr('name', '');
+    $("#WaterList select").attr('name', '');
     $("#WaterList").hide();
     $("tr#AmountRow").hide();
     $("tr.ptdata").hide();
@@ -176,31 +178,49 @@ $(document).ready(function() {
 
     if ($("#team_category_ballsports").is(':checked')) {
             $("div#BallList").show();
+            $("#BallList select").attr('name', 'game[sport]');
             $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
             $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
     } else if ($("#team_category_fitness").is(':checked')) {
             $("div#FitList").show();
+            $("#FitList select").attr('name', 'game[sport]');
             $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
             $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
     } else if ($("#team_category_watersports").is(':checked')) {
             $("div#WaterList").show();
+            $("#WaterList select").attr('name', 'game[sport]');
             $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
             $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
     }
 
 
     if ($("#game_category_ballsports").is(':checked')) {
             $("div#BallList").show();
+            $("#BallList select").attr('name', 'game[sport]');
             $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
             $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
     } else if ($("#game_category_fitness").is(':checked')) {
             $("div#FitList").show();
+            $("#FitList select").attr('name', 'game[sport]');
             $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
             $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
     } else if ($("#game_category_watersports").is(':checked')) {
             $("div#WaterList").show();
+            $("#WaterList select").attr('name', 'game[sport]');
             $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
             $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
     }
 // check select cat radiobutton
 
@@ -339,16 +359,25 @@ $("#fileupload").change(function(){
     $("input:radio[name='event[category]']").change( function() {
         if ($(this).is(':checked') && $(this).val() == 'BallSports') {
             $("div#BallList").show();
+            $("#BallList select").attr('name', 'game[sport]');
             $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
             $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
         } else if ($(this).is(':checked') && $(this).val() == 'Fitness') {
             $("div#FitList").show();
+            $("#FitList select").attr('name', 'game[sport]');
             $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
             $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
         } else if ($(this).is(':checked') && $(this).val() == 'WaterSports') {
             $("div#WaterList").show();
+            $("#WaterList select").attr('name', 'game[sport]');
             $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
             $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
         }
     });
 
@@ -389,32 +418,50 @@ $("#fileupload").change(function(){
     $("input:radio[name='game[category]']").change( function() {
         if ($(this).is(':checked') && $(this).val() == 'BallSports') {
             $("div#BallList").show();
+            $("#BallList select").attr('name', 'game[sport]');
             $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
             $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
         } else if ($(this).is(':checked') && $(this).val() == 'Fitness') {
             $("div#FitList").show();
+            $("#FitList select").attr('name', 'game[sport]');
             $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
             $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
         } else if ($(this).is(':checked') && $(this).val() == 'WaterSports') {
             $("div#WaterList").show();
+            $("#WaterList select").attr('name', 'game[sport]');
             $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
             $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
         }
     });
 
     $("input:radio[name='team[category]']").change( function() {
         if ($(this).is(':checked') && $(this).val() == 'BallSports') {
             $("div#BallList").show();
+            $("#BallList select").attr('name', 'game[sport]');
             $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
             $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
         } else if ($(this).is(':checked') && $(this).val() == 'Fitness') {
             $("div#FitList").show();
+            $("#FitList select").attr('name', 'game[sport]');
             $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
             $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
         } else if ($(this).is(':checked') && $(this).val() == 'WaterSports') {
             $("div#WaterList").show();
+            $("#WaterList select").attr('name', 'game[sport]');
             $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
             $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
         }
     });
 

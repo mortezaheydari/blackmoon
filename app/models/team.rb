@@ -18,11 +18,19 @@ class Team < ActiveRecord::Base
 	# invitations_received
 	# join_requests_sent
 
-	# offerings_participating  	
+	# offerings_participating
 	# games_participating
 	# events_participating
 
 
-  attr_accessible :descreption, :sport, :number_of_attendings, :title, :category, :open_join
+  attr_accessible :descreption, :sport, :number_of_attendings, :title, :category, :open_join, :updated_at
+
+      searchable do
+        text :title, :boost => 5
+        text :descreption
+        # string :fee_type
+        string :sport
+        date :updated_at
+    end
 
 end

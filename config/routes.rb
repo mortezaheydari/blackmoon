@@ -91,10 +91,12 @@ Blackmoon::Application.routes.draw do
   ActiveAdmin.routes(self)
 
     get 'pages/offering_management'
+    get 'pages/search'
+    match 'search' => 'pages#search', as: :search
 
     resources :activities
 
-    resources :notifications # TODO: line might not be required 
+    resources :notifications # TODO: line might not be required
 
     resources :album_photos
 

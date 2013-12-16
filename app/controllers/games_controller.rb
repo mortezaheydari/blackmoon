@@ -83,7 +83,6 @@ class GamesController < ApplicationController
     set_params_gmaps_flag :game
     location = params[:game].delete :location
     @game = Game.new(params[:game])
-    @game.team_participation ||= false
     @game.album = Album.new
     @game.happening_case = HappeningCase.new(params[:happening_case])
 

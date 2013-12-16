@@ -52,7 +52,6 @@ class EventsController < ApplicationController
   def create
     @current_user_id = current_user.id
     @event = Event.new(params[:event])
-    @event.team_participation ||= false
     @event.album = Album.new
     @event.happening_case = HappeningCase.new(params[:happening_case])
 
@@ -108,7 +107,7 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-      
+
     if !@event.update_attributes(params[:event]); raise Errors::FlowError.new(edit_event_path(@event)); end
     if !@event.happening_case.update_attributes params[:happening_case]; raise Errors::FlowError.new(edit_event_path(@event)); end
     if !@event.create_activity :update, owner: current_user; raise Errors::FlowError.new(edit_event_path(@event)); end

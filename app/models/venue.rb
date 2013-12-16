@@ -9,7 +9,7 @@ class Venue < ActiveRecord::Base
   	# offering_sessions
   	# happening_cases
     # joineds
-    # join_requests_received    
+    # join_requests_received
     # individual_participators
     # invitations
     # collectives
@@ -18,6 +18,11 @@ class Venue < ActiveRecord::Base
   	# album
   	# logo
 
-  attr_accessible :descreption, :title, :location
+  attr_accessible :descreption, :title, :location, :updated_at
 
+    searchable do
+        text :title, :boost => 5
+        text :descreption
+        date :updated_at
+    end
 end
