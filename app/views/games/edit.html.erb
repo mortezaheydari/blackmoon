@@ -174,8 +174,8 @@
       };
       // Update form attributes with given coordinates
       function updateFormLocation(latLng) {
-        $('#venue_location_latitude').val(latLng.lat());
-        $('#venue_location_longitude').val(latLng.lng());
+        $('#game_location_latitude').val(latLng.lat());
+        $('#game_location_longitude').val(latLng.lng());
         $('#centre_gmaps_zoom').val(Gmaps.map.serviceObject.getZoom());
       }
       // Add a marker with an open infowindow

@@ -105,10 +105,15 @@ class GamesController < ApplicationController
     @photo = Photo.new
     @album = @game.album
     @owner = @game
-    @location = @game.location if @game.location
-    if @location
-        @json = @game.location.to_gmaps4rails
+
+
+    if @game.location.parent_id.nil?
+        @location = @game.location
+    else
+        @location = @game.location.parent_location
     end
+
+    @json = @location.to_gmaps4rails
     @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game", trackable_id: @game.id)
     @recent_activities = @recent_activities.order("created_at desc")
 
@@ -142,10 +147,11 @@ class GamesController < ApplicationController
       copy_locations(referenced_location, @game.location)
       @game.location.parent_id = referenced_location.id
       # change location parent
-    elsif changing_location_to_custom?(@game) || changing_custom_location?(@game)
+    elsif changing_location_to_custom?(@game) || changing_custom_location?(@game, :game)
       set_params_gmaps_flag :game
       location = params[:game].delete :location
       temp_location = Location.new(location)
+      if temp_location.invalid?; raise Errors::FlowError.new(edit_game_path, "location not valid");end;
       copy_locations(temp_location, @game.location)
       if @game.location.invalid?
         errors = "Location invalid. "

@@ -14,14 +14,14 @@ module LocationEvaluationHelper
 
 	# compare two location, regardless of their specifics
     def compare_locations?(locatin_from, location_to)
-		location_to.title == locatin_from.title &&
+		# location_to.title == locatin_from.title &&
 		location_to.custom_address == locatin_from.custom_address &&
-		location_to.custom_address_use == locatin_from.custom_address_use &&
-		location_to.gmap_use == locatin_from.gmap_use &&
-		location_to.gmaps == locatin_from.gmaps &&
+		# location_to.custom_address_use == locatin_from.custom_address_use &&
+		# location_to.gmap_use == locatin_from.gmap_use &&
+		# location_to.gmaps == locatin_from.gmaps &&
 		location_to.latitude == locatin_from.latitude &&
-		location_to.longitude == locatin_from.longitude &&
-		location_to.title == locatin_from.title
+		location_to.longitude == locatin_from.longitude
+		# location_to.title == locatin_from.title
     end
 
 	def venue_location(venue_id)
@@ -59,11 +59,18 @@ module LocationEvaluationHelper
 	    params[:location_type] == "parent_location" && owner.location.parent_id.nil?
 	  end
 
-	  def changing_custom_location?(owner)
-	    return false unless params[:referenced_venue_id]
-	    referenced_location = venue_location(params[:referenced_venue_id])
-	    return false unless referenced_location
-	    compare_locations?(owner.location, referenced_location)
+	  def changing_custom_location?(owner, owner_type)
+                new_location = Location.new(params[owner_type][:location])
+	    !compare_locations?(owner.location, new_location) && params[:location_type] == "custom_location"
 	  end
 
+
+                # TODO: figure out why return false
+
+              def unknown_method?(owner)
+                return false unless params[:referenced_venue_id]
+                referenced_location = venue_location(params[:referenced_venue_id])
+                return false unless referenced_location
+                compare_locations?(owner.location, referenced_location)
+              end
 end
