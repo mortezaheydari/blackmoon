@@ -6,7 +6,7 @@ module Joinable
         has_many :invitations, as: :subject, dependent: :destroy; accepts_nested_attributes_for :invitations
         has_many :join_requests_received, as: :receiver, class_name: "join_request"; accepts_nested_attributes_for :join_requests_received
         has_many :offering_individual_participations, as: :offering, :dependent => :destroy; accepts_nested_attributes_for :offering_individual_participations
-        
+
         def individual_participators
             @participators = []
             self.offering_individual_participations.each do |participation|
@@ -35,7 +35,7 @@ module Joinable
         end
 
         unless "Team" == self.name
-            
+
             has_many :offering_team_participations, as: :offering, :dependent => :destroy; accepts_nested_attributes_for :offering_team_participations
             has_one :happening_case, as: :happening, :dependent => :destroy; accepts_nested_attributes_for :happening_case
 

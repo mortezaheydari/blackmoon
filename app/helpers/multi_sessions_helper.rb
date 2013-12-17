@@ -1,4 +1,4 @@
-module VenueHelper
+module MultiSessionsHelper
 
 ## regardig calendar system.
 
@@ -50,6 +50,6 @@ module VenueHelper
     end
   end
 
-## 
+##
 
 end

@@ -105,7 +105,7 @@ class OfferingSessionsController < ApplicationController
 
 		else
 			@offering_session.build_happening_case(params[:happening_case])
-			if !@offering_session.save; raise Errors::FlowError.new; end 
+			if !@offering_session.save; raise Errors::FlowError.new; end
 		end
 
 		# return message.
@@ -115,7 +115,7 @@ class OfferingSessionsController < ApplicationController
 		@grouped_happening_cases = grouped_happening_cases(@owner)
 		@grouped_sessions = replace_with_happening(@grouped_happening_cases)
 		@date = params[:date] ? Date.parse(params[:date]) : Date.today
-		@collectives = Collective.all
+		@collectives = @owner.collectives
 
 		respond_to do |format|
 			format.html { redirect_to @owner, notice: msg }
@@ -133,13 +133,13 @@ class OfferingSessionsController < ApplicationController
 
 
 		@offering_session = OfferingSession.find(params[:id])
-        find_offering_session_owner
-        raise Errors::FlowError.new @owner
-		
+                        find_offering_session_owner
+                        raise Errors::FlowError.new unless @owner
+
 		if !@owner.offering_sessions.include? @offering_session; raise Errors::FlowError.new(@owner); end
 
 		# check validity of attributes (TBD)
-	
+
 		if @offering_session.individual_participators.count != 0; raise Errors::FlowError.new(@owner, "This session has participators and can not be updated."); end
 
     	case params[:offering_session][:collective_type]
@@ -177,7 +177,7 @@ class OfferingSessionsController < ApplicationController
 
 		@grouped_happening_cases = grouped_happening_cases(@owner)
 		@grouped_sessions = replace_with_happening(@grouped_happening_cases)
-				@collectives = Collective.all
+				@collectives = @owner.collectives
 		@date = params[:date] ? Date.parse(params[:date]) : Date.today
 
 		respond_to do |format|
@@ -188,9 +188,9 @@ class OfferingSessionsController < ApplicationController
 
 	def destroy # offering_session
 		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
-		raise Errors::FlowError.new @owner
+		raise Errors::FlowError.new unless @owner
 		@offering_session = OfferingSession.find(params[:offering_session_id])
-			
+
 		if !@owner.offering_sessions.include? @offering_session; raise Errors::FlowError.new(@owner); end
 
 		if @offering_session.individual_participators.count != 0; raise Errors::FlowError.new(@owner, "This session has participators and can not be deleted."); end
@@ -207,7 +207,7 @@ class OfferingSessionsController < ApplicationController
 
 	def release
 		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
-		raise Errors::FlowError.new @owner
+		raise Errors::FlowError.new unless @owner
 		@offering_session= OfferingSession.find(params[:offering_session_id])
 
 		if !@owner.offering_sessions.include? @offering_session; raise Errors::FlowError.new(@owner); end
@@ -226,7 +226,7 @@ class OfferingSessionsController < ApplicationController
 
 	def destroy_collective
 		@owner = owner_if_reachable(params[:owner_type], params[:owner_id])
-		raise Errors::FlowError.new @owner
+		raise Errors::FlowError.new unless @owner
 		@collective = Collective.find(params[:collective_id])
 
 		if !@owner.collectives.include? @collective; raise Errors::FlowError.new; end
@@ -288,7 +288,7 @@ class OfferingSessionsController < ApplicationController
 			return false unless collective.save
 			collective
 		end
-		
+
 		# note: use of this in controller action should be followed with a "return unless" validation
         def find_offering_session_owner
             @owner = owner_if_reachable(params[:offering_session][:owner_type], params[:offering_session][:owner_id])

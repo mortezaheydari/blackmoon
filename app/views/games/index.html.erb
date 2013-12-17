@@ -4,19 +4,7 @@
 
 
 
-    <div class="row-fluid search_container">
-        <div class="span12">
-            <!-- <h2 class="header_text">Search</h2> -->
-            <%= form_tag games_path, :method => :get, class: "custom" do %>
-                <%= text_field_tag :search, params[:search] %>
-                <%= submit_tag "Search", :name => nil, class: "btn" %>
-                <%= label_tag 'team_participation', id: "team_participation_label" do %>
-                        <%= check_box_tag :team_participation, :checked, (true if params[:team_participation] == "checked")  %> Team participation
-                <% end -%>
-                <%= hidden_field_tag 'sport',  params[:sport] %>
-            <% end %>
-        </div>
-    </div>
+    <%= render "shared/search_offering", search_type: "offering" %>
 
     <hr>
 

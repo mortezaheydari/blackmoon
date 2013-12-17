@@ -25,7 +25,7 @@
                     <%= f.label :collective_id %>
                 </td>
                 <td>
-                    <%= f.select :collective_id, Collective.find(:all).collect {|c| [c.title, c.id]} %>
+                    <%= f.select :collective_id, @collectives.collect {|c| [c.title, c.id]} %>
                 </td>
             </tr>
             <tr>
@@ -68,7 +68,7 @@
             </tr>
             <tr>
                 <td>
-                    <%= f.hidden_field :owner_type, value: "Venue" %>
+                    <%= f.hidden_field :owner_type, value: owner.class.to_s %>
                     <%= f.hidden_field :owner_id, value: owner.id %>
                 </td>
             </tr>

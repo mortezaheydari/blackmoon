@@ -60,7 +60,7 @@
                     <%= render "shared/happening_case", happening_case: @edit_happening_case, date_id: "edit_happening_case_date_and_time", duration_id: "edit_happening_case_duration_type" %>
             <tr>
                 <td>
-                    <%= f.hidden_field :owner_type, value: "Venue" %>
+                    <%= f.hidden_field :owner_type, value: owner.class.to_s %>
                     <%= f.hidden_field :owner_id, value: owner.id %>
                 </td>
             </tr>

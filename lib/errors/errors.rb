@@ -7,14 +7,14 @@ module Errors
 
     def message
       "There was a problem with your request."
-    end  	
+    end
   end
 
 
   class FlowError < BlackmoonError
 	attr_reader :redirect_object, :message
 
-    def initialize(redirect_object, message)
+    def initialize(redirect_object= root_path, message = "There was a problem with your request")
       @redirect_object = redirect_object
       @message = message
     end

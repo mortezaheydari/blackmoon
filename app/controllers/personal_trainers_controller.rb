@@ -1,7 +1,7 @@
 class PersonalTrainersController < ApplicationController
 
 	include SessionsHelper
-    include PersonalTrainerHelper
+            include MultiSessionsHelper
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
             add_breadcrumb "home", :root_path
@@ -111,7 +111,7 @@ class PersonalTrainersController < ApplicationController
 
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
-        @collectives = Collective.all
+        @collectives = @personal_trainer.collectives
 
 	end
 

@@ -4,16 +4,7 @@
 
 
 
-    <div class="row-fluid search_container">
-        <div class="span12">
-            <!-- <h2 class="header_text">Search</h2> -->
-            <%= form_tag search_path, :method => :get, class: "custom" do %>
-                <%= text_field_tag :search, params[:search] %>
-                <%= hidden_field_tag 'offering_type',  params[:offering_type] %>
-                <%= submit_tag "Search", :name => nil, class: "btn" %>
-            <% end %>
-        </div>
-    </div>
+    <%= render "shared/search_offering", search_type: "main_search" %>
 
     <hr>
 

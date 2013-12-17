@@ -25,7 +25,7 @@
         <% end %>
     <% end %>
 <span id="inviteBtn<%= person.id %>" class="right">
-    <%= render 'shared/invite_button', this: this, person: person unless this.class.to_s == "Venue" %>
+    <%= render 'shared/invite_button', this: this, person: person unless ["Venue", "PersonalTrainer", "GroupTraining"].include? this.class.to_s %>
 </span>
 
 </span>
