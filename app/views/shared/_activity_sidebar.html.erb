@@ -7,7 +7,7 @@
     <% unless m.blank?  %>
         <hr>
         <div class="sideActivity">
-          <p><%= m %></p><br>
+          <%= m %><br>
           <span><%= time_ago_in_words(activity.updated_at) %> ago</span>
         </div>
         <% @i += 1 %>

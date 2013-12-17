@@ -6,7 +6,7 @@
 
     <div class="row-fluid search_container">
         <div class="span12">
-            <h2 class="header_text">Search</h2>
+            <!-- <h2 class="header_text">Search</h2> -->
             <%= form_tag search_path, :method => :get, class: "custom" do %>
                 <%= text_field_tag :search, params[:search] %>
                 <%= hidden_field_tag 'offering_type',  params[:offering_type] %>
@@ -31,7 +31,7 @@
                         <%= render 'teams/team', team: offering %>
                     <% end %>
                 </div>
-                <% if i == 2 %>
+                <% if i == 2 || offering == @offerings.last %>
                 </div>
                 <% end %>
             <%

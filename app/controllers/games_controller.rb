@@ -37,7 +37,6 @@ class GamesController < ApplicationController
   def index
     add_breadcrumb "games", games_path, :title => "Back to the Index"
 
-    @games = Game.order("created_at desc")
 
 @search = Sunspot.search(Game) do
       fulltext params[:search]
@@ -50,6 +49,7 @@ class GamesController < ApplicationController
       facet(:sport)
       with(:sport, params[:sport]) if params[:sport].present?
 
+      order_by(:updated_at, :desc)
       # if params[:order_by] == "Price"
       #   order_by(:price)
       # elsif params[:order_by] == "Popular"

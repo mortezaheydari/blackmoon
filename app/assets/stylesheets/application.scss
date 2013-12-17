@@ -644,11 +644,12 @@ div.stats {
 
 div.sideBox {
   background: #ffffff;
-  border: 1px solid $timePassedGrey;
+  // border: 1px solid $timePassedGrey;
   float: left;
   width: 280px;
   margin: 20px 10px 20px 10px;
-  @include border-radius(15px);
+  padding: 0 15px;
+  // @include border-radius(15px);
   hr {
     color: $timePassedGrey;
     width: 100%;
@@ -696,6 +697,11 @@ div.sideBox {
   div.sideActivity {
     padding: 5px;
     @include SideText;
+      margin: 0;
+      padding: 0;
+      font-size: 11px;
+      color: $TextColor;
+      display: inline;
     div {
       width: 32px;
       height: 32px;
@@ -708,13 +714,6 @@ div.sideBox {
     span {
       font-size: 11px;
       color: $timePassedGrey;
-    }
-    p {
-      margin: 0;
-      padding: 0;
-      font-size: 13px;
-      color: $TextColor;
-      display: inline;
     }
   }
 
@@ -880,7 +879,7 @@ article.activityBox {
   width: 200px;
   background: $objBg;
   float: left;
-  margin: 20px 10px 20px 10px;
+  margin: 10px 10px;
   @include border-radius(5%);
   img.activityImage {
     @include border-top-left-radius(5%);
@@ -2013,8 +2012,13 @@ form.topsearch {
 
 form.custom {
     input[name="search"] {
-        margin-bottom: 10px;
+        margin: 10px 0;
     }
+    input[value="Search"] {
+        display: inline;
+        height: 30px;
+    }
+    margin-bottom: 10px;
 }
 
 
@@ -2030,5 +2034,21 @@ form#new_session {
     }
     a.forgetLink {
         margin-left: 40px;
+    }
+}
+
+.container-fluid > hr {
+    margin: 10px 0;
+}
+
+
+// activity box
+
+.activitySideBox {
+    hr {
+        margin: 3px 0;
+    }
+    div {
+        padding: 0 !important;
     }
 }

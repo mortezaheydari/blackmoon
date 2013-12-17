@@ -6,14 +6,14 @@
 
     <div class="row-fluid search_container">
         <div class="span12">
-            <h2 class="header_text">Search</h2>
+            <!-- <h2 class="header_text">Search</h2> -->
             <%= form_tag games_path, :method => :get, class: "custom" do %>
                 <%= text_field_tag :search, params[:search] %>
+                <%= submit_tag "Search", :name => nil, class: "btn" %>
                 <%= label_tag 'team_participation', id: "team_participation_label" do %>
                         <%= check_box_tag :team_participation, :checked, (true if params[:team_participation] == "checked")  %> Team participation
                 <% end -%>
                 <%= hidden_field_tag 'sport',  params[:sport] %>
-                <%= submit_tag "Search", :name => nil, class: "btn" %>
             <% end %>
         </div>
     </div>
@@ -31,7 +31,7 @@
             <div class="span4 indexCards">
                 <%= render 'shared/offering/offering', offering: g, class_name: "gameList" %>
             </div>
-                <% if i == 2 %>
+                <% if i == 2 || g == @games.last %>
                     </div>
                 <% end %>
             <%
@@ -43,7 +43,7 @@
             %>
         <% end %>
     </div>
-</div>
+
 
 
         <div class="span3">
@@ -65,8 +65,9 @@
                 <li class="divider"></li>
             </ul>
 
-          <div class="sideBox">
-            <div class="sideTitle">Activity</div>
+          <div class="sideBox span12 activitySideBox hero-unit">
+            <hr>
+            <div class="nav-header">Activity Feed</div>
                 <%= render 'shared/activity_sidebar', recent_activities: @recent_activities %>
           </div>
         </div>
