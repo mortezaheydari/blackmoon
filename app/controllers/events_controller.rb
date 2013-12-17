@@ -63,7 +63,7 @@ class EventsController < ApplicationController
 			end
 
 		end
-		@event = @search.results
+		@events = @search.results
 
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Event")
 		@recent_activities = @recent_activities.order("created_at desc")
@@ -116,7 +116,7 @@ class EventsController < ApplicationController
 
 		if !@event.destroy; raise Errors::FlowError.new(@event); end
 		@event.create_activity :destroy, owner: current_user
-		
+
 		redirect_to(events_path)
 	end
 
@@ -129,10 +129,10 @@ class EventsController < ApplicationController
 		@album = @event.album
 		@owner = @event
 
-		if @game.location.parent_id.nil?
-				@location = @game.location
+		if @event.location.parent_id.nil?
+				@location = @event.location
 		else
-				@location = @game.location.parent_location
+				@location = @event.location.parent_location
 		end
 
 		@json = @location.to_gmaps4rails
@@ -153,7 +153,7 @@ class EventsController < ApplicationController
 		@happening_case = @event.happening_case
 		@event.album ||= Album.new
 		@location = @event.location
-		@venues = Venue.all    
+		@venues = Venue.all
 		@photo = Photo.new
 		@photo.title = "Logo"
 
