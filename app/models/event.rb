@@ -16,10 +16,20 @@ class Event < ActiveRecord::Base
   include Albumable
   	# album
   	# logo
-
-  include OfferingSearchable
+    
+  # include OfferingSearchable
 
   attr_accessible :category, :custom_address, :descreption,
     :location_type, :title, :tournament_id, :fee, :fee_type, :sport, :number_of_attendings, :team_participation, :open_join
 
+  attr_accessor :updated_at
+
+    searchable do
+        text :title, :boost => 5
+        text :description
+        # string :fee_type
+        string :sport
+        boolean :team_participation
+        date :updated_at
+    end
 end

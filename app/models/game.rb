@@ -17,11 +17,20 @@ class Game < ActiveRecord::Base
   	# album
   	# logo
     
-  include OfferingSearchable
+  # include OfferingSearchable
 
   attr_accessible :category, :custom_address, :description,
   	:fee, :fee_type, :location_type, :number_of_attendings, :sport,
   	:team_participation, :title, :tournament_id, :open_join, :location
 
-
+  attr_accessor :updated_at
+  
+    searchable do
+        text :title, :boost => 5
+        text :description
+        # string :fee_type
+        string :sport
+        boolean :team_participation
+        date :updated_at
+    end
 end

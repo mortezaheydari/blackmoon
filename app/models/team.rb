@@ -22,10 +22,18 @@ class Team < ActiveRecord::Base
 	# games_participating
 	# events_participating
 
-  include OfferingSearchable
+  # include OfferingSearchable
   
   attr_accessible :descreption, :sport, :number_of_attendings, :title, :category, :open_join
 
+  attr_accessor :updated_at
 
+	searchable do
+		text :title, :boost => 5
+		text :descreption
+		# string :fee_type
+		string :sport
+		date :updated_at
+	end
 
 end

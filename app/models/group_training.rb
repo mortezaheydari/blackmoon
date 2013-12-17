@@ -18,7 +18,13 @@ class GroupTraining < ActiveRecord::Base
   	# album
   	# logo
 
-  include OfferingSearchable
+  # include OfferingSearchable
   
   attr_accessible :descreption, :title, :location
+  attr_accessor :updated_at
+    searchable do
+      text :title, :boost => 5
+      text :descreption
+      date :updated_at
+    end
 end
