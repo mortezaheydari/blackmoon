@@ -1,10 +1,10 @@
 class VenuesController < ApplicationController
 
 	include SessionsHelper
-            include MultiSessionsHelper
+	include MultiSessionsHelper
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
-            add_breadcrumb "home", :root_path
+			add_breadcrumb "home", :root_path
 
 	def like
 
@@ -32,12 +32,12 @@ class VenuesController < ApplicationController
 		current_user.toggle_flag(@venue, :like)
 
 		respond_to do |format|
-				format.js { render 'shared/offering/like_cards', :locals => { offering: @venue, style_id: params[:style_id], class_name: params[:class_name] } }
+			format.js { render 'shared/offering/like_cards', :locals => { offering: @venue, style_id: params[:style_id], class_name: params[:class_name] } }
 		end
 	end
 
 	def index
-                        add_breadcrumb "venues", venues_path, :title => "Back to the Index"
+		add_breadcrumb "venues", venues_path, :title => "Back to the Index"
 		@venues = Venue.all
 		@recent_activities = PublicActivity::Activity.where(trackable_type: "Venue")
 		@recent_activities = @recent_activities.order("created_at desc")
@@ -54,7 +54,7 @@ class VenuesController < ApplicationController
 		@venue.album = Album.new
 
 		# here, location assignment operation should take place.
-                        set_params_gmaps_flag :venue
+						set_params_gmaps_flag :venue
 		@venue.build_location(params[:venue][:location])
 
 		if !@venue.save; raise Errors::FlowError.new(new_venue_path, "There has been a problem with data entry."); end
@@ -73,28 +73,28 @@ class VenuesController < ApplicationController
 		unless user_is_admin?(@venue) && user_created_this?(@venue); raise Errors::FlowError.new(venues_path); end
 
 		@venue.create_activity :destroy, owner: current_user
-		@venue.destroy
+		if !@venue.destroy; raise Errors::FlowError.new(@venue); end
 
 		redirect_to @venue
 	end
 
 	def show
 		@venue = Venue.find(params[:id])
-                add_breadcrumb "venues", venues_path, :title => "Back to the Index"
-                add_breadcrumb @venue.title, venue_path(@venue)
-        @offering_session =  OfferingSession.new
+			add_breadcrumb "venues", venues_path, :title => "Back to the Index"
+			add_breadcrumb @venue.title, venue_path(@venue)
+		@offering_session =  OfferingSession.new
 
-        if params[:session_id]
-            @offering_session_edit = OfferingSession.find(params[:session_id])
-            @edit_happening_case = @offering_session_edit.happening_case
-        else
-            @offering_session_edit = OfferingSession.new
-            @edit_happening_case = HappeningCase.new
-        end
+		if params[:session_id]
+			@offering_session_edit = OfferingSession.find(params[:session_id])
+			@edit_happening_case = @offering_session_edit.happening_case
+		else
+			@offering_session_edit = OfferingSession.new
+			@edit_happening_case = HappeningCase.new
+		end
 
-        @happening_case = HappeningCase.new
+		@happening_case = HappeningCase.new
 
-        @date = params[:date] ? Date.parse(params[:date]) : Date.today
+		@date = params[:date] ? Date.parse(params[:date]) : Date.today
 
 		@json = @venue.location.to_gmaps4rails
 
@@ -106,12 +106,12 @@ class VenuesController < ApplicationController
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Venue", trackable_id: @venue.id)
 		@recent_activities = @recent_activities.order("created_at desc")
 
-        @grouped_happening_cases = grouped_happening_cases(@venue)
-        @grouped_sessions = replace_with_happening(@grouped_happening_cases)
+		@grouped_happening_cases = grouped_happening_cases(@venue)
+		@grouped_sessions = replace_with_happening(@grouped_happening_cases)
 
-        @date = params[:date] ? Date.parse(params[:date]) : Date.today
+		@date = params[:date] ? Date.parse(params[:date]) : Date.today
 
-        @collectives = @venue.collectives
+		@collectives = @venue.collectives
 
 	end
 
@@ -126,7 +126,7 @@ class VenuesController < ApplicationController
 	def update
 		@venue = Venue.find(params[:id])
 		@location = @venue.location
-                        set_params_gmaps_flag :venue
+						set_params_gmaps_flag :venue
 
 		unless @venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmap_use: params[:venue][:location][:gmap_use], custom_address: params[:venue][:location][:custom_address], gmaps: params[:venue][:location][:gmaps])
 			raise Errors::FlowError.new(edit_venue_path(@venue), "There has been a problem with data entry.")
@@ -144,41 +144,5 @@ class VenuesController < ApplicationController
 			redirect_to(@venue) unless @venue.administrators.include?(@user)
 		end
 
-    def grouped_happening_cases(this)
-        session_id_list = []
-        this.offering_sessions.each do |os|
-            session_id_list << os.id
-        end
-
-        sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).group_by(&:date_and_time)
-    end
-
-    def replace_with_happening(grouped_happening_cases)
-        grouped_sessions = Hash.new
-        grouped_happening_cases.each do |key, value|
-            grouped_sessions[key.to_date] = []
-            value.each do |happening_case|
-                grouped_sessions[key.to_date] << happening_case.happening
-            end
-        end
-        grouped_sessions
-    end
-
-  ## currently out of use
-  #
-  # def sorted_offering_sessions(venue)
-  # 	session_id_list = []
-  # 	venue.offering_sessions.each do |os|
-  # 		session_id_list << os.id
-  # 	end
-
-  # 	sorted_happening_cases = HappeningCase.where(happening_type: "OfferingSession", happening_id: session_id_list).order(:date_and_time)
-
-  # 	sorted_sessions = []
-  # 	sorted_happening_cases.each do |hc|
-  # 		sorted_sessions << hc.id
-  # 	end
-  # 	sorted_sessions
-  # end
 
 end

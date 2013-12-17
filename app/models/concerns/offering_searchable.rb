@@ -18,7 +18,6 @@ module OfferingSearchable
 			text :descreption
 			date :updated_at
 		end
-	end
 	when "Team"
 		searchable do
 			text :title, :boost => 5

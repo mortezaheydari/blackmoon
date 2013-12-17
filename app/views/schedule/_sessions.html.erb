@@ -1,54 +1,69 @@
 <div class="calendar">
-    <% if user_is_admin?(owner) %>
-        <br>
-        <a href="#" id="new_offering_session" class="btn left">New session</a>
-    <% end -%>
-    <div class="btn-group left pad_left">
-        <% if user_is_admin?(owner) %>
-            <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
-            Delete Collectives
-            <span class="caret"></span>
-            </a>
-        <% end -%>
-        <% if @collectives %>
-            <ul class="dropdown-menu">
-                <li>
-                    <%= link_to "Explode", destroy_collective_offering_session_path(owner_type: owner.class.to_s, owner_id: owner.id, explode: "true"), id: "explode_collective", :confirm => "Are you sure you want to do that?" %>
-                </li>
-                <li><%= link_to "Delete Completely", destroy_collective_offering_session_path(owner_type: owner.class.to_s, owner_id: owner.id), id: "delete_collective", :confirm => "Are you sure you want to do that?" %></li>
-            </ul>
-        <% end %>
-    </div>
-    <br>
-    <br>
-    <div id="collectives" class="left"><%= render "schedule/collectives", collectives: collectives %></div>
-    <div id="articles">
-      <h2 id="month">
-        <%= link_to "<", date: @date.prev_month %>
-        <%= @date.strftime("%B %Y") %>
-        <%= link_to ">", date: @date.next_month %>
-      </h2>
-      <%= calendar @date do |date| %>
-        <%= date.day %>
-        <% if grouped_sessions[date] %>
-          <ul>
-            <% grouped_sessions[date].each do |session| %>
-              <li>
-                <% if user_is_admin?(owner) %>
-                    <%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "session #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>
-                <% else %>
-                    <%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "sessionshow #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>
-                <% end -%>
-                <% unless session.happening_case.duration_type == "All Day" %>
-                    <br>
-                    ( <%= session.happening_case.time_from.strftime('%H:%M') %> to <%= session.happening_case.time_to.strftime('%H:%M') %> )
-                <%- end %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-      <% end %>
-    </div>
+	<% if user_is_admin?(owner) %>
+		<br>
+		<a href="#" id="new_offering_session" class="btn left">New session</a>
+	<% end -%>
+	<div class="btn-group left pad_left">
+		<% if user_is_admin?(owner) %>
+			<a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
+			Delete Collectives
+			<span class="caret"></span>
+			</a>
+		<% end -%>
+		<% if @collectives %>
+			<ul class="dropdown-menu">
+				<li>
+					<%= link_to "Explode", destroy_collective_offering_session_path(owner_type: owner.class.to_s, owner_id: owner.id, explode: "true"), id: "explode_collective", :confirm => "Are you sure you want to do that?" %>
+				</li>
+				<li><%= link_to "Delete Completely", destroy_collective_offering_session_path(owner_type: owner.class.to_s, owner_id: owner.id), id: "delete_collective", :confirm => "Are you sure you want to do that?" %></li>
+			</ul>
+		<% end %>
+	</div>
+	<br>
+	<br>
+	<div id="collectives" class="left"><%= render "schedule/collectives", collectives: collectives %></div>
+	<div id="articles">
+	  <h2 id="month">
+		<%= link_to "<", date: @date.prev_month %>
+		<%= @date.strftime("%B %Y") %>
+		<%= link_to ">", date: @date.next_month %>
+	  </h2>
+	  <%= calendar @date do |date| %>
+		<%= date.day %>
+		<% if grouped_sessions[date] %>
+		  <ul>
+			<%# order sessions with minimum load on db %>
+			<% grouped_sessions[date].each do |session|
+				def session.time_from
+					@time_from = self.happening_case.time_from
+				end 
+
+				def session.time_to
+					@time_to = self.happening_case.time_to
+				end
+			end
+
+			grouped_sessions[date].sort! { |a,b| a.time_from <=> b.time_from }
+			%>
+			<%# day render %>
+
+			<% grouped_sessions[date].each do |session| %>
+			  <li>
+				<% if user_is_admin?(owner) %>
+					<%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "session #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>
+				<% else %>
+					<%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "sessionshow #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>
+				<% end -%>
+				<% unless session.happening_case.duration_type == "All Day" %>
+					<br>
+					( <%= session.time_from.strftime('%H:%M') %> to <%= session.time_to.strftime('%H:%M') %> )
+				<%- end %>
+			  </li>
+			<% end %>
+		  </ul>
+		<% end %>
+	  <% end %>
+	</div>
 </div>
 
 <div id="session_reload"><%= render "offering_sessions/session_modal", session: @offering_session_edit, session_happening_case: @edit_happening_case %></div>

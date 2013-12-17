@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
-            add_breadcrumb "home", :root_path
+			add_breadcrumb "home", :root_path
 	def like
 
 		@team = Team.find(params[:id])
@@ -17,8 +17,8 @@ class TeamsController < ApplicationController
 		end
 
 		respond_to do |format|
-				format.html { redirect_to @team}
-				format.js
+			format.html { redirect_to @team}
+			format.js
 		end
 	end
 
@@ -30,13 +30,13 @@ class TeamsController < ApplicationController
 		current_user.toggle_flag(@team, :like)
 
 		respond_to do |format|
-				format.js { render 'shared/offering/like_team_cards', :locals => { offering: @team, style_id: params[:style_id], class_name: params[:class_name] } }
+			format.js { render 'shared/offering/like_team_cards', :locals => { offering: @team, style_id: params[:style_id], class_name: params[:class_name] } }
 		end
 	end
 
 
 	def index
-                        add_breadcrumb "teams", teams_path, :title => "Back to the Index"
+		add_breadcrumb "teams", teams_path, :title => "Back to the Index"
 		@teams = Team.all
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Team")
 		@recent_activities = @recent_activities.order("created_at desc")
@@ -62,11 +62,9 @@ class TeamsController < ApplicationController
 		@user = current_user
 		@team = Team.find(params[:id])
 		if user_is_admin?(@team) && user_created_this?(@team)
+			if !@team.destroy; raise Errors::FlowError.new(@team); end
 			@team.create_activity :destroy, owner: current_user
-			@team.destroy
 
-			# @team.offering_creation.destroy
-			# @team.offering_administrations.destroy
 			redirect_to @team
 		else
 			render 'index'
@@ -75,8 +73,8 @@ class TeamsController < ApplicationController
 
 	def show
 		@team = Team.find(params[:id])
-                        add_breadcrumb "teams", teams_path, :title => "Back to the Index"
-                        add_breadcrumb @team.title, team_path(@team)
+		add_breadcrumb "teams", teams_path, :title => "Back to the Index"
+		add_breadcrumb @team.title, team_path(@team)
 		@likes = @team.flaggings.with_flag(:like)
 		@members = @team.members
 		@photo = Photo.new
