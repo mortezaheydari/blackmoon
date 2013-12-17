@@ -31,9 +31,8 @@
   <div class="secondMenu">
     <nav id="secondary">
       <ul>
-        <li id="Map"><a href="#">Location</a></li>
-        <li id="Schedule" class="navActive"><a href="#">Schedule</a></li>
-        <li id="Description"><a href="#">Description</a></li>
+        <li id="Description" class="navActive"><a href="#">Description</a></li>
+        <li id="Schedule"><a href="#">Schedule</a></li>
         <li id="likes"><a href="#">Likes (<span id="likeCount"><%= @personal_trainer.flaggings.with_flag(:like).count %></span>)</a></li>
         <li id="gallery"><a href="#">gallery</a></li>
       </ul>
@@ -41,10 +40,6 @@
   </div>
   <div class="event">
     <div class="body">
-        <div class="Map">
-            <h2 class="header_text">Location:</h2>
-            <div id="MapContainer"><%= render "shared/map" %></div>
-         </div>
         <div class="Schedule">
             <div id="new_form"><%= render "schedule/new_session", owner: @personal_trainer %></div>
             <% unless @personal_trainer.offering_sessions.empty? %>
@@ -53,6 +48,8 @@
             <div id="calendar_reload"><%= render "schedule/sessions", grouped_sessions: @grouped_sessions, owner: @personal_trainer, collectives: @collectives %></div>
         </div>
         <div class="Description">
+            <h2 class="header_text">Location:</h2>
+            <div id="MapContainer"><%= render "shared/map" %></div>
             <p><%= @personal_trainer.descreption %></p>
 
             <%= render "shared/activity_table", recent_activities: @recent_activities %>
