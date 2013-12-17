@@ -1,13 +1,15 @@
   <div class="body">
+  <div class="container-fluid">
 <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
 
 
 
-    <div class="row search_container">
+    <div class="row-fluid search_container">
         <div class="span12">
             <h2 class="header_text">Search</h2>
             <%= form_tag search_path, :method => :get, class: "custom" do %>
                 <%= text_field_tag :search, params[:search] %>
+                <%= hidden_field_tag 'offering_type',  params[:offering_type] %>
                 <%= submit_tag "Search", :name => nil, class: "btn" %>
             <% end %>
         </div>
@@ -15,37 +17,56 @@
 
     <hr>
 
-
-    <div class="cardsection span12">
-        <% @offerings.each do |offering| %>
-            <% unless k_lower(offering) == "Team" %>
-                <%= render 'shared/offering/offering', offering: offering, class_name: "gameList" %>
-            <% else %>
-                <%= render 'teams/team', team: offering %>
+    <div class="row-fluid">
+        <div class="cardsection span9">
+            <% i = 0 %>
+            <% @offerings.each do |offering| %>
+                <% if i == 0 %>
+                <div class="row-fluid">
+                <% end %>
+                <div class="span4 indexCards">
+                    <% unless k_lower(offering) == "Team" %>
+                        <%= render 'shared/offering/offering', offering: offering, class_name: "gameList" %>
+                    <% else %>
+                        <%= render 'teams/team', team: offering %>
+                    <% end %>
+                </div>
+                <% if i == 2 %>
+                </div>
+                <% end %>
+            <%
+                    if i == 2
+                        i = 0
+                    else
+                        i = i + 1
+                    end
+            %>
             <% end %>
-        <% end %>
-    </div>
+        </div>
 
-<div id="sideBox">
-     <div class="sideHeader">
-        <h2>NARROW DOWN</h2>
-    </div>
-    <div class="sideLinks">
-        <h3>Category</h3>
-        <ul class="twelve side-nav">
-        <% for row in @search.facet(:offering_type).rows %>
 
-          <li>
-            <% if params[:offering_type].blank? %>
-                <%= link_to row.value + " " + "(#{row.count})", :offering_type => row.value, search: params[:search] %>
-            <% else %>
-                <strong><%= row.value %></strong> (<%= link_to "remove", :offering_type => nil, search: params[:search]  %>)
+
+        <div class="span3">
+
+            <ul class="nav nav-list">
+                <li class="divider"></li>
+                 <li class="nav-header">Offering Type</li>
+                 <li class="divider"></li>
+            <% for row in @search.facet(:offering_type).rows %>
+
+              <li>
+                <% if params[:offering_type].blank? %>
+                    <%= link_to row.value + " " + "(#{row.count})", :offering_type => row.value, search: params[:search] %>
+                <% else %>
+                    <%= link_to "#{row.value} (remove)", :offering_type => nil, search: params[:search]  %>
+                <% end %>
             <% end %>
-        <% end %>
-          </li>
-        </ul>
+              </li>
+              <li class="divider"></li>
+            </ul>
+        </div>
     </div>
-</div>
 
 
+  </div>
   </div>

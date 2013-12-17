@@ -20,7 +20,6 @@ class PagesController < ApplicationController
 	end
 
             def search
-                add_breadcrumb "games", games_path, :title => "Back to the Index"
                 @offerings = Game.all + Event.all + Venue.all + Team.all
 
 

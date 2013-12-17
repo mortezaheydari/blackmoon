@@ -2011,6 +2011,12 @@ form.topsearch {
     display: inline;
 }
 
+form.custom {
+    input[name="search"] {
+        margin-bottom: 10px;
+    }
+}
+
 
 // form fixes
 form#new_session {
