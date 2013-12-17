@@ -2006,3 +2006,23 @@ div.search_container {
         display: block;
     }
 }
+
+form.topsearch {
+    display: inline;
+}
+
+
+// form fixes
+form#new_session {
+    .icon.fa.fa-check-square,
+    .icon.fa.fa-square-o {
+        color: #FFFFFF !important;
+    }
+    button.clearfix {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    a.forgetLink {
+        margin-left: 40px;
+    }
+}
