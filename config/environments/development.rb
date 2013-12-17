@@ -1,4 +1,6 @@
 Blackmoon::Application.configure do
+
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -15,6 +17,16 @@ Blackmoon::Application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+    :authentication => :plain,
+    :address => "sandbox28813.mailgun.org",
+    :port => 587,
+    :domain => "sandbox28813.mailgun.org",
+    :user_name => "postmaster@sandbox28813.mailgun.org",
+    :password => "8fh2vk-7b-w5"
+  }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

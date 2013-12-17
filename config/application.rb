@@ -9,6 +9,35 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+# custom method, intended to be used in mailer views, 
+# generating link_to functionality with full url
+module ActionView
+  module Helpers
+    module UrlHelper
+      def link_with_full_url_to(*args, &block)
+        if block_given?
+          options      = args.first || {}
+          html_options = args.second
+          link_with_full_url_to(capture(&block), options, html_options)
+        else
+          name         = args[0]
+          options      = args[1] || {}
+          html_options = args[2]
+
+          html_options = convert_options_to_data_attributes(options, html_options)
+          url = url_for(options)
+
+          href = html_options['href']
+          tag_options = tag_options(html_options)
+
+          href_attr = "href=\"http://localhost:3000#{ERB::Util.html_escape(url)}\"" unless href
+          "<a #{href_attr}#{tag_options}>#{ERB::Util.html_escape(name || url)}</a>".html_safe
+        end
+      end
+    end
+  end
+end
+
 module Blackmoon
   class Application < Rails::Application
 
@@ -22,7 +51,7 @@ module Blackmoon
       #{config.root}/app/models/butterfly_models
       #{config.root}/lib/
     )
-
+    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -74,5 +103,6 @@ module Blackmoon
 
     # JavaScript files you want as :defaults (application.js is always included).
     config.action_view.javascript_expansions[:defaults] = %w( jquery rails )
+
   end
 end

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include LocationEvaluationHelper
   include PublicActivity::StoreController
   require 'errors/errors'
+
   protect_from_forgery
 
   	rescue_from Errors::FlowError, with: :flow_error_handler
