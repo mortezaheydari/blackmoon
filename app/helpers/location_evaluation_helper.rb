@@ -9,12 +9,14 @@ module LocationEvaluationHelper
 		location_to.gmaps = locatin_from.gmaps
 		location_to.latitude = locatin_from.latitude
 		location_to.longitude = locatin_from.longitude
+		location_to.city = locatin_from.city
 		location_to.title = locatin_from.title
     end
 
 	# compare two location, regardless of their specifics
     def compare_locations?(locatin_from, location_to)
 		# location_to.title == locatin_from.title &&
+		location_to.city == locatin_from.city &&		
 		location_to.custom_address == locatin_from.custom_address &&
 		# location_to.custom_address_use == locatin_from.custom_address_use &&
 		# location_to.gmap_use == locatin_from.gmap_use &&
