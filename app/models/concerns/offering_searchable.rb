@@ -1,5 +1,5 @@
 module OfferingSearchable
-  attr_accessor:updated_at
+  attr_accessor :updated_at
 
 	case self.class.to_s
 

@@ -16,7 +16,7 @@ class Event < ActiveRecord::Base
   include Albumable
   	# album
   	# logo
-    
+
   include OfferingSearchable
 
   attr_accessible :category, :custom_address, :descreption,

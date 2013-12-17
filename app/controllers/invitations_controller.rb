@@ -27,9 +27,8 @@ class InvitationsController < ApplicationController
 
 		if !@invitation.save; raise Errors::FlowError.new; end
 
-		if activity = @invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
-			ModelMailer.new_invitation_notification(@invitation).deliver
-		end
+		@invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
+		ModelMailer.new_invitation_notification(@invitation).deliver
 
 		respond_to do |format|
 			format.html { redirect_to(@redirect_object, notice: 'invitation has been sent.') and return }
@@ -77,7 +76,7 @@ class InvitationsController < ApplicationController
 		if @invitation.invited.class.to_s == "User" && @invitation.state = "accepted"
 			ModelMailer.individual_invitation_accepted_notification(@invitation).deliver
 		end
-		
+
 		@invitation.create_activity :update, owner: @invitation.invited, recipient: @invitation.inviter
 
 		respond_to do |format|
