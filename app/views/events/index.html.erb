@@ -1,25 +1,64 @@
   <div class="body">
+  <div class="container-fluid">
 <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
-    <div class="cardsection">
+
+
+    <%= render "shared/search_offering", search_type: "offering" %>
+
+    <hr>
+
+
+<div class="row-fluid">
+    <div class="cardsection span9">
+            <% i = 0 %>
         <% @events.each do |e| %>
-            <%= render 'shared/offering/offering', offering: e, class_name: "eventList" %>
+            <% if i == 0 %>
+                <div class="row-fluid">
+            <% end %>
+            <div class="span4 indexCards">
+                <%= render 'shared/offering/offering', offering: e, class_name: "eventList" %>
+            </div>
+                <% if i == 2 || e == @events.last %>
+                    </div>
+                <% end %>
+            <%
+                    if i == 2
+                        i = 0
+                    else
+                        i = i + 1
+                    end
+            %>
         <% end %>
     </div>
 
-    <div class="sideBar">
 
+        <div class="span3">
 
-<!--         <div class="sideBox">
-            <div class="sideTitle">Your Upcoming Events</div>
-            <% @events.each do |e| %>
-                <%= render 'shared/upcoming_offering', offering: e, offering_name: "event" %>
+            <ul class="nav nav-list">
+                <li class="divider"></li>
+                 <li class="nav-header">Sports</li>
+                <li class="divider"></li>
+        <% for row in @search.facet(:sport).rows %>
+
+          <li>
+            <% if params[:sport].blank? %>
+                <%= link_to row.value + " " + "(#{row.count})", :sport => row.value, search: params[:search], team_participation: params[:team_participation] %>
+            <% else %>
+                <%= link_to "#{row.value} (remove)", :sport => nil, search: params[:search],  team_participation: params[:team_participation]  %>
             <% end %>
-        </div>
- -->
+        <% end %>
+              </li>
+                <li class="divider"></li>
+            </ul>
 
-      <div class="sideBox">
-        <div class="sideTitle">Activity</div>
-            <%= render 'shared/activity_sidebar', recent_activities: @recent_activities %>
-      </div>
+          <div class="sideBox span12 activitySideBox hero-unit">
+            <hr>
+            <div class="nav-header">Activity Feed</div>
+                <%= render 'shared/activity_sidebar', recent_activities: @recent_activities %>
+          </div>
+        </div>
+</div>
+
+
     </div>
   </div>
