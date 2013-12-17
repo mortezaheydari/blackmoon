@@ -18,11 +18,9 @@ class Venue < ActiveRecord::Base
   	# album
   	# logo
 
-  attr_accessible :descreption, :title, :location, :updated_at
+  include OfferingSearchable
+  
+  attr_accessible :descreption, :title, :location
 
-    searchable do
-        text :title, :boost => 5
-        text :descreption
-        date :updated_at
-    end
+
 end

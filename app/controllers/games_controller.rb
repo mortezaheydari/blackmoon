@@ -116,10 +116,10 @@ class GamesController < ApplicationController
 
     unless user_is_admin?(@game) && user_created_this?(@game); raise Errors::FlowError.new(games_path); end
 
-    @game.create_activity :destroy, owner: current_user
-
     if !@game.destroy; raise Errors::FlowError.new(@game); end
 
+    @game.create_activity :destroy, owner: current_user
+    
     redirect_to(games_path)
   end
 
@@ -191,8 +191,8 @@ class GamesController < ApplicationController
       # do nothing
     end
 
-    if !@game.update_attributes(params[:game]); raise Errors::FlowError.new(edit_game_path(@game)); end
     if !@game.happening_case.update_attributes params[:happening_case]; raise Errors::FlowError.new(edit_game_path(@game)); end
+    if !@game.update_attributes(params[:game]); raise Errors::FlowError.new(edit_game_path(@game)); end
     if !@game.create_activity :update, owner: current_user; raise Errors::FlowError.new(edit_game_path(@game)); end
 
     redirect_to @game, notice: "Game was updated"

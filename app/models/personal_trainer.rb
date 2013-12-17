@@ -18,5 +18,7 @@ class PersonalTrainer < ActiveRecord::Base
   	# album
   	# logo
 
+  include OfferingSearchable
+  
   attr_accessible :descreption, :title, :location
 end
