@@ -63,6 +63,10 @@
     <div class="body">
         <%= render 'shared/cardsection', individuals: @participator, this: @event, class_name: "joined", makeadmin: true%>
     <div class="Description">
+            <% if @location %>
+                <h2 class="header_text">Location:</h2>
+                <div id="MapContainer"><%= render "shared/map" %></div>
+            <% end %>      
         <div class="<%= @event.category %> left"></div> <br> <br> <br>
         <p><%= @event.descreption %></p>
 

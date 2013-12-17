@@ -53,16 +53,26 @@
 <hr>
 
                     <h2>2. <%= image_tag "location-icon.png", width: 50 %> Location</h2>
-
                             <div>
                                 <table width="100%">
                                     <tr>
-                                        <td width="130"><%= f.label :custom_address, "Select the city:" %></td>
-                                        <td><%= f.select :custom_address, ["Al-Salmiyah", "Kuwait City"] %></td>
+                                        <td width="130"><%= label_tag 'location_type', 'Location Type' %></td>
+                                        <td><%= select_tag "location_type", options_for_select([["Custom Location", "custom_location"], ["Existing Venue", "parent_location"] ]) %></td>
                                     </tr>
                                 </table>
-
                             </div>
+                        <div class="venue_list">
+                                <table width="100%">
+                                    <tr>
+                                        <td width="130"><%= label_tag 'referenced_venue_id', 'Venue' %></td>
+                                        <td><%= select_tag "referenced_venue_id", options_from_collection_for_select(@venues, "id", "title"), { :data => { :live_search => "true" } } %></td>
+                                    </tr>
+                                </table>
+                        </div>
+                        <div class="location_partial_container">
+                            <%= render "shared/location", location: @location, f: f, form_type: "new" %>
+                        </div>
+
 
 <hr>
                     <h2>3. <%= image_tag "payment-icon.png", width: 50 %> Payment</h2>

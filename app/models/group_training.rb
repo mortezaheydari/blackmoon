@@ -20,11 +20,12 @@ class GroupTraining < ActiveRecord::Base
 
   # include OfferingSearchable
   
-  attr_accessible :descreption, :title, :location
+  attr_accessible :descreption, :title, :location, :city 
   attr_accessor :updated_at
     searchable do
       text :title, :boost => 5
       text :descreption
       date :updated_at
+      text :city
     end
 end

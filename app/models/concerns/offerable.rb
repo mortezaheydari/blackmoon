@@ -63,6 +63,10 @@ module Offerable
                     User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
                 end
 
+                def city
+                    location.city
+                end
+
                 def administrators
                     @admins = []
                     self.offering_administrations.each do |admin|

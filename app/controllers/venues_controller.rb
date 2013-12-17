@@ -38,7 +38,29 @@ class VenuesController < ApplicationController
 
 	def index
 		add_breadcrumb "venues", venues_path, :title => "Back to the Index"
-		@venues = Venue.all
+
+		@search = Sunspot.search(Venue) do
+			fulltext params[:search]
+
+			# with(:price, params[:min_price].to_i..params[:max_price].to_i) if params[:max_price].present? && params[:min_price].present?
+			# with(:price).greater_than(params[:min_price].to_i) if !params[:max_price].present? && params[:min_price].present?
+			# with(:price).less_than(params[:max_price].to_i) if params[:max_price].present? && !params[:min_price].present?
+
+			# with(:condition, params[:condition]) if params[:condition].present?
+
+			facet(:city)
+			with(:city, params[:city]) if params[:city].present?			
+
+			order_by(:updated_at, :desc)
+			# if params[:order_by] == "Price"
+			#   order_by(:price)
+			# elsif params[:order_by] == "Popular"
+			#   order_by(:favorite_count, :desc)
+			# end
+
+		end		
+		@venues = @search.results
+
 		@recent_activities = PublicActivity::Activity.where(trackable_type: "Venue")
 		@recent_activities = @recent_activities.order("created_at desc")
 	end

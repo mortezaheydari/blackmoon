@@ -20,7 +20,7 @@ class Event < ActiveRecord::Base
   # include OfferingSearchable
 
   attr_accessible :category, :custom_address, :descreption,
-    :location_type, :title, :tournament_id, :fee, :fee_type, :sport, :number_of_attendings, :team_participation, :open_join
+    :location_type, :title, :tournament_id, :fee, :fee_type, :sport, :number_of_attendings, :team_participation, :open_join, :city
 
   attr_accessor :updated_at
 
@@ -31,5 +31,6 @@ class Event < ActiveRecord::Base
         string :sport
         boolean :team_participation
         date :updated_at
+        text :city        
     end
 end
