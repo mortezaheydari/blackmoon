@@ -64,7 +64,7 @@ module Offerable
                 end
 
                 def city
-                    location.city
+                    self.location.city
                 end
 
                 def administrators

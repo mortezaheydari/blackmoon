@@ -44,9 +44,27 @@
 
           <li>
             <% if params[:sport].blank? %>
-                <%= link_to row.value + " " + "(#{row.count})", :sport => row.value, search: params[:search], team_participation: params[:team_participation] %>
+                <%= link_to row.value + " " + "(#{row.count})", :sport => row.value, search: params[:search], team_participation: params[:team_participation], city: params[:city] %>
             <% else %>
-                <%= link_to "#{row.value} (remove)", :sport => nil, search: params[:search],  team_participation: params[:team_participation]  %>
+                <%= link_to "#{row.value} (remove)", :sport => nil, search: params[:search],  team_participation: params[:team_participation], city: params[:city]  %>
+            <% end %>
+        <% end %>
+              </li>
+                <li class="divider"></li>
+            </ul>
+
+
+            <ul class="nav nav-list">
+                <li class="divider"></li>
+                 <li class="nav-header">Cities</li>
+                <li class="divider"></li>
+        <% for row in @search.facet(:city).rows %>
+
+          <li>
+            <% if params[:city].blank? %>
+                <%= link_to row.value + " " + "(#{row.count})", :city => row.value, search: params[:search], team_participation: params[:team_participation], sport: params[:sport] %>
+            <% else %>
+                <%= link_to "#{row.value} (remove)", :city => nil, search: params[:search],  team_participation: params[:team_participation], sport: params[:sport]  %>
             <% end %>
         <% end %>
               </li>
