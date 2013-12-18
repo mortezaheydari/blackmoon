@@ -16,7 +16,7 @@ class Event < ActiveRecord::Base
   include Albumable
   	# album
   	# logo
-    
+
   # include OfferingSearchable
 
   attr_accessible :category, :custom_address, :descreption,
@@ -26,11 +26,11 @@ class Event < ActiveRecord::Base
 
     searchable do
         text :title, :boost => 5
-        text :description
+        text :descreption
         # string :fee_type
         string :sport
         boolean :team_participation
         date :updated_at
-        text :city        
+        string :city
     end
 end

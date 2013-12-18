@@ -1,19 +1,51 @@
   <div class="body">
+  <div class="container-fluid">
 <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
-    <div class="cardsection">
+
+
+
+    <%= render "shared/search_offering", search_type: "team" %>
+
+    <hr>
+
+
+    <div class="cardsection span9">
+            <% i = 0 %>
         <% @teams.each do |t| %>
+            <% if i == 0 %>
+                <div class="row-fluid">
+            <% end %>
+            <div class="span4 indexCards">
             <%= render 'teams/team', team: t %>
+            </div>
+                <% if i == 2 || t == @teams.last %>
+                    </div>
+                <% end %>
+            <%
+                    if i == 2
+                        i = 0
+                    else
+                        i = i + 1
+                    end
+            %>
         <% end %>
     </div>
 
-    <div class="sideBar">
-
-<!-- -->
+        <div class="span3">
 
 
-      <div class="sideBox">
-        <div class="sideTitle">Activity</div>
-            <%= render 'shared/activity_sidebar', recent_activities: @recent_activities %>
-      </div>
-    </div>
+        <%= render "shared/sport_facet" %>
+
+
+          <div class="sideBox span12 activitySideBox hero-unit">
+            <hr>
+            <div class="nav-header">Activity Feed</div>
+                <%= render 'shared/activity_sidebar', recent_activities: @recent_activities %>
+          </div>
+        </div>
+</div>
+
+
+
+  </div>
   </div>

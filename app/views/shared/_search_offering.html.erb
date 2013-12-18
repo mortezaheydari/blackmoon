@@ -9,7 +9,8 @@
                             <%= check_box_tag :team_participation, :checked, (true if params[:team_participation] == "checked")  %> Team participation
                     <% end -%>
                 <% end -%>
-                <%= hidden_field_tag 'sport',  params[:sport] if search_type == "offering" %>
+                <%= hidden_field_tag 'sport',  params[:sport] if (search_type == "offering" || search_type == "team" ) %>
+                <%= hidden_field_tag 'city',  params[:city] %>
 
                 <%= hidden_field_tag 'offering_type',  params[:offering_type] if search_type == "main_search" %>
 

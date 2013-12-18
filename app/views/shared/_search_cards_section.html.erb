@@ -1,0 +1,21 @@
+    <div class="cardsection span9">
+            <% i = 0 %>
+        <% this.each do |e| %>
+            <% if i == 0 %>
+                <div class="row-fluid">
+            <% end %>
+            <div class="span4 indexCards">
+                <%= render 'shared/offering/offering', offering: e, class_name: class_name %>
+            </div>
+                <% if i == 2 || e == this.last %>
+                    </div>
+                <% end %>
+            <%
+                    if i == 2
+                        i = 0
+                    else
+                        i = i + 1
+                    end
+            %>
+        <% end %>
+    </div>

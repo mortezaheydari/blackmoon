@@ -23,12 +23,13 @@ class PagesController < ApplicationController
                 @offerings = Game.all + Event.all + Venue.all + Team.all
 
 
-                @search = Sunspot.search([Game, Event, Venue, Team]) do
-                      fulltext params[:search]
-                      order_by(:updated_at, :desc)
-                            facet(:offering_type)
-                            with(:offering_type, params[:offering_type]) if params[:offering_type].present?
-
+                    @search = Sunspot.search([Game, Event, Venue, Team, GroupTraining, PersonalTrainer]) do
+                        fulltext params[:search]
+                        order_by(:updated_at, :desc)
+                        facet(:offering_type)
+                        with(:offering_type, params[:offering_type]) if params[:offering_type].present?
+                        facet(:city)
+                        with(:city, params[:city]) if params[:city].present?
                     end
                     @offerings = @search.results
                     @recent_activities =  PublicActivity::Activity.all(order: 'created_at desc')

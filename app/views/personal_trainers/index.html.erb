@@ -1,17 +1,25 @@
   <div class="body">
+  <div class="container-fluid">
 <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
-    <div class="cardsection">
-        <% @personal_trainers.each do |e| %>
-            <%= render 'shared/offering/offering', offering: e, class_name: "personalTrainerList" %>
-        <% end %>
-    </div>
-
-    <div class="sideBar">
 
 
-      <div class="sideBox">
-        <div class="sideTitle">Activity</div>
-            <%= render 'shared/activity_sidebar', recent_activities: @recent_activities %>
-      </div>
+    <%= render "shared/search_offering", search_type: "venue" %>
+    <hr>
+
+<div class="row-fluid">
+    <%= render "shared/search_cards_section", this: @personal_trainers, class_name: "personal_trainerList" %>
+
+    <div class="span3">
+
+
+            <%= render "shared/city_facet" %>
+
+          <div class="sideBox span12 activitySideBox hero-unit">
+            <hr>
+            <div class="nav-header">Activity Feed</div>
+                <%= render 'shared/activity_sidebar', recent_activities: @recent_activities %>
+          </div>
+        </div>
+</div>
     </div>
   </div>

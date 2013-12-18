@@ -178,21 +178,21 @@ $(document).ready(function() {
 
     if ($("#team_category_ballsports").is(':checked')) {
             $("div#BallList").show();
-            $("#BallList select").attr('name', 'game[sport]');
+            $("#BallList select").attr('name', 'team[sport]');
             $("div#FitList").hide();
             $("#FitList select").attr('name', '');
             $("div#WaterList").hide();
             $("#WaterList select").attr('name', '');
     } else if ($("#team_category_fitness").is(':checked')) {
             $("div#FitList").show();
-            $("#FitList select").attr('name', 'game[sport]');
+            $("#FitList select").attr('name', 'team[sport]');
             $("div#WaterList").hide();
             $("#WaterList select").attr('name', '');
             $("div#BallList").hide();
             $("#BallList select").attr('name', '');
     } else if ($("#team_category_watersports").is(':checked')) {
             $("div#WaterList").show();
-            $("#WaterList select").attr('name', 'game[sport]');
+            $("#WaterList select").attr('name', 'team[sport]');
             $("div#BallList").hide();
             $("#BallList select").attr('name', '');
             $("div#FitList").hide();
@@ -217,6 +217,29 @@ $(document).ready(function() {
     } else if ($("#game_category_watersports").is(':checked')) {
             $("div#WaterList").show();
             $("#WaterList select").attr('name', 'game[sport]');
+            $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
+            $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
+    }
+
+    if ($("#event_category_ballsports").is(':checked')) {
+            $("div#BallList").show();
+            $("#BallList select").attr('name', 'event[sport]');
+            $("div#FitList").hide();
+            $("#FitList select").attr('name', '');
+            $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
+    } else if ($("#event_category_fitness").is(':checked')) {
+            $("div#FitList").show();
+            $("#FitList select").attr('name', 'event[sport]');
+            $("div#WaterList").hide();
+            $("#WaterList select").attr('name', '');
+            $("div#BallList").hide();
+            $("#BallList select").attr('name', '');
+    } else if ($("#event_category_watersports").is(':checked')) {
+            $("div#WaterList").show();
+            $("#WaterList select").attr('name', 'event[sport]');
             $("div#BallList").hide();
             $("#BallList select").attr('name', '');
             $("div#FitList").hide();
@@ -359,21 +382,21 @@ $("#fileupload").change(function(){
     $("input:radio[name='event[category]']").change( function() {
         if ($(this).is(':checked') && $(this).val() == 'BallSports') {
             $("div#BallList").show();
-            $("#BallList select").attr('name', 'game[sport]');
+            $("#BallList select").attr('name', 'event[sport]');
             $("div#FitList").hide();
             $("#FitList select").attr('name', '');
             $("div#WaterList").hide();
             $("#WaterList select").attr('name', '');
         } else if ($(this).is(':checked') && $(this).val() == 'Fitness') {
             $("div#FitList").show();
-            $("#FitList select").attr('name', 'game[sport]');
+            $("#FitList select").attr('name', 'event[sport]');
             $("div#WaterList").hide();
             $("#WaterList select").attr('name', '');
             $("div#BallList").hide();
             $("#BallList select").attr('name', '');
         } else if ($(this).is(':checked') && $(this).val() == 'WaterSports') {
             $("div#WaterList").show();
-            $("#WaterList select").attr('name', 'game[sport]');
+            $("#WaterList select").attr('name', 'event[sport]');
             $("div#BallList").hide();
             $("#BallList select").attr('name', '');
             $("div#FitList").hide();
@@ -443,21 +466,21 @@ $("#fileupload").change(function(){
     $("input:radio[name='team[category]']").change( function() {
         if ($(this).is(':checked') && $(this).val() == 'BallSports') {
             $("div#BallList").show();
-            $("#BallList select").attr('name', 'game[sport]');
+            $("#BallList select").attr('name', 'team[sport]');
             $("div#FitList").hide();
             $("#FitList select").attr('name', '');
             $("div#WaterList").hide();
             $("#WaterList select").attr('name', '');
         } else if ($(this).is(':checked') && $(this).val() == 'Fitness') {
             $("div#FitList").show();
-            $("#FitList select").attr('name', 'game[sport]');
+            $("#FitList select").attr('name', 'team[sport]');
             $("div#WaterList").hide();
             $("#WaterList select").attr('name', '');
             $("div#BallList").hide();
             $("#BallList select").attr('name', '');
         } else if ($(this).is(':checked') && $(this).val() == 'WaterSports') {
             $("div#WaterList").show();
-            $("#WaterList select").attr('name', 'game[sport]');
+            $("#WaterList select").attr('name', 'team[sport]');
             $("div#BallList").hide();
             $("#BallList select").attr('name', '');
             $("div#FitList").hide();

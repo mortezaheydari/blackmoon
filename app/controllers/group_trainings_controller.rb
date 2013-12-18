@@ -48,7 +48,7 @@ class GroupTrainingsController < ApplicationController
 			# with(:condition, params[:condition]) if params[:condition].present?
 
 			facet(:city)
-			with(:city, params[:city]) if params[:city].present?			
+			with(:city, params[:city]) if params[:city].present?
 
 			order_by(:updated_at, :desc)
 			# if params[:order_by] == "Price"
@@ -57,9 +57,9 @@ class GroupTrainingsController < ApplicationController
 			#   order_by(:favorite_count, :desc)
 			# end
 
-		end		
+		end
 		@group_trainings = @search.results
-		
+
 		@recent_activities = PublicActivity::Activity.where(trackable_type: "GroupTraining")
 		@recent_activities = @recent_activities.order("created_at desc")
 	end
@@ -101,7 +101,7 @@ class GroupTrainingsController < ApplicationController
 
 	def show
 		@group_training = GroupTraining.find(params[:id])
-				add_breadcrumb "Group Trainings", group_trainings_path, :title => "Back to the Index"
+				add_breadcrumb "Classes", group_trainings_path, :title => "Back to the Index"
 				add_breadcrumb @group_training.title, group_training_path(@group_training)
 		@offering_session =  OfferingSession.new
 

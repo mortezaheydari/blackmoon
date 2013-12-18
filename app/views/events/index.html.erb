@@ -9,47 +9,14 @@
 
 
 <div class="row-fluid">
-    <div class="cardsection span9">
-            <% i = 0 %>
-        <% @events.each do |e| %>
-            <% if i == 0 %>
-                <div class="row-fluid">
-            <% end %>
-            <div class="span4 indexCards">
-                <%= render 'shared/offering/offering', offering: e, class_name: "eventList" %>
-            </div>
-                <% if i == 2 || e == @events.last %>
-                    </div>
-                <% end %>
-            <%
-                    if i == 2
-                        i = 0
-                    else
-                        i = i + 1
-                    end
-            %>
-        <% end %>
-    </div>
+        <%= render "shared/search_cards_section", this: @events, class_name: "eventList" %>
 
 
         <div class="span3">
 
-            <ul class="nav nav-list">
-                <li class="divider"></li>
-                 <li class="nav-header">Sports</li>
-                <li class="divider"></li>
-        <% for row in @search.facet(:sport).rows %>
+            <%= render "shared/sport_facet" %>
 
-          <li>
-            <% if params[:sport].blank? %>
-                <%= link_to row.value + " " + "(#{row.count})", :sport => row.value, search: params[:search], team_participation: params[:team_participation] %>
-            <% else %>
-                <%= link_to "#{row.value} (remove)", :sport => nil, search: params[:search],  team_participation: params[:team_participation]  %>
-            <% end %>
-        <% end %>
-              </li>
-                <li class="divider"></li>
-            </ul>
+            <%= render "shared/city_facet" %>
 
           <div class="sideBox span12 activitySideBox hero-unit">
             <hr>

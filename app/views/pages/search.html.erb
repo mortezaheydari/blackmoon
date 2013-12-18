@@ -47,14 +47,22 @@
 
               <li>
                 <% if params[:offering_type].blank? %>
-                    <%= link_to row.value + " " + "(#{row.count})", :offering_type => row.value, search: params[:search] %>
+                    <% if row.value == "PersonalTrainer" %>
+                            <%= link_to "Personal Trainers " + "(#{row.count})", :offering_type => row.value, search: params[:search], city: params[:city] %>
+                    <% elsif row.value == "GroupTraining" %>
+                            <%= link_to "Classes " + "(#{row.count})", :offering_type => row.value, search: params[:search], city: params[:city] %>
+                    <% else %>
+                            <%= link_to row.value.pluralize + " " + "(#{row.count})", :offering_type => row.value, search: params[:search], city: params[:city] %>
+                    <% end %>
                 <% else %>
-                    <%= link_to "#{row.value} (remove)", :offering_type => nil, search: params[:search]  %>
+                    <%= link_to "#{row.value.pluralize} (remove)", :offering_type => nil, search: params[:search], city: params[:city] %>
                 <% end %>
             <% end %>
               </li>
               <li class="divider"></li>
             </ul>
+
+            <%= render "shared/city_facet" %>
         </div>
     </div>
 
