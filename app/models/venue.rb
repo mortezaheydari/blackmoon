@@ -19,13 +19,13 @@ class Venue < ActiveRecord::Base
   	# logo
 
   # include OfferingSearchable
-  
-  attr_accessible :descreption, :title, :location, :city 
+
+  attr_accessible :descreption, :title, :location, :city
   attr_accessor :updated_at
     searchable do
       text :title, :boost => 5
       text :descreption
       date :updated_at
-      text :city      
+      string :city
     end
 end

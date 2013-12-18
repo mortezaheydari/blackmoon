@@ -36,8 +36,31 @@ class TeamsController < ApplicationController
 
 
 	def index
-		add_breadcrumb "teams", teams_path, :title => "Back to the Index"
-		@teams = Team.all
+		add_breadcrumb "Teams", teams_path, :title => "Back to the Index"
+                        @search = Sunspot.search(Team) do
+                              fulltext params[:search]
+
+                              # with(:price, params[:min_price].to_i..params[:max_price].to_i) if params[:max_price].present? && params[:min_price].present?
+                              # with(:price).greater_than(params[:min_price].to_i) if !params[:max_price].present? && params[:min_price].present?
+                              # with(:price).less_than(params[:max_price].to_i) if params[:max_price].present? && !params[:min_price].present?
+
+                              # with(:condition, params[:condition]) if params[:condition].present?
+                              facet(:sport)
+                              with(:sport, params[:sport]) if params[:sport].present?
+
+                              order_by(:updated_at, :desc)
+                              # if params[:order_by] == "Price"
+                              #   order_by(:price)
+                              # elsif params[:order_by] == "Popular"
+                              #   order_by(:favorite_count, :desc)
+                              # end
+
+                              if params[:team_participation]  == "checked"
+                                with(:team_participation, true)
+                              end
+
+                            end
+                            @teams = @search.results
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Team")
 		@recent_activities = @recent_activities.order("created_at desc")
 	end
@@ -73,7 +96,7 @@ class TeamsController < ApplicationController
 
 	def show
 		@team = Team.find(params[:id])
-		add_breadcrumb "teams", teams_path, :title => "Back to the Index"
+		add_breadcrumb "Teams", teams_path, :title => "Back to the Index"
 		add_breadcrumb @team.title, team_path(@team)
 		@likes = @team.flaggings.with_flag(:like)
 		@members = @team.members

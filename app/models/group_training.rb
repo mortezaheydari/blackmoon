@@ -9,7 +9,7 @@ class GroupTraining < ActiveRecord::Base
   	# offering_sessions
   	# happening_cases
     # joineds
-    # join_requests_received    
+    # join_requests_received
     # individual_participators
     # invitations
     # collectives
@@ -19,13 +19,13 @@ class GroupTraining < ActiveRecord::Base
   	# logo
 
   # include OfferingSearchable
-  
-  attr_accessible :descreption, :title, :location, :city 
+
+  attr_accessible :descreption, :title, :location, :city
   attr_accessor :updated_at
     searchable do
       text :title, :boost => 5
       text :descreption
       date :updated_at
-      text :city
+      string :city
     end
 end
