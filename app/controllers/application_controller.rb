@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   	rescue_from Errors::FlowError, with: :flow_error_handler
 
 	def name_is_valid?(name)
-	  ["event","class","game", "user", "team", "venue", "personal_trainer", "group_training"].include? name.underscore
+	  ["event","game", "user", "team", "venue", "personal_trainer", "group_training"].include? name.underscore
 	end
 
 	# find and assign, dose it without administration check,

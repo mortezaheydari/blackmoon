@@ -74,4 +74,15 @@ module MultiSessionsHelper
 		end
 
 
+
+                        def grouped_happening_cases_for_schedule(these)
+                            happening_cases_id_list = []
+                            these.each do |this|
+                                happening_cases_id_list << this.happening_case_id
+                            end
+                            sorted_happening_cases = HappeningCase.where(id: happening_cases_id_list).group_by(&:date_and_time)
+                        end
+
+
+
 end

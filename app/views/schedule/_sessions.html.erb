@@ -1,4 +1,6 @@
+<% user_schedule ||= false %>
 <div class="calendar">
+    <% unless user_schedule == true %>
 	<% if user_is_admin?(owner) %>
 		<br>
 		<a href="#" id="new_offering_session" class="btn left">New session</a>
@@ -21,7 +23,9 @@
 	</div>
 	<br>
 	<br>
-	<div id="collectives" class="left"><%= render "schedule/collectives", collectives: collectives %></div>
+
+    <% end -%>
+    <div id="collectives" class="left"><%= render "schedule/collectives", collectives: collectives %></div>
 	<div id="articles">
 	  <h2 id="month">
 		<%= link_to "<", date: @date.prev_month %>
@@ -36,7 +40,7 @@
 			<% grouped_sessions[date].each do |session|
 				def session.time_from
 					@time_from = self.happening_case.time_from
-				end 
+				end
 
 				def session.time_to
 					@time_to = self.happening_case.time_to
@@ -49,7 +53,13 @@
 
 			<% grouped_sessions[date].each do |session| %>
 			  <li>
-				<% if user_is_admin?(owner) %>
+                                                <% if user_schedule == true %>
+                                                    <% if session.class.to_s == "OfferingSession" %>
+                                                        <%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title + " (#{session.owner.title})", send("#{session.owner.class.to_s.underscore}_path", session.owner), class: "collective#{session.owner.class.to_s.underscore.tr(' ', '_')}", target: "_blank" %>
+                                                    <% else %>
+                                                        <%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{session.class.to_s.underscore}_path", session), class: "collective#{session.class.to_s.underscore.tr(' ', '_')}", target: "_blank" %>
+                                                    <% end %>
+				<% elsif user_is_admin?(owner) %>
 					<%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "session #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>
 				<% else %>
 					<%= link_to "<i class=\"icon-calendar\"></i>".html_safe + session.title, send("#{owner.class.to_s.underscore}_path", owner, session_id: session.id), class: "sessionshow #{session.collective.title.tr(' ', '_') unless session.collective.nil?}", :remote => true %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131215121231) do
+ActiveRecord::Schema.define(:version => 20131218082540) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -197,6 +197,16 @@ ActiveRecord::Schema.define(:version => 20131215121231) do
     t.datetime "updated_at",     :null => false
   end
 
+  create_table "happening_schedules", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "happening_case_id"
+    t.datetime "date_and_time"
+    t.boolean  "email_delivered",        :default => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.integer  "delivery_failure_count", :default => 0
+  end
+
   create_table "invitations", :force => true do |t|
     t.integer  "inviter_id"
     t.string   "inviter_type"
@@ -314,9 +324,10 @@ ActiveRecord::Schema.define(:version => 20131215121231) do
     t.integer  "phone"
     t.string   "gender"
     t.text     "about"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.integer  "user_id"
+    t.boolean  "daily_email_option", :default => true
   end
 
   add_index "profiles", ["first_name", "last_name"], :name => "index_profiles_on_first_name_and_last_name"

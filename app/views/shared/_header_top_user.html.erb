@@ -31,6 +31,12 @@
         </div>
       </li>
       <li>
+        <div id="editProfile" class="left">
+          <div class="left"></div>
+          <%= link_to "My Schedule", schedule_user_path(current_user) %>
+        </div>
+      </li>
+      <li>
         <div id="manageOffering" class="left">
           <div class="left"></div>
           <%= link_to "Manage Offerings", offering_management_user_path(current_user) %>

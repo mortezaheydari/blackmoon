@@ -1,0 +1,11 @@
+<div class="body">
+    <div class="container-fluid">
+        <div class="span12">
+            <h1><%= current_user.name %> Schedule</h2>
+                <hr>
+            <div id="calendar_reload"><%= render "schedule/sessions", grouped_sessions: @grouped_sessions, user_schedule: true, collectives: @collectives %></div>
+
+            <br><br><br>
+        </div>
+      </div>
+  </div>

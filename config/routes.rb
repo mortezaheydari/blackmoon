@@ -8,6 +8,7 @@ Blackmoon::Application.routes.draw do
     resources :users do
         member do
             get 'offering_management'
+            get 'schedule'
         end
     end
 

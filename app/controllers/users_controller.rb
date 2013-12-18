@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 	before_filter :authenticate_account!, only: [:edit, :update]
-	include SessionsHelper
+            include SessionsHelper
+	include MultiSessionsHelper
 
             add_breadcrumb "home", :root_path
 	def index
@@ -50,4 +51,13 @@ class UsersController < ApplicationController
 		#TODO: add venues_administrating
 	end
 
+            def schedule
+                @user = User.find(params[:id])
+                # @schedule = @user.happening_schedules
+                @schedule = HappeningSchedule.where("user_id = ?", @user.id)
+                @grouped_happening_cases = grouped_happening_cases_for_schedule(@schedule)
+                @grouped_sessions = replace_with_happening(@grouped_happening_cases)
+                @date = params[:date] ? Date.parse(params[:date]) : Date.today
+                @collectives = ["event","game", "user", "team", "venue", "personal_trainer", "group_training"]
+            end
 end
