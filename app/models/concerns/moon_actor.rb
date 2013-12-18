@@ -27,11 +27,17 @@ module MoonActor
             # through: :offering_creations
             has_many :events_created, through: :offering_creations, source: :offering, source_type: "Event"; accepts_nested_attributes_for :events_created
             has_many :games_created, through: :offering_creations, source: :offering, source_type: "Game"; accepts_nested_attributes_for :games_created
+            has_many :vanues_created, through: :offering_creations, source: :offering, source_type: "Vanue"; accepts_nested_attributes_for :vanues_created
+            has_many :personal_trainers_created, through: :offering_creations, source: :offering, source_type: "PersonalTrainer"; accepts_nested_attributes_for :personal_trainers_created            
+            has_many :group_trainings_created, through: :offering_creations, source: :offering, source_type: "GroupTraining"; accepts_nested_attributes_for :group_trainings_created
 
             has_many :offering_administrations, foreign_key: :administrator_id
             # through: :offering_administrations
             has_many :events_administrating, through: :offering_administrations, source: :offering, source_type: "Event"; accepts_nested_attributes_for :events_administrating
             has_many :games_administrating, through: :offering_administrations, source: :offering, source_type: "Game"; accepts_nested_attributes_for :games_administrating
+            has_many :vanues_administrating, through: :offering_creations, source: :offering, source_type: "Vanue"; accepts_nested_attributes_for :vanues_administrating
+            has_many :personal_trainers_administrating, through: :offering_creations, source: :offering, source_type: "PersonalTrainer"; accepts_nested_attributes_for :personal_trainers_administrating            
+            has_many :group_trainings_administrating, through: :offering_creations, source: :offering, source_type: "GroupTraining"; accepts_nested_attributes_for :group_trainings_administrating
 
             has_many :offering_individual_participations, foreign_key: :participator_id
             # through: :offering_individual_participations
@@ -62,6 +68,15 @@ module MoonActor
                 games_administrating.each do |game_administrating|
                     @administratings << game_administrating
                 end
+                venues_administrating.each do |venue_administrating|
+                    @administratings << venue_administrating
+                end
+                personal_trainers_administrating.each do |personal_trainer_administrating|
+                    @administratings << personal_trainer_administrating
+                end
+                group_trainings_administrating.each do |group_training_administrating|
+                    @administratings << group_training_administrating
+                end                  
                 @administratings
             end
 
@@ -73,6 +88,15 @@ module MoonActor
                 games_created.each do |game_created|
                     @createds << game_created
                 end
+                venues_created.each do |venue_created|
+                    @createds << venue_created
+                end
+                personal_trainers_created.each do |personal_trainer_created|
+                    @createds << personal_trainer_created
+                end
+                group_trainings_created.each do |group_training_created|
+                    @createds << group_training_created
+                end                            
                 @createds
             end
 ##
