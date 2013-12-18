@@ -13,26 +13,88 @@
                             <th>Liked</th>
                             <th>Link</th>
                         </tr>
+
+<!-- Personal Training -->
                         <tr>
                             <td colspan="7" class="offeringtype" id="ptType">
-                                 <%= image_tag "fitness-icon.png", width: 25 %> <a href="#">Personal Training (0)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
+                                 <%= image_tag "fitness-icon.png", width: 25 %> <a href="#">Personal Training (<%= @personal_trainers.count %>)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
                             </td>
                         </tr>
 
+                        <% @personal_trainers.each do |e| %>
+                            <tr class="ptdata">
+                                <td></td>
+                                <td>
+                                    <div class="managementImg">
+                                        <%= logo_for(e, size: :small) %><%= link_to e.title, personal_trainer_path(e) %>
+                                    </div>
+                                </td>
+                                <td>N/A</td>
+                                <td><%= e.location.custom_address %></td>
+                                <td>N/A</td>
+                                <td><%= link_to "("+e.flaggings.with_flag(:like).count.to_s+")", personal_trainer_path(e)  %> </td>
+                                <td>
+                                    <%= link_to "Edit", edit_personal_trainer_path(e), class: "button blue" %>
+                                </td>
+                            </tr>
+                        <% end -%>
 
 
 
-
+<!-- Classes -->
 
 
                         <tr>
                             <td colspan="7" class="offeringtype" id="clType">
-                                <%= image_tag "class-icon.png", width: 25 %> <a href="#">Classes (0)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
+                                <%= image_tag "class-icon.png", width: 25 %> <a href="#">Classes (<%= @group_trainings.count %>)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
                             </td>
                         </tr>
 
+                        <% @group_trainings.each do |e| %>
+                            <tr class="cldata">
+                                <td></td>
+                                <td>
+                                    <div class="managementImg">
+                                        <%= logo_for(e, size: :small) %><%= link_to e.title, group_training_path(e) %>
+                                    </div>
+                                </td>
+                                <td>N/A</td>
+                                <td><%= e.location.custom_address %></td>
+                                <td>N/A</td>
+                                <td><%= link_to "("+e.flaggings.with_flag(:like).count.to_s+")", group_training_path(e)  %> </td>
+                                <td>
+                                    <%= link_to "Edit", edit_group_training_path(e), class: "button blue" %>
+                                </td>
+                            </tr>
+                        <% end -%>
 
 
+<!-- Venues -->
+
+
+                        <tr>
+                            <td colspan="7" class="offeringtype" id="vnType">
+                                <%= image_tag "class-icon.png", width: 25 %> <a href="#">Venues (<%= @venues.count %>)</a> <%= image_tag "drop-icon.png", width: 20, class: "drop" %>
+                            </td>
+                        </tr>
+
+                        <% @venues.each do |e| %>
+                            <tr class="vndata">
+                                <td></td>
+                                <td>
+                                    <div class="managementImg">
+                                        <%= logo_for(e, size: :small) %><%= link_to e.title, venue_path(e) %>
+                                    </div>
+                                </td>
+                                <td>N/A</td>
+                                <td><%= e.location.custom_address %></td>
+                                <td>N/A</td>
+                                <td><%= link_to "("+e.flaggings.with_flag(:like).count.to_s+")", venue_path(e)  %> </td>
+                                <td>
+                                    <%= link_to "Edit", edit_venue_path(e), class: "button blue" %>
+                                </td>
+                            </tr>
+                        <% end -%>
 
 
 <!-- Events -->
@@ -47,9 +109,13 @@
                         <% @events.each do |e| %>
                             <tr class="evdata">
                                 <td></td>
-                                <td><%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %></td>
+                                <td>
+                                    <div class="managementImg">
+                                        <%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %>
+                                    </div>
+                                </td>
                                 <td><%= e.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></td>
-                                <td><%= e.custom_address %></td>
+                                <td><%= e.location.custom_address %></td>
                                 <td>
                                     <%     if e.team_participation == false
                                                     @participator = e.individual_participators
@@ -77,9 +143,13 @@
                         <% @games.each do |e| %>
                             <tr class="gmdata">
                                 <td></td>
-                                <td><%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %></td>
+                                <td>
+                                    <div class="managementImg">
+                                        <%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %>
+                                    </div>
+                                </td>
                                 <td><%= e.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></td>
-                                <td><%= e.custom_address %></td>
+                                <td><%= e.location.custom_address %></td>
                                 <td>
                                     <%     if e.team_participation == false
                                                     @participator = e.individual_participators
@@ -107,7 +177,11 @@
                         <% @teams.each do |e| %>
                             <tr class="tmdata">
                                 <td></td>
-                                <td colspan="3"><%= logo_for(e, size: :small) %> <%= link_to e.title, team_path(e) %></td>
+                                <td colspan="3">
+                                    <div class="managementImg">
+                                        <%= logo_for(e, size: :small) %> <%= link_to e.title, team_path(e) %>
+                                    </div>
+                                </td>
                                 <td>
                                          <%= link_to "("+e.members.count.to_s+")", team_path(e) %>
                                         </td>

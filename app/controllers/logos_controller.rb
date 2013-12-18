@@ -13,7 +13,7 @@ class LogosController < ApplicationController
 	@owner = owner_type.camelize.constantize.find_by_id(owner_id)
 
 	# checking photo upload premission
-	if owner_type == "User"	
+	if owner_type == "User"
 		if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
 	else
 		if !@owner.administrators.include? current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
@@ -54,8 +54,8 @@ class LogosController < ApplicationController
 
 		@logo.photo_id = @photo.id
 
-		if !@logo.save; raise Errors::FlowError.new(@owner, 'error while updating the photo.'); end 
-		
+		if !@logo.save; raise Errors::FlowError.new(@owner, 'error while updating the photo.'); end
+
 		respond_to do |format|
 			format.html { redirect_to @owner, notice: 'Photo was successfully added.' }
 			format.js
@@ -65,7 +65,7 @@ class LogosController < ApplicationController
   end
 
 	private
-	
+
 	def unless_photo_exists(&b)
 		if @photo_exists
 			@photo = Photo.find_by_id(params[:photo_id])

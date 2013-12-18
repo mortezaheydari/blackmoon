@@ -2,10 +2,10 @@ module MoonActor
     extend ActiveSupport::Concern
 
     included do
-     
+
         has_many :invitations_sent, as: :inviter, class_name: "Invitation", dependent: :destroy; accepts_nested_attributes_for :invitations_sent
         has_many :invitations_received, as: :invited, class_name: "Invitation", dependent: :destroy; accepts_nested_attributes_for :invitations_sent
-        has_many :join_requests_sent, as: :sender, class_name: "join_request"; accepts_nested_attributes_for :join_requests_sent  
+        has_many :join_requests_sent, as: :sender, class_name: "join_request"; accepts_nested_attributes_for :join_requests_sent
 
         def offerings_participating
             @participatings = []
@@ -27,16 +27,16 @@ module MoonActor
             # through: :offering_creations
             has_many :events_created, through: :offering_creations, source: :offering, source_type: "Event"; accepts_nested_attributes_for :events_created
             has_many :games_created, through: :offering_creations, source: :offering, source_type: "Game"; accepts_nested_attributes_for :games_created
-            has_many :vanues_created, through: :offering_creations, source: :offering, source_type: "Vanue"; accepts_nested_attributes_for :vanues_created
-            has_many :personal_trainers_created, through: :offering_creations, source: :offering, source_type: "PersonalTrainer"; accepts_nested_attributes_for :personal_trainers_created            
+            has_many :venues_created, through: :offering_creations, source: :offering, source_type: "Venue"; accepts_nested_attributes_for :venues_created
+            has_many :personal_trainers_created, through: :offering_creations, source: :offering, source_type: "PersonalTrainer"; accepts_nested_attributes_for :personal_trainers_created
             has_many :group_trainings_created, through: :offering_creations, source: :offering, source_type: "GroupTraining"; accepts_nested_attributes_for :group_trainings_created
 
             has_many :offering_administrations, foreign_key: :administrator_id
             # through: :offering_administrations
             has_many :events_administrating, through: :offering_administrations, source: :offering, source_type: "Event"; accepts_nested_attributes_for :events_administrating
             has_many :games_administrating, through: :offering_administrations, source: :offering, source_type: "Game"; accepts_nested_attributes_for :games_administrating
-            has_many :vanues_administrating, through: :offering_creations, source: :offering, source_type: "Vanue"; accepts_nested_attributes_for :vanues_administrating
-            has_many :personal_trainers_administrating, through: :offering_creations, source: :offering, source_type: "PersonalTrainer"; accepts_nested_attributes_for :personal_trainers_administrating            
+            has_many :venues_administrating, through: :offering_creations, source: :offering, source_type: "Venue"; accepts_nested_attributes_for :venues_administrating
+            has_many :personal_trainers_administrating, through: :offering_creations, source: :offering, source_type: "PersonalTrainer"; accepts_nested_attributes_for :personal_trainers_administrating
             has_many :group_trainings_administrating, through: :offering_creations, source: :offering, source_type: "GroupTraining"; accepts_nested_attributes_for :group_trainings_administrating
 
             has_many :offering_individual_participations, foreign_key: :participator_id
@@ -59,7 +59,7 @@ module MoonActor
             # through: :act_memberships
             has_many :teams_membership, through: :act_memberships, source: :act, source_type: "Team"; accepts_nested_attributes_for :teams_membership
                 #
-                
+
             def offerings_administrating
                 @administratings = []
                 events_administrating.each do |event_administrating|
@@ -76,7 +76,7 @@ module MoonActor
                 end
                 group_trainings_administrating.each do |group_training_administrating|
                     @administratings << group_training_administrating
-                end                  
+                end
                 @administratings
             end
 
@@ -96,7 +96,7 @@ module MoonActor
                 end
                 group_trainings_created.each do |group_training_created|
                     @createds << group_training_created
-                end                            
+                end
                 @createds
             end
 ##
@@ -106,7 +106,7 @@ module MoonActor
             has_many :offering_team_participations, foreign_key: :participator_id
             # through: :offering_team_participations
             has_many :events_participating, through: :offering_team_participations, source: :offering, source_type: "Event"; accepts_nested_attributes_for :events_participating
-            has_many :games_participating, through: :offering_team_participations, source: :offering, source_type: "Game"; accepts_nested_attributes_for :games_participating            
+            has_many :games_participating, through: :offering_team_participations, source: :offering, source_type: "Game"; accepts_nested_attributes_for :games_participating
         end
 ##
 #

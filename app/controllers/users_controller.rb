@@ -44,9 +44,9 @@ class UsersController < ApplicationController
 		@events = @user.events_administrating
 		@games = @user.games_administrating
 		@teams = @user.teams_administrating
-                        # @personal_trainings = @user.teams_administrating
-                        # @gruop_trainings = @user.teams_administrating
-                        # @venues = @user.teams_administrating
+                        @personal_trainers = @user.personal_trainers_administrating
+                        @group_trainings = @user.group_trainings_administrating
+                        @venues = @user.venues_administrating
 		#TODO: add venues_administrating
 	end
 

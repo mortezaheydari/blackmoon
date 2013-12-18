@@ -37,9 +37,9 @@ class ApplicationController < ActionController::Base
 		this = this_if_reachable(this_type, this_id)
 		return false unless this
 		if this_type == "Collective"
-			return false unless this.owner.administrators.include? current_user 
+			return false unless this.owner.administrators.include? current_user
 		else
-			return false unless this.administrators.include? current_user 
+			return false unless this.administrators.include? current_user
 		end
 		this
 	end
@@ -47,11 +47,11 @@ class ApplicationController < ActionController::Base
 	# -ended
 
 	def flow_error_handler(exeption)
-		redirect_to exeption.redirect_object, notice: exeption.message and return 
+		redirect_to exeption.redirect_object, notice: exeption.message and return
 	end
 
 	# def handle_record_not_saved
-	# 	redirect_to new_game_path, notice: "there has been a problem with data entry." and return 		
+	# 	redirect_to new_game_path, notice: "there has been a problem with data entry." and return
 	# end
 
 end

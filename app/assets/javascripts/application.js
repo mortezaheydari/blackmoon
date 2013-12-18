@@ -160,6 +160,7 @@ $(document).ready(function() {
     $("tr#AmountRow").hide();
     $("tr.ptdata").hide();
     $("tr.cldata").hide();
+    $("tr.vndata").hide();
     $("tr.evdata").hide();
     $("tr.gmdata").hide();
     $("tr.tmdata").hide();
@@ -518,6 +519,17 @@ $("#fileupload").change(function(){
         e.preventDefault();
         img = $("td#clType img.drop");
         $("tr.cldata").fadeToggle("fast");
+        if (img.attr("src") != "/assets/up-icon.png") {
+            img.attr("src", "/assets/up-icon.png");
+        } else {
+            img.attr("src", "/assets/drop-icon.png");
+        }
+    });
+
+    $("td#vnType").click(function(e) {
+        e.preventDefault();
+        img = $("td#vnType img.drop");
+        $("tr.vndata").fadeToggle("fast");
         if (img.attr("src") != "/assets/up-icon.png") {
             img.attr("src", "/assets/up-icon.png");
         } else {
