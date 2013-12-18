@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
     user.create_profile if user.profile.nil?
   end
 
+  has_many :happening_schedules, :dependent => :destroy; accepts_nested_attributes_for :happening_schedules
   belongs_to :account
   has_one :profile, :dependent => :destroy
   accepts_nested_attributes_for :profile
@@ -67,4 +68,7 @@ class User < ActiveRecord::Base
     end
   end
 
+  def wants_daily_emails?
+    self.profile.daily_email_option
+  end
 end

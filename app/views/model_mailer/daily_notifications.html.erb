@@ -1,0 +1,10 @@
+Dear "<%= @user.title %>"<br><br>
+Here is a list of your upcoming activitis in next 24 hours.<br><br>
+<hr>
+<%- @schedule.each do |schedule_happening| %>
+	offering = schedule_happening.happening.owner
+	<%= link_with_full_url_to @offering.title, @offering %><br>
+	<%= schedule_happening.date_and_time %><br>
+	<hr>
+<% end -%>
+<br>

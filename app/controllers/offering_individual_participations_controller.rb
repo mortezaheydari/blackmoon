@@ -20,9 +20,24 @@ class OfferingIndividualParticipationsController < ApplicationController
 		joining_offering = offering_type.camelize.constantize.find_by_id(offering_id)
 		number_of_attendings = joining_offering.number_of_attendings
 		if offerings_participating.count < number_of_attendings or number_of_attendings == 0
-			# todo: check participation deadline is not pass
+			# TODO: check participation deadline is not pass
 			offerings_participating << joining_offering unless offerings_participating.include? joining_offering
 			joining_offering.create_activity key: "offering_individual_participation.create", owner: current_user, recipient: user
+
+			# create happening_scheduled
+			happening_case = joining_offering.happening_case
+			happ_sch = HappeningSchedule.new
+			happ_sch.happening_case_id = happening_case.id
+			happ_sch.user_id = user.id
+			if happening_case.duration_type = "All Day"
+				happ_sch.date_and_time = happening_case.date_and_time
+			else
+				d = happening_case.date_and_time
+				t = happening_case.time_from
+				happ_sch.date_and_time = DateTime.new(d.year, d.month, d.day, t.hour, t.min, t.sec)
+			end
+			happ_sch.save
+			#
 		end
 		@participator = joining_offering.individual_participators
 		@offering = joining_offering
@@ -46,6 +61,11 @@ class OfferingIndividualParticipationsController < ApplicationController
 		participations.each.destroy unless participations == []
 
 		leaving_offering = offering.camelize.constantize.find_by_id(offering_id)
+		# destroy happening_schedule
+		happ_schs = HappeningSchedule.where("user_id = ? AND happening_case_id = ?", user.id, leaving_offering.happening_case.id)
+		happ_schs.each.destroy unless happ_schs == []
+		# 
+
 		leaving_offering.create_activity key: "offering_individual_participation.destroy", owner: current_user, recipient: user
 
 		@participator = leaving_offering.individual_participators

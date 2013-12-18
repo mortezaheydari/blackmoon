@@ -21,6 +21,14 @@ class ModelMailer < ActionMailer::Base
      @offering = @invitation.subject
      @invited = @invitation.invited
   # mail to: @invitation.inviter.account.email, subject: "Goboom - Invitation Accepted."
-  mail to: "info.charchoob@gmail.com", subject: "Goboom - Invitation Accepted."  
+  mail to: "info.charchoob@mail.com", subject: "Goboom - Invitation Accepted."  
+  end
+
+  def daily_notifications(user, today_schedules)
+    @user = user
+    @schedule = today_schedules
+
+  # mail to: @user.account.email, subject: "Goboom - Today's Schedule."
+  mail to: "info.charchoob@mail.com", subject: "Goboom - Today's Schedule."  
   end
 end

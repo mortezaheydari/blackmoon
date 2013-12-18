@@ -21,6 +21,7 @@ gem 'metric_fu'
 gem "jquery-fileupload-rails"
 gem 'sunspot_rails'
 gem 'font-awesome-sass'
+gem 'whenever', require: false
 
 gem 'make_flaggable', :git => 'git@github.com:Charchoob/make_flaggable.git'
 gem "breadcrumbs_on_rails"
