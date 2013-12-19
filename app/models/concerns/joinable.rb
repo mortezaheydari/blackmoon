@@ -58,6 +58,11 @@ module Joinable
                 @joineds
             end
 
+            def open_to_edit?
+                count = self.joinds.count + self.inviteds.count
+                count == 0
+            end
+
 ## Team:
         else
             has_many :act_memberships, as: :act, :dependent => :destroy

@@ -25,10 +25,17 @@ class InvitationsController < ApplicationController
 		@invitation.state               = "sent"
 		@invitation.submission_datetime = Time.now
 
-		if !@invitation.save; raise Errors::FlowError.new; end
+		if @subject.inviteds.include? @invited; raise Errors::FlowError.new(@subject, "Already invited."); end
 
-		@invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
-		ModelMailer.new_invitation_notification(@invitation).deliver
+		if !@invitation.save; raise Errors::FlowError.new(@subject, "There was a problem with submiting the invitation."); end	
+
+		if params[:invited_type] == "Team"
+			@invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
+			ModelMailer.team_new_invitation_notification(@invitation).deliver			
+		else
+			@invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
+			ModelMailer.new_invitation_notification(@invitation).deliver
+		end
 
 		respond_to do |format|
 			format.html { redirect_to(@redirect_object, notice: 'invitation has been sent.') and return }
@@ -64,6 +71,7 @@ class InvitationsController < ApplicationController
 			elsif @invitation.invited.class.to_s == "Team"
 				offering_type = k_lower(@invitation.subject)
 				offerings_participating = @invitation.invited.send("#{offering_type}s_participating")
+
 				offerings_participating << @invitation.subject unless offerings_participating.include? @invitation.subject
 				@invitation.subject.create_activity key: "offering_team_participation.create", owner: current_user, recipient: @invitation.invited
 			end

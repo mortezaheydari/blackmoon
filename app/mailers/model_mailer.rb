@@ -1,7 +1,6 @@
 class ModelMailer < ActionMailer::Base
   default from: "info@goboom.me"
 
-
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -31,4 +30,13 @@ class ModelMailer < ActionMailer::Base
   # mail to: @user.account.email, subject: "Goboom - Today's Schedule."
   mail to: "info.charchoob@mail.com", subject: "Goboom - Today's Schedule."  
   end
+
+  def team_new_invitation_notification(invitation)
+     @invitation = invitation
+     @offering = @invitation.subject
+     @invited_team = @invitation.invited
+     @inviter = @invitation.inviter
+  # mail to: "info.charchoob@gmail.com", subject: "Goboom - New invitation for '#{@invited_team.title}'."  
+  mail to: "info.charchoob@gmail.com", subject: "Goboom - New invitation for '#{@invited_team.title}'."  
+  end  
 end
