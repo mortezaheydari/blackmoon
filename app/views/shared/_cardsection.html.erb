@@ -10,9 +10,17 @@
             <% end %>
         <% else %>
             <% if makeadmin == true %>
-                <%= render 'users/usercards', person: individual, this: this, class_name: class_name  %>
+                <% if individual.class.to_s == "Team" %>
+                    <%= render 'teams/team', team: individual %>
+                <% else %>
+                    <%= render 'users/usercards', person: individual, this: this, class_name: class_name  %>
+                <% end %>
             <% else %>
-                <%= render 'users/usercardslist', person: individual %>
+                <% if individual.class.to_s == "Team" %>
+                    <%= render 'teams/team', team: individual %>
+                <% else %>
+                    <%= render 'users/usercardslist', person: individual %>
+                <% end %>
             <% end %>
         <% end %>
     <% end %>

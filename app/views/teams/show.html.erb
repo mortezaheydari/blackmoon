@@ -53,12 +53,13 @@
             <%# render "shared/upcoming_offering_test" %>
         </div>
 
-        <%# render "shared/activity_table", recent_activities: @recent_activities %>  
-        <div class="activity_table">
-        <h1>Team Notifications</h1>
-                <%= render "shared/notification_message", recent_activities: @recent_activities, log_title: "team notification" %>
-        </div>
-
+        <% if current_user.teams_administrating.include?(@team) %>
+             <div class="activity_table">
+            <h1>Team Notifications</h1>
+                    <%= render "shared/notification_message", recent_activities: @team_notifications, log_title: "team notification" %>
+            </div>
+            <%= render "shared/activity_table", recent_activities: @recent_activities %>
+        <% end %>
 
 
 

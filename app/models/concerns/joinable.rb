@@ -63,6 +63,10 @@ module Joinable
                 count == 0
             end
 
+            def full?
+                self.joineds.count >= self.number_of_attendings
+            end
+
 ## Team:
         else
             has_many :act_memberships, as: :act, :dependent => :destroy

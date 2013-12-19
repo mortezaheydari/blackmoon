@@ -106,6 +106,9 @@ class TeamsController < ApplicationController
 
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Team", trackable_id: @team.id)
 		@recent_activities = @recent_activities.order("created_at desc")
+
+                        @team_notifications =  PublicActivity::Activity.where(recipient_type: "Team", recipient_id: @team.id)
+                        @team_notifications = @team_notifications.order("created_at desc")
 	end
 
 	def edit

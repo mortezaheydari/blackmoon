@@ -159,7 +159,13 @@
                                 <table width="100%">
                                     <tr>
                                         <td width="130"><%= f.label :number_of_attendings, "Number of attendings" %></td>
-                                        <td><%= f.number_field :number_of_attendings %></td>
+                                        <td>
+                                            <%  if @event.open_to_edit?  %>
+                                                <%=  f.number_field :number_of_attendings %>
+                                            <% else %>
+                                                <label><%= @event.number_of_attendings %></label>
+                                            <% end -%>
+                                        </td>
                                     </tr>
 
                                     <%= render "shared/happening_case", happening_case: @happening_case %>

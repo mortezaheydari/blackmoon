@@ -48,7 +48,6 @@ class InvitationsController < ApplicationController
 		invitation_respond = params[:respond]
 		redirect_object
 
-		if @invitation.invited != current_user; raise Errors::FlowError.new; end
 
 		unless ["reject", "accept"].include? invitation_respond; raise Errors::FlowError.new; end
 
@@ -59,6 +58,7 @@ class InvitationsController < ApplicationController
 			@invitation.state = "accepted"
 
 			if @invitation.invited.class.to_s == "User"
+                                                if @invitation.invited != current_user; raise Errors::FlowError.new; end
 				offering_type = k_lower(@invitation.subject)
 				if @invitation.subject.class.to_s == "Team"
 					offerings_participating = @invitation.invited.send("#{offering_type}s_membership")
@@ -79,7 +79,7 @@ class InvitationsController < ApplicationController
 
 		@invitation.response_datetime = Time.now
 
-		if !@invitation.save; raise Errors::FlowError.new; end
+                        if !@invitation.save; raise Errors::FlowError.new; end
 
 		if @invitation.invited.class.to_s == "User" && @invitation.state = "accepted"
 			ModelMailer.individual_invitation_accepted_notification(@invitation).deliver

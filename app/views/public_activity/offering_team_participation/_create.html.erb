@@ -16,7 +16,7 @@
         <%- end %>
 
 <%#  3. notification %>
-    <% elsif @render_for == "notification" %>
+    <% elsif @render_for == "team notification" %>
         <% if activity.trackable && activity.owner %>
         	<%= link_to activity.owner.title, activity.owner %> participated team into <%= link_to activity.trackable.title, activity.trackable %>.
 

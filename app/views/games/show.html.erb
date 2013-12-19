@@ -37,25 +37,25 @@
     </div>
 
     <%= render 'shared/like_button', offering: @game if signed_in? %>
-    <% if @game.team_participation == true %>
-            <%= render 'shared/join_link', this: @game, participating_actor: "team" if signed_in? %>
-    <% else %>
-            <%= render 'shared/join_link', this: @game, participating_actor: "user" if signed_in? %>
-    <% end %>
-
-
     <a href="#"><div class="shareButton"></div></a>
-    <% if @game.team_participation == true %>
-        <% if @game.open_join %>
-            <% if @my_teams.empty? %>
-                <%= link_to content_tag("div", "", class: "joinedButton"), "#" %>
+
+
+    <% unless @game.full? %>
+        <% if @game.team_participation == true %>
+            <% if @game.open_join %>
+                <% if @my_teams.empty? %>
+                    <%= link_to content_tag("div", "", class: "joinedButton"), "#" %>
+                <% else %>
+                    <%= render "shared/team_join", this: @game, teams: @my_teams %>
+                <% end %>
             <% else %>
-                <%= render "shared/team_join", this: @game, teams: @my_teams %>
+                <%= render "shared/team_invite", this: @game, teams: @teams %>
             <% end %>
         <% else %>
-            <%= render "shared/team_invite", this: @game, teams: @teams %>
-        <% end %>
+                <%= render 'shared/join_link', this: @game, participating_actor: "user" if signed_in? %>
+        <% end -%>
     <% end -%>
+
     <%= link_to "Edit", edit_game_path(@game), class: "button blue left" if signed_in? && user_is_admin?(@game) %>
   </div>
 
