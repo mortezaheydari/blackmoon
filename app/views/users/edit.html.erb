@@ -58,6 +58,10 @@
                         <td><%= profile_form.label :last_name, class: "right" %></td>
                         <td><%= profile_form.text_field :last_name, class: "textField" %></td>
                     </tr>
+                    <tr>
+                        <td><%= profile_form.label :gender, "Gender" %></td>
+                        <td id="profileGender" ><%= profile_form.select :gender, {"Male" => "Male", "Female" => "Female"} %></td>
+                    </tr>
                      <tr>
                         <td><%= profile_form.label :phone, class: "right" %></td>
                         <td><%= profile_form.text_field :phone, class: "textField" %></td>

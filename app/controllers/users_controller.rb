@@ -33,9 +33,9 @@ class UsersController < ApplicationController
 		@user.profile.date_of_birth = date_helper_to_str(params[:date_of_birth])
 		if @user.update_attributes(params[:user]) # should become more secure in future.
 			flash[:success] = "Profile updated"
-			redirect_to @user, notice: "i don't know" #TODO: write a better notice.
+			redirect_to @user, notice: "Your profile has been updated." #TODO: write a better notice.
 		else
-			render 'edit'
+			render user_edit_path(@user)
 		end
 
 	end

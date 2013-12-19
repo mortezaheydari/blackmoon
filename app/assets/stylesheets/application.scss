@@ -2060,3 +2060,9 @@ form#new_session {
         height: 50px;
     }
 }
+
+td#profileGender {
+    div.bootstrap-select {
+        width: 100% !important;
+    }
+}
