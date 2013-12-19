@@ -122,7 +122,7 @@ class GamesController < ApplicationController
     if !@game.destroy; raise Errors::FlowError.new(@game); end
 
     @game.create_activity :destroy, owner: current_user
-    
+
     redirect_to(games_path)
   end
 

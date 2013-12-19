@@ -1105,7 +1105,7 @@ header#main {
       font-size: 12px;
       // margin-left: 5px;  for menu space
       &:hover {
-        text-decoration: underline;
+        color: #000;
       }
     }
     div#dashboard {
@@ -1228,7 +1228,6 @@ header#main {
              }
            }
            a#signOutTop {
-             margin-left: 25px;
              padding: 5px;
 
            }
@@ -2065,4 +2064,8 @@ td#profileGender {
     div.bootstrap-select {
         width: 100% !important;
     }
+}
+
+.menu.fa {
+    font-size: 1.5em;
 }
