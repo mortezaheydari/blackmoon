@@ -13,7 +13,7 @@
 
 		<%- end %>
 
-<%#  3. notification %>
+<%#  3-1. notification %>
 	<% elsif @render_for == "notification" %>
 		<% if activity.trackable && activity.owner %>
 			you were invited to "<%= link_to activity.trackable.subject.title, activity.trackable %>" by "<%= link_to activity.owner.title, activity.owner %>".
@@ -22,6 +22,18 @@
 			you were invited to "<%= link_to activity.trackable.title, activity.trackable %>".
 			
 		<%- end %>
+
+<%#  3-3. team notification %>
+	<% elsif @render_for == "team notification" %>
+		<% if activity.trackable && activity.owner %>
+			Team were invited to "<%= link_to activity.trackable.subject.title, activity.trackable %>" by "<%= link_to activity.owner.title, activity.owner %>".
+
+
+		<% elsif activity.trackable%>
+			Team were invited to "<%= link_to activity.trackable.title, activity.trackable %>".
+			
+		<%- end %>
+
 
 <%#  4. public %>
 	<% elsif @render_for == "public" %>

@@ -52,7 +52,16 @@
             </div>
             <%# render "shared/upcoming_offering_test" %>
         </div>
-        <%= render "shared/activity_table", recent_activities: @recent_activities %>
+
+        <%# render "shared/activity_table", recent_activities: @recent_activities %>  
+        <div class="activity_table">
+        <h1>Team Notifications</h1>
+                <%= render "shared/notification_message", recent_activities: @recent_activities, log_title: "team notification" %>
+        </div>
+
+
+
+
     </div>
         <%= render 'shared/cardsection', individuals: @likes, this: @team, class_name: "likes", makeadmin: true %>
 
