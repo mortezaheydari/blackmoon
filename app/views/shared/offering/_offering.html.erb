@@ -9,7 +9,14 @@
               <p class="text-left"><%= k_lower(offering).capitalize %></p>
               <% unless this_is_act?(offering) %>
                   <p class="text-left"><strong>Originator:</strong> <%= offering.creator.name %><br><%= offering.happening_case.date_and_time.strftime("%A, %B %d, %Y") unless ["Venue", "PersonalTrainer", "GroupTraining"].include? offering.class.to_s %></p>
-                  <div class="<%= offering.category unless ["Venue", "PersonalTrainer", "GroupTraining"].include? offering.class.to_s %>"></div>
+                  <!-- <div class="<%= offering.category unless ["Venue", "PersonalTrainer", "GroupTraining"].include? offering.class.to_s %>"></div> -->
+              <% unless ["Venue", "PersonalTrainer", "GroupTraining"].include?(offering.class.to_s) %>
+                  <% if offering.team_participation == true %>
+                        <div class="teamIcon"><i class="fa fa-users"></i></div>
+                  <% else %>
+                        <div class="teamIcon"><i class="fa fa-user"></i></div>
+                  <% end %>
+              <% end %>
 
               <% end -%>
               <% if this_is_act?(offering) %>
@@ -24,7 +31,7 @@
             </header>
 
             <div class="activityBody text-center">
-              <ul class="block-grid three-up">
+              <ul>
                 <li><%= image_tag "1.png" %></li>
                 <li><%= toggle_like_card_button(offering, current_user, {style_id: style_id, class_name: class_name}) if signed_in? %> <span id="likecount<%= k_lower(offering) + offering.id.to_s %>" class="small-text"><%= offering.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
                 <li><div class="featureStar"></div> </li>

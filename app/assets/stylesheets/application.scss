@@ -906,6 +906,7 @@ article.activityBox {
     border-top: 1px solid #ffffff;
     margin: 5px auto;
     ul {
+        width: 360px;
       li {
         display: inline;
         float: left;
@@ -2072,4 +2073,12 @@ td#profileGender {
 
 .teamInvite {
     margin: 255px 0 0 0;
+}
+
+.teamIcon {
+    text-align: center;
+    .fa {
+        font-size: 2em;
+        color: $NavTextColor;
+    }
 }
