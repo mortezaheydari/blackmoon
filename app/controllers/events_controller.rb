@@ -49,7 +49,7 @@ class EventsController < ApplicationController
 			with(:sport, params[:sport]) if params[:sport].present?
 
 			facet(:city)
-			with(:city, params[:city]) if params[:city].present?			
+			with(:city, params[:city]) if params[:city].present?
 
 			order_by(:updated_at, :desc)
 			# if params[:order_by] == "Price"
