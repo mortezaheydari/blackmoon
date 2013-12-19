@@ -125,6 +125,7 @@ class EventsController < ApplicationController
 		add_breadcrumb "events", events_path, :title => "Back to the Index"
 		add_breadcrumb @event.title, event_path(@event)
 		@likes = @event.flaggings.with_flag(:like)
+                        @teams = Team.all
 		@photo = Photo.new
 		@album = @event.album
 		@owner = @event

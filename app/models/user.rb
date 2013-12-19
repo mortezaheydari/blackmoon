@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
     # invitations_sent
     # invitations_received
     # join_requests_sent
-    
-    # offerings_participating   
+
+    # offerings_participating
     # games_participating
     # events_participating
     # offering_sessions_participating
@@ -61,7 +61,10 @@ class User < ActiveRecord::Base
 ##
 
   def title
-    title = (profile.first_name.capitalize+" "+profile.last_name.capitalize)
+    title = ""
+    if !profile.first_name.nil? && !profile.last_name.nil?
+        title = (profile.first_name.capitalize+" "+profile.last_name.capitalize)
+    end
     title = self.name if title.tr(' ', '').empty?
     title
   end

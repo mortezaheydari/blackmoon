@@ -46,7 +46,9 @@
 
     <a href="#"><div class="shareButton"></div></a>
     <%= link_to "Edit", edit_game_path(@game), class: "button blue left" if signed_in? && user_is_admin?(@game) %>
-
+    <% if @game.team_participation == true %>
+        <%= render "shared/team_invite", this: @game, teams: @teams %>
+    <% end -%>
   </div>
 
   <div class="secondMenu">

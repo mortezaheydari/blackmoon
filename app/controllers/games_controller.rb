@@ -133,6 +133,7 @@ class GamesController < ApplicationController
     @likes = @game.flaggings.with_flag(:like)
     @photo = Photo.new
     @album = @game.album
+    @teams = Team.all
     @owner = @game
 
 
