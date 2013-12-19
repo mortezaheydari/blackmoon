@@ -61,13 +61,8 @@ class TeamsController < ApplicationController
 
             end
             @teams = @search.results
-            @all_teams = Team.all
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Team")
 		@recent_activities = @recent_activities.order("created_at desc")
-		respond_to do |format|
-			format.html 
-			format.json { render json: @all_teams, root: false }
-		end		
 	end
 
 	def new

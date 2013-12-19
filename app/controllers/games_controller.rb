@@ -69,10 +69,6 @@ class GamesController < ApplicationController
 
     @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game")
     @recent_activities = @recent_activities.order("created_at desc")
-                        respond_to do |format|
-                            format.html
-                            format.json { render json: @games}
-                        end
 
   end
 
@@ -137,6 +133,7 @@ class GamesController < ApplicationController
     @likes = @game.flaggings.with_flag(:like)
     @photo = Photo.new
     @album = @game.album
+    @teams = Team.all
     @owner = @game
 
 

@@ -46,6 +46,9 @@
 
     <a href="#"><div class="shareButton"></div></a>
     <%= link_to "Edit", edit_event_path(@event), class: "button blue left" if signed_in? && user_is_admin?(@event) %>
+    <% if @event.team_participation == true %>
+        <%= render "shared/team_invite", this: @event, teams: @teams %>
+    <% end -%>
 
   </div>
 
@@ -66,7 +69,7 @@
             <% if @location %>
                 <h2 class="header_text">Location:</h2>
                 <div id="MapContainer"><%= render "shared/map" %></div>
-            <% end %>      
+            <% end %>
         <div class="<%= @event.category %> left"></div> <br> <br> <br>
         <p><%= @event.descreption %></p>
 
