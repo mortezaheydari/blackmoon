@@ -1,0 +1,7 @@
+<div class="teamInvite">
+    <%= form_tag offering_team_participations_create_path(offering_type: this.class.to_s.underscore, offering_id: this.id), :method => :post, class: "custom" do %>
+        <label for="invited_id">My Teams</label>
+        <%= select_tag "joining_team", options_from_collection_for_select(teams, "id", "title"), { :data => { :live_search => "true" } } %>
+        <%= submit_tag "Join", :name => nil, class: "btn" %>
+    <% end -%>
+</div>

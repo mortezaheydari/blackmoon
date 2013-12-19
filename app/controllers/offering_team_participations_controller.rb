@@ -12,7 +12,7 @@ class OfferingTeamParticipationsController < ApplicationController
 		team = Team.find_by_id(params[:joining_team])
 		offering_id = params[:offering_id]
 
-		if !name_is_valid?(user, offering_type); raise Errors::FlowError.new; end
+		if !name_is_valid?(team, offering_type); raise Errors::FlowError.new; end
 
 		offerings_participating = team.send("#{offering_type}s_participating")
 		joining_offering = offering_type.camelize.constantize.find_by_id(offering_id)
@@ -35,12 +35,12 @@ class OfferingTeamParticipationsController < ApplicationController
 		team = Team.find_by_id(params[:leaving_team])
 		offering_id = params[:offering_id]
 
-		if !name_is_valid?(user, offering_type); raise Errors::FlowError.new; end
-		 
+		if !name_is_valid?(team, offering_type); raise Errors::FlowError.new; end
+
 		participations = team.offering_team_participations.where(offering_type: offering_type, offering_id: offering_id)
 		# todo: check participation deadline is not pass
 		participations.each.destroy unless participations == []
-		joining_offering.create_activity key: "offering_team_participation.destroy", owner: current_user, recipient: team    
+		joining_offering.create_activity key: "offering_team_participation.destroy", owner: current_user, recipient: team
 		leaving_offering = offering.camelize.constantize.find_by_id(offering_id)
 		@participator = leaving_offering.team_participators
 		respond_to do |format|
@@ -54,6 +54,6 @@ class OfferingTeamParticipationsController < ApplicationController
 		# checks if offering name is valid for team
 		# note: this function is controller specific
 		def name_is_valid?(team, name)
-			team.respond_to? "#{name}s_participating" and ["event","class","game", "venue", "personal_trainer", "group_training"].include? name
+			team.respond_to? "#{name}s_participating" and ["event","game"].include? name
 		end
 end

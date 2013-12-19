@@ -126,6 +126,12 @@ class EventsController < ApplicationController
 		add_breadcrumb @event.title, event_path(@event)
 		@likes = @event.flaggings.with_flag(:like)
                         @teams = Team.all
+                        @my_teams = []
+                        current_user.teams_administrating.each do |team|
+                            unless team_is_participating?(@event, team)
+                                @my_teams << team
+                            end
+                        end
 		@photo = Photo.new
 		@album = @event.album
 		@owner = @event

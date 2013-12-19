@@ -27,11 +27,11 @@ class InvitationsController < ApplicationController
 
 		if @subject.inviteds.include? @invited; raise Errors::FlowError.new(@subject, "Already invited."); end
 
-		if !@invitation.save; raise Errors::FlowError.new(@subject, "There was a problem with submiting the invitation."); end	
+		if !@invitation.save; raise Errors::FlowError.new(@subject, "There was a problem with submiting the invitation."); end
 
 		if params[:invited_type] == "Team"
 			@invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
-			ModelMailer.team_new_invitation_notification(@invitation).deliver			
+			ModelMailer.team_new_invitation_notification(@invitation).deliver
 		else
 			@invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
 			ModelMailer.new_invitation_notification(@invitation).deliver
