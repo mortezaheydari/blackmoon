@@ -134,6 +134,12 @@ class GamesController < ApplicationController
     @photo = Photo.new
     @album = @game.album
     @teams = Team.all
+    @my_teams = []
+    current_user.teams_administrating.each do |team|
+        unless team_is_participating?(@game, team)
+            @my_teams << team
+        end
+    end
     @owner = @game
 
 

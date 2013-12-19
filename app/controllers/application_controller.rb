@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
 	# -ended
 
 	def flow_error_handler(exeption)
-		redirect_to exeption.redirect_object, notice: exeption.message and return
+		redirect_to exeption.redirect_object, alert: exeption.message and return
 	end
 
 	# def handle_record_not_saved

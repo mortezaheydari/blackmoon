@@ -59,7 +59,7 @@ module Joinable
             end
 
             def open_to_edit?
-                count = self.joinds.count + self.inviteds.count
+                count = self.joineds.count + self.inviteds.count
                 count == 0
             end
 
