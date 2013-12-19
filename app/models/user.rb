@@ -61,11 +61,9 @@ class User < ActiveRecord::Base
 ##
 
   def title
-    if profile.first_name || profile.last_name
-      profile.first_name+" "+profile.last_name
-    else
-      name
-    end
+    title = (profile.first_name.capitalize+" "+profile.last_name.capitalize)
+    title = self.name if title.tr(' ', '').empty?
+    title
   end
 
   def wants_daily_emails?

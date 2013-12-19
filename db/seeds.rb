@@ -77,5 +77,9 @@
 				Sport.create(name: sport, sport_category_id: water_sport_category.id)
 			end
 		end
+
+		if AdminUser.all.empty?
+			AdminUser.create!(:email => 'info@goboom.me', :password => 'goboom123', :password_confirmation => 'goboom123')
+		end
 	#
 # DONE
