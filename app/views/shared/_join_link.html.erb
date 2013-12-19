@@ -1,5 +1,5 @@
 <div id="join_container">
-<% if this.open_join %>
+<% if this.open_join || user_is_participating?(this) %>
     <% if participating_actor == "user" && this_is_offering?(this) %>
         <% if user_is_participating?(this) %>
                 <%= render "#{k_lower_p(this)}/joined" %>
