@@ -37,32 +37,37 @@ class TeamsController < ApplicationController
 
 	def index
 		add_breadcrumb "Teams", teams_path, :title => "Back to the Index"
-                        @search = Sunspot.search(Team) do
-                              fulltext params[:search]
+        @search = Sunspot.search(Team) do
+              fulltext params[:search]
 
-                              # with(:price, params[:min_price].to_i..params[:max_price].to_i) if params[:max_price].present? && params[:min_price].present?
-                              # with(:price).greater_than(params[:min_price].to_i) if !params[:max_price].present? && params[:min_price].present?
-                              # with(:price).less_than(params[:max_price].to_i) if params[:max_price].present? && !params[:min_price].present?
+              # with(:price, params[:min_price].to_i..params[:max_price].to_i) if params[:max_price].present? && params[:min_price].present?
+              # with(:price).greater_than(params[:min_price].to_i) if !params[:max_price].present? && params[:min_price].present?
+              # with(:price).less_than(params[:max_price].to_i) if params[:max_price].present? && !params[:min_price].present?
 
-                              # with(:condition, params[:condition]) if params[:condition].present?
-                              facet(:sport)
-                              with(:sport, params[:sport]) if params[:sport].present?
+              # with(:condition, params[:condition]) if params[:condition].present?
+              facet(:sport)
+              with(:sport, params[:sport]) if params[:sport].present?
 
-                              order_by(:updated_at, :desc)
-                              # if params[:order_by] == "Price"
-                              #   order_by(:price)
-                              # elsif params[:order_by] == "Popular"
-                              #   order_by(:favorite_count, :desc)
-                              # end
+              order_by(:updated_at, :desc)
+              # if params[:order_by] == "Price"
+              #   order_by(:price)
+              # elsif params[:order_by] == "Popular"
+              #   order_by(:favorite_count, :desc)
+              # end
 
-                              if params[:team_participation]  == "checked"
-                                with(:team_participation, true)
-                              end
+              if params[:team_participation]  == "checked"
+                with(:team_participation, true)
+              end
 
-                            end
-                            @teams = @search.results
+            end
+            @teams = @search.results
+            @all_teams = Team.all
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Team")
 		@recent_activities = @recent_activities.order("created_at desc")
+		respond_to do |format|
+			format.html 
+			format.json { render json: @all_teams, root: false }
+		end		
 	end
 
 	def new
