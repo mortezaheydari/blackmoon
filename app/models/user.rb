@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
     # teams_administrating
     # teams_membership
 
-  attr_accessible :name, :profile_attributes
+  attr_accessible :name, :profile_attributes, :gender
   validates :name, presence: true, length: {maximum: 50}, uniqueness: true
 
   make_flagger
