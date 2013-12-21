@@ -17,7 +17,20 @@ class OfferingIndividualParticipationsController < ApplicationController
 		if !name_is_valid?(user, offering_type); raise Errors::FlowError.new; end
 
 		offerings_participating = user.send("#{offering_type}s_participating")
+
 		joining_offering = offering_type.camelize.constantize.find_by_id(offering_id)
+
+		# gender restriction		
+		if joining_offering.class.to_s == "OfferingSession"
+			if ["male", "female"].include? joining_offering.owner.gender
+				unless user.gender == joining_offering.owner.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+			end
+		else
+			if ["male", "female"].include? joining_offering.gender
+				unless user.gender == joining_offering.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+			end
+		end
+
 		number_of_attendings = joining_offering.number_of_attendings
 		if offerings_participating.count < number_of_attendings or number_of_attendings == 0
 			# TODO: check participation deadline is not pass

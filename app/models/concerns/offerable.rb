@@ -1,9 +1,9 @@
 module Offerable
     extend ActiveSupport::Concern
 
-    validates :title, presence: true, length: {maximum: 50}, uniqueness: true
     
     included do
+        validates :title, presence: true, length: {maximum: 50}, uniqueness: true
         make_flaggable :like
         attr_accessor  :offering_type
 

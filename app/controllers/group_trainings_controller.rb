@@ -72,8 +72,13 @@ class GroupTrainingsController < ApplicationController
 
 	def create
 		@current_user_id = current_user.id
-		@group_training = GroupTraining.new(title: params[:group_training][:title], descreption: params[:group_training][:descreption])
+		@group_training = GroupTraining.new(title: params[:group_training][:title], descreption: params[:group_training][:descreption], gender: params[:group_training][:gender])
 		@group_training.album = Album.new
+
+		# gender restriction
+		if ["male", "female"].include? @group_training.gender
+			unless current_user.gender == @group_training.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		end
 
 		# here, location assignment operation should take place.
 						set_params_gmaps_flag :group_training
@@ -150,7 +155,12 @@ class GroupTrainingsController < ApplicationController
 		@location = @group_training.location
 						set_params_gmaps_flag :group_training
 
-		unless @group_training.update_attributes(title: params[:group_training][:title], descreption: params[:group_training][:descreption]) && @location.update_attributes(city: params[:group_training][:location][:city], custom_address_use: params[:group_training][:location][:custom_address_use], longitude: params[:group_training][:location][:longitude], latitude: params[:group_training][:location][:latitude], gmap_use: params[:group_training][:location][:gmap_use], custom_address: params[:group_training][:location][:custom_address], gmaps: params[:group_training][:location][:gmaps])
+		# gender restriction
+		if ["male", "female"].include? params[:group_training][:gender]
+			unless current_user.gender == params[:group_training][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		end
+
+		unless @group_training.update_attributes(title: params[:group_training][:title], descreption: params[:group_training][:descreption], gender: params[:group_training][:gender]) && @location.update_attributes(city: params[:group_training][:location][:city], custom_address_use: params[:group_training][:location][:custom_address_use], longitude: params[:group_training][:location][:longitude], latitude: params[:group_training][:location][:latitude], gmap_use: params[:group_training][:location][:gmap_use], custom_address: params[:group_training][:location][:custom_address], gmaps: params[:group_training][:location][:gmaps])
 			raise Errors::FlowError.new(edit_group_training_path(@group_training), "There has been a problem with data entry.")
 		end
 

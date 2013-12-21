@@ -73,8 +73,13 @@ class VenuesController < ApplicationController
 
 	def create
 		@current_user_id = current_user.id
-		@venue = Venue.new(title: params[:venue][:title], descreption: params[:venue][:descreption])
+		@venue = Venue.new(title: params[:venue][:title], descreption: params[:venue][:descreption], :gender params[:venue][:gender])
 		@venue.album = Album.new
+
+		# gender restriction
+		if ["male", "female"].include? @venue.gender
+			unless current_user.gender == @venue.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		end
 
 		# here, location assignment operation should take place.
 						set_params_gmaps_flag :venue
@@ -151,7 +156,12 @@ class VenuesController < ApplicationController
 		@location = @venue.location
 						set_params_gmaps_flag :venue
 
-		unless @venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmap_use: params[:venue][:location][:gmap_use], custom_address: params[:venue][:location][:custom_address], gmaps: params[:venue][:location][:gmaps])
+		# gender restriction
+		if ["male", "female"].include? params[:venue][:gender]
+			unless current_user.gender == params[:venue][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		end
+
+		unless @venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption], :gender params[:venue][:gender]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmap_use: params[:venue][:location][:gmap_use], custom_address: params[:venue][:location][:custom_address], gmaps: params[:venue][:location][:gmaps])
 			raise Errors::FlowError.new(edit_venue_path(@venue), "There has been a problem with data entry.")
 		end
 

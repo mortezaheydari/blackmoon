@@ -14,6 +14,12 @@ class ActMembershipsController < ApplicationController
 
 		acts_membership = user.send("#{act_type}s_membership")
 		joining_act = act_type.camelize.constantize.find_by_id(act_id)
+
+		# gender restriction
+		if ["male", "female"].include? joining_act.gender
+			unless user.gender == joining_act.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		end		
+			
 		number_of_attendings = joining_act.number_of_attendings
 		if acts_membership.count < number_of_attendings or number_of_attendings == 0
 			acts_membership << joining_act
