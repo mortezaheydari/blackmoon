@@ -90,10 +90,10 @@ class GamesController < ApplicationController
     @game.album = Album.new
     @game.happening_case = HappeningCase.new(params[:happening_case])
 
-    # gender restriction
-    if ["male", "female"].include? @game.gender
-      unless current_user.gender == @game.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
-    end
+    # # gender restriction
+    # if ["male", "female"].include? @game.gender
+    #   unless current_user.gender == @game.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+    # end
 
     @game.build_location(location)
 
@@ -180,10 +180,10 @@ class GamesController < ApplicationController
   def update
     @game = Game.find(params[:id])
 
-    # gender restriction
-    if ["male", "female"].include? params[:game][:gender]
-      unless current_user.gender == params[:game][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
-    end
+    # # gender restriction
+    # if ["male", "female"].include? params[:game][:gender]
+    #   unless current_user.gender == params[:game][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+    # end
 
     # update location
     if changing_location_parent?(@game) || changing_location_to_parent?(@game)

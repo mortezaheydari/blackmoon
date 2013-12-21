@@ -2,6 +2,7 @@ ActiveAdmin.register Account do
   filter :email
 
     index do 
+    	
       column :email
   	column "user name", :user
   	column "full name" do |account|

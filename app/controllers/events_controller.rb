@@ -87,10 +87,11 @@ class EventsController < ApplicationController
 		@event.album = Album.new
 		@event.happening_case = HappeningCase.new(params[:happening_case])
 
-	    # gender restriction
-	    if ["male", "female"].include? @event.gender
-	      unless current_user.gender == @event.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
-	    end
+	    # # gender restriction
+	    # if ["male", "female"].include? @event.gender
+	    #   unless current_user.gender == @event.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+	    # end
+
 		@event.build_location(location)
 
 		# custom or referenced location.
@@ -174,10 +175,11 @@ class EventsController < ApplicationController
 	def update
 		@event = Event.find(params[:id])
 
-	    # gender restriction
-	    if ["male", "female"].include? params[:event][:gender]
-	      unless current_user.gender == params[:event][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
-	    end
+	    # # gender restriction
+	    # if ["male", "female"].include? params[:event][:gender]
+	    #   unless current_user.gender == params[:event][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+	    # end
+	    
 		# update location
 		if changing_location_parent?(@event) || changing_location_to_parent?(@event)
 			params[:event].delete :location

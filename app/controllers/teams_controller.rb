@@ -74,6 +74,12 @@ class TeamsController < ApplicationController
 		@current_user_id = current_user.id
 		@team = Team.new(params[:team])
 		@team.album = Album.new
+
+		# gender restriction
+		if ["male", "female"].include? @team.gender
+			unless current_user.gender == @team.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		end
+
 		@team.save
 		@team.create_act_creation(creator_id: @current_user_id)
 		@team.act_administrations.create(administrator_id: @current_user_id)
@@ -108,8 +114,8 @@ class TeamsController < ApplicationController
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Team", trackable_id: @team.id)
 		@recent_activities = @recent_activities.order("created_at desc")
 
-                        @team_notifications =  PublicActivity::Activity.where(recipient_type: "Team", recipient_id: @team.id)
-                        @team_notifications = @team_notifications.order("created_at desc")
+        @team_notifications =  PublicActivity::Activity.where(recipient_type: "Team", recipient_id: @team.id)
+        @team_notifications = @team_notifications.order("created_at desc")
 	end
 
 	def edit
@@ -121,6 +127,12 @@ class TeamsController < ApplicationController
 
 	def update
 		@team = Team.find(params[:id])
+
+		# gender restriction
+		if ["male", "female"].include? params[:team][:gender]
+			unless current_user.gender == params[:team][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		end
+
 		if @team.update_attributes(params[:team]) # should become more secure in future.
 		@team.create_activity :update, owner: current_user
 			redirect_to @team
