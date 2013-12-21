@@ -3,6 +3,7 @@ class Event < ActiveRecord::Base
   include PublicActivity::Model
 
   include Offerable
+    # city
   	# location
   	# creator
   	# administrators
@@ -20,9 +21,9 @@ class Event < ActiveRecord::Base
   # include OfferingSearchable
 
   attr_accessible :category, :custom_address, :descreption,
-    :location_type, :title, :tournament_id, :fee, :fee_type, :sport, :number_of_attendings, :team_participation, :open_join, :city
+    :location_type, :title, :tournament_id, :fee, :fee_type, :sport, :number_of_attendings, :team_participation, :open_join
 
-  attr_accessor :updated_at
+  attr_accessor :updated_at, :city
 
     searchable do
         text :title, :boost => 5

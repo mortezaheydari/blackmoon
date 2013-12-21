@@ -3,6 +3,7 @@ class Game < ActiveRecord::Base
   include PublicActivity::Model
 
   include Offerable
+    # city
   	# location
   	# creator
   	# administrators
@@ -21,9 +22,9 @@ class Game < ActiveRecord::Base
 
   attr_accessible :category, :custom_address, :description,
   	:fee, :fee_type, :location_type, :number_of_attendings, :sport,
-  	:team_participation, :title, :tournament_id, :open_join, :location, :city
+  	:team_participation, :title, :tournament_id, :open_join, :location
 
-  attr_accessor :updated_at
+  attr_accessor :updated_at, :city
 
     searchable do
         text :title, :boost => 5

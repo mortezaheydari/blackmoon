@@ -2,6 +2,7 @@ class GroupTraining < ActiveRecord::Base
 
   include PublicActivity::Model
   include Offerable
+    # city
   	# location
   	# creator
   	# administrators
@@ -20,8 +21,10 @@ class GroupTraining < ActiveRecord::Base
 
   # include OfferingSearchable
 
-  attr_accessible :descreption, :title, :location, :city
-  attr_accessor :updated_at
+  attr_accessible :descreption, :title, :location
+
+  attr_accessor :updated_at, :city
+
     searchable do
       text :title, :boost => 5
       text :descreption
