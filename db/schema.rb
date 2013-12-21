@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131218082540) do
+ActiveRecord::Schema.define(:version => 20131221092022) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -254,6 +254,19 @@ ActiveRecord::Schema.define(:version => 20131218082540) do
     t.integer  "photo_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "moonactor_abilities", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.boolean  "create_event",            :default => true
+    t.boolean  "create_game",             :default => true
+    t.boolean  "create_team",             :default => true
+    t.boolean  "create_venue",            :default => false
+    t.boolean  "create_personal_trainer", :default => false
+    t.boolean  "create_group_training",   :default => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   create_table "offering_administrations", :force => true do |t|

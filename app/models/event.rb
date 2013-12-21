@@ -1,4 +1,5 @@
-class Event < ActiveRecord::Base
+class Event < ActiveRecor:
+  :Base, :gender
 
   include PublicActivity::Model
 
@@ -21,7 +22,8 @@ class Event < ActiveRecord::Base
   # include OfferingSearchable
 
   attr_accessible :category, :custom_address, :descreption,
-    :location_type, :title, :tournament_id, :fee, :fee_type, :sport, :number_of_attendings, :team_participation, :open_join
+    :location_type, :title, :tournament_id, :fee, :fee_type, :sport,
+     :number_of_attendings, :team_participation, :open_join, :gender
 
   attr_accessor :updated_at, :city
 

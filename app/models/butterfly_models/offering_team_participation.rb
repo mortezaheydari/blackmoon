@@ -1,7 +1,7 @@
 class OfferingTeamParticipation < ActiveRecord::Base
 
   include PublicActivity::Model  
-  attr_accessible :offering_id, :offering_type, :participator_id
+  attr_accessible :offering_id, :offering_type, :participator_id, :gender
   belongs_to :offering, polymorphic: true
   belongs_to :participator, :class_name => "Team", :foreign_key => "participator_id"    
 end

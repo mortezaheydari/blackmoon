@@ -1,5 +1,6 @@
 class AddGenderToOfferings < ActiveRecord::Migration
   def change
+    add_column :users, :gender, :string, default: "none"
     add_column :games, :gender, :string, default: "none"
     add_column :events, :gender, :string, default: "none"
     add_column :venues, :gender, :string, default: "none"

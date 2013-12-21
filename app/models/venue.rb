@@ -21,7 +21,7 @@ class Venue < ActiveRecord::Base
 
   # include OfferingSearchable
 
-  attr_accessible :descreption, :title, :location
+  attr_accessible :descreption, :title, :location, :gender
 
   attr_accessor :updated_at, :city
   
