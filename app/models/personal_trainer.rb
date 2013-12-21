@@ -1,4 +1,4 @@
-, :genderclass PersonalTrainer < ActiveRecord::Base
+class PersonalTrainer < ActiveRecord::Base
 
   include PublicActivity::Model
   include Offerable

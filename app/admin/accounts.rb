@@ -199,16 +199,15 @@ ActiveAdmin.register Account do
 				profile_form.input  :phone, as: :number
 				# profile_form.input   :gender
 				profile_form.input   :about
-				profile_form.input  :daily_email_option, as: :radio
+				profile_form.input  :daily_email_option
 		  end
 		  user_form.inputs "Abilities", :for => [:moonactor_ability, user_form.object.moonactor_ability || MoonactorAbility.new] do |ability_form|
-
-			ability_form.input :create_event, :as => :check_boxes
-			ability_form.input :create_game, :as => :check_boxes
-			ability_form.input :create_team, :as => :check_boxes
-			ability_form.input :create_group_training, :as => :check_boxes
-			ability_form.input :create_personal_trainer, :as => :check_boxes
-			ability_form.input :create_venue, :as => :check_boxes
+			ability_form.input :create_event
+			ability_form.input :create_game
+			ability_form.input :create_team
+			ability_form.input :create_group_training
+			ability_form.input :create_personal_trainer
+			ability_form.input :create_venue
 
 		  end
 		end

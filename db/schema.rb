@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131221092022) do
+ActiveRecord::Schema.define(:version => 20131221095453) do
 
   create_table "accounts", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -136,14 +136,15 @@ ActiveRecord::Schema.define(:version => 20131221092022) do
     t.string   "custom_address"
     t.string   "category"
     t.integer  "tournament_id"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.float    "fee"
     t.string   "fee_type"
     t.string   "sport"
     t.integer  "number_of_attendings"
     t.boolean  "team_participation"
-    t.boolean  "open_join",            :default => false, :null => false
+    t.boolean  "open_join",            :default => false,  :null => false
+    t.string   "gender",               :default => "none"
   end
 
   create_table "flaggings", :force => true do |t|
@@ -173,16 +174,18 @@ ActiveRecord::Schema.define(:version => 20131221092022) do
     t.string   "sport"
     t.integer  "number_of_attendings"
     t.boolean  "team_participation"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
-    t.boolean  "open_join",            :default => false, :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.boolean  "open_join",            :default => false,  :null => false
+    t.string   "gender",               :default => "none"
   end
 
   create_table "group_trainings", :force => true do |t|
     t.string   "title"
     t.text     "descreption"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.string   "gender",      :default => "none"
   end
 
   create_table "happening_cases", :force => true do |t|
@@ -316,8 +319,9 @@ ActiveRecord::Schema.define(:version => 20131221092022) do
   create_table "personal_trainers", :force => true do |t|
     t.string   "title"
     t.text     "descreption"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.string   "gender",      :default => "none"
   end
 
   create_table "photos", :force => true do |t|
@@ -374,18 +378,20 @@ ActiveRecord::Schema.define(:version => 20131221092022) do
     t.string   "title"
     t.text     "descreption"
     t.string   "sport"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.integer  "number_of_attendings"
     t.string   "category"
-    t.boolean  "open_join",            :default => false, :null => false
+    t.boolean  "open_join",            :default => false,  :null => false
+    t.string   "gender",               :default => "none"
   end
 
   create_table "users", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "account_id"
+    t.string   "gender",     :default => "none"
   end
 
   add_index "users", ["account_id"], :name => "index_users_on_account_id"
@@ -394,12 +400,13 @@ ActiveRecord::Schema.define(:version => 20131221092022) do
   create_table "venues", :force => true do |t|
     t.string   "title"
     t.text     "descreption"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.string   "address"
     t.boolean  "gmaps"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "gender",      :default => "none"
   end
 
 end

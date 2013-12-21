@@ -1,5 +1,4 @@
-class Event < ActiveRecor:
-  :Base, :gender
+class Event < ActiveRecord::Base
 
   include PublicActivity::Model
 

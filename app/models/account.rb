@@ -6,12 +6,19 @@ class Account < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :user_attributes, :user, :profile
+  attr_accessible :email, :password, :password_confirmation, :remember_me,
+          :user, :user_attributes,
+          :profile, :profile_attributes,
+          :moonactor_ability, :moonactor_ability_attributes
 
   has_one :user, :dependent => :destroy
   accepts_nested_attributes_for :user, :allow_destroy => true
 
-  has_one :profile, through: :user, :dependent => :destroy 
+  has_one :profile, through: :user, :dependent => :destroy
+  accepts_nested_attributes_for :profile, :allow_destroy => true
+
+  has_one :moonactor_ability, through: :user, :dependent => :destroy
+  accepts_nested_attributes_for :moonactor_ability, :allow_destroy => true
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, format: {with: VALID_EMAIL_REGEX}

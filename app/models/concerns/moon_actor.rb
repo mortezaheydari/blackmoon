@@ -99,7 +99,7 @@ module MoonActor
                 end
                 @createds
             end
-            has_one :moonactor_ability, dependent: :destroy; accepts_nested_attributes_for :moonactor_ability
+            has_one :moonactor_ability, as: :owner, dependent: :destroy; accepts_nested_attributes_for :moonactor_ability
 
             def can_create?(offering_name)
                 return true unless ["event","game", "team", "venue", "personal_trainer", "group_training"].incude? offering_name
