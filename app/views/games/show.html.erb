@@ -2,8 +2,8 @@
 <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
     <div class="eventProfileCard">
       <div class="large"><%= logo_for(@game, size: :user_profile, css_style: "margin:15px auto;") %></div>
-      <div class="<%= @game.category %> left"></div>
-      <h1><%= @game.title %></h1>
+      <!-- <div class="<%= @game.category %> left"></div> -->
+      <h1><%= truncate(@game.title, length: 35) %></h1>
       <p>Sports: <%= @game.sport %></p>
       <% unless @game.happening_case.duration_type == "All Day" %>
             <p>Time: <%= @game.happening_case.time_from.strftime("%I:%M %p") %> - <%= @game.happening_case.time_to.strftime("%I:%M %p")  %></p>

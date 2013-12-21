@@ -20,7 +20,7 @@
         (member)
     </h5>
       <% elsif signed_in? %>
-        Join this team <%= link_to "->", team_path(team), class: "teamCardJoin" %>
+        Join this team <%= link_to team_path(team), class: "teamCardJoin", target: "_blank" do %><i class="fa fa-sign-in"></i><% end -%>
       <% end %>
   </header>
 

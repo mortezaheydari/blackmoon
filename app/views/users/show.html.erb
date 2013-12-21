@@ -96,11 +96,33 @@
 <div class="userBottom">
 
 <div class="body userBottom">
-    <div class="likeSection">
-        <% @likes.each do |e| %>
-            <% @f = e.flaggable %>
-            <%= render 'shared/offering/offering', offering: @f, class_name: "likeSection" %>
-        <% end %>
+    <div class="row-fluid likeSection">
+        <div class="cardsection span9">
+            <% i = 0 %>
+            <% @likes.each do |offering| %>
+                <% @f = offering.flaggable %>
+                <% if i == 0 %>
+                <div class="row-fluid">
+                <% end %>
+                <div class="span4 indexCards">
+                    <% unless k_lower(offering) == "Team" %>
+                        <%= render 'shared/offering/offering', offering: @f, class_name: "gameList" %>
+                    <% else %>
+                        <%= render 'teams/team', team: offering %>
+                    <% end %>
+                </div>
+                <% if i == 2 || @f == @likes.last %>
+                </div>
+                <% end %>
+            <%
+                    if i == 2
+                        i = 0
+                    else
+                        i = i + 1
+                    end
+            %>
+            <% end %>
+        </div>
     </div>
 
 

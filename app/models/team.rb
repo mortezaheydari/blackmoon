@@ -23,8 +23,8 @@ class Team < ActiveRecord::Base
 	# events_participating
 
   # include OfferingSearchable
-  
-  attr_accessible :descreption, :sport, :number_of_attendings, :title, :category, :open_join
+
+  attr_accessible :descreption, :sport, :number_of_attendings, :title, :category, :open_join, :gender
 
   attr_accessor :updated_at
 

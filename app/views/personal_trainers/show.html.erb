@@ -2,7 +2,7 @@
 <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
     <div class="eventProfileCard">
       <div class="large"><%= logo_for(@personal_trainer, size: :user_profile, css_style: "margin:15px auto;") %></div>
-      <h1><%= @personal_trainer.title %></h1>
+      <h1><%= truncate(@personal_trainer.title, length: 35) %></h1>
     </div>
 
     <div class="locationPartial">

@@ -49,6 +49,10 @@
                         <td><%= f.label "User Name", class: "right" %></td>
                         <td><%= f.text_field :name, class: "textField" %></td>
                     </tr>
+                     <tr>
+                        <td><%= f.label :gender, "Gender" %></td>
+                        <td id="profileGender" ><%= f.select :gender, {"Unspecified" => "none", "Male" => "male", "Female" => "female"} %></td>
+                    </tr>
                     <%= f.fields_for :profile do |profile_form| %>
                      <tr>
                         <td><%= profile_form.label :first_name, class: "right" %></td>
@@ -58,10 +62,7 @@
                         <td><%= profile_form.label :last_name, class: "right" %></td>
                         <td><%= profile_form.text_field :last_name, class: "textField" %></td>
                     </tr>
-<!--                     <tr>
-                        <td><%# profile_form.label :gender, "Gender" %></td>
-                        <td id="profileGender" ><%# profile_form.select :gender, {"Male" => "Male", "Female" => "Female"} %></td>
-                    </tr> -->
+
                      <tr>
                         <td><%= profile_form.label :phone, class: "right" %></td>
                         <td><%= profile_form.text_field :phone, class: "textField" %></td>

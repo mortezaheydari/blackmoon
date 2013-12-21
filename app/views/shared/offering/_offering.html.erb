@@ -4,9 +4,12 @@
             <header class="activityHeader">
               <%= link_to logo_for(offering, size: :offering_card, css_class: "activityImage"), send(k_lower(offering) + "_path" ,offering) %>
               <h5 class="activityTitle text-left">
-                <%= link_to offering.title, send(k_lower(offering) + "_path" ,offering) %>
+                <%= link_to truncate(offering.title, length: 35), send(k_lower(offering) + "_path" ,offering) %>
               </h5>
-              <p class="text-left"><%= k_lower(offering).capitalize %></p>
+              <p class="text-left"><%= k_lower(offering).humanize unless k_lower(offering).humanize == "Group training" %></p>
+              <% if k_lower(offering).humanize == "Group training" %>
+                  <p class="text-left">Class</p>
+              <% end -%>
               <% unless this_is_act?(offering) %>
                   <p class="text-left"><strong>Originator:</strong> <%= offering.creator.name %><br><%= offering.happening_case.date_and_time.strftime("%A, %B %d, %Y") unless ["Venue", "PersonalTrainer", "GroupTraining"].include? offering.class.to_s %></p>
                   <!-- <div class="<%= offering.category unless ["Venue", "PersonalTrainer", "GroupTraining"].include? offering.class.to_s %>"></div> -->
@@ -19,20 +22,28 @@
               <% end %>
 
               <% end -%>
-              <% if this_is_act?(offering) %>
-                  <div class="teamMembers">
+              <%# if this_is_act?(offering) %>
+<!--                   <div class="teamMembers">
                     <p>Team Members</p>
                     <div class="smallImg"></div>
                     <div class="smallImg"></div>
                     <div class="smallImg"></div>
                     <div class="smallImg"></div>
-                  </div>
-              <% end %>
+                  </div>-->
+              <%# end %>
             </header>
 
             <div class="activityBody text-center">
               <ul>
-                <li class="gender" data-toggle="tooltip" title="Mixed"><i class="fa fa-female"></i><i class="fa fa-male"></i></li>
+                <% case offering.gender
+                    when "male" %>
+                        <li class="gender" data-toggle="tooltip" title="Male"><i class="fa fa-male"></i></li>
+                    <% when "female" %>
+                        <li class="gender" data-toggle="tooltip" title="Female"><i class="fa fa-female"></i></li>
+                    <% when "mix" %>
+                        <li class="gender" data-toggle="tooltip" title="Mix"><i class="fa fa-female"></i><i class="fa fa-male"></i></li>
+                    <% else %>
+                <% end %>
                 <li><%= toggle_like_card_button(offering, current_user, {style_id: style_id, class_name: class_name}) if signed_in? %> <span id="likecount<%= k_lower(offering) + offering.id.to_s %>" class="small-text"><%= offering.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
                 <li><i class="fa fa-star"></i></li>
               </ul>

@@ -44,6 +44,10 @@
                                         <td><%= f.label :descreption, "Description" %></td>
                                         <td><%= f.text_area :descreption %></td>
                                     </tr>
+                                     <tr>
+                                        <td><%= f.label :gender, "Gender" %></td>
+                                        <td><%= f.select :gender, {"Unspecified" => "none", "Female Only" => "female", "Male Only" => "male"} %></td>
+                                    </tr>
                                     <tr>
                                         <td><%= f.label :open_join, "Open for all to join" %></td>
                                         <td><%= f.select :open_join, {"Yes" => true, "No" => false} %></td>
