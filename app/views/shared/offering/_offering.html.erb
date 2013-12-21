@@ -12,9 +12,9 @@
                   <!-- <div class="<%= offering.category unless ["Venue", "PersonalTrainer", "GroupTraining"].include? offering.class.to_s %>"></div> -->
               <% unless ["Venue", "PersonalTrainer", "GroupTraining"].include?(offering.class.to_s) %>
                   <% if offering.team_participation == true %>
-                        <div class="teamIcon"><i class="fa fa-users"></i></div>
+                        <div class="teamIcon"><i class="fa fa-users team" data-toggle="tooltip" title="Team"></i></div>
                   <% else %>
-                        <div class="teamIcon"><i class="fa fa-user"></i></div>
+                        <div class="teamIcon"><i class="fa fa-user solo" data-toggle="tooltip" title="Individual"></i></div>
                   <% end %>
               <% end %>
 
@@ -32,9 +32,9 @@
 
             <div class="activityBody text-center">
               <ul>
-                <li><%= image_tag "1.png" %></li>
+                <li class="gender" data-toggle="tooltip" title="Mixed"><i class="fa fa-female"></i><i class="fa fa-male"></i></li>
                 <li><%= toggle_like_card_button(offering, current_user, {style_id: style_id, class_name: class_name}) if signed_in? %> <span id="likecount<%= k_lower(offering) + offering.id.to_s %>" class="small-text"><%= offering.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
-                <li><div class="featureStar"></div> </li>
+                <li><i class="fa fa-star"></i></li>
               </ul>
 
             </div>

@@ -174,6 +174,11 @@ $(document).ready(function() {
 
     $(".btn-group").hide();
 
+    $('.gender').tooltip();
+    $('div.team').tooltip();
+    $('div.solo').tooltip();
+    $(document).tooltip();
+
 
 // check select cat radiobutton
 
