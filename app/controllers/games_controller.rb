@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   include SessionsHelper
+  before_filter :can_create, only: [:create]  
  	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
@@ -213,8 +214,10 @@ class GamesController < ApplicationController
     def user_must_be_admin?
      @game = Game.find(params[:id])
      @user = current_user
-     redirect_to(@game) unless @game.administrators.include?(@user)
+     redirect_to(@game) and return unless @game.administrators.include?(@user)
     end
-
+    def can_create
+      redirect_to root_path and return unless current_user.can_create? "game"
+    end
 
 end

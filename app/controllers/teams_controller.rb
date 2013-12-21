@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
 	include SessionsHelper
+	before_filter :can_create, only: [:create]	
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
@@ -132,6 +133,9 @@ class TeamsController < ApplicationController
 		def user_must_be_admin?
 			@team = Team.find(params[:id])
 			@user = current_user
-			redirect_to(@team) unless @team.administrators.include?(@user)
+			redirect_to(@team) and return unless @team.administrators.include?(@user)
 		end
+		def can_create
+			redirect_to root_path and return unless current_user.can_create? "team"
+		end		
 end

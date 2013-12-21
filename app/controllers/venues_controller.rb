@@ -2,6 +2,7 @@ class VenuesController < ApplicationController
 
 	include SessionsHelper
 	include MultiSessionsHelper
+	before_filter :can_create, only: [:create]
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 			add_breadcrumb "home", :root_path
@@ -163,7 +164,11 @@ class VenuesController < ApplicationController
 		def user_must_be_admin?
 			@venue = Venue.find(params[:id])
 			@user = current_user
-			redirect_to(@venue) unless @venue.administrators.include?(@user)
+			redirect_to(@venue) and return unless @venue.administrators.include?(@user)
+		end
+
+		def can_create
+			redirect_to root_path and return unless current_user.can_create? "venue"
 		end
 
 

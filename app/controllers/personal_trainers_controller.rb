@@ -2,6 +2,7 @@ class PersonalTrainersController < ApplicationController
 
 	include SessionsHelper
 			include MultiSessionsHelper
+	before_filter :can_create, only: [:create]			
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 			add_breadcrumb "home", :root_path
@@ -163,7 +164,9 @@ class PersonalTrainersController < ApplicationController
 		def user_must_be_admin?
 			@personal_trainer = PersonalTrainer.find(params[:id])
 			@user = current_user
-			redirect_to(@personal_trainer) unless @personal_trainer.administrators.include?(@user)
+			redirect_to(@personal_trainer) and return unless @personal_trainer.administrators.include?(@user)
 		end
-
+		def can_create
+			redirect_to root_path and return unless current_user.can_create? "personal_trainer"
+		end
 end

@@ -1,6 +1,7 @@
 class GroupTrainingsController < ApplicationController
 	include SessionsHelper
 			include MultiSessionsHelper
+	before_filter :can_create, only: [:create]			
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 			add_breadcrumb "home", :root_path
@@ -162,7 +163,9 @@ class GroupTrainingsController < ApplicationController
 		def user_must_be_admin?
 			@group_training = GroupTraining.find(params[:id])
 			@user = current_user
-			redirect_to(@group_training) unless @group_training.administrators.include?(@user)
+			redirect_to(@group_training) and return unless @group_training.administrators.include?(@user)
 		end
-
+		def can_create
+			redirect_to root_path and return unless current_user.can_create? "group_training"
+		end
 end
