@@ -33,6 +33,7 @@ class Game < ActiveRecord::Base
         string :sport
         boolean :team_participation
         date :updated_at
+        string :gender    
         string :city
     end
 end

@@ -33,6 +33,7 @@ class Team < ActiveRecord::Base
 		text :descreption
 		# string :fee_type
 		string :sport
+		string :gender		
 		date :updated_at
 	end
 

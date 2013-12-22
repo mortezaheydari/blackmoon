@@ -30,5 +30,7 @@ class GroupTraining < ActiveRecord::Base
       text :descreption
       date :updated_at
       string :city
+      string :gender    
+
     end
 end

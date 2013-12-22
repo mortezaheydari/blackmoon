@@ -34,5 +34,7 @@ class Event < ActiveRecord::Base
         boolean :team_participation
         date :updated_at
         string :city
+        string :gender    
+
     end
 end

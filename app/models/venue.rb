@@ -29,6 +29,7 @@ class Venue < ActiveRecord::Base
       text :title, :boost => 5
       text :descreption
       date :updated_at
+      string :gender    
       string :city
     end
 end
