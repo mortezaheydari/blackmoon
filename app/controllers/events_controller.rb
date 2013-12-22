@@ -220,5 +220,8 @@ class EventsController < ApplicationController
 		 @user = current_user
 		 redirect_to(@event) and return unless @event.administrators.include?(@user)
 	 end
+    def can_create
+      redirect_to root_path and return unless current_user.can_create? "game"
+    end
 
 end

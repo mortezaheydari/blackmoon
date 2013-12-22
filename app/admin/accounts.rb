@@ -1,5 +1,6 @@
 ActiveAdmin.register Account do
   filter :email
+  filter :user
 
     index do 
     	

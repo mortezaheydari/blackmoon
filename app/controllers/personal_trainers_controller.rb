@@ -19,8 +19,8 @@ class PersonalTrainersController < ApplicationController
 			msg = "you now like this personal trainer."
 		end
 
-		respond_to do |format|
-			format.html { redirect_to @personal_trainer}
+		respond_to do |format
+|			format.html { redirect_to @personal_trainer}
 			format.js
 		end
 	end
@@ -73,7 +73,7 @@ class PersonalTrainersController < ApplicationController
 
 	def create
 		@current_user_id = current_user.id
-		@personal_trainer = PersonalTrainer.new(title: params[:personal_trainer][:title], descreption: params[:personal_trainer][:descreption], :gender params[:personal_trainer][:gender])
+		@personal_trainer = PersonalTrainer.new(title: params[:personal_trainer][:title], descreption: params[:personal_trainer][:descreption], gender: params[:personal_trainer][:gender])
 		@personal_trainer.album = Album.new
 
 		# # gender restriction
@@ -161,7 +161,18 @@ class PersonalTrainersController < ApplicationController
 		# 	unless current_user.gender == params[:personal_trainer][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
 		# end
 
-		unless @personal_trainer.update_attributes(title: params[:personal_trainer][:title], descreption: params[:personal_trainer][:descreption], :gender params[:personal_trainer][:gender]) && @location.update_attributes(city: params[:personal_trainer][:location][:city], custom_address_use: params[:personal_trainer][:location][:custom_address_use], longitude: params[:personal_trainer][:location][:longitude], latitude: params[:personal_trainer][:location][:latitude], gmap_use: params[:personal_trainer][:location][:gmap_use], custom_address: params[:personal_trainer][:location][:custom_address], gmaps: params[:personal_trainer][:location][:gmaps])
+		unless @personal_trainer.update_attributes(
+				title: params[:personal_trainer][:title],
+				descreption: params[:personal_trainer][:descreption],
+				gender: params[:personal_trainer][:gender])	&& 
+				@location.update_attributes(
+		 		city: params[:personal_trainer][:location][:city],
+		 		custom_address_use: params[:personal_trainer][:location][:custom_address_use],
+		 		longitude: params[:personal_trainer][:location][:longitude],
+		 		latitude: params[:personal_trainer][:location][:latitude],
+		 		gmap_use: params[:personal_trainer][:location][:gmap_use],
+		 		custom_address: params[:personal_trainer][:location][:custom_address],
+		 		gmaps: params[:personal_trainer][:location][:gmaps] )
 			raise Errors::FlowError.new(edit_personal_trainer_path(@personal_trainer), "There has been a problem with data entry.")
 		end
 
