@@ -59,7 +59,39 @@ class User < ActiveRecord::Base
   def unfollow!(other_user)
     relationships.find_by_followed_id(other_user.id).destroy
   end
+
+  def people_in_relation
+    self.followed + self.followers
+  end
+
+  def male_in_relation
+    @them = []
+    self.people_in_relation.each do |person|
+      if person.male?
+        @them << person
+      end
+    end
+    @them
+  end
+
+  def female_in_relation
+    @them = []
+    self.people_in_relation.each do |person|
+      if person.female?
+        @them << person
+      end
+    end
+    @them
+  end    
 ##
+
+  def male?
+    self.gender == "male"
+  end
+
+  def female?
+    self.gender == "male"
+  end
 
   def title
     title = ""
