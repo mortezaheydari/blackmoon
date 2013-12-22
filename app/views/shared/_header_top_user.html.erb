@@ -11,9 +11,15 @@
         </ul>
   </div>
   <div id="notiMenu" class="left">
-    <%= link_to notification_path do %>
-        <i class="menu fa fa-globe"></i>  Notifications
-    <% end -%>
+    <% if current_user.pending_invitations? %>
+        <%= link_to notification_path do %>
+            <i class="menu fa fa-globe active"></i>  Notifications
+        <% end -%>
+    <% else %>
+        <%= link_to notification_path do %>
+            <i class="menu fa fa-globe"></i>  Notifications
+        <% end -%>
+    <% end %>
   </div>
   <div id="createNewMenu" class="left">
     <a href="#Create"><i class="menu fa fa-plus"></i> Create New</a>
