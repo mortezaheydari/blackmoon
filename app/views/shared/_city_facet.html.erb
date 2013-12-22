@@ -6,9 +6,9 @@
 
     <li>
         <% if params[:city].blank? %>
-            <%= link_to row.value + " " + "(#{row.count})", :city => row.value, search: params[:search], team_participation: params[:team_participation], sport: params[:sport], offering_type: params[:offering_type] %>
+            <%= link_to row.value + " " + "(#{row.count})", :city => row.value, search: params[:search], team_participation: params[:team_participation], sport: params[:sport], offering_type: params[:offering_type], gender: params[:gender] %>
         <% else %>
-            <%= link_to "#{row.value} (remove)", :city => nil, search: params[:search],  team_participation: params[:team_participation], sport: params[:sport], offering_type: params[:offering_type]  %>
+            <%= link_to "#{row.value} (remove)", :city => nil, search: params[:search],  team_participation: params[:team_participation], sport: params[:sport], offering_type: params[:offering_type], gender: params[:gender]  %>
         <% end %>
     </li>
 <% end %>
