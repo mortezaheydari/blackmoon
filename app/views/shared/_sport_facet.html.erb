@@ -1,3 +1,4 @@
+<% unless @search.facet(:sport).rows.empty? %>
             <ul class="nav nav-list">
                 <li class="divider"></li>
                  <li class="nav-header">Sports</li>
@@ -14,3 +15,4 @@
               </li>
                 <li class="divider"></li>
             </ul>
+<% end %>
