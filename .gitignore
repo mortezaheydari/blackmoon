@@ -43,3 +43,5 @@ coverage/.resultset.json
 solr/
 
 solr/pids/development/sunspot-solr-development.pid
+
+db/test.sqlite3-journal
