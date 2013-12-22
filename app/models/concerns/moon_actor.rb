@@ -17,6 +17,12 @@ module MoonActor
             end
             @participatings
         end
+        def pending_invitations
+            Invitation.where("invited_id = ? AND invited_type = ? AND  state = ?", self.id, self.class.to_s, "sent")
+        end
+        def pending_invitations?
+            !self.pending_invitations.empty?
+        end
 
 # categorized features
 ## User
