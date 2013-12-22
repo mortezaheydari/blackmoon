@@ -173,7 +173,7 @@
                                         <td><%= f.label :team_participation, "Team Participation" %></td>
                                         <td>
                                             <%  if @event.open_to_edit?  %>
-                                                <%= f.select :team_participation, {"Yes" => true, "No" => false}%>
+                                                <%= f.select :team_participation, {"No" => false, "Yes" => true}%>
                                             <% else %>
                                                 <label><%= "Yes" if @event.team_participation == true %></label>
                                                 <label><%= "No" if @event.team_participation == false %></label>

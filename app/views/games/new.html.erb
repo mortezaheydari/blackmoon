@@ -95,7 +95,7 @@
                                     <%= render "shared/happening_case", happening_case: @happening_case %>
                                     <tr>
                                         <td><%= f.label :team_participation, "Team Participation" %></td>
-                                        <td><%= f.select :team_participation, {"Yes" => true, "No" => false} %></td>
+                                        <td><%= f.select :team_participation, {"No" => false, "Yes" => true} %></td>
                                     </tr>
                                   <tr>
                                         <td><%= f.label :gender, "Gender" %></td>
