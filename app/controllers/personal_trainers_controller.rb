@@ -2,7 +2,7 @@ class PersonalTrainersController < ApplicationController
 
 	include SessionsHelper
 			include MultiSessionsHelper
-	before_filter :can_create, only: [:create]			
+	before_filter :can_create, only: [:create]
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 			add_breadcrumb "home", :root_path
@@ -19,8 +19,8 @@ class PersonalTrainersController < ApplicationController
 			msg = "you now like this personal trainer."
 		end
 
-		respond_to do |format
-|			format.html { redirect_to @personal_trainer}
+		respond_to do |format|
+        			format.html { redirect_to @personal_trainer}
 			format.js
 		end
 	end
@@ -50,7 +50,7 @@ class PersonalTrainersController < ApplicationController
 			# with(:condition, params[:condition]) if params[:condition].present?
 
 			facet(:city)
-			with(:city, params[:city]) if params[:city].present?			
+			with(:city, params[:city]) if params[:city].present?
 
 			facet(:gender)
 			with(:gender, params[:gender]) if params[:gender].present?
@@ -62,7 +62,7 @@ class PersonalTrainersController < ApplicationController
 			#   order_by(:favorite_count, :desc)
 			# end
 
-		end		
+		end
 		@personal_trainers = @search.results
 
 		@recent_activities = PublicActivity::Activity.where(trackable_type: "PersonalTrainer")
@@ -102,7 +102,7 @@ class PersonalTrainersController < ApplicationController
 		@personal_trainer = PersonalTrainer.find(params[:id])
 
 		unless user_is_admin?(@personal_trainer) && user_created_this?(@personal_trainer); raise Errors::FlowError.new(personal_trainers_path); end
-		
+
 		if !@personal_trainer.destroy; raise Errors::FlowError.new(@personal_trainer); end
 		@personal_trainer.create_activity :destroy, owner: current_user
 
@@ -167,7 +167,7 @@ class PersonalTrainersController < ApplicationController
 		unless @personal_trainer.update_attributes(
 				title: params[:personal_trainer][:title],
 				descreption: params[:personal_trainer][:descreption],
-				gender: params[:personal_trainer][:gender])	&& 
+				gender: params[:personal_trainer][:gender])	&&
 				@location.update_attributes(
 		 		city: params[:personal_trainer][:location][:city],
 		 		custom_address_use: params[:personal_trainer][:location][:custom_address_use],

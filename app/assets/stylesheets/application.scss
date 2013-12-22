@@ -1918,7 +1918,16 @@ a.collective_label {
 
 div#Create {
     width: 600px;
-    height: 350px;
+    height: 70%;
+    overflow: hidden;
+    .modalLinks > div {
+        border-bottom: 1px solid #DDDDDD;
+        color: #666666;
+        font-size: 1.3em;
+        padding: 10px 0;
+        width: 100%;
+
+    }
     .header {
         height: 0;
         left: 300px;
@@ -1928,16 +1937,21 @@ div#Create {
         }
     }
     .linkContainer {
-        width: 100%;
         margin: 140px auto;
-        div {
-            width: 25%;
-            padding: 2%;
-            a {
+        width: 100%;
+        .modalLinks {
+            div {
+                border-bottom: 1px solid #DDDDDD;
                 color: $TextColor;
-                font-size: 1em;
-                p {
-                    text-align: center;
+                font-size: 1.3em;
+                padding: 10px 0;
+                width: 100%;
+            }
+            &:hover {
+                text-decoration: none !important;
+                div {
+                    background-color: #eee;
+                    color: #000 !important;
                 }
             }
         }
@@ -2081,6 +2095,7 @@ td#profileGender {
         font-size: 2em;
         color: $NavTextColor;
         width: 32px;
+        background: none !important;
     }
 }
 

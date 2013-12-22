@@ -10,12 +10,48 @@
         <div class="left" id="tour"><%= link_to content_tag("div", "", class: "tourIcon center"), new_game_path %> <%= link_to content_tag("p", "Game"), new_game_path %></div>
     </div> -->
     <div class="linkContainer">
-        <%= link_to "Team", new_team_path, class: "btn btn-info" %>
-        <%= link_to "Event", new_event_path, class: "btn btn-info" %>
-        <%= link_to "Game", new_game_path, class: "btn btn-info" %>
-        <%= link_to "Venue", new_venue_path, class: "btn btn-info" %>
-        <%= link_to "Class", new_group_training_path, class: "btn btn-info" %>
-        <%= link_to "Personal Trainer", new_personal_trainer_path, class: "btn btn-info" %>        
+        <% if current_user.can_create? "event" %>
+            <%= link_to new_event_path, class: "modalLinks" do %>
+                <div>
+                    <i class="fa fa-flag"></i> Event
+                </div>
+            <% end %>
+        <% end -%>
+        <% if current_user.can_create? "game" %>
+            <%= link_to new_game_path, class: "modalLinks" do %>
+                <div>
+                    <i class="fa fa-flag"></i> Game
+                </div>
+            <% end %>
+        <% end -%>
+        <% if current_user.can_create? "venue" %>
+            <%= link_to new_venue_path, class: "modalLinks" do %>
+                <div>
+                    <i class="fa fa-flag"></i> Venue
+                </div>
+            <% end %>
+        <% end -%>
+        <% if current_user.can_create? "group_training" %>
+            <%= link_to new_group_training_path, class: "modalLinks" do %>
+                <div>
+                    <i class="fa fa-flag"></i> Class
+                </div>
+            <% end %>
+        <% end -%>
+        <% if current_user.can_create? "personal_trainer" %>
+            <%= link_to new_personal_trainer_path, class: "modalLinks" do %>
+                <div>
+                    <i class="fa fa-flag"></i> Personal Trainer
+                </div>
+            <% end %>
+        <% end -%>
+        <% if current_user.can_create? "team" %>
+            <%= link_to new_team_path, class: "modalLinks" do %>
+                <div>
+                    <i class="fa fa-flag"></i> Team
+                </div>
+            <% end %>
+        <% end -%>
     </div>
   </div>
 </div>
