@@ -78,7 +78,7 @@
 			end
 		end
 
-		if AdminUser.all.empty?
+		if AdminUser.find_by_email("info@goboom.me").nil?
 			AdminUser.create!(:email => 'info@goboom.me', :password => 'goboom123', :password_confirmation => 'goboom123')
 		end
 	#
