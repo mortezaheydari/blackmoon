@@ -1,0 +1,7 @@
+<div class="teamInvite">
+    <%= form_tag invitations_path(inviter_id: current_user.id, inviter_type: current_user.class.to_s,invited_type: "User", subject_id: this.id, subject_type: this.class.to_s, return_object_id: this.id, return_object_type: this.class.to_s), :method => :post, class: "custom" do %>
+        <label for="invited_id">Users</label>
+        <%= select_tag "invited_id", options_from_collection_for_select(users, "id", "title"), { :data => { :live_search => "true" } } %>
+        <%= submit_tag "Invite", :name => nil, class: "btn" %>
+    <% end -%>
+</div>

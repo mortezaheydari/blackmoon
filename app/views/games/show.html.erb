@@ -52,10 +52,20 @@
                 <%= render "shared/team_invite", this: @game, teams: @teams %>
             <% end %>
         <% else %>
-            <% if current_user.gender == @game.gender %>
-                <%= render 'shared/join_link', this: @game, participating_actor: "user" if signed_in? %>
+            <% if @game.open_join %>
+                <% if current_user.gender == @game.gender || @game.gender == "none" || @game.gender == "mix" %>
+                    <%= render 'shared/join_link', this: @game, participating_actor: "user" if signed_in? %>
+                <% else %>
+                    <div class="gender genderShowPage" data-toggle="tooltip" title="<%= @game.gender.humanize %> Only"><i class="fa fa-<%= @game.gender %>"></i></div>
+                <% end %>
             <% else %>
-                <div class="gender genderShowPage" data-toggle="tooltip" title="<%= @game.gender.humanize %> Only"><i class="fa fa-<%= @game.gender %>"></i></div>
+                <% if @game.gender == "male" %>
+                    <%= render "shared/user_invite", this: @game, users: current_user.male_in_relation %>
+                <% elsif @game.gender == "female" %>
+                    <%= render "shared/user_invite", this: @game, users: current_user.female_in_relation %>
+                <% else %>
+                    <%= render "shared/user_invite", this: @game, users: current_user.people_in_relation %>
+                <% end -%>
             <% end %>
         <% end -%>
     <% end -%>

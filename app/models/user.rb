@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
 
   after_create do |user|
     user.create_profile if user.profile.nil?
-    user.create_moonactor_ability if user.moonactor_ability.nil?    
+    user.create_moonactor_ability if user.moonactor_ability.nil?
   end
 
   has_many :happening_schedules, :dependent => :destroy; accepts_nested_attributes_for :happening_schedules
@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def people_in_relation
-    self.followed + self.followers
+    self.followed_users + self.followers
   end
 
   def male_in_relation
@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
       end
     end
     @them
-  end    
+  end
 ##
 
   def male?
