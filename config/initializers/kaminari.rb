@@ -1,5 +1,5 @@
 Kaminari.configure do |config|
-  config.page_method_name = :per_page_kaminari
+  # config.page_method_name = :per_page_kaminari
 
 
 	if defined?(WillPaginate)
@@ -14,5 +14,5 @@ Kaminari.configure do |config|
 	      alias_method :num_pages, :total_pages
 	    end
 	  end
-	end  
+	end
 end

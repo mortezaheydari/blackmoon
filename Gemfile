@@ -14,7 +14,7 @@ gem "heroku"
 gem 'thin'
 gem 'public_activity'
 gem "paperclip", "~> 3.0"
-gem 'activeadmin'
+gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'gmaps4rails', "1.5"
 gem 'chronic'
 gem 'metric_fu'
