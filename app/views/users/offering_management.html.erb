@@ -196,36 +196,3 @@
                     </table>
     </div>
 </div>
-
-
-
-
-<script type="text/javascript">
-    $(document).ready(function() {
-
-    // Calling Ajax Function
-    loadContent();
-
-});
-
-function loadContent() {
-    $.ajax({
-       type: "GET",
-       url: "http://localhost:3000/games.json",
-       dataType: "json",
-       cache: false,
-       contentType: "application/json",
-       success: function(data) {
-        alert("Success");
-        $.getJSON("http://localhost:3000/games.json",function(result){
-            $.each(result, function(i, field){
-                $("#tabPanelWrapper").append(field.title + " ");
-            });
-        });
-      },
-        error: function(xhr, status, error) {
-            alert(xhr.status);
-        }
-    });
-}
-</script>

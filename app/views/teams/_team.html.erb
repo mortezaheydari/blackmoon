@@ -26,7 +26,16 @@
 
   <div class="activityBody text-center">
     <ul class="block-grid three-up">
-      <li><%= image_tag "1.png" %></li>
+    <% case team.gender
+        when "male" %>
+            <li class="gender" data-toggle="tooltip" title="Male"><i class="fa fa-male"></i></li>
+        <% when "female" %>
+            <li class="gender" data-toggle="tooltip" title="Female"><i class="fa fa-female"></i></li>
+        <% when "mix" %>
+            <li class="gender" data-toggle="tooltip" title="Mix"><i class="fa fa-female"></i><i class="fa fa-male"></i></li>
+        <% else %>
+            <li></li>
+    <% end %>
       <li><%= toggle_like_card_button(team, current_user, {style_id: style_id}) if signed_in? %> <span id="likecount<%= team.id %>" class="small-text"><%= team.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
       <li><div class="featureStar"></div> </li>
     </ul>
