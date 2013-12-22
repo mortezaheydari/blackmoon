@@ -52,6 +52,9 @@ class EventsController < ApplicationController
 			facet(:city)
 			with(:city, params[:city]) if params[:city].present?
 
+			facet(:gender)
+			with(:gender, params[:gender]) if params[:gender].present?
+
 			order_by(:updated_at, :desc)
 			# if params[:order_by] == "Price"
 			#   order_by(:price)

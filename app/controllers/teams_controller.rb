@@ -49,6 +49,9 @@ class TeamsController < ApplicationController
               facet(:sport)
               with(:sport, params[:sport]) if params[:sport].present?
 
+			facet(:gender)
+			with(:gender, params[:gender]) if params[:gender].present?
+
               order_by(:updated_at, :desc)
               # if params[:order_by] == "Price"
               #   order_by(:price)
