@@ -14,7 +14,7 @@ gem "heroku"
 gem 'thin'
 gem 'public_activity'
 gem "paperclip", "~> 3.0"
-gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'activeadmin'#, github: 'gregbell/active_admin'
 gem 'gmaps4rails', "1.5"
 gem 'chronic'
 gem 'metric_fu'
@@ -26,6 +26,12 @@ gem 'active_model_serializers'
 
 gem 'make_flaggable', :git => 'git@github.com:Charchoob/make_flaggable.git'
 gem "breadcrumbs_on_rails"
+
+# # dependancies
+# gem "mime-types", "~> 1.16"
+# gem"railties", "~> 3.1.0"
+# # done
+
 
 group :development do
     gem 'annotate', '2.5.0'

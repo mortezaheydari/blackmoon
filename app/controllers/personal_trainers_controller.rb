@@ -20,7 +20,7 @@ class PersonalTrainersController < ApplicationController
 		end
 
 		respond_to do |format|
-        			format.html { redirect_to @personal_trainer}
+			format.html { redirect_to @personal_trainer}
 			format.js
 		end
 	end
