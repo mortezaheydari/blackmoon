@@ -52,7 +52,11 @@
                 <%= render "shared/team_invite", this: @game, teams: @teams %>
             <% end %>
         <% else %>
+            <% if current_user.gender == @game.gender %>
                 <%= render 'shared/join_link', this: @game, participating_actor: "user" if signed_in? %>
+            <% else %>
+                <div class="gender genderShowPage" data-toggle="tooltip" title="<%= @game.gender.humanize %> Only"><i class="fa fa-<%= @game.gender %>"></i></div>
+            <% end %>
         <% end -%>
     <% end -%>
 

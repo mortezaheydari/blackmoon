@@ -23,10 +23,14 @@
         <p>Level 2: Game Originator</p>
     </div>
 
-    <%= render 'shared/like_button', offering: @team if signed_in? %>
-    <%= render 'shared/join_link', this: @team, participating_actor: "user" if signed_in? %>
-
     <a href="#"><div class="shareButton"></div></a>
+    <%= render 'shared/like_button', offering: @team if signed_in? %>
+    <% if current_user.gender == @team.gender %>
+        <%= render 'shared/join_link', this: @team, participating_actor: "user" if signed_in? %>
+    <% else %>
+        <div class="gender genderShowPage" data-toggle="tooltip" title="<%= @team.gender.humanize %> Only"><i class="fa fa-<%= @team.gender %>"></i></div>
+    <% end %>
+
     <%= link_to "Edit", edit_team_path(@team), class: "button blue left" if signed_in? && current_user == @team.creator %>
 
   </div>

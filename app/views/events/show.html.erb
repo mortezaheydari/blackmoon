@@ -37,25 +37,30 @@
     </div>
 
     <%= render 'shared/like_button', offering: @event if signed_in? %>
-    <% if @event.team_participation == true %>
-            <%= render 'shared/join_link', this: @event, participating_actor: "team" if signed_in? %>
-    <% else %>
-            <%= render 'shared/join_link', this: @event, participating_actor: "user" if signed_in? %>
-    <% end %>
-
-
     <a href="#"><div class="shareButton"></div></a>
-    <% if @event.team_participation == true %>
-        <% if @event.open_join %>
-            <% if @my_teams.empty? %>
-                <%= link_to content_tag("div", "", class: "joinedButton"), "#" %>
+
+
+    <% unless @event.full? %>
+        <% if @event.team_participation == true %>
+            <% if @event.open_join %>
+                <% if @my_teams.empty? %>
+                    <%= link_to content_tag("div", "", class: "joinedButton"), "#" %>
+                <% else %>
+                    <%= render "shared/team_join", this: @event, teams: @my_teams %>
+                <% end %>
             <% else %>
-                <%= render "shared/team_join", this: @event, teams: @my_teams %>
+                <%= render "shared/team_invite", this: @event, teams: @teams %>
             <% end %>
         <% else %>
-            <%= render "shared/team_invite", this: @event, teams: @teams %>
-        <% end %>
+            <% if current_user.gender == @event.gender %>
+                <%= render 'shared/join_link', this: @event, participating_actor: "user" if signed_in? %>
+            <% else %>
+                <div class="gender genderShowPage" data-toggle="tooltip" title="<%= @event.gender.humanize %> Only"><i class="fa fa-<%= @event.gender %>"></i></div>
+            <% end %>
+        <% end -%>
     <% end -%>
+
+
     <%= link_to "Edit", edit_event_path(@event), class: "button blue left" if signed_in? && user_is_admin?(@event) %>
 
   </div>

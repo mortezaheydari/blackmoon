@@ -46,8 +46,17 @@ class ApplicationController < ActionController::Base
 
 	# -ended
 
-	def flow_error_handler(exeption)
-		redirect_to exeption.redirect_object, alert: exeption.message and return
+	def flow_error_handler(exception)
+                if exception.message.class.to_s == "String"
+                    redirect_to exception.redirect_object, alert: exception.message and return
+                else
+                    flash[:alert] = []
+                    flash[:alert] << "There was a problem with your request."
+                    exception.message.full_messages.each do |msg|
+                        flash[:alert] << msg
+                    end
+                    redirect_to exception.redirect_object and return
+                end
 	end
 
 	# def handle_record_not_saved

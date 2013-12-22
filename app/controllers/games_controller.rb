@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   include SessionsHelper
-  before_filter :can_create, only: [:create]  
+  before_filter :can_create, only: [:create]
  	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
  	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
@@ -138,11 +138,15 @@ class GamesController < ApplicationController
     @likes = @game.flaggings.with_flag(:like)
     @photo = Photo.new
     @album = @game.album
-    @teams = Team.all
+    if ["male", "female"].include? @game.gender
+        @teams = Team.where("gender = ?", @game.gender)
+    end
     @my_teams = []
     current_user.teams_administrating.each do |team|
         unless team_is_participating?(@game, team)
-            @my_teams << team
+            if @game.gender == team.gender
+                @my_teams << team
+            end
         end
     end
     @owner = @game
@@ -184,7 +188,6 @@ class GamesController < ApplicationController
     # if ["male", "female"].include? params[:game][:gender]
     #   unless current_user.gender == params[:game][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
     # end
-
     # update location
     if changing_location_parent?(@game) || changing_location_to_parent?(@game)
       params[:game].delete :location
@@ -211,8 +214,9 @@ class GamesController < ApplicationController
       # do nothing
     end
 
+
     if !@game.happening_case.update_attributes params[:happening_case]; raise Errors::FlowError.new(edit_game_path(@game)); end
-    if !@game.update_attributes(params[:game]); raise Errors::FlowError.new(edit_game_path(@game)); end
+    if !@game.update_attributes(params[:game]); raise Errors::FlowError.new(edit_game_path(@game), @game.errors); end
     if !@game.create_activity :update, owner: current_user; raise Errors::FlowError.new(edit_game_path(@game)); end
 
     redirect_to @game, notice: "Game was updated"

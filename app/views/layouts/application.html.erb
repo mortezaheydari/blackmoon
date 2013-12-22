@@ -51,7 +51,16 @@
                 <% elsif alert %>
                 <div class="alert">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <%= alert %>
+                    <% if alert.class.to_s == "Array" %>
+                        <h4><%= alert.shift %></h4>
+                        <ul>
+                        <% alert.each do |a| %>
+                            <li><%= a %></li>
+                        <% end -%>
+                        </ul>
+                    <% else %>
+                        <%= alert %>
+                    <% end %>
                 </div>
                 <% end %>
             </div>

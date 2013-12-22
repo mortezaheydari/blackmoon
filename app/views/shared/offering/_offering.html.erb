@@ -43,6 +43,7 @@
                     <% when "mix" %>
                         <li class="gender" data-toggle="tooltip" title="Mix"><i class="fa fa-female"></i><i class="fa fa-male"></i></li>
                     <% else %>
+                        <li>&nbsp;&nbsp;&nbsp;</li>
                 <% end %>
                 <li><%= toggle_like_card_button(offering, current_user, {style_id: style_id, class_name: class_name}) if signed_in? %> <span id="likecount<%= k_lower(offering) + offering.id.to_s %>" class="small-text"><%= offering.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
                 <li><i class="fa fa-star"></i></li>

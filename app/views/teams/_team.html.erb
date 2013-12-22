@@ -11,16 +11,14 @@
     <h5 class="activityTitle text-left">
       <%= link_to team.title, team_path(team) %>
     </h5>
-    <h5 class="activityTitle text-left">
       <% if user_created_this? team, person %>
-        (creator)
+        <p class="text-left"><strong>Role:</strong> Creator</p>
       <% elsif user_is_admin? team,  person %>
-        (admin)
+        <p class="text-left"><strong>Role:</strong> Admin</p>
       <% elsif user_is_member? team, person %>
-        (member)
-    </h5>
+        <p class="text-left"><strong>Role:</strong> Member</p>
       <% elsif signed_in? %>
-        Join this team <%= link_to team_path(team), class: "teamCardJoin", target: "_blank" do %><i class="fa fa-sign-in"></i><% end -%>
+        <p class="text-left">Join this team <%= link_to team_path(team), class: "teamCardJoin", target: "_blank" do %><i class="fa fa-sign-in"></i><% end -%></p>
       <% end %>
   </header>
 
@@ -34,7 +32,7 @@
         <% when "mix" %>
             <li class="gender" data-toggle="tooltip" title="Mix"><i class="fa fa-female"></i><i class="fa fa-male"></i></li>
         <% else %>
-            <li></li>
+            <li>&nbsp;</li>
     <% end %>
       <li><%= toggle_like_card_button(team, current_user, {style_id: style_id}) if signed_in? %> <span id="likecount<%= team.id %>" class="small-text"><%= team.flaggings.with_flag(:like).count if signed_in?  %> </span> </li>
       <li><div class="featureStar"></div> </li>
