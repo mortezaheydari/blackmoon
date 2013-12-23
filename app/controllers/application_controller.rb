@@ -51,23 +51,35 @@ class ApplicationController < ActionController::Base
     
     # debugging methods and error handlers
 	def flow_error_handler(exception)
-                if exception.message.class.to_s == "String"
-                    redirect_to exception.redirect_object, alert: exception.message and return
-                elsif exception.message.class.to_s == "Array"
-                    flash[:alert] = []
-                    flash[:alert] << "There was a problem with your request."
-                    exception.message.each do |msg|
-                        flash[:alert] << msg
-                    end
-                    redirect_to exception.redirect_object and return
-                else 
-                    flash[:alert] = []
-                    flash[:alert] << "There was a problem with your request."
-                    exception.message.full_messages.each do |msg|
-                        flash[:alert] << msg
-                    end
-                    redirect_to exception.redirect_object and return
-                end
+        if exception.message.class.to_s == "String"
+            respond_to do |format|
+                format.html { redirect_to exception.redirect_object, alert: exception.message }
+                format.js { render 'error/refresh_flash_message' }
+            end   
+            return                        
+        elsif exception.message.class.to_s == "Array"
+            flash[:alert] = []
+            flash[:alert] << "There was a problem with your request."
+            exception.message.each do |msg|
+                flash[:alert] << msg
+            end
+            respond_to do |format|
+                format.html { redirect_to exception.redirect_object }
+                format.js { render 'error/refresh_flash_message' }
+            end   
+            return                        
+        else 
+            flash[:alert] = []
+            flash[:alert] << "There was a problem with your request."
+            exception.message.full_messages.each do |msg|
+                flash[:alert] << msg
+            end
+            respond_to do |format|
+                format.html { redirect_to exception.redirect_object }
+                format.js { render 'error/refresh_flash_message' }
+            end   
+            return                  
+        end
 	end
 
     # Entrance of the following errors indicate a possibility of website malfunction.
@@ -84,44 +96,69 @@ class ApplicationController < ActionController::Base
     #   E0804: problem with PublicActivity in update action, It will go alright except for lack of notification.      
 
 	def validation_error_handler(exception)
-                if exception.message.class.to_s == "String"
-                    flash[:alert] = exception.message
-                    render exception.redirect_object and return
-                elsif exception.message.class.to_s == "Array"
-                    flash[:alert] = []
-                    flash[:alert] << "There was a problem with your request."
-                    exception.message.each do |msg|
-                        flash[:alert] << msg
-                    end
-                    render exception.redirect_object and return
-                else 
-                    flash[:alert] = []
-                    flash[:alert] << "There was a problem with your request."
-                    exception.message.full_messages.each do |msg|
-                        flash[:alert] << msg
-                    end
-                    render exception.redirect_object and return
-                end
+        if exception.message.class.to_s == "String"
+            flash[:alert] = exception.message
+            respond_to do |format|
+                format.html { render exception.redirect_object }
+                format.js { render 'error/refresh_flash_message' }
+            end
+
+            return
+        elsif exception.message.class.to_s == "Array"
+            flash[:alert] = []
+            flash[:alert] << "There was a problem with your request."
+            exception.message.each do |msg|
+                flash[:alert] << msg
+            end
+            respond_to do |format|
+                format.html { render exception.redirect_object }
+                format.js { render 'error/refresh_flash_message' }
+            end
+            return
+        else 
+            flash[:alert] = []
+            flash[:alert] << "There was a problem with your request."
+            exception.message.full_messages.each do |msg|
+                flash[:alert] << msg
+            end
+            respond_to do |format|
+                format.html { render exception.redirect_object }
+                format.js { render 'error/refresh_flash_message' }
+            end                    
+            return
+        end
 	end
 
     def load_malfunction_error_handler(exception)
-                if exception.message.class.to_s == "String"
-                    redirect_to exception.redirect_object, alert: exception.message and return
-                elsif exception.message.class.to_s == "Array"
-                    flash[:alert] = []
-                    flash[:alert] << "There was a problem with your request. Please report this problem in case it occurs again."
-                    exception.message.each do |msg|
-                        flash[:alert] << msg
-                    end
-                    redirect_to exception.redirect_object and return
-                else 
-                    flash[:alert] = []
-                    flash[:alert] << "There was a problem with your request. Please report this problem in case it occurs again."
-                    exception.message.full_messages.each do |msg|
-                        flash[:alert] << msg
-                    end
-                    redirect_to exception.redirect_object and return
-                end
+        if exception.message.class.to_s == "String"
+            respond_to do |format|
+                format.html { redirect_to exception.redirect_object, alert: exception.message }
+                format.js { render 'error/refresh_flash_message' }
+            end                      
+            return
+        elsif exception.message.class.to_s == "Array"
+            flash[:alert] = []
+            flash[:alert] << "There was a problem with your request. Please report this problem in case it occurs again."
+            exception.message.each do |msg|
+                flash[:alert] << msg
+            end
+            respond_to do |format|
+                format.html { redirect_to exception.redirect_object }
+                format.js { render 'error/refresh_flash_message' }
+            end                     
+            return
+        else 
+            flash[:alert] = []
+            flash[:alert] << "There was a problem with your request. Please report this problem in case it occurs again."
+            exception.message.full_messages.each do |msg|
+                flash[:alert] << msg
+            end
+            respond_to do |format|
+                format.html { redirect_to exception.redirect_object }
+                format.js { render 'error/refresh_flash_message' }
+            end                         
+            return
+        end
     end    
 
     # Currently, being done manually
