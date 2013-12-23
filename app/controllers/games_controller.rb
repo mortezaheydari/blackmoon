@@ -78,16 +78,7 @@ class GamesController < ApplicationController
 		set_params_gmaps_flag :game
 		location_param = params[:game].delete :location
 
-		@game = Game.new(title: params[:game][:title], 
-			description: params[:game][:description], 
-			category: params[:game][:category], 
-			fee: params[:game][:fee], 
-			fee_type: params[:game][:fee_type], 
-			sport: params[:game][:sport], 
-			number_of_attendings: params[:game][:number_of_attendings], 
-			team_participation: params[:game][:team_participation], 
-			open_join: params[:game][:open_join], 
-			gender: params[:game][:gender])
+		@game = Game.new(safe_param)
 
 		@game.album = Album.new
 		@happening_case = @game.build_happening_case(params[:happening_case])
@@ -117,12 +108,19 @@ class GamesController < ApplicationController
 		if !@game.save ; raise Errors::FlowError.new(new_game_path, @game.errors); end
 
 		# secondary database actions
-		@game.create_offering_creation(creator_id: @current_user_id)
-		@game.offering_administrations.create(administrator_id: @current_user_id)
-		@game.create_activity :create, owner: current_user
+		unless @game.create_offering_creation(creator_id: @current_user_id)
+			@game.destroy
+			raise Errors::LoudMalfunction.new("E0801")
+		end
+		unless @game.offering_administrations.create(administrator_id: @current_user_id)
+			@game.destroy
+			raise Errors::LoudMalfunction.new("E0802")
+		end	
+		unless @game.create_activity(:create, owner: current_user)
+			silent_malfunction_error_handler("E0803")		
+		end
 
 		# done 
-
 		redirect_to @game, notice: "Game was created"
 	end
 
@@ -152,8 +150,9 @@ class GamesController < ApplicationController
 		@album = @game.album
 		if ["male", "female"].include? @game.gender
 			@teams = Team.where("gender = ?", @game.gender)
+		else
+			@teams = Team.all
 		end
-        @teams = Team.all		
 		@my_teams = []
 		current_user.teams_administrating.each do |team|
 			unless team_is_participating?(@game, team)
@@ -205,9 +204,6 @@ class GamesController < ApplicationController
 		@location = @game.location
 		@happening_case = @game.happening_case
 
-		# @location = @game.location
-		# @happening_case = @game.happening_case
-
 		# # gender restriction
 		# if ["male", "female"].include? params[:game][:gender]
 		#   unless current_user.gender == params[:game][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
@@ -241,17 +237,7 @@ class GamesController < ApplicationController
 
 		@happening_case = @game.happening_case
 		# update and validate happening_case
-		safe_param = Hash.new
-		safe_param[:title] = params[:game][:title] unless params[:game][:title].nil?
-		safe_param[:description] = params[:game][:description] unless params[:game][:description].nil?
-		safe_param[:category] = params[:game][:category] unless params[:game][:category].nil?
-		safe_param[:fee] = params[:game][:fee] unless params[:game][:fee].nil?
-		safe_param[:fee_type] = params[:game][:fee_type] unless params[:game][:fee_type].nil?
-		safe_param[:sport] = params[:game][:sport] unless params[:game][:sport].nil?
-		safe_param[:number_of_attendings] = params[:game][:number_of_attendings] unless params[:game][:number_of_attendings].nil?
-		safe_param[:team_participation] = params[:game][:team_participation] unless params[:game][:team_participation].nil?
-		safe_param[:open_join] = params[:game][:open_join] unless params[:game][:open_join].nil?
-		safe_param[:gender] = params[:game][:gender] unless params[:game][:gender].nil?
+
 
 		@game.assign_attributes safe_param
 
@@ -259,8 +245,9 @@ class GamesController < ApplicationController
 		if !@game.save; raise Errors::FlowError.new(:edit, @game.errors); end		
 
 		# secondary database actions
-		@game.create_activity :update, owner: current_user
-
+		unless @game.create_activity :update, owner: current_user
+			silent_malfunction_error_handler("E0804")	
+		end
 		# done
 		redirect_to @game, notice: "Game was updated"
 
@@ -275,6 +262,21 @@ class GamesController < ApplicationController
 		end
 		def can_create
 			redirect_to root_path and return unless current_user.can_create? "game"
+		end
+
+		def safe_param
+			this = Hash.new
+			this[:title] = params[:game][:title] unless params[:game][:title].nil?
+			this[:description] = params[:game][:description] unless params[:game][:description].nil?
+			this[:category] = params[:game][:category] unless params[:game][:category].nil?
+			this[:fee] = params[:game][:fee] unless params[:game][:fee].nil?
+			this[:fee_type] = params[:game][:fee_type] unless params[:game][:fee_type].nil?
+			this[:sport] = params[:game][:sport] unless params[:game][:sport].nil?
+			this[:number_of_attendings] = params[:game][:number_of_attendings] unless params[:game][:number_of_attendings].nil?
+			this[:team_participation] = params[:game][:team_participation] unless params[:game][:team_participation].nil?
+			this[:open_join] = params[:game][:open_join] unless params[:game][:open_join].nil?
+			this[:gender] = params[:game][:gender] unless params[:game][:gender].nil?
+			this
 		end
 
 end

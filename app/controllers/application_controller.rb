@@ -75,11 +75,13 @@ class ApplicationController < ActionController::Base
     # event_controller
     #   E0701: could not create "offering_creation"
     #   E0702: could not create "offering_administration"
-    #   E0703: problem with PublicActivity, It will go alright except for lack of notification.
+    #   E0703: problem with PublicActivity in create action, It will go alright except for lack of notification.
+    #   E0704: problem with PublicActivity in update action, It will go alright except for lack of notification.    
     # game_controller
     #   E0801: could not create "offering_creation"
     #   E0802: could not create "offering_administration"
-    #   E0803: problem with PublicActivity, It will go alright except for lack of notification.
+    #   E0803: problem with PublicActivity in create action, It will go alright except for lack of notification.
+    #   E0804: problem with PublicActivity in update action, It will go alright except for lack of notification.      
 
 	def validation_error_handler(exception)
                 if exception.message.class.to_s == "String"
