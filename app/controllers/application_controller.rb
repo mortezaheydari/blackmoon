@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
 
   	rescue_from Errors::FlowError, with: :flow_error_handler
   	rescue_from Errors::ValidationError, with: :validation_error_handler  	
+    rescue_from Errors::LoudMalfunction, with: :load_malfunction_error_handler        
+    # rescue_from Errors::SilentMalfunction, with: :silent_malfunction_error_handler           
 
 	def name_is_valid?(name)
 	  ["event","game", "user", "team", "venue", "personal_trainer", "group_training"].include? name.underscore
@@ -46,7 +48,8 @@ class ApplicationController < ActionController::Base
 	end
 
 	# -ended
-
+    
+    # debugging methods and error handlers
 	def flow_error_handler(exception)
                 if exception.message.class.to_s == "String"
                     redirect_to exception.redirect_object, alert: exception.message and return
@@ -66,6 +69,17 @@ class ApplicationController < ActionController::Base
                     redirect_to exception.redirect_object and return
                 end
 	end
+
+    # Entrance of the following errors indicate a possibility of website malfunction.
+    # Make sure to revise server, database and code in case any these codes were reported
+    # event_controller
+    #   E0701: could not create "offering_creation"
+    #   E0702: could not create "offering_administration"
+    #   E0703: problem with PublicActivity, It will go alright except for lack of notification.
+    # game_controller
+    #   E0801: could not create "offering_creation"
+    #   E0802: could not create "offering_administration"
+    #   E0803: problem with PublicActivity, It will go alright except for lack of notification.
 
 	def validation_error_handler(exception)
                 if exception.message.class.to_s == "String"
@@ -87,10 +101,37 @@ class ApplicationController < ActionController::Base
                     render exception.redirect_object and return
                 end
 	end
-	# def handle_record_not_saved
-	# 	redirect_to new_game_path, notice: "there has been a problem with data entry." and return
-	# end
 
+    def load_malfunction_error_handler(exception)
+                if exception.message.class.to_s == "String"
+                    redirect_to exception.redirect_object, alert: exception.message and return
+                elsif exception.message.class.to_s == "Array"
+                    flash[:alert] = []
+                    flash[:alert] << "There was a problem with your request. Please report this problem in case it occurs again."
+                    exception.message.each do |msg|
+                        flash[:alert] << msg
+                    end
+                    redirect_to exception.redirect_object and return
+                else 
+                    flash[:alert] = []
+                    flash[:alert] << "There was a problem with your request. Please report this problem in case it occurs again."
+                    exception.message.full_messages.each do |msg|
+                        flash[:alert] << msg
+                    end
+                    redirect_to exception.redirect_object and return
+                end
+    end    
+
+    # Currently, being done manually
+    # def silent_malfunction_error_handler(exception)
+    #     logger.debug "\nWebsite Silent Malfunction:\n #{exception.message}\n"
+
+    # end 
+    def silent_malfunction_error_handler(message)
+        logger.debug "\nWebsite Silent Malfunction:\n #{message}\n"
+    end     
+
+    
     def black_debug(variable={}, message="debuging...")
         logger.debug "\n"
         logger.debug "<<<<<<<<<<<<<<<<<-debug->>>>>>>>>>>>>>>>>-start\n"
@@ -99,6 +140,8 @@ class ApplicationController < ActionController::Base
         logger.debug "<<<<<<<<<<<<<<<<<-debug->>>>>>>>>>>>>>>>>-end\n"        
         logger.debug "\n"        
     end
+
+    # -ended
         
 
 end
