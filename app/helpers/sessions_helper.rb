@@ -110,9 +110,9 @@ module SessionsHelper
 
             def this_is_act?(this)
                 if this.class.to_s == "String"
-                    ["team", "sponsor", "organization"].include?(this)
+                    ["team"].include?(this)
                 else
-                    ["team", "sponsor", "organization"].include?(k_lower(this))
+                    ["team"].include?(k_lower(this))
                 end
             end
 

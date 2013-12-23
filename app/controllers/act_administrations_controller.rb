@@ -9,17 +9,21 @@ class ActAdministrationsController < ApplicationController
 		act = act_type.camelize.constantize
 		this = act.find_by_id(params[:this_id])
 
-		if !name_is_valid?(user, act_type); raise Errors::FlowError.new(send("#{act_type}_path", act_id)); end
+		if !name_is_valid?(user, act_type); raise Errors::FlowError.new(send("#{act_type}_path", act_id), "Permission denied."); end
 
 		acts_administrating = user.send("#{act_type.pluralize}_administrating")
 		act_to_administrate = act_type.camelize.constantize.find_by_id(act_id)
 
-		if act_to_administrate.administrators.include? current_user
+		unless act_to_administrate; raise Errors::FlowError.new; end
+
+		if user_is_admin?(act_to_administrate)
 			# todo: check user has the right rank
 				acts_administrating << act_to_administrate
 			# activities
 				act_to_administrate.create_activity key: "act_administration.create", owner: current_user, recipient: user
 			# # #
+		else
+			raise Errors::FlowError.new(send("#{act_type}_path", act_id), "Permission denied.")
 		end
 
 		@person = user
@@ -37,16 +41,20 @@ class ActAdministrationsController < ApplicationController
 		act = act_type.camelize.constantize
 		this = act.find_by_id(params[:this_id])
 
-		if !name_is_valid?(user, act_type); raise Errors::FlowError.new(send("#{act_type}_path", act_id)); end
+		if !name_is_valid?(user, act_type); raise Errors::FlowError.new(send("#{act_type}_path", act_id), "Permission denied."); end
 
 		act_to_remove_admin_from = act_type.camelize.constantize.find_by_id(act_id)
 
+		unless act_to_remove_admin_from; raise Errors::FlowError.new; end
+		
 		if current_user_can_delete_admin?(user, act_to_remove_admin_from)
 			administrations = []
 			administrations = user.act_administrations.where(act_type: act_type.camelize , act_id: act_id)
 			administrations.each do |a|
 				a.destroy
 			end unless administrations == []
+		else
+			raise Errors::FlowError.new(send("#{act_type}_path", act_id), "Permission denied.")
 		end
 		# activities
 			act_to_remove_admin_from.create_activity key: "act_administration.destroy", owner: current_user, recipient: user
