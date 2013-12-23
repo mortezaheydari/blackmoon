@@ -1,239 +1,280 @@
 class GamesController < ApplicationController
-  include SessionsHelper
-  before_filter :can_create, only: [:create]
- 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
- 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
+	include SessionsHelper
+	before_filter :can_create, only: [:create]
+	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
+	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 
-            add_breadcrumb "home", :root_path
-  def like
+	add_breadcrumb "home", :root_path
+	def like
 
-    @game = Game.find(params[:id])
+		@game = Game.find(params[:id])
 
-    if current_user.flagged?(@game, :like)
-      current_user.unflag(@game, :like)
-      msg = "you now don't like this game."
-    else
-      current_user.flag(@game, :like)
-      msg = "you now like this game."
-    end
+		if current_user.flagged?(@game, :like)
+			current_user.unflag(@game, :like)
+			msg = "you now don't like this game."
+		else
+			current_user.flag(@game, :like)
+			msg = "you now like this game."
+		end
 
-    respond_to do |format|
-        format.html { redirect_to @game}
-        format.js
-    end
-  end
+		respond_to do |format|
+				format.html { redirect_to @game}
+				format.js
+		end
+	end
 
-  def like_cards
+	def like_cards
 
-    @game = Game.find(params[:id])
+		@game = Game.find(params[:id])
 
-    # current_user.unflag(@game, :like)
-    current_user.toggle_flag(@game, :like)
+		# current_user.unflag(@game, :like)
+		current_user.toggle_flag(@game, :like)
 
-    respond_to do |format|
-        format.js { render 'shared/offering/like_cards', :locals => { offering: @game, style_id: params[:style_id], class_name: params[:class_name] } }
-    end
-  end
+		respond_to do |format|
+				format.js { render 'shared/offering/like_cards', :locals => { offering: @game, style_id: params[:style_id], class_name: params[:class_name] } }
+		end
+	end
 
-  def index
-    add_breadcrumb "games", games_path, :title => "Back to the Index"
+	def index
+		add_breadcrumb "games", games_path, :title => "Back to the Index"
+		@search = Sunspot.search(Game) do
+			fulltext params[:search]
 
+			facet(:sport)
+			with(:sport, params[:sport]) if params[:sport].present?
 
-@search = Sunspot.search(Game) do
-      fulltext params[:search]
+			facet(:city)
+			with(:city, params[:city]) if params[:city].present?
 
-      # with(:price, params[:min_price].to_i..params[:max_price].to_i) if params[:max_price].present? && params[:min_price].present?
-      # with(:price).greater_than(params[:min_price].to_i) if !params[:max_price].present? && params[:min_price].present?
-      # with(:price).less_than(params[:max_price].to_i) if params[:max_price].present? && !params[:min_price].present?
+			facet(:gender)
+			with(:gender, params[:gender]) if params[:gender].present?
 
-      # with(:condition, params[:condition]) if params[:condition].present?
-      facet(:sport)
-      with(:sport, params[:sport]) if params[:sport].present?
+			order_by(:updated_at, :desc)
 
-      facet(:city)
-      with(:city, params[:city]) if params[:city].present?
+			if params[:team_participation]  == "checked"
+				with(:team_participation, true)
+			end
 
-      facet(:gender)
-      with(:gender, params[:gender]) if params[:gender].present?
+		end
+		@games = @search.results
 
-      order_by(:updated_at, :desc)
-      # if params[:order_by] == "Price"
-      #   order_by(:price)
-      # elsif params[:order_by] == "Popular"
-      #   order_by(:favorite_count, :desc)
-      # end
+		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Game")
+		@recent_activities = @recent_activities.order("created_at desc")
 
-      if params[:team_participation]  == "checked"
-        with(:team_participation, true)
-      end
+	end
 
-    end
-    @games = @search.results
+	def new
+		@game = Game.new
+		@game.happening_case = HappeningCase.new
+		@happening_case = @game.happening_case
+		@venues = Venue.all
+		@location = Location.new
+	end
 
+	def create
+		# variables and params assignment
+		@venues = Venue.all		
+		@current_user_id = current_user.id
+		set_params_gmaps_flag :game
+		location_param = params[:game].delete :location
 
-    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game")
-    @recent_activities = @recent_activities.order("created_at desc")
+		@game = Game.new(title: params[:game][:title], 
+			description: params[:game][:description], 
+			category: params[:game][:category], 
+			fee: params[:game][:fee], 
+			fee_type: params[:game][:fee_type], 
+			sport: params[:game][:sport], 
+			number_of_attendings: params[:game][:number_of_attendings], 
+			team_participation: params[:game][:team_participation], 
+			open_join: params[:game][:open_join], 
+			gender: params[:game][:gender])
 
-  end
+		@game.album = Album.new
+		@happening_case = @game.build_happening_case(params[:happening_case])
 
-  def new
-    @game = Game.new
-    @game.happening_case = HappeningCase.new
-    @happening_case = @game.happening_case
-    @venues = Venue.all
-    @location = Location.new
-  end
+		# # gender restriction (currently inactive.)
+		# if ["male", "female"].include? @game.gender
+		#   unless current_user.gender == @game.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		# end
 
-  # TODO: procedure order to be used in other controllers.
-  def create
-    @current_user_id = current_user.id
-    set_params_gmaps_flag :game
-    location = params[:game].delete :location
-    @game = Game.new(params[:game])
-    @game.album = Album.new
-    @game.happening_case = HappeningCase.new(params[:happening_case])
+		@location = @game.build_location(location_param)
 
-    # # gender restriction
-    # if ["male", "female"].include? @game.gender
-    #   unless current_user.gender == @game.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
-    # end
+		# custom or referenced location.
+		if params[:location_type] == "parent_location"
+			referenced_location = venue_location(params[:referenced_venue_id])
+			if !referenced_location; raise Errors::FlowError.new(new_game_path, "location was not valid"); end
+			copy_locations(referenced_location, @game.location)
+			@game.location.parent_id = referenced_location.id
+		else
+			@game.location.parent_id = nil
+		end
 
-    @game.build_location(location)
+		# validation and assignment
+		if @game.location.invalid? ; raise Errors::ValidationError.new(:new, ["Address is not valid."]); end
+		if @game.happening_case.invalid? ; raise Errors::ValidationError.new(:new, @game.happening_case.errors); end
+		if @game.invalid? ; raise Errors::ValidationError.new(:new, @game.errors); end
 
-    # custom or referenced location.
-    if params[:location_type] == "parent_location"
-      referenced_location = venue_location(params[:referenced_venue_id])
-      if !referenced_location; raise Errors::FlowError.new(new_game_path, "location not valid"); end
-      copy_locations(referenced_location, @game.location)
-      @game.location.parent_id = referenced_location.id
-    else
-      @game.location.parent_id = nil
-    end
+		if !@game.save ; raise Errors::FlowError.new(new_game_path, @game.errors); end
 
-    # here, location assignment operation should take place.
+		# secondary database actions
+		@game.create_offering_creation(creator_id: @current_user_id)
+		@game.offering_administrations.create(administrator_id: @current_user_id)
+		@game.create_activity :create, owner: current_user
 
-    if !@game.save ; raise Errors::FlowError.new(new_game_path, "there has been a problem with data entry."); end
+		# done 
 
-    @game.create_offering_creation(creator_id: @current_user_id)
-    @game.offering_administrations.create(administrator_id: @current_user_id)
-    @game.create_activity :create, owner: current_user
+		redirect_to @game, notice: "Game was created"
+	end
 
-    redirect_to @game, notice: "Game was created"
-  end
+	def destroy
+		@user = current_user
+		@game = Game.find(params[:id])
 
-  def destroy
-    @user = current_user
-    @game = Game.find(params[:id])
+		if user_is_admin?(@game) && user_created_this?(@game); raise Errors::FlowError.new(games_path, "Permission denied."); end
 
-    unless user_is_admin?(@game) && user_created_this?(@game); raise Errors::FlowError.new(games_path); end
+		if !@game.destroy; raise Errors::FlowError.new(@game); end
 
-    if !@game.destroy; raise Errors::FlowError.new(@game); end
+		@game.create_activity :destroy, owner: current_user
 
-    @game.create_activity :destroy, owner: current_user
+		redirect_to(games_path)
+	end
 
-    redirect_to(games_path)
-  end
+	def show
+		begin
+			@game = Game.find(params[:id])
+		rescue
+			raise Errors::FlowError.new(games_path, "Game not found.")
+		end
+		add_breadcrumb "games", games_path, :title => "Back to the Index"
+		add_breadcrumb @game.title, game_path(@game)
+		@likes = @game.flaggings.with_flag(:like)
+		@photo = Photo.new
+		@album = @game.album
+		if ["male", "female"].include? @game.gender
+			@teams = Team.where("gender = ?", @game.gender)
+		end
+        @teams = Team.all		
+		@my_teams = []
+		current_user.teams_administrating.each do |team|
+			unless team_is_participating?(@game, team)
+				if @game.gender == team.gender
+						@my_teams << team
+				end
+			end
+		end
+		@owner = @game
 
-  def show
-    @game = Game.find(params[:id])
-    add_breadcrumb "games", games_path, :title => "Back to the Index"
-    add_breadcrumb @game.title, game_path(@game)
-    @likes = @game.flaggings.with_flag(:like)
-    @photo = Photo.new
-    @album = @game.album
-    if ["male", "female"].include? @game.gender
-        @teams = Team.where("gender = ?", @game.gender)
-    end
-    @my_teams = []
-    current_user.teams_administrating.each do |team|
-        unless team_is_participating?(@game, team)
-            if @game.gender == team.gender
-                @my_teams << team
-            end
-        end
-    end
-    @owner = @game
+		if @game.location.parent_id.nil?
+			@location = @game.location
+		else
+			@location = @game.location.parent_location
+		end
 
+		@json = @location.to_gmaps4rails
+		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Game", trackable_id: @game.id)
+		@recent_activities = @recent_activities.order("created_at desc")
 
-    if @game.location.parent_id.nil?
-        @location = @game.location
-    else
-        @location = @game.location.parent_location
-    end
+		if @game.team_participation == false
+			@participator = @game.individual_participators
+		else
+			@participator = @game.team_participators
+		end
 
-    @json = @location.to_gmaps4rails
-    @recent_activities =  PublicActivity::Activity.where(trackable_type: "Game", trackable_id: @game.id)
-    @recent_activities = @recent_activities.order("created_at desc")
+	end
 
-    if @game.team_participation == false
-      @participator = @game.individual_participators
-    else
-      @participator = @game.team_participators
-    end
+	def edit
+		begin
+			@game = Game.find(params[:id])
+		rescue
+			raise Errors::FlowError.new(games_path, "Game not found.")
+		end
+		@happening_case = @game.happening_case
+		@game.album ||= Album.new
+		@location = @game.location
+		@venues = Venue.all
+		@photo = Photo.new
+		@photo.title = "Logo"
 
-  end
+	end
 
-  def edit
-    @game = Game.find(params[:id])
-    @happening_case = @game.happening_case
-    @game.album ||= Album.new
-    @location = @game.location
-    @venues = Venue.all
-    @photo = Photo.new
-    @photo.title = "Logo"
+	def update
+		@game = Game.find(params[:id])
+		@venues = Venue.all
+		@photo = Photo.new
+		@photo.title = "Logo"
+		@location = @game.location
+		@happening_case = @game.happening_case
 
-  end
+		# @location = @game.location
+		# @happening_case = @game.happening_case
 
-  def update
-    @game = Game.find(params[:id])
+		# # gender restriction
+		# if ["male", "female"].include? params[:game][:gender]
+		#   unless current_user.gender == params[:game][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		# end
 
-    # # gender restriction
-    # if ["male", "female"].include? params[:game][:gender]
-    #   unless current_user.gender == params[:game][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
-    # end
-    # update location
-    if changing_location_parent?(@game) || changing_location_to_parent?(@game)
-      params[:game].delete :location
-      referenced_location = venue_location(params[:referenced_venue_id])
-      if !referenced_location; raise Errors::FlowError.new(new_game_path, "location not valid"); end
-      copy_locations(referenced_location, @game.location)
-      @game.location.parent_id = referenced_location.id
-      # change location parent
-    elsif changing_location_to_custom?(@game) || changing_custom_location?(@game, :game)
-      set_params_gmaps_flag :game
-      location = params[:game].delete :location
-      temp_location = Location.new(location)
-      if temp_location.invalid?; raise Errors::FlowError.new(edit_game_path, "location not valid");end;
-      copy_locations(temp_location, @game.location)
-      if @game.location.invalid?
-        errors = "Location invalid. "
-        @game.location.errors.each { |m| errors +=  (m.first.to_s + ": " + m.last.first.to_s + "; ") }
-        raise Errors::FlowError.new(edit_game_path(@game), errors)
-      end
-      @game.location.parent_id = nil
-      # change to custom
-    else
-      params[:game].delete :location
-      # do nothing
-    end
+		# update location
+		if changing_location_parent?(@game) || changing_location_to_parent?(@game)
+			params[:game].delete :location
+			referenced_location = venue_location(params[:referenced_venue_id])
+			if !referenced_location; raise Errors::ValidationError.new(:edit, "Address is not valid."); end
+			copy_locations(referenced_location, @game.location)
+			@game.location.parent_id = referenced_location.id # change location parent
+		elsif changing_location_to_custom?(@game) || changing_custom_location?(@game, :game)
+			set_params_gmaps_flag :game
+			location = params[:game].delete :location
+			temp_location = Location.new(location)
+			if temp_location.invalid?; raise Errors::ValidationError.new(:edit, "Address is not valid.");end;
+			copy_locations(temp_location, @game.location)
 
+			@game.location.parent_id = nil # change to custom
+			@location = @game.location			
+		else
+			params[:game].delete :location
+		end
 
-    if !@game.happening_case.update_attributes params[:happening_case]; raise Errors::FlowError.new(edit_game_path(@game)); end
-    if !@game.update_attributes(params[:game]); raise Errors::FlowError.new(edit_game_path(@game), @game.errors); end
-    if !@game.create_activity :update, owner: current_user; raise Errors::FlowError.new(edit_game_path(@game)); end
+		if @game.location.invalid?; raise Errors::ValidationError.new(:edit, @game.location.errors); end
 
-    redirect_to @game, notice: "Game was updated"
-  end
+		# update and validate happening_case
+		@game.happening_case.assign_attributes params[:happening_case]
+		if @game.happening_case.invalid?; raise Errors::ValidationError.new(:edit, @game.happening_case.errors); end
 
-  private
+		@happening_case = @game.happening_case
+		# update and validate happening_case
+		safe_param = Hash.new
+		safe_param[:title] = params[:game][:title] unless params[:game][:title].nil?
+		safe_param[:description] = params[:game][:description] unless params[:game][:description].nil?
+		safe_param[:category] = params[:game][:category] unless params[:game][:category].nil?
+		safe_param[:fee] = params[:game][:fee] unless params[:game][:fee].nil?
+		safe_param[:fee_type] = params[:game][:fee_type] unless params[:game][:fee_type].nil?
+		safe_param[:sport] = params[:game][:sport] unless params[:game][:sport].nil?
+		safe_param[:number_of_attendings] = params[:game][:number_of_attendings] unless params[:game][:number_of_attendings].nil?
+		safe_param[:team_participation] = params[:game][:team_participation] unless params[:game][:team_participation].nil?
+		safe_param[:open_join] = params[:game][:open_join] unless params[:game][:open_join].nil?
+		safe_param[:gender] = params[:game][:gender] unless params[:game][:gender].nil?
 
-    def user_must_be_admin?
-     @game = Game.find(params[:id])
-     @user = current_user
-     redirect_to(@game) and return unless @game.administrators.include?(@user)
-    end
-    def can_create
-      redirect_to root_path and return unless current_user.can_create? "game"
-    end
+		@game.assign_attributes safe_param
+
+		if @game.invalid?; raise Errors::ValidationError.new(:edit, @game.errors); end
+		if !@game.save; raise Errors::FlowError.new(:edit, @game.errors); end		
+
+		# secondary database actions
+		@game.create_activity :update, owner: current_user
+
+		# done
+		redirect_to @game, notice: "Game was updated"
+
+	end
+
+	private
+
+		def user_must_be_admin?
+		 @game = Game.find(params[:id])
+		 @user = current_user
+		 redirect_to(@game) and return unless @game.administrators.include?(@user)
+		end
+		def can_create
+			redirect_to root_path and return unless current_user.can_create? "game"
+		end
 
 end

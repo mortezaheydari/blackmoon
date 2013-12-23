@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   	rescue_from Errors::FlowError, with: :flow_error_handler
+  	rescue_from Errors::ValidationError, with: :validation_error_handler  	
 
 	def name_is_valid?(name)
 	  ["event","game", "user", "team", "venue", "personal_trainer", "group_training"].include? name.underscore
@@ -49,7 +50,14 @@ class ApplicationController < ActionController::Base
 	def flow_error_handler(exception)
                 if exception.message.class.to_s == "String"
                     redirect_to exception.redirect_object, alert: exception.message and return
-                else
+                elsif exception.message.class.to_s == "Array"
+                    flash[:alert] = []
+                    flash[:alert] << "There was a problem with your request."
+                    exception.message.each do |msg|
+                        flash[:alert] << msg
+                    end
+                    redirect_to exception.redirect_object and return
+                else 
                     flash[:alert] = []
                     flash[:alert] << "There was a problem with your request."
                     exception.message.full_messages.each do |msg|
@@ -59,8 +67,38 @@ class ApplicationController < ActionController::Base
                 end
 	end
 
+	def validation_error_handler(exception)
+                if exception.message.class.to_s == "String"
+                    flash[:alert] = exception.message
+                    render exception.redirect_object and return
+                elsif exception.message.class.to_s == "Array"
+                    flash[:alert] = []
+                    flash[:alert] << "There was a problem with your request."
+                    exception.message.each do |msg|
+                        flash[:alert] << msg
+                    end
+                    render exception.redirect_object and return
+                else 
+                    flash[:alert] = []
+                    flash[:alert] << "There was a problem with your request."
+                    exception.message.full_messages.each do |msg|
+                        flash[:alert] << msg
+                    end
+                    render exception.redirect_object and return
+                end
+	end
 	# def handle_record_not_saved
 	# 	redirect_to new_game_path, notice: "there has been a problem with data entry." and return
 	# end
+
+    def black_debug(variable={}, message="debuging...")
+        logger.debug "\n"
+        logger.debug "<<<<<<<<<<<<<<<<<-debug->>>>>>>>>>>>>>>>>-start\n"
+        logger.debug "#{message}:\n"
+        logger.debug "#{variable}\n"
+        logger.debug "<<<<<<<<<<<<<<<<<-debug->>>>>>>>>>>>>>>>>-end\n"        
+        logger.debug "\n"        
+    end
+        
 
 end
