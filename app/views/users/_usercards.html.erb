@@ -12,10 +12,13 @@
 
   <div class="userCardRecent text-left">
     <p>Recent Activities</p>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
+    <% person.recent_offerings_participating(4).each do |offering| %>
+        <div>
+            <%= link_to offering, target: "_blank", title: "#{offering.title}" do %>
+                <%= logo_for(offering, size: :small, css_style: "margin:3px auto;") %>
+            <% end -%>
+        </div>
+    <% end %>
 <span id="makeAdmin<%= person.id %>">
     <% if user_is_admin?(this) %>
         <% if !user_is_admin?(this,person) %>

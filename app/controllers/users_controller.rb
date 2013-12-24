@@ -30,13 +30,17 @@ class UsersController < ApplicationController
 	def update
 		params_striper
 		@user = User.find(params[:id])
+
+                @photo = Photo.new
+        @photo.title = "Logo"
+        @date_of_birth = @user.profile.date_of_birth
 		raise Errors::FlowError.new unless current_user == @user
 		@user.profile.date_of_birth = date_helper_to_str(params[:date_of_birth])
 		if @user.update_attributes(params[:user]) # should become more secure in future.
 			flash[:success] = "Profile updated"
 			redirect_to @user, notice: "Your profile has been updated." #TODO: write a better notice.
 		else
-			render user_edit_path(@user)
+			render :edit
 		end
 
 	end

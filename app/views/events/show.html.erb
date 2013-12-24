@@ -48,7 +48,7 @@
                             <%= render "shared/team_join", this: @event, teams: @my_teams %>
                         <% end %>
                     <% else %>
-                        <%= render "shared/team_invite", this: @event, teams: @teams %>
+                        <%= render "shared/team_invite", this: @event, teams: @teams if user_is_admin?(@event) %>
                     <% end %>
                 <% else %>
                     <% if @event.open_join %>
@@ -59,11 +59,11 @@
                         <% end %>
                     <% else %>
                         <% if @event.gender == "male" %>
-                            <%= render "shared/user_invite", this: @event, users: current_user.male_in_relation %>
+                            <%= render "shared/user_invite", this: @event, users: current_user.male_in_relation if user_is_admin?(@event) %>
                         <% elsif @event.gender == "female" %>
-                            <%= render "shared/user_invite", this: @event, users: current_user.female_in_relation %>
+                            <%= render "shared/user_invite", this: @event, users: current_user.female_in_relation if user_is_admin?(@event) %>
                         <% else %>
-                            <%= render "shared/user_invite", this: @event, users: current_user.people_in_relation %>
+                            <%= render "shared/user_invite", this: @event, users: current_user.people_in_relation if user_is_admin?(@event) %>
                         <% end -%>
                     <% end %>
                 <% end -%>

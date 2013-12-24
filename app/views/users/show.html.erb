@@ -65,7 +65,7 @@
   <div class="secondMenu">
     <nav id="secondary">
       <ul>
-        <li id="activities"><a href="#">Activities (<%= @user.offerings_participating.count %>)</a></li>
+        <li id="activities" class="navActive"><a href="#">Activities (<%= @user.recent_offerings_participating.count %>)</a></li>
         <li id="likeSection"><a href="#">Likes (<%= @likes.with_flag(:like).count %>)</a></li>
         <li id="FollowingSection"><a href="#">Following (<%= @user.followed_users.count %>)</a></li>
         <li id="FollowerSection"><a href="#">Followers (<%= @user.followers.count %>)</a></li>
@@ -78,7 +78,14 @@
 
 <div class="userBottom">
 
-<div class="body userBottom">
+<div class="container-fluid body userBottom">
+
+    <div class="activityCards">
+        <% @user.recent_offerings_participating.each do |offering| %>
+            <%= render 'shared/offering/offering', offering: offering, class_name: "activityCards" %>
+        <% end %>
+    </div>
+
     <div class="row-fluid likeSection">
         <div class="cardsection span9">
             <% i = 0 %>
@@ -94,7 +101,7 @@
                         <%= render 'teams/team', team: offering %>
                     <% end %>
                 </div>
-                <% if i == 2 || @f == @likes.last %>
+                <% if i == 2 || @f == @likes.last || offering == @likes.last %>
                 </div>
                 <% end %>
             <%
@@ -106,13 +113,6 @@
             %>
             <% end %>
         </div>
-    </div>
-
-
-    <div class="activityCards">
-        <% @user.offerings_participating.each do |offering| %>
-            <%= render 'shared/offering/offering', offering: offering, class_name: "activityCards" %>
-        <% end %>
     </div>
 
     <div class="FollowingSection">

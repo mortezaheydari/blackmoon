@@ -1304,6 +1304,9 @@ article.userCard {
       height: 32px;
       width: 32px;
       @include border-radius(5px);
+      img {
+          @include border-radius(5px);
+      }
     }
   }
 }

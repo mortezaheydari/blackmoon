@@ -107,21 +107,25 @@ module MoonActor
             end
 
             def recent_offerings_participating(number=10)
-                offerings = []                
+                offerings = []
                 if self.class.to_s == "User"
                     participations = OfferingIndividualParticipation.where(participator_id: self.id).order(created_at: :desc).limit(number)
                     participations.each do |participation|
-                        offerings << participation.offering
+                        if participation.offering.class.to_s == "OfferingSession"
+                            offerings << participation.offering.owner
+                        else
+                            offerings << participation.offering
+                        end
                     end
-                elsif self.class.to_s == "User"
-                    participations = OfferingIndividualParticipation.where(participator_id: self.id).order(created_at: :desc).limit(number)
+                elsif self.class.to_s == "Team"
+                    participations = OfferingTeamParticipation.where(participator_id: self.id).order(created_at: :desc).limit(number)
                     participations.each do |participation|
                         offerings << participation.offering
-                    end                    
+                    end
                 end
                 offerings
             end
-            
+
             has_one :moonactor_ability, as: :owner, dependent: :destroy; accepts_nested_attributes_for :moonactor_ability
 
             def can_create?(offering_name)
