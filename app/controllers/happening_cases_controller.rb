@@ -1,3 +1,4 @@
+# this controller is out of use. Make sure to upload it with proper loginc before using it.
 class HappeningCasesController < ApplicationController
 
 	def update
@@ -8,7 +9,7 @@ class HappeningCasesController < ApplicationController
 		@happening_case = params[:happening_case]
 		@happening_case.date_and_time = date_helper_to_str(params[:date_and_time])
 
-		if !@happening_case.save; raise Errors::FlowError.new(@happening_case.happening); end
+		if !@happening_case.save; raise Errors::FlowError.new(@happening_case.happening, @happening_case.errors); end
 
 		@happening_case.create_activity :update, owner: current_user
 		

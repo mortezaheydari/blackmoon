@@ -8,12 +8,12 @@ class AlbumPhotosController < ApplicationController
 		if !name_is_valid?(owner_type); raise Errors::FlowError.new; end
 
 		@owner = owner_type.camelize.constantize.find_by_id(owner_id)
-
-		# checking photo upload premission
+			unless @owner; raise Errors::FlowError.new; end
+		# checking photo upload permission
 		if owner_type == "user"
-			if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
+			if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have permission to upload photos to this page.'); end
 		else
-			if !@owner.administrators.include?(current_user); raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
+			if !@owner.administrators.include?(current_user); raise Errors::FlowError.new(@owner, 'you don\'t have permission to upload photos to this page.'); end
 		end
 
 		@album = @owner.album
@@ -42,12 +42,13 @@ class AlbumPhotosController < ApplicationController
 		if !name_is_valid?(owner_type); raise Errors::FlowError.new; end
 
 		@owner = owner_type.camelize.constantize.find_by_id(owner_id)
+			unless @owner; raise Errors::FlowError.new; end
 
-		# checking photo upload premission
+		# checking photo upload permission
 		if owner_type == "user"
-			if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission edit this page.'); end
+			if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have permission edit this page.'); end
 		else
-			if !@owner.administrators.include? current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission edit this page.'); end
+			if !@owner.administrators.include? current_user; raise Errors::FlowError.new(@owner, 'you don\'t have permission edit this page.'); end
 		end
 
 		@album = @owner.album
@@ -73,12 +74,13 @@ class AlbumPhotosController < ApplicationController
 		if !name_is_valid?(owner_type); raise Errors::FlowError.new; end
 
 		@owner = owner_type.camelize.constantize.find_by_id(owner_id)
-
-		# checking photo upload premission
+			unless @owner; raise Errors::FlowError.new; end
+			
+		# checking photo upload permission
 		if owner_type == "user"
-			if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
+			if @owner != current_user; raise Errors::FlowError.new(@owner, 'you don\'t have permission to upload photos to this page.'); end
 		else
-			if !@owner.administrators.include? current_user; raise Errors::FlowError.new(@owner, 'you don\'t have premission to upload photos to this page.'); end
+			if !@owner.administrators.include? current_user; raise Errors::FlowError.new(@owner, 'you don\'t have permission to upload photos to this page.'); end
 		end
 
 		@album_photo = PhotoAlbum.find_by_id(params[:album_photo_id])

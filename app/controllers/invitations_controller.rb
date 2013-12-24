@@ -14,9 +14,9 @@ class InvitationsController < ApplicationController
 
 		redirect_object
 
-		unless !@inviter.nil? && !@invited.nil? && !@subject.nil?; raise Errors::FlowError.new; end
+		if @inviter.nil? || @invited.nil? || @subject.nil?; raise Errors::FlowError.new; end
 
-		if !@subject.administrators.include? @inviter; raise Errors::FlowError.new(@redirect_object, 'you don\'t have premission'); end
+		if !@subject.administrators.include? @inviter; raise Errors::FlowError.new(@redirect_object, "Permission denied."); end
 
 		@invitation                     = Invitation.new
 		@invitation.inviter             = @inviter
@@ -32,7 +32,7 @@ class InvitationsController < ApplicationController
 			unless @subject.gender == @invited.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
 		end		
 
-		if !@invitation.save; raise Errors::FlowError.new(@subject, "There was a problem with submiting the invitation."); end
+		if !@invitation.save; raise Errors::FlowError.new(@subject, "There was a problem with submitting the invitation."); end
 
 		if params[:invited_type] == "Team"
 			@invitation.create_activity :create, owner: @invitation.inviter, recipient: @invitation.invited
