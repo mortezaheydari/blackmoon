@@ -34,11 +34,11 @@
                 <% end %>
             <% else %>
                 <% if @team.gender == "male" %>
-                    <%= render "shared/user_invite", this: @team, users: current_user.male_in_relation %>
+                    <%= render "shared/user_invite", this: @team, users: current_user.male_in_relation if user_is_admin?(@team) %>
                 <% elsif @team.gender == "female" %>
-                    <%= render "shared/user_invite", this: @team, users: current_user.female_in_relation %>
+                    <%= render "shared/user_invite", this: @team, users: current_user.female_in_relation if user_is_admin?(@team) %>
                 <% else %>
-                    <%= render "shared/user_invite", this: @team, users: current_user.people_in_relation %>
+                    <%= render "shared/user_invite", this: @team, users: current_user.people_in_relation if user_is_admin?(@team) %>
                 <% end -%>
             <% end %>
 
