@@ -89,6 +89,8 @@ class ApplicationController < ActionController::Base
     #   E0X02: could not create "offering_administration"
     #   E0X03: problem with PublicActivity in create action, It will go alright except for lack of notification.
     #   E0X04: problem with PublicActivity in update action, It will go alright except for lack of notification.
+    #   E0X05: could not create "act_membership"
+
     # event_controller
     #   X => 7
     # game_controller
@@ -99,7 +101,9 @@ class ApplicationController < ActionController::Base
     #   X => 3   
     # group_training_controller    
     #   X => 4
-    
+    # group_training_controller    
+    #   X => 5
+
 	def validation_error_handler(exception)
         if exception.message.class.to_s == "String"
             flash[:alert] = exception.message
