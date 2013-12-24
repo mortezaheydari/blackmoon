@@ -33,7 +33,7 @@
             <%= link_to @event.creator.name , user_path(@event.creator) %>
         </div>
       <!-- <a href="#" class="originTitle"><%= @event.creator.name %></a> -->
-        <p>Level 2: Game Originator</p>
+        <!-- <p>Level 2: Game Originator</p> -->
     </div>
 
     <%= render 'shared/like_button', offering: @event if signed_in? %>
