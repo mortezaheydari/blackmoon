@@ -128,7 +128,7 @@ class GamesController < ApplicationController
 		@user = current_user
 		@game = Game.find(params[:id])
 
-		if user_is_admin?(@game) && user_created_this?(@game); raise Errors::FlowError.new(games_path, "Permission denied."); end
+		unless user_is_admin?(@game) && user_created_this?(@game); raise Errors::FlowError.new(games_path, "Permission denied."); end
 
 		if !@game.destroy; raise Errors::FlowError.new(@game); end
 
@@ -236,9 +236,8 @@ class GamesController < ApplicationController
 		if @game.happening_case.invalid?; raise Errors::ValidationError.new(:edit, @game.happening_case.errors); end
 
 		@happening_case = @game.happening_case
-		# update and validate happening_case
 
-
+		# update and validate game
 		@game.assign_attributes safe_param
 
 		if @game.invalid?; raise Errors::ValidationError.new(:edit, @game.errors); end

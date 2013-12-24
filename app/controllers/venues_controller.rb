@@ -43,12 +43,6 @@ class VenuesController < ApplicationController
 		@search = Sunspot.search(Venue) do
 			fulltext params[:search]
 
-			# with(:price, params[:min_price].to_i..params[:max_price].to_i) if params[:max_price].present? && params[:min_price].present?
-			# with(:price).greater_than(params[:min_price].to_i) if !params[:max_price].present? && params[:min_price].present?
-			# with(:price).less_than(params[:max_price].to_i) if params[:max_price].present? && !params[:min_price].present?
-
-			# with(:condition, params[:condition]) if params[:condition].present?
-
 			facet(:city)
 			with(:city, params[:city]) if params[:city].present?
 
@@ -56,11 +50,6 @@ class VenuesController < ApplicationController
 			with(:gender, params[:gender]) if params[:gender].present?
 
 			order_by(:updated_at, :desc)
-			# if params[:order_by] == "Price"
-			#   order_by(:price)
-			# elsif params[:order_by] == "Popular"
-			#   order_by(:favorite_count, :desc)
-			# end
 
 		end
 		@venues = @search.results
@@ -76,23 +65,38 @@ class VenuesController < ApplicationController
 
 	def create
 		@current_user_id = current_user.id
-		@venue = Venue.new(title: params[:venue][:title], descreption: params[:venue][:descreption], gender: params[:venue][:gender])
+		@venue = Venue.new(safe_param)
 		@venue.album = Album.new
+		
+		set_params_gmaps_flag :venue
 
 		# # gender
 		# if ["male", "female"].include? @venue.gender
 		# 	unless current_user.gender == @venue.gender; raise Errors::FlowError.new(root_path, "This venue is #{@venue.gender} only."); end
 		# end
 
-		# here, location assignment operation should take place.
-						set_params_gmaps_flag :venue
-		@venue.build_location(params[:venue][:location])
+		# location assignment and validation
+		@location = @venue.build_location(safe_location_param)
+		if @location.invalid? ; raise Errors::ValidationError.new(:new, ["Address is not valid."]); end
 
-		if !@venue.save; raise Errors::FlowError.new(new_venue_path, "There has been a problem with data entry."); end
+		# venue validation and save
+		if @venue.invalid?; raise Errors::ValidationError.new(:new, @venue.errors); end
+		if !@venue.save; raise Errors::FlowError.new(new_venue_path, @venue.errors); end
 
-		@venue.create_activity :create, owner: current_user
-		@venue.create_offering_creation(creator_id: @current_user_id)
-		@venue.offering_administrations.create(administrator_id: @current_user_id)
+		# secondary database actions
+		unless @venue.create_offering_creation(creator_id: @current_user_id)
+			@venue.destroy
+			raise Errors::LoudMalfunction.new("E0201")
+		end
+		unless @venue.offering_administrations.create(administrator_id: @current_user_id)
+			@venue.destroy
+			raise Errors::LoudMalfunction.new("E0202")
+		end	
+		unless @venue.create_activity(:create, owner: current_user)
+			silent_malfunction_error_handler("E0203")		
+		end
+
+		# done
 		redirect_to @venue, notice: "Venue was created"
 
 	end
@@ -101,19 +105,31 @@ class VenuesController < ApplicationController
 		@user = current_user
 		@venue = Venue.find(params[:id])
 
-		unless user_is_admin?(@venue) && user_created_this?(@venue); raise Errors::FlowError.new(venues_path); end
+		unless user_is_admin?(@venue) && user_created_this?(@venue); raise Errors::FlowError.new(venues_path, "Permission denied."); end
+
+		if !@venue.destroy; raise Errors::FlowError.new(@venue); end
 
 		@venue.create_activity :destroy, owner: current_user
-		if !@venue.destroy; raise Errors::FlowError.new(@venue); end
 
 		redirect_to @venue
 	end
 
 	def show
-		@venue = Venue.find(params[:id])
-			add_breadcrumb "venues", venues_path, :title => "Back to the Index"
-			add_breadcrumb @venue.title, venue_path(@venue)
-		@offering_session =  OfferingSession.new
+		begin
+			@venue = Venue.find(params[:id])
+		rescue
+			raise Errors::FlowError.new(venues_path, "Venue not found.")
+		end
+		add_breadcrumb "venues", venues_path, :title => "Back to the Index"
+		add_breadcrumb @venue.title, venue_path(@venue)
+		@likes = @venue.flaggings.with_flag(:like)
+		@photo = Photo.new
+		@album = @venue.album
+		@owner = @venue		
+		@happening_case = HappeningCase.new
+		@offering_session = OfferingSession.new
+
+		@location = @venue.location
 
 		if params[:session_id]
 			@offering_session_edit = OfferingSession.find(params[:session_id])
@@ -123,31 +139,25 @@ class VenuesController < ApplicationController
 			@edit_happening_case = HappeningCase.new
 		end
 
-		@happening_case = HappeningCase.new
-
 		@date = params[:date] ? Date.parse(params[:date]) : Date.today
-
 		@json = @venue.location.to_gmaps4rails
 
-		@likes = @venue.flaggings.with_flag(:like)
-		@photo = Photo.new
-		@album = @venue.album
-		@owner = @venue
-		@location = @venue.location
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "Venue", trackable_id: @venue.id)
 		@recent_activities = @recent_activities.order("created_at desc")
 
 		@grouped_happening_cases = grouped_happening_cases(@venue)
 		@grouped_sessions = replace_with_happening(@grouped_happening_cases)
 
-		@date = params[:date] ? Date.parse(params[:date]) : Date.today
-
 		@collectives = @venue.collectives
 
 	end
 
 	def edit
-		@venue = Venue.find(params[:id])
+		begin
+			@venue = Venue.find(params[:id])
+		rescue
+			raise Errors::FlowError.new(venues_path, "Venue not found.")
+		end				
 		@venue.album ||= Album.new
 		@location = @venue.location
 		@photo = Photo.new
@@ -157,18 +167,31 @@ class VenuesController < ApplicationController
 	def update
 		@venue = Venue.find(params[:id])
 		@location = @venue.location
-						set_params_gmaps_flag :venue
+		@photo = Photo.new
+		@photo.title = "Logo"		
+		set_params_gmaps_flag :venue
 
 		# # gender
 		# if ["male", "female"].include? params[:venue][:gender]
 		# 	unless current_user.gender == params[:venue][:gender]; raise Errors::FlowError.new(root_path, "This venue is #{@venue.gender} only."); end
 		# end
 
-		unless @venue.update_attributes(title: params[:venue][:title], descreption: params[:venue][:descreption], gender: params[:venue][:gender]) && @location.update_attributes(city: params[:venue][:location][:city], custom_address_use: params[:venue][:location][:custom_address_use], longitude: params[:venue][:location][:longitude], latitude: params[:venue][:location][:latitude], gmap_use: params[:venue][:location][:gmap_use], custom_address: params[:venue][:location][:custom_address], gmaps: params[:venue][:location][:gmaps])
-			raise Errors::FlowError.new(edit_venue_path(@venue), "There has been a problem with data entry.")
+		# update and validate location
+		@location = @venue.location.assign_attributes(safe_location_param)
+		if @venue.location.invalid?; raise Errors::ValidationError.new(:edit, ["Address is not valid."]); end
+		
+		# update and validate venue
+		@venue.assign_attributes safe_param
+
+		if @venue.invalid?; raise Errors::ValidationError.new(:edit, @venue.errors); end
+		if !@venue.save; raise Errors::FlowError.new(:edit, @venue.errors); end
+
+		# secondary database actions
+		unless @venue.create_activity :update, owner: current_user
+			silent_malfunction_error_handler("E0204")
 		end
 
-		@venue.create_activity :update, owner: current_user
+		# done
 		redirect_to @venue, notice: "Venue was updated"
 	end
 
@@ -184,5 +207,24 @@ class VenuesController < ApplicationController
 			redirect_to root_path and return unless current_user.can_create? "venue"
 		end
 
+		def safe_param
+			this = Hash.new
+			this[:title] = params[:venue][:title] unless params[:venue][:title].nil?
+			this[:descreption] = params[:venue][:descreption] unless params[:venue][:descreption].nil?
+			this[:gender] = params[:venue][:gender] unless params[:venue][:gender].nil?
+			this
+		end
+
+		def safe_location_param
+			this = Hash.new
+			this[:city] = params[:venue][:location][:city] unless params[:venue][:location][:city].nil?
+			this[:custom_address_use] = params[:venue][:location][:custom_address_use] unless params[:venue][:location][:custom_address_use].nil?
+			this[:longitude] = params[:venue][:location][:longitude] unless params[:venue][:location][:longitude].nil?
+			this[:latitude] = params[:venue][:location][:latitude] unless params[:venue][:location][:latitude].nil?
+			this[:gmap_use] = params[:venue][:location][:gmap_use] unless params[:venue][:location][:gmap_use].nil?
+			this[:custom_address] = params[:venue][:location][:custom_address] unless params[:venue][:location][:custom_address].nil?
+			this[:gmaps] = params[:venue][:location][:gmaps] unless params[:venue][:location][:gmaps].nil?
+			this
+		end		
 
 end

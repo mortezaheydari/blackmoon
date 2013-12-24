@@ -43,12 +43,6 @@ class PersonalTrainersController < ApplicationController
 		@search = Sunspot.search(PersonalTrainer) do
 			fulltext params[:search]
 
-			# with(:price, params[:min_price].to_i..params[:max_price].to_i) if params[:max_price].present? && params[:min_price].present?
-			# with(:price).greater_than(params[:min_price].to_i) if !params[:max_price].present? && params[:min_price].present?
-			# with(:price).less_than(params[:max_price].to_i) if params[:max_price].present? && !params[:min_price].present?
-
-			# with(:condition, params[:condition]) if params[:condition].present?
-
 			facet(:city)
 			with(:city, params[:city]) if params[:city].present?
 
@@ -56,11 +50,6 @@ class PersonalTrainersController < ApplicationController
 			with(:gender, params[:gender]) if params[:gender].present?
 
 			order_by(:updated_at, :desc)
-			# if params[:order_by] == "Price"
-			#   order_by(:price)
-			# elsif params[:order_by] == "Popular"
-			#   order_by(:favorite_count, :desc)
-			# end
 
 		end
 		@personal_trainers = @search.results
@@ -76,23 +65,38 @@ class PersonalTrainersController < ApplicationController
 
 	def create
 		@current_user_id = current_user.id
-		@personal_trainer = PersonalTrainer.new(title: params[:personal_trainer][:title], descreption: params[:personal_trainer][:descreption], gender: params[:personal_trainer][:gender])
+		@personal_trainer = PersonalTrainer.new(safe_param)
 		@personal_trainer.album = Album.new
+
+		set_params_gmaps_flag :personal_trainer
 
 		# # gender
 		# if ["male", "female"].include? @personal_trainer.gender
 		# 	unless current_user.gender == @personal_trainer.gender; raise Errors::FlowError.new(root_path, "This personal trainer is #{@personal_trainer.gender} only."); end
 		# end
 
-		# here, location assignment operation should take place.
-						set_params_gmaps_flag :personal_trainer
-		@personal_trainer.build_location(params[:personal_trainer][:location])
+		# location assignment and validation
+		@location = @personal_trainer.build_location(safe_location_param)
+		if @location.invalid? ; raise Errors::ValidationError.new(:new, ["Address is not valid."]); end
 
-		if !@personal_trainer.save; raise Errors::FlowError.new(new_personal_trainer_path, "There has been a problem with data entry."); end
+		# personal_trainer validation and save
+		if @personal_trainer.invalid?; raise Errors::ValidationError.new(:new, @personal_trainer.errors); end
+		if !@personal_trainer.save; raise Errors::FlowError.new(new_personal_trainer_path, @personal_trainer.errors); end
 
-		@personal_trainer.create_activity :create, owner: current_user
-		@personal_trainer.create_offering_creation(creator_id: @current_user_id)
-		@personal_trainer.offering_administrations.create(administrator_id: @current_user_id)
+		# secondary database actions
+		unless @personal_trainer.create_offering_creation(creator_id: @current_user_id)
+			@personal_trainer.destroy
+			raise Errors::LoudMalfunction.new("E0301")
+		end
+		unless @personal_trainer.offering_administrations.create(administrator_id: @current_user_id)
+			@personal_trainer.destroy
+			raise Errors::LoudMalfunction.new("E0302")
+		end	
+		unless @personal_trainer.create_activity(:create, owner: current_user)
+			silent_malfunction_error_handler("E0303")		
+		end
+
+		# done
 		redirect_to @personal_trainer, notice: "Personal trainer page was created"
 
 	end
@@ -101,7 +105,7 @@ class PersonalTrainersController < ApplicationController
 		@user = current_user
 		@personal_trainer = PersonalTrainer.find(params[:id])
 
-		unless user_is_admin?(@personal_trainer) && user_created_this?(@personal_trainer); raise Errors::FlowError.new(personal_trainers_path); end
+		unless user_is_admin?(@personal_trainer) && user_created_this?(@personal_trainer); raise Errors::FlowError.new(personal_trainers_path, "Permission denied."); end
 
 		if !@personal_trainer.destroy; raise Errors::FlowError.new(@personal_trainer); end
 		@personal_trainer.create_activity :destroy, owner: current_user
@@ -110,10 +114,21 @@ class PersonalTrainersController < ApplicationController
 	end
 
 	def show
-		@personal_trainer = PersonalTrainer.find(params[:id])
-				add_breadcrumb "Personal Trainers", personal_trainers_path, :title => "Back to the Index"
-				add_breadcrumb @personal_trainer.title, personal_trainer_path(@personal_trainer)
-		@offering_session =  OfferingSession.new
+		begin
+			@personal_trainer = PersonalTrainer.find(params[:id])
+		rescue
+			raise Errors::FlowError.new(personal_trainers_path, "Personal trainer not found.")
+		end		
+		add_breadcrumb "Personal Trainers", personal_trainers_path, :title => "Back to the Index"
+		add_breadcrumb @personal_trainer.title, personal_trainer_path(@personal_trainer)
+		@likes = @personal_trainer.flaggings.with_flag(:like)
+		@photo = Photo.new
+		@album = @personal_trainer.album
+		@owner = @personal_trainer
+		@happening_case = HappeningCase.new
+		@offering_session =  OfferingSession.new		
+
+		@location = @personal_trainer.location		
 
 		if params[:session_id]
 			@offering_session_edit = OfferingSession.find(params[:session_id])
@@ -123,31 +138,25 @@ class PersonalTrainersController < ApplicationController
 			@edit_happening_case = HappeningCase.new
 		end
 
-		@happening_case = HappeningCase.new
-
 		@date = params[:date] ? Date.parse(params[:date]) : Date.today
-
 		@json = @personal_trainer.location.to_gmaps4rails
 
-		@likes = @personal_trainer.flaggings.with_flag(:like)
-		@photo = Photo.new
-		@album = @personal_trainer.album
-		@owner = @personal_trainer
-		@location = @personal_trainer.location
 		@recent_activities =  PublicActivity::Activity.where(trackable_type: "PersonalTrainer", trackable_id: @personal_trainer.id)
 		@recent_activities = @recent_activities.order("created_at desc")
 
 		@grouped_happening_cases = grouped_happening_cases(@personal_trainer)
 		@grouped_sessions = replace_with_happening(@grouped_happening_cases)
 
-		@date = params[:date] ? Date.parse(params[:date]) : Date.today
-
 		@collectives = @personal_trainer.collectives
 
 	end
 
 	def edit
-		@personal_trainer = PersonalTrainer.find(params[:id])
+		begin
+			@personal_trainer = PersonalTrainer.find(params[:id])
+		rescue
+			raise Errors::FlowError.new(personal_trainers_path, "Personal trainer not found.")
+		end
 		@personal_trainer.album ||= Album.new
 		@location = @personal_trainer.location
 		@photo = Photo.new
@@ -157,29 +166,31 @@ class PersonalTrainersController < ApplicationController
 	def update
 		@personal_trainer = PersonalTrainer.find(params[:id])
 		@location = @personal_trainer.location
-						set_params_gmaps_flag :personal_trainer
+		@photo = Photo.new
+		@photo.title = "Logo"		
+		set_params_gmaps_flag :personal_trainer
 
 		# # gender
 		# if ["male", "female"].include? params[:personal_trainer][:gender]
 		# 	unless current_user.gender == params[:personal_trainer][:gender]; raise Errors::FlowError.new(root_path, "This personal trainer is #{@personal_trainer.gender} only."); end
 		# end
 
-		unless @personal_trainer.update_attributes(
-				title: params[:personal_trainer][:title],
-				descreption: params[:personal_trainer][:descreption],
-				gender: params[:personal_trainer][:gender])	&&
-				@location.update_attributes(
-		 		city: params[:personal_trainer][:location][:city],
-		 		custom_address_use: params[:personal_trainer][:location][:custom_address_use],
-		 		longitude: params[:personal_trainer][:location][:longitude],
-		 		latitude: params[:personal_trainer][:location][:latitude],
-		 		gmap_use: params[:personal_trainer][:location][:gmap_use],
-		 		custom_address: params[:personal_trainer][:location][:custom_address],
-		 		gmaps: params[:personal_trainer][:location][:gmaps] )
-			raise Errors::FlowError.new(edit_personal_trainer_path(@personal_trainer), "There has been a problem with data entry.")
+		# update and validate location
+		@location = @personal_trainer.location.assign_attributes(safe_location_param)
+		if @personal_trainer.location.invalid?; raise Errors::ValidationError.new(:edit, ["Address is not valid."]); end
+
+		# update and validate venue
+		@personal_trainer.assign_attributes safe_param
+
+		if @personal_trainer.invalid?; raise Errors::ValidationError.new(:edit, @personal_trainer.errors); end
+		if !@personal_trainer.save; raise Errors::FlowError.new(:edit, @personal_trainer.errors); end
+
+		# secondary database actions
+		unless @personal_trainer.create_activity :update, owner: current_user
+			silent_malfunction_error_handler("E0304")
 		end
 
-		@personal_trainer.create_activity :update, owner: current_user
+		# done
 		redirect_to @personal_trainer, notice: "Personal Trainer page was updated"
 	end
 
@@ -193,4 +204,24 @@ class PersonalTrainersController < ApplicationController
 		def can_create
 			redirect_to root_path and return unless current_user.can_create? "personal_trainer"
 		end
+
+		def safe_param
+			this = Hash.new
+			this[:title] = params[:personal_trainer][:title] unless params[:personal_trainer][:title].nil?
+			this[:descreption] = params[:personal_trainer][:descreption] unless params[:personal_trainer][:descreption].nil?
+			this[:gender] = params[:personal_trainer][:gender] unless params[:personal_trainer][:gender].nil?
+			this
+		end
+
+		def safe_location_param
+			this = Hash.new
+			this[:city] = params[:personal_trainer][:location][:city] unless params[:personal_trainer][:location][:city].nil?
+			this[:custom_address_use] = params[:personal_trainer][:location][:custom_address_use] unless params[:personal_trainer][:location][:custom_address_use].nil?
+			this[:longitude] = params[:personal_trainer][:location][:longitude] unless params[:personal_trainer][:location][:longitude].nil?
+			this[:latitude] = params[:personal_trainer][:location][:latitude] unless params[:personal_trainer][:location][:latitude].nil?
+			this[:gmap_use] = params[:personal_trainer][:location][:gmap_use] unless params[:personal_trainer][:location][:gmap_use].nil?
+			this[:custom_address] = params[:personal_trainer][:location][:custom_address] unless params[:personal_trainer][:location][:custom_address].nil?
+			this[:gmaps] = params[:personal_trainer][:location][:gmaps] unless params[:personal_trainer][:location][:gmaps].nil?
+			this
+		end				
 end

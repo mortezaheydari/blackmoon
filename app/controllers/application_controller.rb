@@ -85,17 +85,21 @@ class ApplicationController < ActionController::Base
 
     # Entrance of the following errors indicate a possibility of website malfunction.
     # Make sure to revise server, database and code in case any these codes were reported
+    #   E0X01: could not create "offering_creation"
+    #   E0X02: could not create "offering_administration"
+    #   E0X03: problem with PublicActivity in create action, It will go alright except for lack of notification.
+    #   E0X04: problem with PublicActivity in update action, It will go alright except for lack of notification.
     # event_controller
-    #   E0701: could not create "offering_creation"
-    #   E0702: could not create "offering_administration"
-    #   E0703: problem with PublicActivity in create action, It will go alright except for lack of notification.
-    #   E0704: problem with PublicActivity in update action, It will go alright except for lack of notification.
+    #   X => 7
     # game_controller
-    #   E0801: could not create "offering_creation"
-    #   E0802: could not create "offering_administration"
-    #   E0803: problem with PublicActivity in create action, It will go alright except for lack of notification.
-    #   E0804: problem with PublicActivity in update action, It will go alright except for lack of notification.
-
+    #   X => 8    
+    # venue_controller    
+    #   X => 2    
+    # personal_trainer_controller    
+    #   X => 3   
+    # group_training_controller    
+    #   X => 4
+    
 	def validation_error_handler(exception)
         if exception.message.class.to_s == "String"
             flash[:alert] = exception.message
