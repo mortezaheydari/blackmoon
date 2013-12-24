@@ -27,9 +27,9 @@ class InvitationsController < ApplicationController
 
 		if @subject.inviteds.include? @invited; raise Errors::FlowError.new(@subject, "Already invited."); end
 		
-		# gender restriction
+		# gender
 		if ["male", "female"].include? @subject.gender
-			unless @subject.gender == @invited.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+			unless @subject.gender == @invited.gender; raise Errors::FlowError.new(root_path, "This #{@subject.class.to_s.humanize} is #{@subject.gender} only."); end
 		end		
 
 		if !@invitation.save; raise Errors::FlowError.new(@subject, "There was a problem with submitting the invitation."); end
@@ -56,9 +56,9 @@ class InvitationsController < ApplicationController
 
 		unless ["reject", "accept"].include? invitation_respond; raise Errors::FlowError.new; end
 				
-		# gender restriction
+		# gender
 		if ["male", "female"].include? @invitation.subject.gender
-			unless @invitation.subject.gender == @invitation.invited.gender; raise Errors::FlowError.new(redirect_object, "This action is not possible because of gender restriction."); end
+			unless @invitation.subject.gender == @invitation.invited.gender; raise Errors::FlowError.new(redirect_object, "This #{@invitation.subject.humanize} is #{@subject.gender} only now."); end
 		end		
 
 		if invitation_respond == "reject"

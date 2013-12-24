@@ -79,9 +79,9 @@ class PersonalTrainersController < ApplicationController
 		@personal_trainer = PersonalTrainer.new(title: params[:personal_trainer][:title], descreption: params[:personal_trainer][:descreption], gender: params[:personal_trainer][:gender])
 		@personal_trainer.album = Album.new
 
-		# # gender restriction
+		# # gender
 		# if ["male", "female"].include? @personal_trainer.gender
-		# 	unless current_user.gender == @personal_trainer.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		# 	unless current_user.gender == @personal_trainer.gender; raise Errors::FlowError.new(root_path, "This personal trainer is #{@personal_trainer.gender} only."); end
 		# end
 
 		# here, location assignment operation should take place.
@@ -159,9 +159,9 @@ class PersonalTrainersController < ApplicationController
 		@location = @personal_trainer.location
 						set_params_gmaps_flag :personal_trainer
 
-		# # gender restriction
+		# # gender
 		# if ["male", "female"].include? params[:personal_trainer][:gender]
-		# 	unless current_user.gender == params[:personal_trainer][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		# 	unless current_user.gender == params[:personal_trainer][:gender]; raise Errors::FlowError.new(root_path, "This personal trainer is #{@personal_trainer.gender} only."); end
 		# end
 
 		unless @personal_trainer.update_attributes(

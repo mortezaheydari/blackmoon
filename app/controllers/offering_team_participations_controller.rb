@@ -17,9 +17,9 @@ class OfferingTeamParticipationsController < ApplicationController
 		offerings_participating = team.send("#{offering_type}s_participating")
 		joining_offering = offering_type.camelize.constantize.find_by_id(offering_id)
 
-		# gender restriction
+		# gender
 		if ["male", "female"].include? joining_offering.gender
-			unless team.gender == joining_offering.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+			unless team.gender == joining_offering.gender; raise Errors::FlowError.new(root_path, "This #{joining_offering.class.to_s} is #{joining_offering.gender} only."); end
 		end		
 
 		number_of_attendings = joining_offering.number_of_attendings

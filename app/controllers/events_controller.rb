@@ -93,9 +93,9 @@ class EventsController < ApplicationController
 		@event.album = Album.new
 		@happening_case = @event.happening_case = HappeningCase.new(params[:happening_case])
 
-		# # gender restriction
+		# # gender
 		# if ["male", "female"].include? @event.gender
-		#   unless current_user.gender == @event.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		#   unless current_user.gender == @event.gender; raise Errors::FlowError.new(root_path, "This event is #{@event.gender} only."); end
 		# end
 
 		@location = @event.build_location(location_param)
@@ -211,9 +211,9 @@ class EventsController < ApplicationController
 		@location = @event.location
 		@happening_case = @event.happening_case
 
-		# # gender restriction
+		# # gender
 		# if ["male", "female"].include? params[:event][:gender]
-		#   unless current_user.gender == params[:event][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+		#   unless current_user.gender == params[:event][:gender]; raise Errors::FlowError.new(root_path, "This event is #{@event.gender} only."); end
 		# end
 		
 		# update location

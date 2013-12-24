@@ -78,9 +78,9 @@ class TeamsController < ApplicationController
 		@team = Team.new(params[:team])
 		@team.album = Album.new
 
-		# gender restriction
+		# gender
 		if ["male", "female"].include? @team.gender
-			unless current_user.gender == @team.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+			unless current_user.gender == @team.gender; raise Errors::FlowError.new(root_path, "This team is #{@team.gender} only."); end
 		end
 
 		@team.save
@@ -131,9 +131,9 @@ class TeamsController < ApplicationController
 	def update
 		@team = Team.find(params[:id])
 
-		# gender restriction
+		# gender
 		if ["male", "female"].include? params[:team][:gender]
-			unless current_user.gender == params[:team][:gender]; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+			unless current_user.gender == params[:team][:gender]; raise Errors::FlowError.new(root_path, "This team is #{@team.gender} only."); end
 		end
 
 		if @team.update_attributes(params[:team]) # should become more secure in future.

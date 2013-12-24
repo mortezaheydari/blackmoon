@@ -17,9 +17,9 @@ class ActMembershipsController < ApplicationController
 
 		unless joining_act; raise Errors::FlowError.new; end
 
-		# gender restriction
+		# gender
 		if ["male", "female"].include? joining_act.gender
-			unless user.gender == joining_act.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+			unless user.gender == joining_act.gender; raise Errors::FlowError.new(root_path, "This #{act_type} is #{joining_act.gender} only."); end
 		end	
 			
 		number_of_attendings = joining_act.number_of_attendings

@@ -20,14 +20,14 @@ class OfferingIndividualParticipationsController < ApplicationController
 
 		joining_offering = offering_type.camelize.constantize.find_by_id(offering_id)
 
-		# gender restriction		
+		# gender		
 		if joining_offering.class.to_s == "OfferingSession"
 			if ["male", "female"].include? joining_offering.owner.gender
-				unless user.gender == joining_offering.owner.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+				unless user.gender == joining_offering.owner.gender; raise Errors::FlowError.new(root_path, "This #{joining_offering.owner.class.to_s} is #{joining_offering.owner.gender} only."); end
 			end
 		else
 			if ["male", "female"].include? joining_offering.gender
-				unless user.gender == joining_offering.gender; raise Errors::FlowError.new(root_path, "This action is not possible because of gender restriction."); end
+				unless user.gender == joining_offering.gender; raise Errors::FlowError.new(root_path, "This #{joining_offering.class.to_s} is #{joining_offering.gender} only."); end
 			end
 		end
 
