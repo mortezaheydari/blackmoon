@@ -1,30 +1,30 @@
-  <div class="userInfo">
-<%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
-    <div class="eventProfileCard">
-      <div class="large"><%= logo_for(@team, size: :user_profile, css_style: "margin:15px auto;") %></div>
-      <h1><%= truncate(@team.title, length: 35) %></h1>
-      <p>Sports: <%= @team.sport %></p>
-      <footer>
-        <span class="right">players: <%= @team.number_of_attendings %></span>
-      </footer>
-    </div>
-
-    <div class="locationPartial">
-      <div class="locationTitle">Location</div>
-      <div class="map"></div>
-    </div>
-
-    <div class="activityOrigin">
-        <div class="OriginTitle">Activity Originator</div>
-        <div class="UserimgName">
-            <%= logo_for(@team.creator, size: :small, css_class: "userCardImage left") %>
-            <%= link_to @team.creator.name , user_path(@team.creator) %>
+  <div class="container-fluid userInfo">
+    <div class="row-fluid">
+        <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
+        <div class="span7 eventProfileCard">
+            <div class="span4">
+                  <div class="large"><%= logo_for(@team, size: :user_profile, css_style: "margin:15px auto;") %></div>
+            </div>
+            <div class="span8">
+                  <h1><%= truncate(@team.title, length: 35) %></h1>
+                  <p>Sport: <%= @team.sport %></p>
+            </div>
         </div>
-        <p>Level 2: Team Originator</p>
+
+        <div class="span3 activityOrigin">
+            <div class="OriginTitle">Team Originator</div>
+            <div class="UserimgName">
+                <div class="img"><%= logo_for(@team.creator, size: :small, css_class: "userCardImage left") %></div>
+                <%= link_to @team.creator.name , user_path(@team.creator) %>
+            </div>
+        </div>
     </div>
 
-    <a href="#"><div class="shareButton"></div></a>
+
+    <div class="row-fluid">
+        <div class="span12">
     <%= render 'shared/like_button', offering: @team if signed_in? %>
+    <a href="#"><div class="shareButton"></div></a>
 
             <% if @team.open_join %>
                 <% if current_user.gender == @team.gender || @team.gender == "none" || @team.gender == "mix" %>
@@ -42,9 +42,10 @@
                 <% end -%>
             <% end %>
 
-    <%= link_to "Edit", edit_team_path(@team), class: "button blue left" if signed_in? && current_user == @team.creator %>
-
-  </div>
+            <%= link_to "Edit", edit_team_path(@team), class: "button blue left" if signed_in? && current_user == @team.creator %>
+        </div>
+    </div>
+</div>
 
   <div class="secondMenu">
     <nav id="secondary">
@@ -62,7 +63,7 @@
     <div class="Description">
         <div class="teamDesc">
             <div class="desctext">
-                <div class="<%= @team.category %> left"></div>  <br> <br> <br>
+                <h2 class="header_text">Description</h2>
                 <p><%= @team.descreption %></p>
             </div>
             <%# render "shared/upcoming_offering_test" %>

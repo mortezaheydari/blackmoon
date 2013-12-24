@@ -1,77 +1,78 @@
-  <div class="userInfo">
-<%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
-    <div class="eventProfileCard">
-      <div class="large"><%= logo_for(@game, size: :user_profile, css_style: "margin:15px auto;") %></div>
-      <!-- <div class="<%= @game.category %> left"></div> -->
-      <h1><%= truncate(@game.title, length: 35) %></h1>
-      <p>Sports: <%= @game.sport %></p>
-      <% unless @game.happening_case.duration_type == "All Day" %>
-            <p>Time: <%= @game.happening_case.time_from.strftime("%I:%M %p") %> - <%= @game.happening_case.time_to.strftime("%I:%M %p")  %></p>
-      <% end -%>
-      <p>Date: <%= @game.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></p>
-      <p>Location: <%= @game.custom_address %></p>
-      <footer>
-        <span>Fee:</span>
-        <% if @game.fee_type == "Free" %>
-            <a href="#">Free</a>
-        <% else %>
-            <a href="#"><%= @game.fee %> KD</a>
-        <% end %>
-        <span class="right">players: <%= @game.number_of_attendings %></span>
-      </footer>
-    </div>
-
-    <div class="locationPartial">
-      <div class="locationTitle">Location</div>
-      <div class="map"></div>
-    </div>
-
-    <div class="activityOrigin">
-        <div class="OriginTitle">Activity Originator</div>
-        <div class="UserimgName">
-            <div class="img"><%= gravatar_for(@game.creator) %></div>
-            <%= link_to @game.creator.name , user_path(@game.creator) %>
-        </div>
-      <!-- <a href="#" class="originTitle"><%= @game.creator.name %></a> -->
-        <p>Level 2: Game Originator</p>
-    </div>
-
-    <%= render 'shared/like_button', offering: @game if signed_in? %>
-    <a href="#"><div class="shareButton"></div></a>
-
-
-    <% unless @game.full? %>
-        <% if @game.team_participation == true %>
-            <% if @game.open_join %>
-                <% if @my_teams.empty? %>
-                    <%= link_to content_tag("div", "", class: "joinedButton"), "#" %>
-                <% else %>
-                    <%= render "shared/team_join", this: @game, teams: @my_teams %>
-                <% end %>
-            <% else %>
-                <%= render "shared/team_invite", this: @game, teams: @teams %>
-            <% end %>
-        <% else %>
-            <% if @game.open_join %>
-                <% if current_user.gender == @game.gender || @game.gender == "none" || @game.gender == "mix" %>
-                    <%= render 'shared/join_link', this: @game, participating_actor: "user" if signed_in? %>
-                <% else %>
-                    <div class="gender genderShowPage" data-toggle="tooltip" title="<%= @game.gender.humanize %> Only"><i class="fa fa-<%= @game.gender %>"></i></div>
-                <% end %>
-            <% else %>
-                <% if @game.gender == "male" %>
-                    <%= render "shared/user_invite", this: @game, users: current_user.male_in_relation %>
-                <% elsif @game.gender == "female" %>
-                    <%= render "shared/user_invite", this: @game, users: current_user.female_in_relation %>
-                <% else %>
-                    <%= render "shared/user_invite", this: @game, users: current_user.people_in_relation %>
+<div class="container-fluid userInfo">
+    <div class="row-fluid">
+        <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
+        <div class="span7 eventProfileCard">
+            <div class="span4">
+                <div class="large"><%= logo_for(@game, size: :user_profile, css_style: "margin:15px auto;") %></div>
+            </div>
+            <div class="span8">
+                <!-- <div class="<%= @game.category %> left"></div> -->
+                <h1><%= truncate(@game.title, length: 35) %></h1>
+                <p>Sports: <%= @game.sport %></p>
+                <% unless @game.happening_case.duration_type == "All Day" %>
+                    <p>Time: <%= @game.happening_case.time_from.strftime("%I:%M %p") %> - <%= @game.happening_case.time_to.strftime("%I:%M %p")  %></p>
                 <% end -%>
-            <% end %>
-        <% end -%>
-    <% end -%>
+                <p>Date: <%= @game.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></p>
+                <p>Location: <%= @game.custom_address %></p>
+                <footer>
+                    <span>Fee:</span>
+                    <% if @game.fee_type == "Free" %>
+                        <a href="#">Free</a>
+                    <% else %>
+                        <a href="#"><%= @game.fee %> KD</a>
+                    <% end %>
+                    <span class="right">players: <%= @game.number_of_attendings %></span>
+                </footer>
+            </div>
+        </div>
+        <div class="span3 activityOrigin">
+            <div class="OriginTitle">Activity Originator</div>
+            <div class="UserimgName">
+                <div class="img"><%= gravatar_for(@game.creator) %></div>
+                <%= link_to @game.creator.name , user_path(@game.creator) %>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <%= render 'shared/like_button', offering: @game if signed_in? %>
+            <a href="#"><div class="shareButton"></div></a>
 
-    <%= link_to "Edit", edit_game_path(@game), class: "button blue left" if signed_in? && user_is_admin?(@game) %>
-  </div>
+
+            <% unless @game.full? %>
+                <% if @game.team_participation == true %>
+                    <% if @game.open_join %>
+                        <% if @my_teams.empty? %>
+                            <%= link_to content_tag("div", "", class: "joinedButton"), "#" %>
+                        <% else %>
+                            <%= render "shared/team_join", this: @game, teams: @my_teams %>
+                        <% end %>
+                    <% else %>
+                        <%= render "shared/team_invite", this: @game, teams: @teams %>
+                    <% end %>
+                <% else %>
+                    <% if @game.open_join %>
+                        <% if current_user.gender == @game.gender || @game.gender == "none" || @game.gender == "mix" %>
+                            <%= render 'shared/join_link', this: @game, participating_actor: "user" if signed_in? %>
+                        <% else %>
+                            <div class="gender genderShowPage" data-toggle="tooltip" title="<%= @game.gender.humanize %> Only"><i class="fa fa-<%= @game.gender %>"></i></div>
+                        <% end %>
+                    <% else %>
+                        <% if @game.gender == "male" %>
+                            <%= render "shared/user_invite", this: @game, users: current_user.male_in_relation %>
+                        <% elsif @game.gender == "female" %>
+                            <%= render "shared/user_invite", this: @game, users: current_user.female_in_relation %>
+                        <% else %>
+                            <%= render "shared/user_invite", this: @game, users: current_user.people_in_relation %>
+                        <% end -%>
+                    <% end %>
+                <% end -%>
+            <% end -%>
+
+            <%= link_to "Edit", edit_game_path(@game), class: "button blue left" if signed_in? && user_is_admin?(@game) %>
+        </div>
+    </div>
+</div>
 
   <div class="secondMenu">
     <nav id="secondary">
@@ -91,7 +92,7 @@
                 <h2 class="header_text">Location:</h2>
                 <div id="MapContainer"><%= render "shared/map" %></div>
             <% end %>
-        <div class="<%= @game.category %> left"></div>  <br> <br> <br>
+            <h2 class="header_text">Description</h2>
         <p><%= @game.description %></p>
         <%= render "shared/activity_table", recent_activities: @recent_activities %>
 

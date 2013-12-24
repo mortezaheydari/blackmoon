@@ -1,20 +1,25 @@
-  <div class="userInfo">
+<div class="container-fluid userInfo">
+    <div class="row-fluid">
 <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
-    <div class="UserProfileCard">
-      <div class="large"><%= logo_for(@user, size: :user_profile) %></div>
-      <h1><%= @user.profile.first_name %> <%= @user.profile.last_name %></h1>
-      <div class="small"></div>
-      <div class="small"></div>
-      <div class="small"></div>
-      <p><%= @user.profile.about %></p>
-      <footer>
-        <span>First Boomer</span>
-        <span >1</span>
-        <%= image_tag "test.png" %><span>122</span>
-      </footer>
-    </div>
+        <div class="span7 UserProfileCard">
+            <div class="span4">
+                <div class="large"><%= logo_for(@user, size: :user_profile) %></div>
+            </div>
+            <div class="span8">
+                <h1><%= @user.profile.first_name %> <%= @user.profile.last_name %></h1>
+<!--                 <div class="small"></div>
+                <div class="small"></div>
+                <div class="small"></div>
+                <p><%= @user.profile.about %></p>
+                <footer>
+                <span>First Boomer</span>
+                <span >1</span>
+                <%= image_tag "test.png" %><span>122</span>
+                </footer> -->
+            </div>
+        </div>
 
-    <div class="stats">
+    <div class="span3 stats">
       <span class="statsHeader">Basic Stats</span>
       <div>
         <table border="0" cellspacing="0" cellpadding="0">
@@ -28,7 +33,7 @@
           </tr>
           <tr>
             <td class="statLabel">
-              Tournaments:
+              Events:
             </td>
             <td class="statNumber">
               1
@@ -42,34 +47,11 @@
               4
             </td>
           </tr>
-          <tr>
-            <td class="statLabel">
-              Wins:
-            </td>
-            <td class="statNumber">
-              7
-            </td>
-          </tr>
-          <tr>
-            <td class="statLabel">
-              Losses:
-            </td>
-            <td class="statNumber">
-              2
-            </td>
-          </tr>
         </table>
       </div>
     </div>
+</div>
 
-    <div class="activityOrigin">
-      <div class="OriginTitle">Activity Originator</div>
-        <div class="UserimgName">
-            <div class="img"></div>
-            <a href="#">Morteza Mansour Heydari</a>
-        </div>
-      <p>Level 2: Game Originator</p>
-    </div>
 
    <!--  <a href="#" class="button blue left">Follow</a> -->
    <%= render 'shared/follow_form' if signed_in?  %>

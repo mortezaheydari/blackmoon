@@ -180,6 +180,12 @@ $(document).ready(function() {
     $('a').tooltip();
 
 
+     $('.activityOrigin').css({
+         height: $('.eventProfileCard').css('height')
+     });
+     $('.stats').css({
+         height: $('.UserProfileCard').css('height')
+     });
 // check select cat radiobutton
 
     if ($("#team_category_ballsports").is(':checked')) {

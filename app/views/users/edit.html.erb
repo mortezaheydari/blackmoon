@@ -6,6 +6,7 @@
 
             <%= form_for(@photo, :url => logos_update_path(@photo, owner_type: "User", owner_id: @user.id), :html => { :method => "post" }) do |p| %>
 
+                <h2 class="header_text text-center">Update your photo</h2>
                 <table>
                     <tr>
                         <td colspan="2">
@@ -44,6 +45,7 @@
                 <%= form_for(@user) do |f| %>
             			<%= render 'shared/error_messages', object: f.object %>
 
+                <h2 class="header_text text-center">Update Info</h2>
                 <table colspan="5">
                     <tr>
                         <td><%= f.label "User Name", class: "right" %></td>

@@ -1,32 +1,36 @@
-  <div class="userInfo">
-<%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
-    <div class="eventProfileCard">
-      <div class="large"><%= logo_for(@personal_trainer, size: :user_profile, css_style: "margin:15px auto;") %></div>
-      <h1><%= truncate(@personal_trainer.title, length: 35) %></h1>
-    </div>
-
-    <div class="locationPartial">
-      <div class="locationTitle">Location</div>
-      <div class="map"></div>
-    </div>
-
-    <div class="activityOrigin">
-        <div class="OriginTitle">Personal Trainer Originator</div>
-        <div class="UserimgName">
-            <div class="img"><%= logo_for(@personal_trainer.creator, size: :small, css_class: "userCardImage left") %></div>
-            <%= link_to @personal_trainer.creator.name , user_path(@personal_trainer.creator) %>
+<div class="container-fluid userInfo">
+    <div class="row-fluid">
+        <%= render_breadcrumbs :builder => ::BootstrapBreadcrumbsBuilder, :separator => " / " %>
+        <div class="span7 eventProfileCard">
+            <div class="span4">
+                  <div class="large"><%= logo_for(@personal_trainer, size: :user_profile, css_style: "margin:15px auto;") %></div>
+            </div>
+            <div class="span8">
+                  <h1><%= truncate(@personal_trainer.title, length: 35) %></h1>
+            </div>
         </div>
-      <!-- <a href="#" class="originTitle"><%= @personal_trainer.creator.name %></a> -->
-        <p>Level 2: Game Originator</p>
+
+        <div class="span3 activityOrigin">
+            <div class="OriginTitle">Personal Trainer Originator</div>
+            <div class="UserimgName">
+                <div class="img"><%= logo_for(@personal_trainer.creator, size: :small, css_class: "userCardImage left") %></div>
+                <%= link_to @personal_trainer.creator.name , user_path(@personal_trainer.creator) %>
+            </div>
+        </div>
     </div>
 
-    <%= render 'shared/like_button', offering: @personal_trainer if signed_in? %>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <%= render 'shared/like_button', offering: @personal_trainer if signed_in? %>
+            <a href="#"><div class="shareButton"></div></a>
 
 
-    <a href="#"><div class="shareButton"></div></a>
-    <%= link_to "Edit", edit_personal_trainer_path(@personal_trainer), class: "button blue left" if signed_in? && user_is_admin?(@personal_trainer) %>
 
-  </div>
+            <%= link_to "Edit", edit_personal_trainer_path(@personal_trainer), class: "button blue left" if signed_in? && user_is_admin?(@personal_trainer) %>
+        </div>
+    </div>
+</div>
 
   <div class="secondMenu">
     <nav id="secondary">
@@ -50,6 +54,7 @@
         <div class="Description">
             <h2 class="header_text">Location:</h2>
             <div id="MapContainer"><%= render "shared/map" %></div>
+            <h2 class="header_text">Description</h2>
             <p><%= @personal_trainer.descreption %></p>
 
             <%= render "shared/activity_table", recent_activities: @recent_activities %>

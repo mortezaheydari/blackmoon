@@ -424,8 +424,9 @@ div.page {
   div.userInfo {
     @include column(20);
     @include divReset;
+    margin-bottom: 0;
     div.stats{
-      margin: 0 75px 0 75px;
+      // margin: 0 75px 0 75px;
     }
     div.locationPartial {
       margin: 0 20px 0 20px;
@@ -612,7 +613,7 @@ nav#secondary {
 div.stats {
   @include background($objBg);
   @include box-shadow(#ccc 0px 2px 5px);
-  padding: 8px 10px;
+  padding: 10px;
   float: left;
   color: $TextColor;
   width: 147px;
@@ -726,8 +727,9 @@ div.eventProfileCard {
   float: left;
   color: $TextColor;
   width: 520px;
-  height: 154px;
+  // height: 154px;
   @include SideText;
+  margin-left: 0 !important;
   img {
     position: relative;
     width: 100%;
@@ -764,11 +766,10 @@ div.eventProfileCard {
 div.activityOrigin {
   @include background($objBg);
   @include box-shadow(#ccc 0px 2px 5px);
-  padding: $boxPadding;
+  padding: 27px;
   float: left;
   color: $TextColor;
   width: 210px;
-  height: 154px;
   div.OriginTitle {
     font-size: 20px;
     margin-bottom: 23px;
@@ -841,8 +842,9 @@ div.UserProfileCard {
   float: left;
   color: $TextColor;
   width: 410px;
-  height: 154px;
+  // height: 154px;
   @include SideText;
+  margin-left: 0 !important;
   div.small {
     width: 18px;
     height: 18px;
@@ -2086,7 +2088,7 @@ td#profileGender {
 }
 
 .teamInvite {
-    margin: 255px 0 0 0;
+    margin: 60px 0 0 0;
 }
 
 .teamIcon {
