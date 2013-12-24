@@ -7,9 +7,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   	rescue_from Errors::FlowError, with: :flow_error_handler
-  	rescue_from Errors::ValidationError, with: :validation_error_handler  	
-    rescue_from Errors::LoudMalfunction, with: :load_malfunction_error_handler        
-    # rescue_from Errors::SilentMalfunction, with: :silent_malfunction_error_handler           
+  	rescue_from Errors::ValidationError, with: :validation_error_handler
+    rescue_from Errors::LoudMalfunction, with: :load_malfunction_error_handler
+    # rescue_from Errors::SilentMalfunction, with: :silent_malfunction_error_handler
 
 	def name_is_valid?(name)
 	  ["event","game", "user", "team", "venue", "personal_trainer", "group_training"].include? name.underscore
@@ -48,15 +48,16 @@ class ApplicationController < ActionController::Base
 	end
 
 	# -ended
-    
+
     # debugging methods and error handlers
 	def flow_error_handler(exception)
         if exception.message.class.to_s == "String"
+            flash[:alert] = exception.message
             respond_to do |format|
                 format.html { redirect_to exception.redirect_object, alert: exception.message }
                 format.js { render 'error/refresh_flash_message' }
-            end   
-            return                        
+            end
+            return
         elsif exception.message.class.to_s == "Array"
             flash[:alert] = []
             flash[:alert] << "There was a problem with your request."
@@ -66,9 +67,9 @@ class ApplicationController < ActionController::Base
             respond_to do |format|
                 format.html { redirect_to exception.redirect_object }
                 format.js { render 'error/refresh_flash_message' }
-            end   
-            return                        
-        else 
+            end
+            return
+        else
             flash[:alert] = []
             flash[:alert] << "There was a problem with your request."
             exception.message.full_messages.each do |msg|
@@ -77,8 +78,8 @@ class ApplicationController < ActionController::Base
             respond_to do |format|
                 format.html { redirect_to exception.redirect_object }
                 format.js { render 'error/refresh_flash_message' }
-            end   
-            return                  
+            end
+            return
         end
 	end
 
@@ -88,12 +89,12 @@ class ApplicationController < ActionController::Base
     #   E0701: could not create "offering_creation"
     #   E0702: could not create "offering_administration"
     #   E0703: problem with PublicActivity in create action, It will go alright except for lack of notification.
-    #   E0704: problem with PublicActivity in update action, It will go alright except for lack of notification.    
+    #   E0704: problem with PublicActivity in update action, It will go alright except for lack of notification.
     # game_controller
     #   E0801: could not create "offering_creation"
     #   E0802: could not create "offering_administration"
     #   E0803: problem with PublicActivity in create action, It will go alright except for lack of notification.
-    #   E0804: problem with PublicActivity in update action, It will go alright except for lack of notification.      
+    #   E0804: problem with PublicActivity in update action, It will go alright except for lack of notification.
 
 	def validation_error_handler(exception)
         if exception.message.class.to_s == "String"
@@ -115,7 +116,7 @@ class ApplicationController < ActionController::Base
                 format.js { render 'error/refresh_flash_message' }
             end
             return
-        else 
+        else
             flash[:alert] = []
             flash[:alert] << "There was a problem with your request."
             exception.message.full_messages.each do |msg|
@@ -124,7 +125,7 @@ class ApplicationController < ActionController::Base
             respond_to do |format|
                 format.html { render exception.redirect_object }
                 format.js { render 'error/refresh_flash_message' }
-            end                    
+            end
             return
         end
 	end
@@ -134,7 +135,7 @@ class ApplicationController < ActionController::Base
             respond_to do |format|
                 format.html { redirect_to exception.redirect_object, alert: exception.message }
                 format.js { render 'error/refresh_flash_message' }
-            end                      
+            end
             return
         elsif exception.message.class.to_s == "Array"
             flash[:alert] = []
@@ -145,9 +146,9 @@ class ApplicationController < ActionController::Base
             respond_to do |format|
                 format.html { redirect_to exception.redirect_object }
                 format.js { render 'error/refresh_flash_message' }
-            end                     
+            end
             return
-        else 
+        else
             flash[:alert] = []
             flash[:alert] << "There was a problem with your request. Please report this problem in case it occurs again."
             exception.message.full_messages.each do |msg|
@@ -156,31 +157,31 @@ class ApplicationController < ActionController::Base
             respond_to do |format|
                 format.html { redirect_to exception.redirect_object }
                 format.js { render 'error/refresh_flash_message' }
-            end                         
+            end
             return
         end
-    end    
+    end
 
     # Currently, being done manually
     # def silent_malfunction_error_handler(exception)
     #     logger.debug "\nWebsite Silent Malfunction:\n #{exception.message}\n"
 
-    # end 
+    # end
     def silent_malfunction_error_handler(message)
         logger.debug "\nWebsite Silent Malfunction:\n #{message}\n"
-    end     
+    end
 
-    
+
     def black_debug(variable={}, message="debuging...")
         logger.debug "\n"
         logger.debug "<<<<<<<<<<<<<<<<<-debug->>>>>>>>>>>>>>>>>-start\n"
         logger.debug "#{message}:\n"
         logger.debug "#{variable}\n"
-        logger.debug "<<<<<<<<<<<<<<<<<-debug->>>>>>>>>>>>>>>>>-end\n"        
-        logger.debug "\n"        
+        logger.debug "<<<<<<<<<<<<<<<<<-debug->>>>>>>>>>>>>>>>>-end\n"
+        logger.debug "\n"
     end
 
     # -ended
-        
+
 
 end
