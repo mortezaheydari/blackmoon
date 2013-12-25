@@ -416,12 +416,26 @@ $("#fileupload").change(function(){
         }
     });
 
+
+    $("span .withoutHour").attr('name', 'offering_session[repeat_duration]');
+    $("span.withoutHour").show();
+    $("span .withHour").attr('name', '');
+    $("span.withHour").hide();
+
     $("#happening_case_duration_type").change( function() {
         if ($(this).val() == 'All Day') {
             $("tr.allday").show();
             $("tr.range").hide();
+            $("span .withoutHour").attr('name', 'offering_session[repeat_duration]');
+            $("span.withoutHour").show();
+            $("span .withHour").attr('name', '');
+            $("span.withHour").hide();
         } else if ($(this).val() == 'Range') {
             $("tr.range").show();
+            $("span .withHour").attr('name', 'offering_session[repeat_duration]');
+            $("span.withHour").show();
+            $("span .withoutHour").attr('name', '');
+            $("span.withoutHour").hide();
         }
     });
 
