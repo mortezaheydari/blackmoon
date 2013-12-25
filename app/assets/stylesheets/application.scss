@@ -974,6 +974,10 @@ div.Notification {
     hr {
       color: $timePassedGrey;
       width: 100%;
+      margin:0;
+    }
+    div.notiRow {
+        padding:10px;
     }
     p {
       color: $TextColor;
