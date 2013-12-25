@@ -11,9 +11,9 @@ class OfferingSessionsController < ApplicationController
 		owner_id = params[:offering_session][:owner_id]
 		params[:happening_case][:date_and_time] = params[:happening_case][:date_and_time]
 
-		unless name_is_valid?(owner_type); raise Errors::FlowError.new; end
+		if !name_is_valid?(owner_type); raise Errors::FlowError.new; end
 
-		@offering_session = OfferingSession.new(safe_param)
+		@offering_session = OfferingSession.new(descreption: params[:offering_session][:descreption], number_of_attendings: params[:offering_session][:number_of_attendings], title: params[:offering_session][:title])
 
         find_offering_session_owner
         raise Errors::FlowError.new unless @owner
@@ -304,14 +304,4 @@ class OfferingSessionsController < ApplicationController
 			end
 			grouped_sessions
 		end
-
-		def safe_param
-			this = Hash.new
-				this[:descreption] = params[:offering_session][:descreption] unless  params[:offering_session][:descreption].nil?
-				this[:number_of_attendings] = params[:offering_session][:number_of_attendings] unless  params[:offering_session][:number_of_attendings].nil?
-				this[:title] = params[:offering_session][:title] unless  params[:offering_session][:title].nil?
-			this
-		end
-
-
 end
