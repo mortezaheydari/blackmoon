@@ -180,6 +180,22 @@ $(document).ready(function() {
     $('a').tooltip();
 
 
+// datepicker
+
+var nowTemp = new Date();
+var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+var checkin = $('#happening_case_date_and_time').datepicker({
+  onRender: function(date) {
+    return date.valueOf() < now.valueOf() ? 'disabled' : '';
+  },
+  format: 'yyyy-mm-dd'
+}).data('datepicker');
+
+
+// datepicker
+
+
      $('.activityOrigin').css({
          height: $('.eventProfileCard').css('height')
      });

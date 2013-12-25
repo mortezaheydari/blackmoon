@@ -3,8 +3,6 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
   $(document).ready ->
-    $('#happening_case_date_and_time').datepicker
-        format: 'yyyy-mm-dd'
     gmarkers = []
     if $("input.location_gmap_check").attr('checked')
         $(".g_rows").show()

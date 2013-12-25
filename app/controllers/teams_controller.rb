@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
 	include SessionsHelper
-	before_filter :can_create, only: [:create]	
+	before_filter :can_create, only: [:create]
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 			add_breadcrumb "home", :root_path
@@ -88,9 +88,9 @@ class TeamsController < ApplicationController
 		unless @team.act_memberships.create(member_id: @current_user_id)
 			@team.destroy
 			raise Errors::LoudMalfunction.new("E0505")
-		end			
+		end
 		unless @team.create_activity(:create, owner: current_user)
-			silent_malfunction_error_handler("E0503")		
+			silent_malfunction_error_handler("E0503")
 		end
 
 		# done
@@ -116,7 +116,7 @@ class TeamsController < ApplicationController
 			@team = Team.find(params[:id])
 		rescue
 			raise Errors::FlowError.new(teams_path, "Team not found.")
-		end				
+		end
 		add_breadcrumb "Teams", teams_path, :title => "Back to the Index"
 		add_breadcrumb @team.title, team_path(@team)
 		@likes = @team.flaggings.with_flag(:like)
@@ -137,7 +137,7 @@ class TeamsController < ApplicationController
 			@team = Team.find(params[:id])
 		rescue
 			raise Errors::FlowError.new(teams_path, "Team not found.")
-		end	
+		end
 		@team.album ||= Album.new
 		@photo = Photo.new
 		@photo.title = "Logo"
@@ -177,7 +177,7 @@ class TeamsController < ApplicationController
 
 		def can_create
 			redirect_to root_path and return unless current_user.can_create? "team"
-		end		
+		end
 
 		def safe_param
 			this = Hash.new
@@ -186,9 +186,9 @@ class TeamsController < ApplicationController
 			this[:sport] = params[:team][:sport] unless params[:team][:sport].nil?
 			this[:number_of_attendings] = params[:team][:number_of_attendings] unless params[:team][:number_of_attendings].nil?
 			this[:category] = params[:team][:category] unless params[:team][:category].nil?
-			this[:open_join] = params[:team][:open_join] unless params[:team][:open_join].nil?												
+			this[:open_join] = params[:team][:open_join] unless params[:team][:open_join].nil?
 			this[:gender] = params[:team][:gender] unless params[:team][:gender].nil?
 			this
-		end		
+		end
 end
 
