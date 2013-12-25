@@ -3,7 +3,6 @@ module Offerable
 
 
     included do
-        validates :title, presence: true, length: {maximum: 50}, uniqueness: true
         make_flaggable :like
         attr_accessor  :offering_type
 
@@ -61,6 +60,7 @@ module Offerable
 ### normal offering:
             else
                 has_one :location, as: :owner, :dependent => :destroy; accepts_nested_attributes_for :location
+                validates :title, presence: true, length: {maximum: 50}, uniqueness: true
                 def creator
                     User.find_by_id(self.offering_creation.creator_id) unless self.offering_creation.nil?
                 end

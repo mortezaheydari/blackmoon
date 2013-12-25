@@ -17,32 +17,36 @@ class OfferingSessionsController < ApplicationController
 
         find_offering_session_owner
         raise Errors::FlowError.new unless @owner
+black_debug 1
 
         @offering_session.owner = @owner
 
 		# need collective or not?
 		case params[:offering_session][:collective_type]
-
 		when "", nil, " ", "none"
 			# if creating mmultiple sessions, must automaticly create a collective to contain them. This allows user to delete those sessions easily in case of any mistakes by deleting the collectives.
 			case params[:offering_session][:collection_flag]
 			when "1"
+black_debug 3
 
 				@collective = create_collective(params[:offering_session][:title], @owner.class.to_s, @owner.id)
 				raise Errors::FlowError.new unless @collective
 				# @offering_session.owner = @collective.owner
 				@offering_session.collective = @collective
 			else
+black_debug 4
 
 				@offering_session.collection_flag = false
 			end
 
 		when "existing"
+black_debug 5
 			@collective = owner_if_reachable("Collective", params[:offering_session][:collective_id])
 			raise Errors::FlowError.new unless @collective
 			@offering_session.collective_id = @collective.id
 
 		when "new"
+black_debug 6
 
 			@collective = create_collective(params[:offering_session][:collective_title], @owner.class.to_s, @owner.id)
 			raise Errors::FlowError.new unless @collective
@@ -50,11 +54,13 @@ class OfferingSessionsController < ApplicationController
 			@offering_session.collective = @collective
 
 		else
+black_debug 7
 			raise Errors::FlowError.new
 
 		end
 
 		# single or multiple?
+black_debug 8
 		if params[:offering_session][:collection_flag] == "1"
 
 			# create them (redirect if not)
@@ -70,12 +76,14 @@ class OfferingSessionsController < ApplicationController
 			# @repeat_every < 26 &&
 			# @repeat_every > 0
 
+black_debug 9
 			@attributes = @offering_session.attributes
 			["id", "created_at", "updated_at"].each do |key|
 				@attributes.delete key
 			end
 
 			# build multiple sessions, if "All Day" or "Range"
+black_debug 10
 			if params[:happening_case][:duration_type] == "All Day"
 				unless !(params[:offering_session][:repeat_duration] == "hour"); raise Errors::FlowError.new(@owner); end
 				@repeat_number.times do |i|
@@ -83,29 +91,37 @@ class OfferingSessionsController < ApplicationController
 					happening_case = @the_offering_session.build_happening_case(params[:happening_case])
 					happening_case.date_and_time = (happening_case.date_and_time + (@repeat_every.send(@repeat_duration))*i)
 					@the_offering_session.save
+black_debug 11
 				end
+black_debug 12
 			elsif params[:happening_case][:duration_type] == "Range"
 				# @offering_sessions_list = Hash.new
 				@repeat_number.times do |i|
 					@the_offering_session = OfferingSession.new(@attributes)
 					happening_case = @the_offering_session.build_happening_case(params[:happening_case])
-                    if (["hour"].include? @repeat_duration)
-                        happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
-                        happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
-                    else
-                        happening_case.date_and_time = (happening_case.date_and_time + (@repeat_every.send(@repeat_duration))*i)
-                        happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
-                        happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
-                    end
+black_debug 13
+                                                        if (["hour"].include? @repeat_duration)
+                                                            happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
+                                                            happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
+black_debug 14
+                                                        else
+                                                            happening_case.date_and_time = (happening_case.date_and_time + (@repeat_every.send(@repeat_duration))*i)
+                                                            happening_case.time_from = (happening_case.time_from + (@repeat_every.send(@repeat_duration))*i)
+                                                            happening_case.time_to = (happening_case.time_to + (@repeat_every.send(@repeat_duration))*i)
+black_debug 15
+                                                        end
 					@the_offering_session.save
+black_debug 16
 				end
 			else
 				raise Errors::FlowError.new(@owner)
+black_debug 17
 			end
 
 		else
 			@offering_session.build_happening_case(params[:happening_case])
 			if !@offering_session.save; raise Errors::FlowError.new; end
+black_debug 18
 		end
 
 		# return message.
