@@ -13,10 +13,8 @@ class OfferingIndividualParticipationsController < ApplicationController
 		offering_type = params[:offering_type]
 		user = User.find_by_id(params[:joining_user])
 		offering_id = params[:offering_id]
-                black_debug 0
 
 		if !name_is_valid?(user, offering_type); raise Errors::FlowError.new; end
-                black_debug 0.1
 
 		offerings_participating = user.send("#{offering_type}s_participating")
 
@@ -32,14 +30,12 @@ class OfferingIndividualParticipationsController < ApplicationController
 				unless user.gender == joining_offering.gender; raise Errors::FlowError.new(root_path, "This #{joining_offering.class.to_s} is #{joining_offering.gender} only."); end
 			end
 		end
-                black_debug 1
 
 		number_of_attendings = joining_offering.number_of_attendings
 		if joining_offering.offering_individual_participations.count < number_of_attendings || number_of_attendings == 0
 			# TODO: check participation deadline is not pass
 			offerings_participating << joining_offering unless offerings_participating.include? joining_offering
 			joining_offering.create_activity key: "offering_individual_participation.create", owner: current_user, recipient: user
-                black_debug 2
 			# create happening_scheduled
 			happening_case = joining_offering.happening_case
 			happ_sch = HappeningSchedule.new
@@ -55,7 +51,6 @@ class OfferingIndividualParticipationsController < ApplicationController
 			happ_sch.save
 			#
 		end
-                black_debug 3
 		@participator = joining_offering.individual_participators
 		@offering = joining_offering
 		respond_to do |format|

@@ -1,3 +1,5 @@
-$("#join_container").html("<%= escape_javascript(render('events/joined')) %>")
 $("div.joined").html("<%= escape_javascript(render('shared/cardsection',  individuals: @participator, this: @offering, class_name: 'joined', makeadmin: true)) %>")
-$('span#joinCount').html("<%= @participator.count %>")
+<%# unless OfferingSession %>
+    $("#join_container").html("<%= escape_javascript(render('events/joined')) %>")
+    $('span#joinCount').html("<%= @participator.count %>")
+<%# done %>
