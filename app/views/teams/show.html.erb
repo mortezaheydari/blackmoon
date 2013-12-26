@@ -20,31 +20,7 @@
         </div>
     </div>
 
-
-    <div class="row-fluid">
-        <div class="span12">
-    <%= render 'shared/like_button', offering: @team if signed_in? %>
-    <a href="#"><div class="shareButton"></div></a>
-
-            <% if @team.open_join %>
-                <% if current_user.gender == @team.gender || @team.gender == "none" || @team.gender == "mix" %>
-                    <%= render 'shared/join_link', this: @team, participating_actor: "user" if signed_in? %>
-                <% else %>
-                    <div class="gender genderShowPage" data-toggle="tooltip" title="<%= @team.gender.humanize %> Only"><i class="fa fa-<%= @team.gender %>"></i></div>
-                <% end %>
-            <% else %>
-                <% if @team.gender == "male" %>
-                    <%= render "shared/user_invite", this: @team, users: current_user.male_in_relation if user_is_admin?(@team) %>
-                <% elsif @team.gender == "female" %>
-                    <%= render "shared/user_invite", this: @team, users: current_user.female_in_relation if user_is_admin?(@team) %>
-                <% else %>
-                    <%= render "shared/user_invite", this: @team, users: current_user.people_in_relation if user_is_admin?(@team) %>
-                <% end -%>
-            <% end %>
-
-            <%= link_to "Edit", edit_team_path(@team), class: "button blue left" if signed_in? && current_user == @team.creator %>
-        </div>
-    </div>
+    <div id="action_box"><%= render "shared/action_row", this: @team %></div>
 </div>
 
   <div class="secondMenu">

@@ -1,0 +1,35 @@
+    <div class="row-fluid">
+        <div class="span12">
+            <%= render 'shared/like_button', offering: this if signed_in? %>
+            <a href="#"><div class="shareButton"></div></a>
+
+
+            <% unless this.full? %>
+                <% if this.team_participation == true %>
+                    <% if this.open_join || user_is_admin?(this) %>
+                        <% unless @my_teams.empty? %>
+                            <%= render "shared/team_join", this: this, teams: @my_teams %>
+                        <% end %>
+                    <% end %>
+                    <%= render "shared/team_invite", this: this, teams: @teams if user_is_admin?(this) %>
+                <% else %>
+                    <% if this.open_join || user_is_admin?(this) %>
+                        <% if current_user.gender == this.gender || this.gender == "none" || this.gender == "mix" %>
+                            <%= render 'shared/join_link', this: this, participating_actor: "user" if signed_in? %>
+                        <% else %>
+                            <div class="gender genderShowPage" data-toggle="tooltip" title="<%= this.gender.humanize %> Only"><i class="fa fa-<%= this.gender %>"></i></div>
+                        <% end %>
+                    <% end %>
+                    <% if this.gender == "male" %>
+                        <%= render "shared/user_invite", this: this, users: current_user.male_in_relation if user_is_admin?(this) %>
+                    <% elsif this.gender == "female" %>
+                        <%= render "shared/user_invite", this: this, users: current_user.female_in_relation if user_is_admin?(this) %>
+                    <% else %>
+                        <%= render "shared/user_invite", this: this, users: current_user.people_in_relation if user_is_admin?(this) %>
+                    <% end -%>
+                <% end -%>
+            <% end -%>
+
+            <%= link_to "Edit", send("edit_#{k_lower(this)}_path", this), class: "button blue left" if signed_in? && user_is_admin?(this) %>
+        </div>
+    </div>

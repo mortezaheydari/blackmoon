@@ -2,7 +2,7 @@ class GroupTrainingsController < ApplicationController
 
 	include SessionsHelper
 	include MultiSessionsHelper
-	before_filter :can_create, only: [:create]			
+	before_filter :can_create, only: [:create]
 	before_filter :authenticate_account!, only: [:new, :create, :edit, :destroy, :like]
 	before_filter :user_must_be_admin?, only: [:edit, :destroy]
 			add_breadcrumb "home", :root_path
@@ -38,7 +38,7 @@ class GroupTrainingsController < ApplicationController
 	end
 
 	def index
-		add_breadcrumb "group_trainings", group_trainings_path, :title => "Back to the Index"
+		add_breadcrumb "classes", group_trainings_path, :title => "Back to the Index"
 
 		@search = Sunspot.search(GroupTraining) do
 			fulltext params[:search]
@@ -91,9 +91,9 @@ class GroupTrainingsController < ApplicationController
 		unless @group_training.offering_administrations.create(administrator_id: @current_user_id)
 			@group_training.destroy
 			raise Errors::LoudMalfunction.new("E0402")
-		end	
+		end
 		unless @group_training.create_activity(:create, owner: current_user)
-			silent_malfunction_error_handler("E0403")		
+			silent_malfunction_error_handler("E0403")
 		end
 
 		# done
@@ -118,7 +118,7 @@ class GroupTrainingsController < ApplicationController
 			@group_training = GroupTraining.find(params[:id])
 		rescue
 			raise Errors::FlowError.new(group_trainings_path, "Class not found.")
-		end			
+		end
 		add_breadcrumb "Classes", group_trainings_path, :title => "Back to the Index"
 		add_breadcrumb @group_training.title, group_training_path(@group_training)
 		@likes = @group_training.flaggings.with_flag(:like)
@@ -157,7 +157,7 @@ class GroupTrainingsController < ApplicationController
 			@group_training = GroupTraining.find(params[:id])
 		rescue
 			raise Errors::FlowError.new(group_trainings_path, "Class not found.")
-		end		
+		end
 		@group_training.album ||= Album.new
 		@location = @group_training.location
 		@photo = Photo.new
@@ -168,7 +168,7 @@ class GroupTrainingsController < ApplicationController
 		@group_training = GroupTraining.find(params[:id])
 		@location = @group_training.location
 		@photo = Photo.new
-		@photo.title = "Logo"		
+		@photo.title = "Logo"
 		set_params_gmaps_flag :group_training
 
 		# # gender
@@ -223,5 +223,5 @@ class GroupTrainingsController < ApplicationController
 			this[:custom_address] = params[:group_training][:location][:custom_address] unless params[:group_training][:location][:custom_address].nil?
 			this[:gmaps] = params[:group_training][:location][:gmaps] unless params[:group_training][:location][:gmaps].nil?
 			this
-		end				
+		end
 end

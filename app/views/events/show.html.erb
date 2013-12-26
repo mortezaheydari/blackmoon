@@ -33,45 +33,7 @@
             </div>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span12">
-            <%= render 'shared/like_button', offering: @event if signed_in? %>
-            <a href="#"><div class="shareButton"></div></a>
-
-
-            <% unless @event.full? %>
-                <% if @event.team_participation == true %>
-                    <% if @event.open_join %>
-                        <% if @my_teams.empty? %>
-                            <%= link_to content_tag("div", "", class: "joinedButton"), "#" %>
-                        <% else %>
-                            <%= render "shared/team_join", this: @event, teams: @my_teams %>
-                        <% end %>
-                    <% else %>
-                        <%= render "shared/team_invite", this: @event, teams: @teams if user_is_admin?(@event) %>
-                    <% end %>
-                <% else %>
-                    <% if @event.open_join %>
-                        <% if current_user.gender == @event.gender || @event.gender == "none" || @event.gender == "mix" %>
-                            <%= render 'shared/join_link', this: @event, participating_actor: "user" if signed_in? %>
-                        <% else %>
-                            <div class="gender genderShowPage" data-toggle="tooltip" title="<%= @event.gender.humanize %> Only"><i class="fa fa-<%= @event.gender %>"></i></div>
-                        <% end %>
-                    <% else %>
-                        <% if @event.gender == "male" %>
-                            <%= render "shared/user_invite", this: @event, users: current_user.male_in_relation if user_is_admin?(@event) %>
-                        <% elsif @event.gender == "female" %>
-                            <%= render "shared/user_invite", this: @event, users: current_user.female_in_relation if user_is_admin?(@event) %>
-                        <% else %>
-                            <%= render "shared/user_invite", this: @event, users: current_user.people_in_relation if user_is_admin?(@event) %>
-                        <% end -%>
-                    <% end %>
-                <% end -%>
-            <% end -%>
-
-            <%= link_to "Edit", edit_event_path(@event), class: "button blue left" if signed_in? && user_is_admin?(@event) %>
-        </div>
-    </div>
+    <div id="action_box"><%= render "shared/action_row", this: @event %></div>
 </div>
 
   <div class="secondMenu">

@@ -20,8 +20,8 @@ class ActMembershipsController < ApplicationController
 		# gender
 		if ["male", "female"].include? joining_act.gender
 			unless user.gender == joining_act.gender; raise Errors::FlowError.new(root_path, "This #{act_type} is #{joining_act.gender} only."); end
-		end	
-			
+		end
+
 		number_of_attendings = joining_act.number_of_attendings
 		if acts_membership.count < number_of_attendings or number_of_attendings == 0
 			acts_membership << joining_act
@@ -48,7 +48,7 @@ class ActMembershipsController < ApplicationController
 		acts_memberships = user.act_memberships.where(act_type: act_type, act_id: act_id)
 
 		unless acts_memberships; raise Errors::FlowError.new; end
-		
+
 		acts_memberships.each.destroy unless acts_memberships == []
 
 		leaving_act = act.camelize.constantize.find_by_id(act_id)
@@ -64,7 +64,7 @@ class ActMembershipsController < ApplicationController
 	private
 		# checks if offering name is valid for team
 		# note: this function is controller specific
-		def name_is_valid?(user, this)
-			user.respond_to? "#{name}s_membership" and this_is_act?(this)
+		def name_is_valid?(user, name)
+			user.respond_to? "#{name}s_membership" and this_is_act?(name)
 		end
 end

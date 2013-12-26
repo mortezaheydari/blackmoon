@@ -38,7 +38,7 @@ class PersonalTrainersController < ApplicationController
 	end
 
 	def index
-		add_breadcrumb "Personal Trainers", personal_trainers_path, :title => "Back to the Index"
+		add_breadcrumb "personal trainers", personal_trainers_path, :title => "Back to the Index"
 
 		@search = Sunspot.search(PersonalTrainer) do
 			fulltext params[:search]
@@ -91,9 +91,9 @@ class PersonalTrainersController < ApplicationController
 		unless @personal_trainer.offering_administrations.create(administrator_id: @current_user_id)
 			@personal_trainer.destroy
 			raise Errors::LoudMalfunction.new("E0302")
-		end	
+		end
 		unless @personal_trainer.create_activity(:create, owner: current_user)
-			silent_malfunction_error_handler("E0303")		
+			silent_malfunction_error_handler("E0303")
 		end
 
 		# done
@@ -118,7 +118,7 @@ class PersonalTrainersController < ApplicationController
 			@personal_trainer = PersonalTrainer.find(params[:id])
 		rescue
 			raise Errors::FlowError.new(personal_trainers_path, "Personal trainer not found.")
-		end		
+		end
 		add_breadcrumb "Personal Trainers", personal_trainers_path, :title => "Back to the Index"
 		add_breadcrumb @personal_trainer.title, personal_trainer_path(@personal_trainer)
 		@likes = @personal_trainer.flaggings.with_flag(:like)
@@ -126,9 +126,9 @@ class PersonalTrainersController < ApplicationController
 		@album = @personal_trainer.album
 		@owner = @personal_trainer
 		@happening_case = HappeningCase.new
-		@offering_session =  OfferingSession.new		
+		@offering_session =  OfferingSession.new
 
-		@location = @personal_trainer.location		
+		@location = @personal_trainer.location
 
 		if params[:session_id]
 			@offering_session_edit = OfferingSession.find(params[:session_id])
@@ -167,7 +167,7 @@ class PersonalTrainersController < ApplicationController
 		@personal_trainer = PersonalTrainer.find(params[:id])
 		@location = @personal_trainer.location
 		@photo = Photo.new
-		@photo.title = "Logo"		
+		@photo.title = "Logo"
 		set_params_gmaps_flag :personal_trainer
 
 		# # gender
@@ -223,5 +223,5 @@ class PersonalTrainersController < ApplicationController
 			this[:custom_address] = params[:personal_trainer][:location][:custom_address] unless params[:personal_trainer][:location][:custom_address].nil?
 			this[:gmaps] = params[:personal_trainer][:location][:gmaps] unless params[:personal_trainer][:location][:gmaps].nil?
 			this
-		end				
+		end
 end

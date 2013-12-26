@@ -1,4 +1,18 @@
-$("span#makeAdmin<%= person.id %>").html("<%= escape_javascript(render('users/make_admin', person: person,  this: this)) %>")
+<% this.joineds.each do |p| %>
+    <% if user_is_admin?(this) %>
+        <% if !user_is_admin?(this,p) %>
+            $("span#makeAdmin<%= p.id %>").html("<%= escape_javascript(render('users/make_admin', person: p,  this: this)) %>")
+        <% elsif user_is_admin?(this, p) && (user_created_this?(this) or current_user?(p)) && this.administrators.count > 1 %>
+            $("span#makeAdmin<%= p.id %>").html("<%= escape_javascript(render('users/remove_admin', person: p,  this: this)) %>")
+        <% end %>
+    <% else %>
+        $("span#makeAdmin<%= p.id %>").html("")
+    <% end %>
+<% end %>
 <% if this.administrators.count == 1 %>
-    $("span#makeAdmin<%= this.creator.id %>").html("")
+        $("span#makeAdmin<%= current_user.id %>").html("")
 <% end -%>
+
+<% unless user_is_admin?(this) %>
+    $("div#action_box").html("<%= escape_javascript(render('shared/action_row', this: this)) %>")
+<% end %>

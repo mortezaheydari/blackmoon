@@ -13,14 +13,16 @@ class OfferingIndividualParticipationsController < ApplicationController
 		offering_type = params[:offering_type]
 		user = User.find_by_id(params[:joining_user])
 		offering_id = params[:offering_id]
-		
+                black_debug 0
+
 		if !name_is_valid?(user, offering_type); raise Errors::FlowError.new; end
+                black_debug 0.1
 
 		offerings_participating = user.send("#{offering_type}s_participating")
 
 		joining_offering = offering_type.camelize.constantize.find_by_id(offering_id)
 
-		# gender		
+		# gender
 		if joining_offering.class.to_s == "OfferingSession"
 			if ["male", "female"].include? joining_offering.owner.gender
 				unless user.gender == joining_offering.owner.gender; raise Errors::FlowError.new(root_path, "This #{joining_offering.owner.class.to_s} is #{joining_offering.owner.gender} only."); end
@@ -30,13 +32,14 @@ class OfferingIndividualParticipationsController < ApplicationController
 				unless user.gender == joining_offering.gender; raise Errors::FlowError.new(root_path, "This #{joining_offering.class.to_s} is #{joining_offering.gender} only."); end
 			end
 		end
+                black_debug 1
 
 		number_of_attendings = joining_offering.number_of_attendings
-		if offerings_participating.count < number_of_attendings or number_of_attendings == 0
+		if joining_offering.offering_individual_participations.count < number_of_attendings || number_of_attendings == 0
 			# TODO: check participation deadline is not pass
 			offerings_participating << joining_offering unless offerings_participating.include? joining_offering
 			joining_offering.create_activity key: "offering_individual_participation.create", owner: current_user, recipient: user
-
+                black_debug 2
 			# create happening_scheduled
 			happening_case = joining_offering.happening_case
 			happ_sch = HappeningSchedule.new
@@ -52,6 +55,7 @@ class OfferingIndividualParticipationsController < ApplicationController
 			happ_sch.save
 			#
 		end
+                black_debug 3
 		@participator = joining_offering.individual_participators
 		@offering = joining_offering
 		respond_to do |format|
@@ -77,7 +81,7 @@ class OfferingIndividualParticipationsController < ApplicationController
 		# destroy happening_schedule
 		happ_schs = HappeningSchedule.where("user_id = ? AND happening_case_id = ?", user.id, leaving_offering.happening_case.id)
 		happ_schs.each.destroy unless happ_schs == []
-		# 
+		#
 
 		leaving_offering.create_activity key: "offering_individual_participation.destroy", owner: current_user, recipient: user
 

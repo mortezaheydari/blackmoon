@@ -46,7 +46,7 @@ class ActAdministrationsController < ApplicationController
 		act_to_remove_admin_from = act_type.camelize.constantize.find_by_id(act_id)
 
 		unless act_to_remove_admin_from; raise Errors::FlowError.new; end
-		
+
 		if current_user_can_delete_admin?(user, act_to_remove_admin_from)
 			administrations = []
 			administrations = user.act_administrations.where(act_type: act_type.camelize , act_id: act_id)
@@ -69,8 +69,8 @@ class ActAdministrationsController < ApplicationController
 
 		# checks if offerign name is valid for user
 		# note: this function is controller specific
-		def name_is_valid?(user, this)
-			user.respond_to? "#{this.pluralize}_administrating" and this_is_act?(this)
+		def name_is_valid?(user, name)
+			user.respond_to? "#{name.pluralize}_administrating" and this_is_act?(name)
 		end
 
 end

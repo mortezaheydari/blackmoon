@@ -67,7 +67,7 @@ class VenuesController < ApplicationController
 		@current_user_id = current_user.id
 		@venue = Venue.new(safe_param)
 		@venue.album = Album.new
-		
+
 		set_params_gmaps_flag :venue
 
 		# # gender
@@ -91,9 +91,9 @@ class VenuesController < ApplicationController
 		unless @venue.offering_administrations.create(administrator_id: @current_user_id)
 			@venue.destroy
 			raise Errors::LoudMalfunction.new("E0202")
-		end	
+		end
 		unless @venue.create_activity(:create, owner: current_user)
-			silent_malfunction_error_handler("E0203")		
+			silent_malfunction_error_handler("E0203")
 		end
 
 		# done
@@ -125,7 +125,7 @@ class VenuesController < ApplicationController
 		@likes = @venue.flaggings.with_flag(:like)
 		@photo = Photo.new
 		@album = @venue.album
-		@owner = @venue		
+		@owner = @venue
 		@happening_case = HappeningCase.new
 		@offering_session = OfferingSession.new
 
@@ -157,7 +157,7 @@ class VenuesController < ApplicationController
 			@venue = Venue.find(params[:id])
 		rescue
 			raise Errors::FlowError.new(venues_path, "Venue not found.")
-		end				
+		end
 		@venue.album ||= Album.new
 		@location = @venue.location
 		@photo = Photo.new
@@ -168,7 +168,7 @@ class VenuesController < ApplicationController
 		@venue = Venue.find(params[:id])
 		@location = @venue.location
 		@photo = Photo.new
-		@photo.title = "Logo"		
+		@photo.title = "Logo"
 		set_params_gmaps_flag :venue
 
 		# # gender
@@ -179,7 +179,7 @@ class VenuesController < ApplicationController
 		# update and validate location
 		@location = @venue.location.assign_attributes(safe_location_param)
 		if @venue.location.invalid?; raise Errors::ValidationError.new(:edit, ["Address is not valid."]); end
-		
+
 		# update and validate venue
 		@venue.assign_attributes safe_param
 
@@ -225,6 +225,6 @@ class VenuesController < ApplicationController
 			this[:custom_address] = params[:venue][:location][:custom_address] unless params[:venue][:location][:custom_address].nil?
 			this[:gmaps] = params[:venue][:location][:gmaps] unless params[:venue][:location][:gmaps].nil?
 			this
-		end		
+		end
 
 end

@@ -20,10 +20,10 @@ class OfferingTeamParticipationsController < ApplicationController
 		# gender
 		if ["male", "female"].include? joining_offering.gender
 			unless team.gender == joining_offering.gender; raise Errors::FlowError.new(root_path, "This #{joining_offering.class.to_s} is #{joining_offering.gender} only."); end
-		end		
+		end
 
 		number_of_attendings = joining_offering.number_of_attendings
-		if offerings_participating.count < number_of_attendings or number_of_attendings == 0
+		if joining_offering.offering_team_participations.count < number_of_attendings or number_of_attendings == 0
 			# todo: check participation deadline is not pass
 			offerings_participating << joining_offering
 			joining_offering.create_activity key: "offering_team_participation.create", owner: current_user, recipient: team

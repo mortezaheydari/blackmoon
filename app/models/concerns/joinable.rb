@@ -79,6 +79,14 @@ module Joinable
                 User.find(@members)
             end
 
+            def full?
+                self.joineds.count >= self.number_of_attendings
+            end
+
+            def team_participation
+                false
+            end
+
             def joineds
                 @joineds = []
                 self.members.each do |joined|

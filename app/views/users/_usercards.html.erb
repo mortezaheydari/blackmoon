@@ -19,19 +19,21 @@
             <% end -%>
         </div>
     <% end %>
-<span id="makeAdmin<%= person.id %>">
-    <% if user_is_admin?(this) %>
-        <% if !user_is_admin?(this,person) %>
-            <%= render 'users/make_admin', person: person,  this: this  %>
-        <% elsif user_is_admin?(this, person) && (user_created_this?(this) or current_user?(person)) && this.administrators.count > 1 %>
-            <%= render 'users/remove_admin', person: person,  this: this %>
-        <% end %>
-    <% end %>
-<span id="inviteBtn<%= person.id %>" class="right">
-    <%= render 'shared/invite_button', this: this, person: person unless ["Venue", "PersonalTrainer", "GroupTraining"].include? this.class.to_s %>
-</span>
+    <div class="makeAdminDiv">
+        <span id="makeAdmin<%= person.id %>">
+            <% if user_is_admin?(this) %>
+                <% if !user_is_admin?(this,person) %>
+                    <%= render 'users/make_admin', person: person,  this: this  %>
+                <% elsif user_is_admin?(this, person) && (user_created_this?(this) or current_user?(person)) && this.administrators.count > 1 %>
+                    <%= render 'users/remove_admin', person: person,  this: this %>
+                <% end %>
+            <% end %>
+        <span id="inviteBtn<%= person.id %>" class="right">
+            <%= render 'shared/invite_button', this: this, person: person unless ["Venue", "PersonalTrainer", "GroupTraining"].include? this.class.to_s %>
+        </span>
 
-</span>
+        </span>
+    </div>
 
   </div>
 </article>

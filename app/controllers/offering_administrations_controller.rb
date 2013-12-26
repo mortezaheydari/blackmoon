@@ -21,7 +21,7 @@ class OfferingAdministrationsController < ApplicationController
 			offerings_administrating << offering_to_administrate
 			# activities
 				offering_to_administrate.create_activity key: "offering_administration.create", owner: current_user, recipient: user
-			# # #			
+			# # #
 		else
 			raise Errors::FlowError.new(send("#{offering_type}_path", offering_id), "Permission denied.")
 		end
@@ -69,8 +69,8 @@ class OfferingAdministrationsController < ApplicationController
 
 	# checks if offerign name is valid for user
 	# note: this function is controller specific
-	def name_is_valid?(user, this)
-		user.respond_to? "#{name}s_administrating" and (this_is_offering?(name) || this_is_multisession?(this))
+	def name_is_valid?(user, name)
+		user.respond_to? "#{name}s_administrating" and (this_is_offering?(name) || this_is_multisession?(name))
 	end
 
 end

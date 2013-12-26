@@ -107,7 +107,7 @@ class TeamsController < ApplicationController
 
 			redirect_to @team
 		else
-			raise Errors::FlowError.new(@team, "Permission denied."); end
+			raise Errors::FlowError.new(@team, "Permission denied.")
 		end
 	end
 
