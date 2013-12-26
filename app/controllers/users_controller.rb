@@ -9,7 +9,11 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@user = User.find(params[:id])
+		begin
+			@user = User.find(params[:id])
+		rescue
+			raise Errors::FlowError.new(users_path, "User not found.")
+		end
         add_breadcrumb @user.title, user_path(@user)
 		@likes = @user.flaggings.with_flag(:like)
 		@photo = Photo.new
@@ -17,9 +21,11 @@ class UsersController < ApplicationController
 	end
 
 	def edit
-		@user = User.find(params[:id])
-		raise Errors::FlowError.new unless current_user == @user
-
+		begin
+			@user = User.find(params[:id])
+		rescue
+			raise Errors::FlowError.new(users_path, "User not found.")
+		end
 		@user.profile ||= Profile.new
 		@user.album ||= Album.new
 		@photo = Photo.new
@@ -30,19 +36,19 @@ class UsersController < ApplicationController
 	def update
 		params_striper
 		@user = User.find(params[:id])
-
-                @photo = Photo.new
+        @photo = Photo.new
         @photo.title = "Logo"
+
         @date_of_birth = @user.profile.date_of_birth
 		raise Errors::FlowError.new unless current_user == @user
 		@user.profile.date_of_birth = date_helper_to_str(params[:date_of_birth])
-		if @user.update_attributes(params[:user]) # should become more secure in future.
-			flash[:success] = "Profile updated"
-			redirect_to @user, notice: "Your profile has been updated." #TODO: write a better notice.
-		else
-			render :edit
-		end
+		@user.assign_attributes safe_param		
+		debugger
+		if @user.invalid?; raise Errors::ValidationError.new(:edit, @user.errors); end 
+		unless @user.save; raise Errors::FlowError.new(@user); end 		
 
+		flash[:success] = "Profile updated"
+		redirect_to @user
 	end
 
 	def offering_management
@@ -53,7 +59,6 @@ class UsersController < ApplicationController
         @personal_trainers = @user.personal_trainers_administrating
         @group_trainings = @user.group_trainings_administrating
         @venues = @user.venues_administrating
-		#TODO: add venues_administrating
 	end
 
     def schedule
@@ -71,4 +76,14 @@ class UsersController < ApplicationController
 	    def params_striper
 	    	params[:user].delete :moonactor_ability
 	    end
+
+	    def safe_param
+			this = Hash.new
+			this[:name] = params[:user][:name] unless params[:user][:name].nil?
+			this[:gender] = params[:user][:gender] unless params[:user][:gender].nil?
+			this[:profile_attributes][:first_name] = params[:user][:profile_attributes][:first_name] unless params[:user][:profile_attributes][:first_name].nil?			
+			this[:profile_attributes][:last_name] = params[:user][:profile_attributes][:last_name] unless params[:user][:profile_attributes][:last_name].nil?	
+			this[:profile_attributes][:phone] = params[:user][:profile_attributes][:phone] unless params[:user][:profile_attributes][:phone].nil?	
+			this
+		end
 end
