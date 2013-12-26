@@ -132,6 +132,35 @@ module MoonActor
                 return true unless ["event","game", "team", "venue", "personal_trainer", "group_training"].include? offering_name
                 self.moonactor_ability.send("create_#{offering_name}")
             end
+
+            def level
+                ability = self.moonactor_ability
+                @level = "Junior Boomer"
+
+                if ability.create_game || ability.create_event
+                    @level = "Boomer"
+                end
+
+                if  ability.create_team
+                    @level = "Plus"
+                end
+
+                if ability.create_venue
+                    @level = "Pro"
+                end
+                if ability.create_personal_trainer || ability.group_training
+                    @level = "Trainer"
+                end
+                if ability.create_event &&
+                     ability.create_game &&
+                     ability.team &&
+                     ability.venue &&
+                     ability.personal_trainer &&
+                     ability.group_training                                                                                  
+                    @level = "Premium"
+                end
+                @level                                                       
+            end         
 ##
 
 ## Team
