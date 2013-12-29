@@ -19,7 +19,7 @@ gem 'gmaps4rails', "1.5"
 gem 'chronic'
 gem 'metric_fu'
 gem "jquery-fileupload-rails"
-gem 'sunspot_rails'
+gem 'sunspot_rails', '2.0.0'
 gem 'font-awesome-sass'
 gem 'whenever', require: false
 gem 'active_model_serializers'
@@ -35,7 +35,7 @@ gem "breadcrumbs_on_rails"
 
 group :development do
     gem 'annotate', '2.5.0'
-    gem 'sunspot_solr'
+    gem 'sunspot_solr', '2.0.0'
 end
 
 # Gems used only for assets and not required
