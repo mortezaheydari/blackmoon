@@ -148,19 +148,18 @@ module MoonActor
                 if ability.create_venue
                     @level = "Pro"
                 end
-                if ability.create_personal_trainer || ability.group_training
+                if ability.create_personal_trainer || ability.create_group_training
                     @level = "Trainer"
                 end
                 if ability.create_event &&
                      ability.create_game &&
-                     ability.team &&
-                     ability.venue &&
-                     ability.personal_trainer &&
-                     ability.group_training                                                                                  
+                     ability.create_team &&
+                     ability.create_venue &&
+                     ability.create_personal_trainer && ability.create_group_training
                     @level = "Premium"
                 end
-                @level                                                       
-            end         
+                @level
+            end
 ##
 
 ## Team
