@@ -50,7 +50,15 @@ Blackmoon::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
-
+  config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+    :authentication => :plain,
+    :address => "sandbox28813.mailgun.org",
+    :port => 587,
+    :domain => "sandbox28813.mailgun.org",
+    :user_name => "postmaster@sandbox28813.mailgun.org",
+    :password => "8fh2vk-7b-w5"
+  }  
   # Enable threaded mode
   # config.threadsafe!
 
@@ -64,4 +72,6 @@ Blackmoon::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+
 end
