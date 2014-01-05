@@ -22,9 +22,9 @@ class Game < ActiveRecord::Base
 
   attr_accessible :category, :custom_address, :description,
   	:fee, :fee_type, :location_type, :number_of_attendings, :sport,
-  	:team_participation, :title, :tournament_id, :open_join, :location, :gender
+  	:team_participation, :title, :tournament_id, :open_join, :location, :gender, :city
 
-  attr_accessor :updated_at, :city
+  attr_accessor :updated_at
 
     searchable do
         text :title, :boost => 5
