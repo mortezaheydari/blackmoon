@@ -108,8 +108,9 @@ module MoonActor
 
             def recent_offerings_participating(number=10)
                 offerings = []
+
                 if self.class.to_s == "User"
-                    participations = OfferingIndividualParticipation.where(participator_id: self.id).order(created_at: :desc).limit(number)
+                    participations = OfferingIndividualParticipation.where(participator_id: self.id.to_i).order("created_at DESC").limit(number)
                     participations.each do |participation|
                         if participation.offering.class.to_s == "OfferingSession"
                             offerings << participation.offering.owner
@@ -118,7 +119,7 @@ module MoonActor
                         end
                     end
                 elsif self.class.to_s == "Team"
-                    participations = OfferingTeamParticipation.where(participator_id: self.id).order(created_at: :desc).limit(number)
+                    participations = OfferingTeamParticipation.where(participator_id: self.id).order("created_at DESC").limit(number)
                     participations.each do |participation|
                         offerings << participation.offering
                     end
