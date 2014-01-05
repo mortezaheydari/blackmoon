@@ -79,6 +79,8 @@ class UsersController < ApplicationController
 
 	    def safe_param
 			this = Hash.new
+			Rails.logger.warn '-'*40
+			Rails.logger.warn params
 			this[:name] = params[:user][:name] unless params[:user][:name].nil?
 			this[:gender] = params[:user][:gender] unless params[:user][:gender].nil?
 			this[:profile_attributes][:first_name] = params[:user][:profile_attributes][:first_name] unless params[:user][:profile_attributes][:first_name].nil?			
