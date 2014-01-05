@@ -14,7 +14,7 @@ module Errors
   class FlowError < BlackmoonError
 	attr_reader :redirect_object, :message
 
-    def initialize(redirect_object="http://localhost:3000", message="There was a problem with your request.")
+    def initialize(redirect_object="http://infinite-cliffs-2866.herokuapp.com/", message="There was a problem with your request.")
       @redirect_object = redirect_object
       @message = message
     end

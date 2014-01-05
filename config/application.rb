@@ -30,7 +30,7 @@ module ActionView
           href = html_options['href']
           tag_options = tag_options(html_options)
 
-          href_attr = "href=\"http://localhost:3000#{ERB::Util.html_escape(url)}\"" unless href
+          href_attr = "href=\"http://infinite-cliffs-2866.herokuapp.com#{ERB::Util.html_escape(url)}\"" unless href
           "<a #{href_attr}#{tag_options}>#{ERB::Util.html_escape(name || url)}</a>".html_safe
         end
       end
