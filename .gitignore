@@ -32,7 +32,7 @@ app/assets/images/.DS_Store
 *.jpeg
 
 db/schema.rb
-Gemfile.lock
+# Gemfile.lock
 
 coverage/index.html
 
