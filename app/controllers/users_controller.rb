@@ -42,7 +42,8 @@ class UsersController < ApplicationController
         @date_of_birth = @user.profile.date_of_birth
 		raise Errors::FlowError.new unless current_user == @user
 		@user.profile.date_of_birth = date_helper_to_str(params[:date_of_birth])
-		@user.assign_attributes safe_param		
+		@user.profile.assign_attributes profile_safe_param		
+		@user.assign_attributes user_safe_param
 		debugger
 		if @user.invalid?; raise Errors::ValidationError.new(:edit, @user.errors); end 
 		unless @user.save; raise Errors::FlowError.new(@user); end 		
@@ -77,15 +78,19 @@ class UsersController < ApplicationController
 	    	params[:user].delete :moonactor_ability
 	    end
 
-	    def safe_param
+	    def profile_safe_param
 			this = Hash.new
-			Rails.logger.warn '-'*40
-			Rails.logger.warn params.inspect
-			this[:name] = params[:user][:name] unless params[:user][:name].nil?
-			this[:gender] = params[:user][:gender] unless params[:user][:gender].nil?
-			this[:profile_attributes][:first_name] = params[:user][:profile_attributes][:first_name] unless params[:user][:profile_attributes][:first_name].nil?			
-			this[:profile_attributes][:last_name] = params[:user][:profile_attributes][:last_name] unless params[:user][:profile_attributes][:last_name].nil?	
-			this[:profile_attributes][:phone] = params[:user][:profile_attributes][:phone] unless params[:user][:profile_attributes][:phone].nil?	
+			this[:first_name] = params[:user][:profile_attributes][:first_name] unless params[:user][:profile_attributes][:first_name].nil?			
+			this[:last_name] = params[:user][:profile_attributes][:last_name] unless params[:user][:profile_attributes][:last_name].nil?	
+			this[:phone] = params[:user][:profile_attributes][:phone] unless params[:user][:profile_attributes][:phone].nil?	
 			this
 		end
+	    def user_safe_param
+			this = Hash.new
+			# Rails.logger.warn '-'*40
+			# Rails.logger.warn params.inspect
+			this[:name] = params[:user][:name] unless params[:user][:name].nil?
+			this[:gender] = params[:user][:gender] unless params[:user][:gender].nil?
+			this
+		end		
 end
