@@ -36,7 +36,7 @@ gem "breadcrumbs_on_rails"
 
 group :development do
     gem 'annotate', '2.5.0'
-    gem 'sunspot_solr', '2.0.0'
+    gem 'sunspot_solr', '2.0.0'    
 end
 
 # Gems used only for assets and not required
@@ -64,6 +64,7 @@ end
 
 group :production do
 	gem 'pg', '0.17.1'
+  gem 'sunspot_solr', '2.0.0'  
 end
 
 group :development, :test do
