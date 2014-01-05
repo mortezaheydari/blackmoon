@@ -29,7 +29,7 @@
               Games:
             </td>
             <td class="statNumber">
-              7
+              <%= @user.games_participating.count %>
             </td>
           </tr>
           <tr>
@@ -37,7 +37,7 @@
               Events:
             </td>
             <td class="statNumber">
-              1
+              <%= @user.evens_participating.count %>
             </td>
           </tr>
           <tr>
@@ -45,7 +45,7 @@
               Teams:
             </td>
             <td class="statNumber">
-              4
+              <%= @user.teams_participating.count %>
             </td>
           </tr>
         </table>
