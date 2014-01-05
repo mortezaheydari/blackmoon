@@ -23,6 +23,7 @@ gem 'sunspot_rails', '2.0.0'
 gem 'font-awesome-sass'
 gem 'whenever', require: false
 gem 'active_model_serializers'
+gem 'aws-sdk'
 
 gem 'make_flaggable', :git => 'git@github.com:Charchoob/make_flaggable.git'
 gem "breadcrumbs_on_rails"
