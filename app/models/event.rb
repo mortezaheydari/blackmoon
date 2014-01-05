@@ -22,9 +22,9 @@ class Event < ActiveRecord::Base
 
   attr_accessible :category, :custom_address, :descreption,
     :location_type, :title, :tournament_id, :fee, :fee_type, :sport,
-     :number_of_attendings, :team_participation, :open_join, :gender
+     :number_of_attendings, :team_participation, :open_join, :gender, :city
 
-  attr_accessor :updated_at, :city
+  attr_accessor :updated_at
 
     searchable do
         text :title, :boost => 5
