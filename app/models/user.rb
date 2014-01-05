@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
   after_create do |user|
     user.create_profile if user.profile.nil?
     user.create_moonactor_ability if user.moonactor_ability.nil?
+    user.moonactor_ability.create_group_training = true
+    user.moonactor_ability.create_personal_trainer = true
+    user.moonactor_ability.create_venue = true      
+    user.moonactor_ability.save
   end
 
   has_many :happening_schedules, :dependent => :destroy; accepts_nested_attributes_for :happening_schedules
