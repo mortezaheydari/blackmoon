@@ -146,7 +146,7 @@
                                 <td></td>
                                 <td>
                                     <div class="managementImg">
-                                        <%= logo_for(e, size: :small) %> <%= link_to e.title, event_path(e) %>
+                                        <%= logo_for(e, size: :small) %> <%= link_to e.title, game_path(e) %>
                                     </div>
                                 </td>
                                 <td><%= e.happening_case.date_and_time.strftime("%A, %B %d, %Y") %></td>
