@@ -1,6 +1,10 @@
 class PgStringAndIntegerIssueFix < ActiveRecord::Migration
   def up
-    change_column :offering_creations, :creator_id, :integer
+    connection.execute(%q{
+    alter table offering_creations
+    alter column creator_id
+    type integer using cast(number as integer)
+  	})
   end
 
   def down
