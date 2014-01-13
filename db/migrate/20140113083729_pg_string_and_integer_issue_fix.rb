@@ -3,7 +3,7 @@ class PgStringAndIntegerIssueFix < ActiveRecord::Migration
     connection.execute(%q{
     alter table offering_creations
     alter column creator_id
-    type integer using cast(number as integer)
+    type integer using cast(creator_id as integer)
   	})
   end
 
